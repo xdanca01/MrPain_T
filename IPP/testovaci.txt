@@ -1,0 +1,4 @@
+.ipPcode20
+move nil@nil string@""
+move nil@nil string@""
+exit int@99
