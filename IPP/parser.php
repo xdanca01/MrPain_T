@@ -6,6 +6,10 @@ $radek;
 $prvni_radek = 1;
 $pole;
 $argument = "--help";
+$cislo = 0;
+
+
+
 if ($argc == 2 && $argv[1] == $argument)
 {
     echo "help for parser.php for IPPcode20\n";
@@ -20,14 +24,15 @@ else
 //nacitani ze STDIN
 while($radek = fgets(STDIN))
 {
-    echo "testuji: $radek";
+    //echo "testuji: $radek";
     $pole = preg_split ("/ +/", $radek);
     $rtrn_code = muj_regex();
-    echo "dotestoval jsem: $radek";
+    //echo "dotestoval jsem: $radek";
     if($rtrn_code != 0) return $rtrn_code;
     $prvni_radek = 0;
+    $cislo++;
 }
-
+echo "</program\n>";
 //bezchybný konec programu
 exit(0);
 
@@ -38,6 +43,7 @@ function muj_regex()
     global $prvni_radek;
     global $radek;
     global $pole;
+    global $cislo;
 
     //prazdny string (nemel by se sem dostat, ale jistota je jistota)
     if(count($pole) == 0) exit(22);
@@ -50,7 +56,7 @@ function muj_regex()
             //chybný var
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
-            echo $radek;
+            echo "<instruction order=\"$cislo\" opcode=\"MOVE\">\n    <arg1>\n    </arg1>\n    <arg2>\n    </arg2>\n  </instruction>\n  ";
             return 0;
         }
         //createframe
@@ -314,6 +320,7 @@ function muj_regex()
         if(preg_match('/\.[iI][pP][pP][cC][oO][dD][eE]20/i', $pole[0]) == 1)
         {
             echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+            echo "<program language=\"IPPcode20\">\n  ";
         }
         else
         {
