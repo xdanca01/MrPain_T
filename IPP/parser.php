@@ -64,75 +64,31 @@ function muj_regex()
             //chybný var
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
-    /*        echo "<instruction order=\"$cislo\" opcode=\"MOVE\">\n    <arg1>\n    </arg1>\n    <arg2>\n    </arg2>\n  </instruction>\n  ";
-      */
-            /*xmlwriter_start_element($IDK, 'instruction');
-            xmlwriter_start_attribute($IDK, 'order');
-            xmlwriter_text($IDK, $cislo);
-            xmlwriter_end_attribute($IDK);
-            xmlwriter_start_attribute($IDK, 'opcode');
-            xmlwriter_text($IDK, 'MOVE');
-            xmlwriter_end_attribute($IDK);
-            xmlwriter_start_element($IDK, 'arg1');
-            //TODO
-            xmlwriter_end_element($IDK);
-            xmlwriter_start_element($IDK, 'arg2');
-            //TODO
-            xmlwriter_end_element($IDK);
-            xmlwriter_end_element($IDK);*/
-            xml_instrukce(2, 'MOVE', 'neco', 'neco2', 'neco3');
+            xml_instrukce(2, 'MOVE', $pole[1], $pole[2], 'neco3');
             return 0;
         }
         //createframe
         elseif(preg_match('/[cC][rR][eE][aA][tT][eE][fF][rR][aA][mM][eE]/i', $pole[0]) == 1)
         {
-            xmlwriter_start_element($IDK, 'instruction');
-            xmlwriter_start_attribute($IDK, 'order');
-            xmlwriter_text($IDK, $cislo);
-            xmlwriter_end_attribute($IDK);
-            xmlwriter_start_attribute($IDK, 'opcode');
-            xmlwriter_text($IDK, 'CREATEFRAME');
-            xmlwriter_end_attribute($IDK);
-            xmlwriter_end_element($IDK);
+            xml_instrukce(0, 'CREATEFRAME', 0 , 0 , 0);
             return 0;
         }
         //pushframe
         elseif(preg_match('/[pP][uU][sS][hH][fF][rR][aA][mM][eE]/i', $pole[0]) == 1)
         {
-            xmlwriter_start_element($IDK, 'instruction');
-            xmlwriter_start_attribute($IDK, 'order');
-            xmlwriter_text($IDK, $cislo);
-            xmlwriter_end_attribute($IDK);
-            xmlwriter_start_attribute($IDK, 'opcode');
-            xmlwriter_text($IDK, 'PUSHFRAME');
-            xmlwriter_end_attribute($IDK);
-            xmlwriter_end_element($IDK);
+            xml_instrukce(0, 'PUSHFRAME', 0, 0, 0);
         }
         //popframe
         elseif(preg_match('/[pP][oO][pP][fF][rR][aA][mM][eE]/i', $pole[0]) == 1)
         {
-            xmlwriter_start_element($IDK, 'instruction');
-            xmlwriter_start_attribute($IDK, 'order');
-            xmlwriter_text($IDK, $cislo);
-            xmlwriter_end_attribute($IDK);
-            xmlwriter_start_attribute($IDK, 'opcode');
-            xmlwriter_text($IDK, 'POPFRAME');
-            xmlwriter_end_attribute($IDK);
-            xmlwriter_end_element($IDK);
+            xml_instrukce(0, 'POPFRAME', 0, 0, 0);
         }
         //defvar var
         elseif(preg_match('/[dD][eE][fF][vV][aA][rR]/i', $pole[0]) == 1)
         {
             if(count($pole) != 2) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
-            xmlwriter_start_element($IDK, 'instruction');
-            xmlwriter_start_attribute($IDK, 'order');
-            xmlwriter_text($IDK, $cislo);
-            xmlwriter_end_attribute($IDK);
-            xmlwriter_start_attribute($IDK, 'opcode');
-            xmlwriter_text($IDK, 'CREATEFRAME');
-            xmlwriter_end_attribute($IDK);
-            xmlwriter_end_element($IDK);
+            xml_instrukce(1, 'DEFVAR', $pole[1], 0, 0);
             return 0;
         }
         //call label
@@ -140,15 +96,21 @@ function muj_regex()
         {
             if(count($pole) != 2) exit(22);
             if(is_label($pole[1]) == 1) exit(22);
+            xml_instrukce(1, 'CALL', $pole[1], 0, 0);
             return 0;
         }
         //return
-        elseif(preg_match('/[rR][eE][tT][uU][rR][nN]/i', $pole[0]) == 1) echo $radek;
+        elseif(preg_match('/[rR][eE][tT][uU][rR][nN]/i', $pole[0]) == 1)
+        {
+            if(count($pole) != 0) exit(22);
+            xml_instrukce(0, 'RETURN', 0, 0, 0);
+        }
         //pushs symb
         elseif(preg_match('/[pP][uU][sS][hH][sS]/i', $pole[0]) == 1)
         {
             if(count($pole) != 2) exit(22);
             if(is_symb($pole[1]) == 1) exit(22);
+            xml_instrukce(1, 'PUSHS', $pole[1], 0, 0);
             return 0;
         }
         //pops var
@@ -156,6 +118,7 @@ function muj_regex()
         {
             if(count($pole) != 2) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
+            xml_instrukce(1, 'POPS', $pole[1], 0, 0);
             return 0;
         }
         //add var symb symb
@@ -165,6 +128,7 @@ function muj_regex()
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
             elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(3, 'ADD', $pole[1], $pole[2], $pole[3]);
             return 0;
         }
         //sub var symb symb
@@ -174,6 +138,7 @@ function muj_regex()
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
             elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(3, 'SUB', $pole[1], $pole[2], $pole[3]);
             return 0;
         }
         //mul var symb symb
@@ -183,6 +148,7 @@ function muj_regex()
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
             elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(3, 'MUL', $pole[1], $pole[2], $pole[3]);
             return 0;
         }
         //idiv var symb symb
@@ -192,6 +158,7 @@ function muj_regex()
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
             elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(3, 'IDIV', $pole[1], $pole[2], $pole[3]);
             return 0;
         }
         //lt var symb symb
@@ -201,6 +168,7 @@ function muj_regex()
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
             elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(3, 'LT', $pole[1], $pole[2], $pole[3]);
             return 0;
         }
         //gt var symb symb
@@ -210,6 +178,7 @@ function muj_regex()
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
             elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(3, 'GT', $pole[1], $pole[2], $pole[3]);
             return 0;
         }
         //eq var symb symb
@@ -219,6 +188,7 @@ function muj_regex()
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
             elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(3, 'EQ', $pole[1], $pole[2], $pole[3]);
             return 0;
         }
         //and var symb symb
@@ -228,6 +198,7 @@ function muj_regex()
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
             elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(3, 'AND', $pole[1], $pole[2], $pole[3]);
             return 0;
         }
         //or var symb symb
@@ -237,15 +208,16 @@ function muj_regex()
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
             elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(3, 'OR', $pole[1], $pole[2], $pole[3]);
             return 0;
         }
-        //not var symb symb
+        //not var symb
         elseif(preg_match('/[nN][oO][tT]/i', $pole[0]) == 1)
         {
-            if(count($pole) != 4) exit(22);
+            if(count($pole) != 3) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(2, 'NOT', $pole[1], $pole[2], 0);
             return 0;
         }
         //int2char var symb
@@ -254,6 +226,7 @@ function muj_regex()
             if(count($pole) != 3) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
+            xml_instrukce(2, 'INT2CHAR', $pole[1], $pole[2], 0);
             return 0;
         }
         //stri2int var symb symb
@@ -263,6 +236,7 @@ function muj_regex()
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
             elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(3, 'STRI2INT', $pole[1], $pole[2], $pole[3]);
             return 0;
         }
         //read var type
@@ -271,6 +245,7 @@ function muj_regex()
             if(count($pole) != 3) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_type($pole[2]) == 1) exit(22);
+            xml_instrukce(2, 'READ', $pole[1], $pole[2], 0);
             return 0;
         }
         //write symb
@@ -278,6 +253,7 @@ function muj_regex()
         {
             if(count($pole) != 2) exit(22);
             if(is_symb($pole[1]) == 1) exit(22);
+            xml_instrukce(1, 'WRITE', $pole[1], 0, 0);
             return 0;
         }
         //concat var symb symb
@@ -287,6 +263,7 @@ function muj_regex()
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
             elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(3, 'CONCAT', $pole[1], $pole[2], $pole[3]);
             return 0;
         }
         //strlen var symb
@@ -295,6 +272,7 @@ function muj_regex()
             if(count($pole) != 3) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
+            xml_instrukce(2, 'STRLEN', $pole[1], $pole[2], 0);
             return 0;
         }
         //getchar var symb symb
@@ -304,6 +282,7 @@ function muj_regex()
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
             elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(3, 'GETCHAR', $pole[1], $pole[2], $pole[3]);
             return 0;
         }
         //setchar var symb symb
@@ -313,6 +292,7 @@ function muj_regex()
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
             elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(3, 'SETCHAR', $pole[1], $pole[2], $pole[3]);
             return 0;
         }
         //type var symb
@@ -321,6 +301,7 @@ function muj_regex()
             if(count($pole) != 3) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
+            xml_instrukce(2, 'TYPE', $pole[1], $pole[2], 0);
             return 0;
         }
         //label label
@@ -328,6 +309,7 @@ function muj_regex()
         {
             if(count($pole) != 2) exit(22);
             if(is_label($pole[1]) == 1) exit(22);
+            xml_instrukce(1, 'LABEL', $pole[1], 0, 0);
             return 0;
         }
         //jump label
@@ -335,6 +317,7 @@ function muj_regex()
         {
             if(count($pole) != 2) exit(22);
             if(is_label($pole[1]) == 1) exit(22);
+            xml_instrukce(1, 'JUMP', $pole[1], 0, 0);
             return 0;
         }
         //jumpifeq label symb symb
@@ -344,6 +327,7 @@ function muj_regex()
             if(is_label($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
             elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(3, 'JUMPIFEQ', $pole[1], $pole[2], $pole[3]);
             return 0;
         }
         //jumpifneq label symb symb
@@ -353,6 +337,7 @@ function muj_regex()
             if(is_label($pole[1]) == 1) exit(22);
             elseif(is_symb($pole[2]) == 1) exit(22);
             elseif(is_symb($pole[3]) == 1) exit(22);
+            xml_instrukce(3, 'JUMPIFNEQ', $pole[1], $pole[2], $pole[3]);
             return 0;
         }
         //exit symb
@@ -360,6 +345,7 @@ function muj_regex()
         {
             if(count($pole) != 2) exit(22);
             if(is_symb($pole[1]) == 1) exit(22);
+            xml_instrukce(1, 'EXIT', $pole[1], 0, 0);
             return 0;
         }
         //dprint symb
@@ -367,10 +353,15 @@ function muj_regex()
         {
             if(count($pole) != 2) exit(22);
             if(is_symb($pole[1]) == 1) exit(22);
+            xml_instrukce(1, 'DPRINT', $pole[1], 0, 0);
             return 0;
         }
         //break
-        elseif(preg_match('/[bB][rR][eE][aA][kK]/i', $pole[0]) == 1) return 0;
+        elseif(preg_match('/[bB][rR][eE][aA][kK]/i', $pole[0]) == 1)
+        {
+            xml_instrukce(0, 'BREAK', 0, 0, 0);
+            return 0;
+        }
         //neznamy chyba 22
         else
         {
@@ -382,13 +373,11 @@ function muj_regex()
     {
         if(preg_match('/\.[iI][pP][pP][cC][oO][dD][eE]20/i', $pole[0]) == 1)
         {
-            //TODO
-            echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+            xmlwriter_start_document($IDK, '1.0', 'UTF-8');
             xmlwriter_start_element($IDK, 'program');
             xmlwriter_start_attribute($IDK, 'language');
             xmlwriter_text($IDK, 'IPPcode20');
             xmlwriter_end_attribute($IDK);
-            //echo "<program language=\"IPPcode20\">\n  ";
         }
         else
         {
