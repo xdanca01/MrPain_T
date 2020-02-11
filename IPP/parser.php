@@ -66,7 +66,7 @@ function muj_regex()
             elseif(is_symb($pole[2]) == 1) exit(22);
     /*        echo "<instruction order=\"$cislo\" opcode=\"MOVE\">\n    <arg1>\n    </arg1>\n    <arg2>\n    </arg2>\n  </instruction>\n  ";
       */
-            xmlwriter_start_element($IDK, 'instruction');
+            /*xmlwriter_start_element($IDK, 'instruction');
             xmlwriter_start_attribute($IDK, 'order');
             xmlwriter_text($IDK, $cislo);
             xmlwriter_end_attribute($IDK);
@@ -79,20 +79,60 @@ function muj_regex()
             xmlwriter_start_element($IDK, 'arg2');
             //TODO
             xmlwriter_end_element($IDK);
-            xmlwriter_end_element($IDK);
+            xmlwriter_end_element($IDK);*/
+            xml_instrukce(2, 'MOVE', 'neco', 'neco2', 'neco3');
             return 0;
         }
         //createframe
-        elseif(preg_match('/[cC][rR][eE][aA][tT][eE][fF][rR][aA][mM][eE]/i', $pole[0]) == 1) echo $radek;
+        elseif(preg_match('/[cC][rR][eE][aA][tT][eE][fF][rR][aA][mM][eE]/i', $pole[0]) == 1)
+        {
+            xmlwriter_start_element($IDK, 'instruction');
+            xmlwriter_start_attribute($IDK, 'order');
+            xmlwriter_text($IDK, $cislo);
+            xmlwriter_end_attribute($IDK);
+            xmlwriter_start_attribute($IDK, 'opcode');
+            xmlwriter_text($IDK, 'CREATEFRAME');
+            xmlwriter_end_attribute($IDK);
+            xmlwriter_end_element($IDK);
+            return 0;
+        }
         //pushframe
-        elseif(preg_match('/[pP][uU][sS][hH][fF][rR][aA][mM][eE]/i', $pole[0]) == 1) echo $radek;
+        elseif(preg_match('/[pP][uU][sS][hH][fF][rR][aA][mM][eE]/i', $pole[0]) == 1)
+        {
+            xmlwriter_start_element($IDK, 'instruction');
+            xmlwriter_start_attribute($IDK, 'order');
+            xmlwriter_text($IDK, $cislo);
+            xmlwriter_end_attribute($IDK);
+            xmlwriter_start_attribute($IDK, 'opcode');
+            xmlwriter_text($IDK, 'PUSHFRAME');
+            xmlwriter_end_attribute($IDK);
+            xmlwriter_end_element($IDK);
+        }
         //popframe
-        elseif(preg_match('/[pP][oO][pP][fF][rR][aA][mM][eE]/i', $pole[0]) == 1) echo $radek;
+        elseif(preg_match('/[pP][oO][pP][fF][rR][aA][mM][eE]/i', $pole[0]) == 1)
+        {
+            xmlwriter_start_element($IDK, 'instruction');
+            xmlwriter_start_attribute($IDK, 'order');
+            xmlwriter_text($IDK, $cislo);
+            xmlwriter_end_attribute($IDK);
+            xmlwriter_start_attribute($IDK, 'opcode');
+            xmlwriter_text($IDK, 'POPFRAME');
+            xmlwriter_end_attribute($IDK);
+            xmlwriter_end_element($IDK);
+        }
         //defvar var
         elseif(preg_match('/[dD][eE][fF][vV][aA][rR]/i', $pole[0]) == 1)
         {
             if(count($pole) != 2) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
+            xmlwriter_start_element($IDK, 'instruction');
+            xmlwriter_start_attribute($IDK, 'order');
+            xmlwriter_text($IDK, $cislo);
+            xmlwriter_end_attribute($IDK);
+            xmlwriter_start_attribute($IDK, 'opcode');
+            xmlwriter_text($IDK, 'CREATEFRAME');
+            xmlwriter_end_attribute($IDK);
+            xmlwriter_end_element($IDK);
             return 0;
         }
         //call label
@@ -342,8 +382,9 @@ function muj_regex()
     {
         if(preg_match('/\.[iI][pP][pP][cC][oO][dD][eE]20/i', $pole[0]) == 1)
         {
+            //TODO
             echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-            xmlwriter_start_element($IDK, program);
+            xmlwriter_start_element($IDK, 'program');
             xmlwriter_start_attribute($IDK, 'language');
             xmlwriter_text($IDK, 'IPPcode20');
             xmlwriter_end_attribute($IDK);
@@ -394,6 +435,46 @@ function is_type($par)
 {
     if(preg_match('/([i][n][t]|[b][o][o][l]|[s][t][r][i][n][g])/i', $par) == 1) return 0;
     else return 1;
+}
+
+function xml_instrukce($count, $op, $ar1, $ar2, $ar3)
+{
+    global $IDK;
+    global $cislo;
+    xmlwriter_start_element($IDK, 'instruction');
+    xmlwriter_start_attribute($IDK, 'order');
+    xmlwriter_text($IDK, $cislo);
+    xmlwriter_end_attribute($IDK);
+    xmlwriter_start_attribute($IDK, 'opcode');
+    xmlwriter_text($IDK, $op);
+    xmlwriter_end_attribute($IDK);
+    if($count >= 1)
+    {
+        xmlwriter_start_element($IDK, 'arg1');
+        xmlwriter_start_attribute($IDK, 'type');
+        xmlwriter_text($IDK, $ar1);
+        xmlwriter_end_attribute($IDK);
+        xmlwriter_end_element($IDK);
+        if($count >= 2)
+        {
+            xmlwriter_start_element($IDK, 'arg2');
+            xmlwriter_start_attribute($IDK, 'type');
+            xmlwriter_text($IDK, $ar1);
+            xmlwriter_end_attribute($IDK);
+            xmlwriter_end_element($IDK);
+            if($count == 3)
+            {
+                xmlwriter_start_element($IDK, 'arg3');
+                xmlwriter_start_attribute($IDK, 'type');
+                xmlwriter_text($IDK, $ar1);
+                xmlwriter_end_attribute($IDK);
+                xmlwriter_end_element($IDK);
+            }
+            elseif($count > 3) return 1;
+        }
+    }
+    xmlwriter_end_element($IDK);
+    return 0;
 }
 
 ?>
