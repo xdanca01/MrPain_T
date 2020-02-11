@@ -5,14 +5,15 @@
 $radek;
 $prvni_radek = 1;
 $pole;
-$argument = "--help";
 $cislo = 0;
 
 
 
-if ($argc == 2 && $argv[1] == $argument)
+if ($argc == 2 && ($argv[1] == '--help' || $argv[1] == '-h'))
 {
     echo "help for parser.php for IPPcode20\n";
+    echo "args: --help, -h [THIS HELP]\n";
+    echo "written by Petr Dancak\n";
     exit(0);
 }
 elseif($argc == 1);
