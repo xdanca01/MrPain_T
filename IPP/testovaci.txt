@@ -1,5 +1,3 @@
 .ipPcode20
 move nil@nil string@hello
 move nil@nil string@test
-createframe
-exit int@99
