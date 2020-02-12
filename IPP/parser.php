@@ -444,20 +444,26 @@ function xml_instrukce($count, $op, $ar1, $ar2, $ar3)
         xmlwriter_start_attribute($IDK, 'type');
         xmlwriter_text($IDK, $ar1);
         xmlwriter_end_attribute($IDK);
+        //TODO
+        xmlwriter_text($IDK, $ar1);
         xmlwriter_end_element($IDK);
         if($count >= 2)
         {
             xmlwriter_start_element($IDK, 'arg2');
             xmlwriter_start_attribute($IDK, 'type');
-            xmlwriter_text($IDK, $ar1);
+            xmlwriter_text($IDK, $ar2);
             xmlwriter_end_attribute($IDK);
+            //TODO
+            xmlwriter_text($IDK, $ar2);
             xmlwriter_end_element($IDK);
             if($count == 3)
             {
                 xmlwriter_start_element($IDK, 'arg3');
                 xmlwriter_start_attribute($IDK, 'type');
-                xmlwriter_text($IDK, $ar1);
+                xmlwriter_text($IDK, $ar3);
                 xmlwriter_end_attribute($IDK);
+                //TODO
+                xmlwriter_text($IDK, $ar3);
                 xmlwriter_end_element($IDK);
             }
             elseif($count > 3) return 1;
