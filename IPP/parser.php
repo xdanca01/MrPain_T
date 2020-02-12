@@ -382,8 +382,16 @@ function muj_regex()
         {
             if(count($pole) != 3) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
+            $arg1 = array(1 => "var", 2 => $pole[1]);
+            if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
             elseif(is_symb($pole[2]) == 1) exit(22);
-            if(xml_instrukce(2, 'INT2CHAR', $pole[1], $pole[2], 0) == 1) exit(99);
+            else
+            {
+                $type = $pole[2];
+                if(which_type($type) != 0) exit(99);
+                array(1 => $type, 2 => $pole[2]);
+            }
+            if(xml_instrukce(2, 'INT2CHAR', $arg1, $arg2, 0) == 1) exit(99);
             return 0;
         }
         //stri2int var symb symb
@@ -391,9 +399,24 @@ function muj_regex()
         {
             if(count($pole) != 4) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
+            $arg1 = array(1 => "var", 2 => $pole[1]);
+            if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
             elseif(is_symb($pole[2]) == 1) exit(22);
+            else
+            {
+                $type = $pole[2];
+                if(which_type($type) != 0) exit(99);
+                array(1 => $type, 2 => $pole[2]);
+            }
+            if(is_var($pole[3]) == 0) $arg2 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
-            if(xml_instrukce(3, 'STRI2INT', $pole[1], $pole[2], $pole[3]) == 1) exit(99);
+            else
+            {
+                $type = $pole[3];
+                if(which_type($type) != 0) exit(99);
+                array(1 => $type, 2 => $pole[3]);
+            } 
+            if(xml_instrukce(3, 'STRI2INT', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
         }
         //read var type
@@ -401,16 +424,25 @@ function muj_regex()
         {
             if(count($pole) != 3) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
+            $arg1 = array(1 => "var", 2 => $pole[1]);
             elseif(is_type($pole[2]) == 1) exit(22);
-            if(xml_instrukce(2, 'READ', $pole[1], $pole[2], 0) == 1) exit(99);
+            $arg2 = array(1 => "type", 2 => $pole[2]);
+            if(xml_instrukce(2, 'READ', $arg1, $arg2, 0) == 1) exit(99);
             return 0;
         }
         //write symb
         elseif(preg_match('/[wW][rR][iI][tT][eE]/i', $pole[0]) == 1)
         {
             if(count($pole) != 2) exit(22);
-            if(is_symb($pole[1]) == 1) exit(22);
-            if(xml_instrukce(1, 'WRITE', $pole[1], 0, 0) == 1) exit(99);
+            if(is_var($pole[1]) == 0) $arg1 = array(1 => "var", 2 => $pole[1]);
+            elseif(is_symb($pole[1]) == 1) exit(22);
+            else
+            {
+                $type = $pole[1];
+                if(which_type($type) != 0) exit(99);
+                array(1 => $type, 2 => $pole[1]);
+            }            
+            if(xml_instrukce(1, 'WRITE', $arg1, 0, 0) == 1) exit(99);
             return 0;
         }
         //concat var symb symb
@@ -418,9 +450,24 @@ function muj_regex()
         {
             if(count($pole) != 4) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
+            $arg1 = array(1 => "var", 2 => $pole[1]);
+            if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
             elseif(is_symb($pole[2]) == 1) exit(22);
+            else
+            {
+                $type = $pole[2];
+                if(which_type($type) != 0) exit(99);
+                array(1 => $type, 2 => $pole[2]);
+            }
+            if(is_var($pole[3]) == 0) $arg2 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
-            if(xml_instrukce(3, 'CONCAT', $pole[1], $pole[2], $pole[3]) == 1) exit(99);
+            else
+            {
+                $type = $pole[3];
+                if(which_type($type) != 0) exit(99);
+                array(1 => $type, 2 => $pole[3]);
+            }
+            if(xml_instrukce(3, 'CONCAT', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
         }
         //strlen var symb
@@ -428,8 +475,16 @@ function muj_regex()
         {
             if(count($pole) != 3) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
+            $arg1 = array(1 => "var", 2 => $pole[1]);
+            if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
             elseif(is_symb($pole[2]) == 1) exit(22);
-            if(xml_instrukce(2, 'STRLEN', $pole[1], $pole[2], 0) == 1) exit(99);
+            else
+            {
+                $type = $pole[2];
+                if(which_type($type) != 0) exit(99);
+                array(1 => $type, 2 => $pole[2]);
+            }
+            if(xml_instrukce(2, 'STRLEN', $arg1, $arg2, 0) == 1) exit(99);
             return 0;
         }
         //getchar var symb symb
@@ -437,9 +492,24 @@ function muj_regex()
         {
             if(count($pole) != 4) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
+            $arg1 = array(1 => "var", 2 => $pole[1]);
+            if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
             elseif(is_symb($pole[2]) == 1) exit(22);
+            else
+            {
+                $type = $pole[2];
+                if(which_type($type) != 0) exit(99);
+                array(1 => $type, 2 => $pole[2]);
+            }
+            if(is_var($pole[3]) == 0) $arg2 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
-            if(xml_instrukce(3, 'GETCHAR', $pole[1], $pole[2], $pole[3]) == 1) exit(99);
+            else
+            {
+                $type = $pole[3];
+                if(which_type($type) != 0) exit(99);
+                array(1 => $type, 2 => $pole[3]);
+            }
+            if(xml_instrukce(3, 'GETCHAR', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
         }
         //setchar var symb symb
