@@ -425,7 +425,7 @@ function muj_regex()
             if(count($pole) != 3) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
             $arg1 = array(1 => "var", 2 => $pole[1]);
-            elseif(is_type($pole[2]) == 1) exit(22);
+            if(is_type($pole[2]) == 1) exit(22);
             $arg2 = array(1 => "type", 2 => $pole[2]);
             if(xml_instrukce(2, 'READ', $arg1, $arg2, 0) == 1) exit(99);
             return 0;
