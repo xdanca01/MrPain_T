@@ -155,7 +155,7 @@ function muj_regex()
             {   
                 $type = $pole[2];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[2]);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
@@ -163,7 +163,7 @@ function muj_regex()
             {   
                 $type = $pole[3];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[3]);
+                $arg3 = array(1 => $type, 2 => $pole[3]);
             } 
             if(xml_instrukce(3, 'ADD', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
@@ -180,7 +180,7 @@ function muj_regex()
             {   
                 $type = $pole[2];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[2]);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
@@ -188,7 +188,7 @@ function muj_regex()
             {   
                 $type = $pole[3];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[3]);
+                $arg3 = array(1 => $type, 2 => $pole[3]);
             } 
             if(xml_instrukce(3, 'SUB', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
@@ -205,7 +205,7 @@ function muj_regex()
             {   
                 $type = $pole[2];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[2]);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
@@ -213,7 +213,7 @@ function muj_regex()
             {   
                 $type = $pole[3];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[3]);
+                $arg3 = array(1 => $type, 2 => $pole[3]);
             }             
             if(xml_instrukce(3, 'MUL', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
@@ -230,7 +230,7 @@ function muj_regex()
             {   
                 $type = $pole[2];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[2]);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
@@ -238,7 +238,7 @@ function muj_regex()
             {   
                 $type = $pole[3];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[3]);
+                $arg3 = array(1 => $type, 2 => $pole[3]);
             }             
             if(xml_instrukce(3, 'IDIV', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
@@ -255,15 +255,15 @@ function muj_regex()
             {   
                 $type = $pole[2];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[2]);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
             } 
-            if(is_var($pole[3]) == 0) $arg2 = array(1 => "var", 2 => $pole[3]);
+            if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
             else
             {   
                 $type = $pole[3];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[3]);
+                $arg3 = array(1 => $type, 2 => $pole[3]);
             } 
             if(xml_instrukce(3, 'LT', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
@@ -280,15 +280,15 @@ function muj_regex()
             {
                 $type = $pole[2];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[2]);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
             }
-            if(is_var($pole[3]) == 0) $arg2 = array(1 => "var", 2 => $pole[3]);
+            if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
             else
             {
                 $type = $pole[3];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[3]);
+                $arg3 = array(1 => $type, 2 => $pole[3]);
             }
             if(xml_instrukce(3, 'GT', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
@@ -305,15 +305,15 @@ function muj_regex()
             {
                 $type = $pole[2];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[2]);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
             }
-            if(is_var($pole[3]) == 0) $arg2 = array(1 => "var", 2 => $pole[3]);
+            if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
             else
             {
                 $type = $pole[3];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[3]);
+                $arg3 = array(1 => $type, 2 => $pole[3]);
             }            
             if(xml_instrukce(3, 'EQ', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
@@ -330,15 +330,15 @@ function muj_regex()
             {
                 $type = $pole[2];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[2]);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
             }
-            if(is_var($pole[3]) == 0) $arg2 = array(1 => "var", 2 => $pole[3]);
+            if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
             else
             {
                 $type = $pole[3];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[3]);
+                $arg3 = array(1 => $type, 2 => $pole[3]);
             }
             if(xml_instrukce(3, 'AND', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
@@ -355,15 +355,15 @@ function muj_regex()
             {
                 $type = $pole[2];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[2]);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
             }
-            if(is_var($pole[3]) == 0) $arg2 = array(1 => "var", 2 => $pole[3]);
+            if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
             else
             {
                 $type = $pole[3];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[3]);
+                $arg3 = array(1 => $type, 2 => $pole[3]);
             }
             if(xml_instrukce(3, 'OR', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
@@ -373,8 +373,16 @@ function muj_regex()
         {
             if(count($pole) != 3) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
+            $arg1 = array(1 => "var", 2 => $pole[1]);
+            if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
             elseif(is_symb($pole[2]) == 1) exit(22);
-            if(xml_instrukce(2, 'NOT', $pole[1], $pole[2], 0) == 1) exit(99);
+            else
+            {
+                $type = $pole[2];
+                if(which_type($type) != 0) exit(99);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
+            }            
+            if(xml_instrukce(2, 'NOT', $arg1, $arg2, 0) == 1) exit(99);
             return 0;
         }
         //int2char var symb
@@ -389,7 +397,7 @@ function muj_regex()
             {
                 $type = $pole[2];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[2]);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(xml_instrukce(2, 'INT2CHAR', $arg1, $arg2, 0) == 1) exit(99);
             return 0;
@@ -406,15 +414,15 @@ function muj_regex()
             {
                 $type = $pole[2];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[2]);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
             }
-            if(is_var($pole[3]) == 0) $arg2 = array(1 => "var", 2 => $pole[3]);
+            if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
             else
             {
                 $type = $pole[3];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[3]);
+                $arg3 = array(1 => $type, 2 => $pole[3]);
             } 
             if(xml_instrukce(3, 'STRI2INT', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
@@ -440,7 +448,7 @@ function muj_regex()
             {
                 $type = $pole[1];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[1]);
+                $arg1 = array(1 => $type, 2 => $pole[1]);
             }            
             if(xml_instrukce(1, 'WRITE', $arg1, 0, 0) == 1) exit(99);
             return 0;
@@ -457,15 +465,15 @@ function muj_regex()
             {
                 $type = $pole[2];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[2]);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
             }
-            if(is_var($pole[3]) == 0) $arg2 = array(1 => "var", 2 => $pole[3]);
+            if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
             else
             {
                 $type = $pole[3];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[3]);
+                $arg3 = array(1 => $type, 2 => $pole[3]);
             }
             if(xml_instrukce(3, 'CONCAT', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
@@ -482,7 +490,7 @@ function muj_regex()
             {
                 $type = $pole[2];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[2]);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(xml_instrukce(2, 'STRLEN', $arg1, $arg2, 0) == 1) exit(99);
             return 0;
@@ -499,15 +507,15 @@ function muj_regex()
             {
                 $type = $pole[2];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[2]);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
             }
-            if(is_var($pole[3]) == 0) $arg2 = array(1 => "var", 2 => $pole[3]);
+            if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
             else
             {
                 $type = $pole[3];
                 if(which_type($type) != 0) exit(99);
-                array(1 => $type, 2 => $pole[3]);
+                $arg3 = array(1 => $type, 2 => $pole[3]);
             }
             if(xml_instrukce(3, 'GETCHAR', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
@@ -517,9 +525,24 @@ function muj_regex()
         {
             if(count($pole) != 4) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
+            $arg1 = array(1 => "var", 2 => $pole[1]);
+            if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
             elseif(is_symb($pole[2]) == 1) exit(22);
+            else
+            {
+                $type = $pole[2];
+                if(which_type($type) != 0) exit(99);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
+            }
+            if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
-            if(xml_instrukce(3, 'SETCHAR', $pole[1], $pole[2], $pole[3]) == 1) exit(99);
+            else
+            {
+                $type = $pole[3];
+                if(which_type($type) != 0) exit(99);
+                $arg3 = array(1 => $type, 2 => $pole[3]);
+            }            
+            if(xml_instrukce(3, 'SETCHAR', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
         }
         //type var symb
@@ -527,8 +550,16 @@ function muj_regex()
         {
             if(count($pole) != 3) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
+            $arg1 = array(1 => "var", 2 => $pole[1]);
+            if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
             elseif(is_symb($pole[2]) == 1) exit(22);
-            if(xml_instrukce(2, 'TYPE', $pole[1], $pole[2], 0) == 1) exit(99);
+            else
+            {
+                $type = $pole[2];
+                if(which_type($type) != 0) exit(99);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
+            }
+            if(xml_instrukce(2, 'TYPE', $arg1, $arg2, 0) == 1) exit(99);
             return 0;
         }
         //label label
@@ -536,7 +567,8 @@ function muj_regex()
         {
             if(count($pole) != 2) exit(22);
             if(is_label($pole[1]) == 1) exit(22);
-            if(xml_instrukce(1, 'LABEL', $pole[1], 0, 0) == 1) exit(99);
+            $arg1 = array(1 => "label", 2 => $pole[1]);
+            if(xml_instrukce(1, 'LABEL', $arg1, 0, 0) == 1) exit(99);
             return 0;
         }
         //jump label
@@ -544,7 +576,8 @@ function muj_regex()
         {
             if(count($pole) != 2) exit(22);
             if(is_label($pole[1]) == 1) exit(22);
-            if(xml_instrukce(1, 'JUMP', $pole[1], 0, 0) == 1) exit(99);
+            $arg1 = array(1 => "label", 2 => $pole[1]);
+            if(xml_instrukce(1, 'JUMP', $arg1, 0, 0) == 1) exit(99);
             return 0;
         }
         //jumpifeq label symb symb
@@ -552,9 +585,24 @@ function muj_regex()
         {
             if(count($pole) != 4) exit(22);
             if(is_label($pole[1]) == 1) exit(22);
+            $arg1 = array(1 => "label", 2 => $pole[1]);
+            if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
             elseif(is_symb($pole[2]) == 1) exit(22);
+            else
+            {
+                $type = $pole[2];
+                if(which_type($type) != 0) exit(99);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
+            }
+            if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
-            if(xml_instrukce(3, 'JUMPIFEQ', $pole[1], $pole[2], $pole[3]) == 1) exit(99);
+            else
+            {
+                $type = $pole[3];
+                if(which_type($type) != 0) exit(99);
+                $arg3 = array(1 => $type, 2 => $pole[3]);
+            }
+            if(xml_instrukce(3, 'JUMPIFEQ', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
         }
         //jumpifneq label symb symb
@@ -562,25 +610,54 @@ function muj_regex()
         {
             if(count($pole) != 4) exit(22);
             if(is_label($pole[1]) == 1) exit(22);
+            $arg1 = array(1 => "label", 2 => $pole[1]);
+            if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
             elseif(is_symb($pole[2]) == 1) exit(22);
+            else
+            {
+                $type = $pole[2];
+                if(which_type($type) != 0) exit(99);
+                $arg2 = array(1 => $type, 2 => $pole[2]);
+            }
+            if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
             elseif(is_symb($pole[3]) == 1) exit(22);
-            if(xml_instrukce(3, 'JUMPIFNEQ', $pole[1], $pole[2], $pole[3]) == 1) exit(99);
+            else
+            {
+                $type = $pole[3];
+                if(which_type($type) != 0) exit(99);
+                $arg3 = array(1 => $type, 2 => $pole[3]);
+            }
+            if(xml_instrukce(3, 'JUMPIFNEQ', $arg1, $arg2, $arg3) == 1) exit(99);
             return 0;
         }
         //exit symb
         elseif(preg_match('/[eE][xX][iI][tT]/i', $pole[0]) == 1)
         {
             if(count($pole) != 2) exit(22);
-            if(is_symb($pole[1]) == 1) exit(22);
-            if(xml_instrukce(1, 'EXIT', $pole[1], 0, 0) == 1) exit(99);
+            if(is_var($pole[2]) == 0) $arg1 = array(1 => "var", 2 => $pole[2]);
+            elseif(is_symb($pole[2]) == 1) exit(22);
+            else
+            {
+                $type = $pole[2];
+                if(which_type($type) != 0) exit(99);
+                $arg1 = array(1 => $type, 2 => $pole[2]);
+            }
+            if(xml_instrukce(1, 'EXIT', $arg1, 0, 0) == 1) exit(99);
             return 0;
         }
         //dprint symb
         elseif(preg_match('/[dD][pP][rR][iI][nN][tT]/i', $pole[0]) == 1)
         {
             if(count($pole) != 2) exit(22);
-            if(is_symb($pole[1]) == 1) exit(22);
-            if(xml_instrukce(1, 'DPRINT', $pole[1], 0, 0) == 1) exit(99);
+            if(is_var($pole[2]) == 0) $arg1 = array(1 => "var", 2 => $pole[2]);
+            elseif(is_symb($pole[2]) == 1) exit(22);
+            else
+            {
+                $type = $pole[2];
+                if(which_type($type) != 0) exit(99);
+                $arg1 = array(1 => $type, 2 => $pole[2]);
+            }
+            if(xml_instrukce(1, 'DPRINT', $arg1, 0, 0) == 1) exit(99);
             return 0;
         }
         //break
