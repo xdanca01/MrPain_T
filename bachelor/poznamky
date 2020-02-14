@@ -1,0 +1,28 @@
+1. rozlišovat jména keywordu pro test například: 
+                systemctl enable <name>.service --> systemctl enable <service-name>.service - Konzistentní zápis keywordů a popřípadě rozlišovat <name>, <service-name>, <command-name>, <option-name> pro různé účely ( lepší parsování a možná implementace základní množiny s obsahem jmen serviců, atd....)
+                priklady, kam by se mohly doplnit keywordy:
+                https://gitlab.cee.redhat.com/red-hat-enterprise-linux-documentation/rhel-8-docs/blob/master/enterprise/modules/core-kernel/proc_installing-the-kernel.adoc
+
+                namisto yum --> yum -y <package-name> (k optionu -y napsat nejaky keyword nebo ho nejak oznacit jako [-y], aby slo vidět, že je optional, ale v testu se použije...
+
+
+
+
+2. odkud se budou brát commandy k testu
+                Oddelit posloupnost commandu, ktere se maji testovat, aby se nepouzily commandy, ktere slouzi napriklad jako ukazka vystupu.
+                
+                ---- --> ---- (//Test || //Output) (nebo pouzit nejaky jiny keyword pro poznamku co se ma testovat/s cim se ma porovnavat)
+                Text || commandy || ETC....
+                ----
+   
+                proc to rozlisovat ? Priklad:
+                https://gitlab.cee.redhat.com/red-hat-enterprise-linux-documentation/rhel-8-docs/blob/master/enterprise/modules/core-kernel/proc_using-selected-bcc-tools-for-performance-analyses.adoc
+
+
+             
+3. Multi-terminal problem
+                Pokud se ma nejaka sekvence prikazu odehrat v rozdilnych terminalech na stejnych strojich pridat keyword např. //term=2. Reseni muze byt spusteni commandu na pozadi a zachovani jeho outputu v univerzalnim file || vice SSH instanci na jednom stroji.
+
+4. Kde, kdy a jake .adoc files se budou testovat (nemusi se testovat uplne vsechny)
+
+5. Nejake jine pripady testu ?

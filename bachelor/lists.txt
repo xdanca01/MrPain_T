@@ -1,0 +1,5 @@
+command service
+command 
+date
+service
+cups
