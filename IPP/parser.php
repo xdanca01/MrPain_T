@@ -695,7 +695,6 @@ function muj_regex()
 function is_var($par)
 {
     if(preg_match('/^[lLtTgG][fF]@[A-z0-9\_\-\$\&\%\*\!\?]*/', $par) == 1) return 0;
-    elseif(preg_match('/^([sS][tT][rR][iI][nN][gG]|[iI][nN][tT]|[bB][oO][oO][lL]|[nN][iI][lL])@[A-z0-9\_\-\&\&\%\*\!\?]+/', $par) == 1) return 0;
     else return 1;
 }
 
@@ -707,6 +706,7 @@ function is_symb($par)
     if(preg_match('/^[iI][nN][tT]@\-?[0-9]+/', $par) == 1) return 0;
     //bool
     elseif(preg_match('/^[bB][oO][oO][lL]@([tT][rR][uU][eE]|[fF][aA][lL][sS][eE])$/', $par) === 1) return 0;
+    elseif(preg_match('/string@.*(\\\\[0-9][0-9][0-9])+/i', $par)) return 0;
     //string
     elseif(preg_match('/^[sS][tT][rR][iI][nN][gG]@.*(#|\\\\|\")+.*/', $par)) return 1;
     elseif(preg_match('/^[sS][tT][rR][iI][nN][gG]@.*/', $par) == 1) return 0;
@@ -727,6 +727,22 @@ function is_type($par)
 {
     if(preg_match('/^([i][n][t]|[b][o][o][l]|[s][t][r][i][n][g])/i', $par) == 1) return 0;
     else return 1;
+}
+
+//@ret 0 pokud se má cutovat, else 1
+function should_cut($par, &$par2)
+{
+    $tab = array(0 => "string", 1 => "int", 2 => "bool");
+    $count = count($tab);
+    for($i = 0; $i < $count; $i++)
+    {
+        if(strcmp($tab[$i], $par) == 0)
+        {
+            $par2 = preg_replace('/.*@/', '', $par2);
+            return 0;
+        }
+    }
+    return 1;
 }
 
 //vytahne ze stringu $par type a spravne ho zapise
@@ -760,6 +776,7 @@ function xml_instrukce($count, $op, $ar1, $ar2, $ar3)
         if(xmlwriter_start_attribute($IDK, 'type') == FALSE) return 1;
         if(xmlwriter_text($IDK, $ar1[1]) == FALSE) return 1;
         if(xmlwriter_end_attribute($IDK) == FALSE) return 1;
+        should_cut($ar1[1], $ar1[2]);
         if(xmlwriter_text($IDK, $ar1[2]) == FALSE) return 1;
         if(xmlwriter_end_element($IDK) == FALSE) return 1;
         
@@ -769,7 +786,7 @@ function xml_instrukce($count, $op, $ar1, $ar2, $ar3)
             if(xmlwriter_start_attribute($IDK, 'type') == FALSE) return 1;
             if(xmlwriter_text($IDK, $ar2[1]) == FALSE) return 1;
             if(xmlwriter_end_attribute($IDK) == FALSE) return 1;
-            //TODO
+            should_cut($ar2[1], $ar2[2]);
             if(xmlwriter_text($IDK, $ar2[2]) == FALSE) return 1;
             if(xmlwriter_end_element($IDK) == FALSE) return 1;
             
@@ -779,7 +796,7 @@ function xml_instrukce($count, $op, $ar1, $ar2, $ar3)
                 if(xmlwriter_start_attribute($IDK, 'type') == FALSE) return 1;
                 if(xmlwriter_text($IDK, $ar3[1]) == FALSE) return 1;
                 if(xmlwriter_end_attribute($IDK) == FALSE) return 1;
-                //TODO
+                should_cut($ar3[1], $ar3[2]);
                 if(xmlwriter_text($IDK, $ar3[2]) == FALSE) return 1;
                 if(xmlwriter_end_element($IDK) == FALSE) return 1;
             }
