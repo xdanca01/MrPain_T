@@ -18,29 +18,45 @@ if not sys.argv[1].isdigit():
 
 #PORT
 ServerPort = int(sys.argv[1])
-#localhost
-SIZE = 1024
+#MAXSIZEOFBUFFER
+SIZE = 4096
+#localhost server
 Server = '127.0.0.1'
 clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 clientSocket.bind((Server, ServerPort))
-clientSocket.listen()
+clientSocket.listen(1)
 while True:
     conn, addr = clientSocket.accept()
-    commID = os.fork()
+    #commID = os.fork()
     #child leave
-    if commID == 0:
-        break
-#create new connection with client addr on socket conn
-print("connection with client",addr,"ESTABLISHED")
-BUFFER = conn.recv(SIZE)
-BUFFER = BUFFER.decode('utf-8')
-if not BUFFER:
-    print("nothing received")
-REQUEST = re.search("GET", BUFFER)
-print(REQUEST)
-
-
-
-print("konec")
-conn.close()
-exit(0)
+    #if commID == 0:
+    #create new connection with client addr on socket conn
+    BUFFER = conn.recv(SIZE).decode()
+    if not BUFFER:
+        print("unknown method")
+        conn.send(b'HTTP/1.1 405 Method Not Allowed\n')
+    else:
+        REQUEST = re.search("GET", BUFFER)
+        if REQUEST:
+            print(BUFFER)
+            GET = re.findall('=.*&', BUFFER)
+            GET = GET[0][1:-1]
+            REQUEST = re.findall('=A HTTP/1.1', BUFFER)
+            #A hostname -> IP
+            if REQUEST:
+                ADDR = socket.gethostbyname(GET)
+                BUFFER = 'HTTP/1.1 200 OK\n' + GET + ":A=" + ADDR + "\n"
+                conn.sendall(BUFFER.encode())
+            #PTR IP -> hostname
+            else:
+                NAME = socket.gethostbyaddr(GET)
+                BUFFER = 'HTTP/1.1 200 OK\n' + GET + ":PTR=" + NAME[0] + "\n"
+                conn.sendall(BUFFER.encode())
+        else:
+            REQUEST = re.search("POST", BUFFER)
+            if REQUEST:
+                print("BUFFER:",BUFFER)
+                print("POST")
+            else:
+                print("NOTHING")
+    conn.close()
