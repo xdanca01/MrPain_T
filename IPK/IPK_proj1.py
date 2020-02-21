@@ -27,9 +27,6 @@ clientSocket.bind((Server, ServerPort))
 clientSocket.listen(1)
 while True:
     conn, addr = clientSocket.accept()
-    #commID = os.fork()
-    #child leave
-    #if commID == 0:
     #create new connection with client addr on socket conn
     BUFFER = conn.recv(SIZE).decode()
     if not BUFFER:
@@ -55,6 +52,22 @@ while True:
         else:
             REQUEST = re.search("POST", BUFFER)
             if REQUEST:
+                print("BUFFER:",BUFFER)
+                #get all requests
+                BUFFER = re.findall('.*:(?:A|PTR)$', BUFFER, flags=re.MULTILINE)
+                HOSTNAMES = ""
+                IPADDR = ""
+                for i in BUFFER:
+                    mezikod = re.search('.*:PTR$', i, flags=re.MULTILINE)
+                    mezikod2 = re.search('.*:A$', i, flags=re.MULTILINE)
+                    if mezikod:
+                        mezikod = mezikod.string
+                        HOSTNAMES = HOSTNAMES + "\n" + mezikod
+                    if mezikod2:
+                        mezikod2 = mezikod2.string
+                        IPADDR = IPADDR + "\n" + mezikod2
+                    print("HOSTNAMES:", HOSTNAMES)
+                    print("IP:", IPADDR)
                 print("BUFFER:",BUFFER)
                 print("POST")
             else:
