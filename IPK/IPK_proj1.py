@@ -47,15 +47,20 @@ while True:
                     REQUEST = re.findall('type=A HTTP/1.1', BUFFER)
                     #A hostname -> IP
                     if REQUEST:
-                        ADDR = socket.gethostbyname(GET)
+                        ADDR = socket.getaddrinfo(GET, ServerPort)
+                        ADDR = ADDR[0][4]
+                        ADDR = ADDR[0]
+                        print(ADDR)
                         BUFFER = 'HTTP/1.1 200 OK\n' + GET + ":A=" + ADDR + "\n"
                         conn.sendall(BUFFER.encode())
                     #PTR IP -> hostname
                     else:
                         REQUEST = re.findall('type=PTR HTTP/1.1', BUFFER)
                         if REQUEST:
-                            NAME = socket.gethostbyaddr(GET)
-                            BUFFER = 'HTTP/1.1 200 OK\n' + GET + ":PTR=" + NAME[0] + "\n"
+                            sockAdr = (GET, 443)
+                            NAME = socket.getnameinfo(sockAdr, socket.NI_NOFQDN)[0]
+                            print(NAME)
+                            BUFFER = 'HTTP/1.1 200 OK\n' + GET + ":PTR=" + NAME + "\n"
                             conn.sendall(BUFFER.encode())
                         else:
                             print("type not A or PTR")
@@ -82,7 +87,8 @@ while True:
                             if mezikod:
                                 mezikod = mezikod.string
                                 something = mezikod[:-4]
-                                neco = socket.gethostbyaddr(something)
+                                sockAdr = (something, 443)
+                                neco = socket.getnameinfo(sockAdr, socket.NI_NOFQDN)[0]
                                 if not neco:
                                     print("error")
                                     conn.sendall(b'HTTP/1.1 500 Internal Server Error\n')
@@ -90,7 +96,12 @@ while True:
                             if mezikod2:
                                 mezikod2 = mezikod2.string
                                 something = mezikod2[:-2]
-                                neco = socket.gethostbyname(something)
+                                neco = socket.getaddrinfo(something, ServerPort)
+                                print(socket.gaierror)
+                                if not neco:
+                                    print("fail")
+                                neco = neco[0][4]
+                                neco = neco[0]
                                 if not neco:
                                     print("error")
                                     conn.sendall(b'HTTP/1.1 500 Internal Server Error\n')
@@ -98,6 +109,7 @@ while True:
                         print(Output)
                         BUFFER = 'HTTP/1.1 200 OK\n' + Output
                         conn.sendall(BUFFER.encode())
+                        conn.sendall(b'neco')
                     else:
                         print("bad post arg")
                         conn.sendall(b'HTTP/1.1 400 Bad Request\n')
