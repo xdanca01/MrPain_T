@@ -11,9 +11,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     conn, addr = s.accept()
     with conn:
         print('Connected by', addr)
-        while True:
-            data = conn.recv(1024)
-            if not data:
-                break
-            conn.sendall(data)
+        data = conn.recv(1024)
+        conn.sendall(b'HTTP/1.1 200 OK\n')
+        conn.sendall(data)
 

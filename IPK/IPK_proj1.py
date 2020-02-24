@@ -30,16 +30,14 @@ while True:
     #create new connection with client addr on socket conn
     BUFFER = conn.recv(SIZE).decode()
     if not BUFFER:
-        print("got nothing")
-        conn.sendall(b'HTTP/1.1 500 Internal Server Error\n')
+        conn.sendall(b'HTTP/1.1 500 Internal Server Error\r\n')
     else:
         REQUEST = re.search("GET", BUFFER)
         #GET
         if REQUEST:
             TEST = re.search("/resolve", BUFFER)
             if not TEST:
-                print("bad URL")
-                conn.sendall(b'HTTP/1.1 400 Bad Request\n')
+                conn.sendall(b'HTTP/1.1 400 Bad Request\r\n')
             else:
                 GET = re.findall('name=.*&', BUFFER)
                 if GET:
@@ -47,27 +45,32 @@ while True:
                     REQUEST = re.findall('type=A HTTP/1.1', BUFFER)
                     #A hostname -> IP
                     if REQUEST:
-                        ADDR = socket.getaddrinfo(GET, ServerPort)
-                        ADDR = ADDR[0][4]
-                        ADDR = ADDR[0]
-                        print(ADDR)
-                        BUFFER = 'HTTP/1.1 200 OK\n' + GET + ":A=" + ADDR + "\n"
-                        conn.sendall(BUFFER.encode())
+                        try:
+                            ADDR = socket.getaddrinfo(GET, ServerPort)
+                            ADDR = ADDR[0][4]
+                            ADDR = GET + ":A=" + ADDR[0] + "\r\n\r\n"
+                            BUFFER = 'HTTP/1.1 200 OK\r\n\r\n' + ADDR
+                            conn.sendall(BUFFER.encode())
+                        except:
+                            conn.sendall(b'HTTP/1.1 500 Internal Server Error\r\n')
                     #PTR IP -> hostname
                     else:
                         REQUEST = re.findall('type=PTR HTTP/1.1', BUFFER)
                         if REQUEST:
                             sockAdr = (GET, 443)
-                            NAME = socket.getnameinfo(sockAdr, socket.NI_NOFQDN)[0]
-                            print(NAME)
-                            BUFFER = 'HTTP/1.1 200 OK\n' + GET + ":PTR=" + NAME + "\n"
-                            conn.sendall(BUFFER.encode())
+                            try:
+                                NAME = socket.getnameinfo(sockAdr, socket.NI_NOFQDN)[0]
+                                NAME = GET + ":PTR=" + NAME + "\r\n\r\n"
+                                BUFFER = 'HTTP/1.1 200 OK\r\n\r\n' + NAME
+                                conn.sendall(BUFFER.encode())
+                            except:
+                                conn.sendall(b'HTTP/1.1 500 Internal Server Error\r\n')
                         else:
                             print("type not A or PTR")
-                            conn.sendall(b'HTTP/1.1 400 Bad Request\n')
+                            conn.sendall(b'HTTP/1.1 400 Bad Request\r\n')
                 else:
                     print("bad arg")
-                    conn.sendall(b'HTTP/1.1 400 Bad Request\n')
+                    conn.sendall(b'HTTP/1.1 400 Bad Request\r\n')
         #POST or UNKNOWN
         else:
             REQUEST = re.search("POST", BUFFER)
@@ -75,7 +78,7 @@ while True:
                 TEST = re.search("/dns-query", BUFFER)
                 if not TEST:
                     print("bad URL")
-                    conn.sendall(b'HTTP/1.1 400 Bad Request\n')
+                    conn.sendall(b'HTTP/1.1 400 Bad Request\r\n')
                 else:
                     #get all requests
                     BUFFER = re.findall('.*:(?:A|PTR)$', BUFFER, flags=re.MULTILINE)
@@ -84,37 +87,38 @@ while True:
                         for i in BUFFER:
                             mezikod = re.search('.*:PTR$', i, flags=re.MULTILINE)
                             mezikod2 = re.search('.*:A$', i, flags=re.MULTILINE)
-                            if mezikod:
+                            try:
                                 mezikod = mezikod.string
                                 something = mezikod[:-4]
                                 sockAdr = (something, 443)
                                 neco = socket.getnameinfo(sockAdr, socket.NI_NOFQDN)[0]
                                 if not neco:
                                     print("error")
-                                    conn.sendall(b'HTTP/1.1 500 Internal Server Error\n')
-                                Output += mezikod + "=" + neco[0] + "\n"
-                            if mezikod2:
+                                    conn.sendall(b'HTTP/1.1 500 Internal Server Error\r\n')
+                                Output += mezikod + "=" + neco + "\r\n\r\n"
+                            except:    
+                                Output += ""
+                            try:
                                 mezikod2 = mezikod2.string
                                 something = mezikod2[:-2]
                                 neco = socket.getaddrinfo(something, ServerPort)
-                                print(socket.gaierror)
                                 if not neco:
                                     print("fail")
                                 neco = neco[0][4]
                                 neco = neco[0]
                                 if not neco:
                                     print("error")
-                                    conn.sendall(b'HTTP/1.1 500 Internal Server Error\n')
-                                Output += mezikod2 + "=" + neco + "\n"
-                        print(Output)
-                        BUFFER = 'HTTP/1.1 200 OK\n' + Output
+                                    conn.sendall(b'HTTP/1.1 500 Internal Server Error\r\n')
+                                Output += mezikod2 + "=" + neco + "\r\n\r\n"
+                            except:
+                                Output += ""
+                        BUFFER = 'HTTP/1.1 200 OK\r\n\r\n' + Output
                         conn.sendall(BUFFER.encode())
-                        conn.sendall(b'neco')
                     else:
                         print("bad post arg")
-                        conn.sendall(b'HTTP/1.1 400 Bad Request\n')
+                        conn.sendall(b'HTTP/1.1 400 Bad Request\r\n')
             #not GET or POST
             else:
                 print("unknown method")
-                conn.send(b'HTTP/1.1 405 Method Not Allowed\n')
+                conn.send(b'HTTP/1.1 405 Method Not Allowed\r\n')
     conn.close()
