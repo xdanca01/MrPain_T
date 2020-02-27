@@ -777,6 +777,7 @@ function xml_instrukce($count, $op, $ar1, $ar2, $ar3)
         if(xmlwriter_text($IDK, $ar1[1]) == FALSE) return 1;
         if(xmlwriter_end_attribute($IDK) == FALSE) return 1;
         should_cut($ar1[1], $ar1[2]);
+        $ar1[2] = preg_replace('/\n$/', '', $ar1[2]);
         if(xmlwriter_text($IDK, $ar1[2]) == FALSE) return 1;
         if(xmlwriter_end_element($IDK) == FALSE) return 1;
         
@@ -787,6 +788,7 @@ function xml_instrukce($count, $op, $ar1, $ar2, $ar3)
             if(xmlwriter_text($IDK, $ar2[1]) == FALSE) return 1;
             if(xmlwriter_end_attribute($IDK) == FALSE) return 1;
             should_cut($ar2[1], $ar2[2]);
+            $ar2[2] = preg_replace('/\n$/', '', $ar2[2]);
             if(xmlwriter_text($IDK, $ar2[2]) == FALSE) return 1;
             if(xmlwriter_end_element($IDK) == FALSE) return 1;
             
@@ -797,6 +799,7 @@ function xml_instrukce($count, $op, $ar1, $ar2, $ar3)
                 if(xmlwriter_text($IDK, $ar3[1]) == FALSE) return 1;
                 if(xmlwriter_end_attribute($IDK) == FALSE) return 1;
                 should_cut($ar3[1], $ar3[2]);
+                $ar3[2] = preg_replace('/\n$/', '', $ar3[2]);
                 if(xmlwriter_text($IDK, $ar3[2]) == FALSE) return 1;
                 if(xmlwriter_end_element($IDK) == FALSE) return 1;
             }
