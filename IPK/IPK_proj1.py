@@ -66,10 +66,8 @@ while True:
                             except:
                                 conn.sendall(b'HTTP/1.1 500 Internal Server Error\r\n')
                         else:
-                            print("type not A or PTR")
                             conn.sendall(b'HTTP/1.1 400 Bad Request\r\n')
                 else:
-                    print("bad arg")
                     conn.sendall(b'HTTP/1.1 400 Bad Request\r\n')
         #POST or UNKNOWN
         else:
@@ -77,7 +75,6 @@ while True:
             if REQUEST:
                 TEST = re.search("/dns-query", BUFFER)
                 if not TEST:
-                    print("bad URL")
                     conn.sendall(b'HTTP/1.1 400 Bad Request\r\n')
                 else:
                     #get all requests
@@ -93,7 +90,6 @@ while True:
                                 sockAdr = (something, 443)
                                 neco = socket.getnameinfo(sockAdr, socket.NI_NOFQDN)[0]
                                 if not neco:
-                                    print("error")
                                     conn.sendall(b'HTTP/1.1 500 Internal Server Error\r\n')
                                 Output += mezikod + "=" + neco + "\r\n\r\n"
                             except:    
@@ -108,17 +104,14 @@ while True:
                                 neco = neco[0]
                                 if not neco:
                                     print("error")
-                                    conn.sendall(b'HTTP/1.1 500 Internal Server Error\r\n')
                                 Output += mezikod2 + "=" + neco + "\r\n\r\n"
                             except:
                                 Output += ""
                         BUFFER = 'HTTP/1.1 200 OK\r\n\r\n' + Output
                         conn.sendall(BUFFER.encode())
                     else:
-                        print("bad post arg")
                         conn.sendall(b'HTTP/1.1 400 Bad Request\r\n')
             #not GET or POST
             else:
-                print("unknown method")
                 conn.send(b'HTTP/1.1 405 Method Not Allowed\r\n')
     conn.close()
