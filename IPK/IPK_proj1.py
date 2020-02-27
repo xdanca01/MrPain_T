@@ -24,7 +24,7 @@ SIZE = 4096
 Server = '127.0.0.1'
 clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 clientSocket.bind((Server, ServerPort))
-clientSocket.listen(1)
+clientSocket.listen()
 while True:
     conn, addr = clientSocket.accept()
     #create new connection with client addr on socket conn
