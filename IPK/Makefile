@@ -1,4 +1,4 @@
 build:
-	chmod +x IPK_proj1.py
+	chmod +x src/IPK_proj1.py
 run:
-	python3 IPK_proj1.py $(PORT)
+	python3 src/IPK_proj1.py $(PORT)

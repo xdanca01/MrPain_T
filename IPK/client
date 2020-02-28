@@ -1,1 +1,0 @@
-clear;curl localhost:5354/resolve?name=www.fit.vutbr.cz\&type=A
