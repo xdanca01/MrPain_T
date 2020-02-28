@@ -29,7 +29,11 @@ if($IDK2 == false) exit(99);
 //nacitani ze STDIN
 while($radek = fgets(STDIN))
 {
-    echo "testuji: $radek";
+    //odmazavani komentaru
+    if(preg_match('/#.*/', $radek) == 1)
+    {   
+        $radek = preg_replace('/ *#.*/', '', $radek);
+    } 
     $pole = preg_split ("/ +/", $radek);
     $rtrn_code = muj_regex();
     //echo "dotestoval jsem: $radek";
@@ -96,6 +100,7 @@ function muj_regex()
         //defvar var
         elseif(preg_match('/^defvar$/i', $pole[0]) == 1)
         {
+            //echo $pole[2];
             if(count($pole) != 2) exit(22);
             if(is_var($pole[1]) == 1) exit(22);
             $arg1 = array(1 => "var", 2 => $pole[1]);
@@ -575,7 +580,6 @@ function muj_regex()
         {
             //if(count($pole) != 4) exit(22);
             //if(is_label($pole[1]) == 1) exit(22);
-            echo "test\n";
             $arg1 = array(1 => "label", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
             elseif(is_symb($pole[2]) == 1) exit(22);
@@ -757,6 +761,14 @@ function which_type(&$par)
     return 0;
 }
 
+function ascii_to_xml(&$vstup)
+{
+    $vstup = preg_replace('/\\\\060/', '&lt', $vstup);
+    $vstup = preg_replace('/\\\\062/', '&gt', $vstup);
+    $vstup = preg_replace('/\\\\038/', '&amp', $vstup);
+    return 0;
+}
+
 function xml_instrukce($count, $op, $ar1, $ar2, $ar3)
 {
     global $IDK;
@@ -778,6 +790,7 @@ function xml_instrukce($count, $op, $ar1, $ar2, $ar3)
         if(xmlwriter_end_attribute($IDK) == FALSE) return 1;
         should_cut($ar1[1], $ar1[2]);
         $ar1[2] = preg_replace('/\n$/', '', $ar1[2]);
+        //ascii_to_xml($ar1[2]);
         if(xmlwriter_text($IDK, $ar1[2]) == FALSE) return 1;
         if(xmlwriter_end_element($IDK) == FALSE) return 1;
         
@@ -789,6 +802,7 @@ function xml_instrukce($count, $op, $ar1, $ar2, $ar3)
             if(xmlwriter_end_attribute($IDK) == FALSE) return 1;
             should_cut($ar2[1], $ar2[2]);
             $ar2[2] = preg_replace('/\n$/', '', $ar2[2]);
+          //  ascii_to_xml($ar2[2]);
             if(xmlwriter_text($IDK, $ar2[2]) == FALSE) return 1;
             if(xmlwriter_end_element($IDK) == FALSE) return 1;
             
@@ -800,6 +814,7 @@ function xml_instrukce($count, $op, $ar1, $ar2, $ar3)
                 if(xmlwriter_end_attribute($IDK) == FALSE) return 1;
                 should_cut($ar3[1], $ar3[2]);
                 $ar3[2] = preg_replace('/\n$/', '', $ar3[2]);
+            //    ascii_to_xml($ar3[2]);
                 if(xmlwriter_text($IDK, $ar3[2]) == FALSE) return 1;
                 if(xmlwriter_end_element($IDK) == FALSE) return 1;
             }

@@ -1,9 +1,9 @@
 .IPPcode20
-DEFVAR GF@counter
+DEFVAR GF@counter #test
 move GF@counter string@
 LABEL while
 JUMPIFEQ end GF@counter string@aaa
-WRITE string@counter\032obsahuje\032
+WRITE string@counter\038obsahuje\038
 WRITE GF@counter
 WRITE string@\010
 CONCAT GF@counter GF@counter string@a
