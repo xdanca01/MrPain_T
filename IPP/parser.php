@@ -29,6 +29,10 @@ if($IDK2 == false) exit(99);
 //nacitani ze STDIN
 while($radek = fgets(STDIN))
 {
+    if(preg_match('/^#.*/', $radek) == 1)
+    {
+        continue;
+    }
     //odmazavani komentaru
     if(preg_match('/#.*/', $radek) == 1)
     {   
@@ -36,7 +40,6 @@ while($radek = fgets(STDIN))
     } 
     $pole = preg_split ("/ +/", $radek);
     $rtrn_code = muj_regex();
-    //echo "dotestoval jsem: $radek";
     if($rtrn_code != 0) return $rtrn_code;
     $prvni_radek = 0;
     $cislo++;
