@@ -18,6 +18,10 @@ if not sys.argv[1].isdigit():
 
 #PORT
 ServerPort = int(sys.argv[1])
+if ServerPort > 65535 or ServerPort <= 0:
+    print("not valid port number:",ServerPort)
+    exit(1)
+
 #MAXSIZEOFBUFFER
 SIZE = 4096
 #localhost server
@@ -71,6 +75,7 @@ while True:
                 else:
                     print("bad arg")
                     conn.sendall(b'HTTP/1.1 400 Bad Request\r\n')
+                    conn.close()
         #POST or UNKNOWN
         else:
             REQUEST = re.search("POST", BUFFER)
