@@ -2,6 +2,7 @@
 
 import getopt
 import sys
+import re
 
 help_str = '--help - this help menu\n--source=file - source file with XML source code of IPPCODE20\n--input=file - file with described inputs\n*****************************************************************\n Additional info: At least 1 of input/source needs to be described, if only 1 is described, then stdin is used as input for second not described option\n'
 
@@ -40,7 +41,17 @@ def main():
             print("bad argument")
             close_them()
             exit(10)
-
+    
+    if XML_source:
+        #inputs na stdin
+        if not inputs:
+            print("not inputs")
+        else:
+            print("everything")
+    #XML_source on stdin
+    else:
+        print("not XML_source")
+        
 
 def close_them():
     if XML_source:
