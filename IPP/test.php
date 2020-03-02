@@ -5,10 +5,9 @@ $longoptions = array("directory::","parse-script::","int-script::","jexamxml::",
 "parse-only","int-only");
 $options = getopt("",$longoptions);
 
-print($options["help"]);
 for ($i = 0;$i < $argc;++$i)
 {
-    if ($options["help"] == 0)
+    if(array_key_exists("help",$options) == TRUE)
     {
         if($argc != 2) exit(10);
         echo "help for test.php\n";
