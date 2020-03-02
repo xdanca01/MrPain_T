@@ -36,6 +36,8 @@ while True:
     if not BUFFER:
         conn.sendall(b'HTTP/1.1 500 Internal Server Error\r\n')
     else:
+        BUFFER = re.sub(r" +", "", BUFFER)
+        print(BUFFER)
         REQUEST = re.search("GET", BUFFER)
         #GET
         if REQUEST:
