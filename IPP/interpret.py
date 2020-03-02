@@ -10,6 +10,8 @@ XML_source = ''
 inputs = ''
 
 def main():
+    global XML_source
+    global inputs
     #GET options from args
     try:
         options, values = getopt.getopt(sys.argv[1:],'',['help', 'source=', 'input='])
