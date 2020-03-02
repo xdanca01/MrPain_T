@@ -7,17 +7,14 @@ $prvni_radek = 1;
 $pole;
 $cislo = 0;
 
-
-
-if ($argc == 2 && ($argv[1] == '--help' || $argv[1] == '-h'))
+if ($argc == 2 && (strcmp($argv[1],"--help") == 0 || strcmp($argv[1],'-h') == 0))
 {
     echo "help for parser.php for IPPcode20\n";
     echo "args: --help, -h [THIS HELP]\n";
     echo "written by Petr Dancak\n";
     exit(0);
 }
-elseif($argc == 1);
-else
+if($argc != 1);
 {
     echo "ERROR: unknown option: $argv[1]\n";
     exit(10);
