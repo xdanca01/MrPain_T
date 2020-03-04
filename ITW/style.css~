@@ -1,0 +1,137 @@
+
+body {
+	margin: 0 0 0 0;
+   text-align:justify;
+   font-size: 15px;
+   color: #6E6E6E;
+}
+#ITW{
+	font-family: Arial;
+	font-style: italic;
+	font-size: 70px;
+}
+.header {
+	background-image: url("bg.jpg");
+	background-repeat: repeat-x;
+}
+.header a{
+   color: white;
+}
+
+.trida1 {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+.header h2{
+	font-size: 20px;
+}
+.header li{
+   padding-right: 20px;
+	font-size: 15px;
+}
+.header li a:hover{
+	padding-bottom: 20px;
+  	background-image: url("menu_bullet.gif");
+  	background-repeat: no-repeat;
+  	background-size: 20px 12px;
+  	background-position: 50% bottom;
+	
+}
+h1 a {
+   color: white;
+}
+.trida3 li {
+   display: block;
+}
+.header li {
+	display: inline;
+}
+
+h1  { 
+	margin-bottom: 40px;
+   color: #b15e23;
+}
+
+h2  { 
+   color: #b15e23;
+}
+.trida1 p{
+   border-bottom: dotted 1px #D5A17C;
+   color: #6E6E6E;
+}
+.trida2 a{
+   border-bottom: dotted 1px #D5A17C;
+   color: #772412;
+   font-weight: bold;
+   font-size: 17px;
+}
+#prvni_menu{
+	
+}
+h2.trida3 {
+   color: white;
+}
+.trida2 {
+   background-image: url("center_bg.gif");
+   background-repeat: repeat-x;
+}
+.trida3 li {
+	display:list-item;
+	list-style-image: url("footer_list_bullet.gif");
+	padding: 5px;
+}
+.trida1{
+	margin: 50 0;
+}
+.trida3 {
+   background-image: url("footer_bg.gif");    
+   background-repeat: repeat;
+}
+table {
+   background-color: white;
+   border:solid 3px black;
+}
+th    { 
+	background-color: #D5A17C;
+   border: dotted 2px black;
+   border-right:  2px solid black;
+	border-bottom: 2px solid black;
+ }
+.trida2 td {
+   border-top:    1px solid black;
+	border-bottom: 1px solid black;
+	color: black;
+}
+dt {
+   float: left;
+   color: white;
+
+}
+dd {      
+   text-align:right;
+   width:30%;
+   color: #D5A17C;
+}
+.posun{
+	color: white;
+} 
+div {
+   padding:1px;
+   padding-left: 300px;
+   padding-right: 300px;
+}
+
+a {
+	color: #D5A17C;
+   text-decoration: none;
+}
+p.cvic{
+	border-bottom: dotted 1px #D5A17C;
+	padding-bottom: 10px;
+}
+a.smazat{
+	border-bottom: none;
+}
+.trida2 img {
+	padding: 10px;
+}

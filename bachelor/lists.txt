@@ -1,5 +1,5 @@
 command service
 command 
-date
+    date
 service
-cups
+    cups
