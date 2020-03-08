@@ -14,7 +14,7 @@ if ($argc == 2 && (strcmp($argv[1],"--help") == 0 || strcmp($argv[1],'-h') == 0)
     echo "written by Petr Dancak\n";
     exit(0);
 }
-if($argc != 1);
+if($argc != 1)
 {
     echo "ERROR: unknown option: $argv[1]\n";
     exit(10);
@@ -790,7 +790,7 @@ function xml_instrukce($count, $op, $ar1, $ar2, $ar3)
         if(xmlwriter_end_attribute($IDK) == FALSE) return 1;
         should_cut($ar1[1], $ar1[2]);
         $ar1[2] = preg_replace('/\n$/', '', $ar1[2]);
-        //ascii_to_xml($ar1[2]);
+        ascii_to_xml($ar1[2]);
         if(xmlwriter_text($IDK, $ar1[2]) == FALSE) return 1;
         if(xmlwriter_end_element($IDK) == FALSE) return 1;
         
@@ -802,7 +802,7 @@ function xml_instrukce($count, $op, $ar1, $ar2, $ar3)
             if(xmlwriter_end_attribute($IDK) == FALSE) return 1;
             should_cut($ar2[1], $ar2[2]);
             $ar2[2] = preg_replace('/\n$/', '', $ar2[2]);
-          //  ascii_to_xml($ar2[2]);
+            ascii_to_xml($ar2[2]);
             if(xmlwriter_text($IDK, $ar2[2]) == FALSE) return 1;
             if(xmlwriter_end_element($IDK) == FALSE) return 1;
             
@@ -814,7 +814,7 @@ function xml_instrukce($count, $op, $ar1, $ar2, $ar3)
                 if(xmlwriter_end_attribute($IDK) == FALSE) return 1;
                 should_cut($ar3[1], $ar3[2]);
                 $ar3[2] = preg_replace('/\n$/', '', $ar3[2]);
-            //    ascii_to_xml($ar3[2]);
+                ascii_to_xml($ar3[2]);
                 if(xmlwriter_text($IDK, $ar3[2]) == FALSE) return 1;
                 if(xmlwriter_end_element($IDK) == FALSE) return 1;
             }
