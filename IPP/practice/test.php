@@ -2,6 +2,9 @@
 
 $HTML_template = "./template.html";
 $HTML_temp = "./results.html";
+$HTML_header = "./test_php_files/HTML_header.html";
+$HTML_center = "./test_php_files/HTML_center.html";
+$HTML_bottom = "./test_php_files/HTML_bottom.html";
 $longoptions = array("directory::","parse-script::","int-script::","jexamxml::","help","recursive",
 "parse-only","int-only");
 $options = getopt("",$longoptions);
@@ -57,11 +60,11 @@ $PASS_counter = 0;
 
     if($recursive == FALSE)
     {
-        exec("find -maxdepth 1 | grep \.src", $src_files);
+        exec("find -maxdepth 1 $dirpath | grep \.src", $src_files);
     }
     else
     {
-        exec("find | grep \.src", $src_files);
+        exec("find $dirpath | grep \.src", $src_files);
     }
 
     //testing existence of files/directories
@@ -72,6 +75,11 @@ $PASS_counter = 0;
     //HTML template check
     if(file_exists($HTML_template) == FALSE) exit(99);
     exec("cp $HTML_template $HTML_temp", $ignore);
+
+    //HTML header template to STDOUT
+    $handle = fopen($HTML_header, "r");
+    while($vypis = fgets($handle)) echo $vypis;
+    fclose($handle);
 
     //test all selected src files
     foreach($src_files as $src_file)
@@ -123,20 +131,30 @@ $PASS_counter = 0;
             $xml_result = is_xml_ok($xml_file,$out_file);
             if($parse_rc == $rc_file_zero)
             {
-                if($xml_result == 1)
-                {
-                    $FAIL_counter += 1;
-                    gen_HTML("FAIL", $test_name, $parse_rc, "Different");
-                }
-                elseif($xml_result == 0)
+                if($xml_result == 0 && $parse_rc == 0)
                 {
                     $PASS_counter += 1;
                     gen_HTML("PASS", $test_name, $parse_rc, "Same");
                 }
-                else exit(99);
+                elseif($parse_rc == 0 && $xml_result != 0)
+                {
+                    $FAIL_counter += 1;
+                    gen_HTML("FAIL", $test_name, $parse_rc, "Different");
+                }
+                elseif($parse_rc != 0)
+                {
+                    $PASS_counter += 1;
+                    gen_HTML("PASS", $test_name, $parse_rc, "Not generated");
+                }
+                else
+                {
+                    $FAIL_counter += 1;
+                    gen_HTML("FAIL", $test_name, $parse_rc, "Different");
+                }
             }
             else
             {
+                $FAIL_counter += 1;
                 gen_HTML("FAIL", $test_name, $parse_rc, "Not tested");
             }
             exec("rm $xml_file",$ignoruju);
@@ -171,13 +189,12 @@ function is_xml_ok($file1, $file2)
 }
 function gen_HTML($status, $jmeno, $return_code, $DIFF)
 {
-    global $HTML_temp;
-    exec("sed -i 's/#replace_me/<tr>\\n#replace_me/' $HTML_temp");
-    exec("sed -i 's/#replace_me/<td>$jmeno<\/td>\\n#replace_me/' $HTML_temp");
-    exec("sed -i 's/#replace_me/<td>$return_code<\/td>\\n#replace_me/' $HTML_temp");
-    exec("sed -i 's/#replace_me/<td>$DIFF<\/td>\\n#replace_me/' $HTML_temp");
-    exec("sed -i 's/#replace_me/<td>$status<\/td>\\n#replace_me/' $HTML_temp");
-    exec("sed -i 's/#replace_me/<\/tr>\\n#replace_me/' $HTML_temp");
+    echo "<tr>\n";
+    echo "<td>$jmeno</td>\n";
+    echo "<td>$return_code</td>\n";
+    echo "<td>$DIFF</td>\n";
+    echo "<td>$status</td>\n";
+    echo "</tr>\n";
 }
 function gen_second_table()
 {
@@ -185,21 +202,24 @@ function gen_second_table()
     global $counter;
     global $FAIL_counter;
     global $PASS_counter;
-    exec("sed -i 's/#second_table/<tr>\\n#second_table/' $HTML_temp");
-    exec("sed -i 's/#second_table/<td>$counter<\/td>\\n#second_table/' $HTML_temp");
-    exec("sed -i 's/#second_table/<td>$PASS_counter<\/td>\\n#second_table/' $HTML_temp");
-    exec("sed -i 's/#second_table/<td>$FAIL_counter<\/td>\\n#second_table/' $HTML_temp");
-    exec("sed -i 's/#second_table/<\/tr>\\n#second_table/' $HTML_temp");
+    echo "<tr>\n";
+    echo "<td>$counter</td>\n";
+    echo "<td>$PASS_counter</td>\n";
+    echo "<td>$FAIL_counter</td>\n";
+    echo "</tr>\n";
 }
+
+
+$handle = fopen($HTML_center, "r");
+while($vystup = fgets($handle)) echo $vystup;
+fclose($handle);
+
 gen_second_table();
-exec("sed -i 's/#second_table//' $HTML_temp");
-exec("sed -i 's/#replace_me//' $HTML_temp");
-$out = fopen($HTML_temp, "r");
-while($vystup = fgets($out))
-{
-    echo $vystup;
-}
-fclose($out);
+
+$handle = fopen($HTML_bottom, "r");
+while($vystup = fgets($handle)) echo $vystup;
+fclose($handle);
+
 exec("rm $HTML_temp", $ignore);
 exit(0);
 ?>

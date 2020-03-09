@@ -65,11 +65,12 @@ function muj_regex()
         //move var symb
         if(preg_match('/^move$/i', $pole[0]) == 1)
         {
+            if(count($pole) != 3) exit(23);
             //chybný var
-            if(is_var($pole[1]) == 1) exit(22);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {
                 $type = $pole[2];
@@ -82,27 +83,29 @@ function muj_regex()
         //createframe
         elseif(preg_match('/^createframe$/i', $pole[0]) == 1)
         {
+            if(count($pole) != 1) exit(23);
             if(xml_instrukce(0, 'CREATEFRAME', 0 , 0 , 0) == 1) exit(99);
             return 0;
         }
         //pushframe
         elseif(preg_match('/^pushframe$/i', $pole[0]) == 1)
         {
+            if(count($pole) != 1) exit(23);
             if(xml_instrukce(0, 'PUSHFRAME', 0, 0, 0) == 1) exit(99);
             return 0;
         }
         //popframe
         elseif(preg_match('/^popframe$/i', $pole[0]) == 1)
         {
+            if(count($pole) != 1) exit(23);
             if(xml_instrukce(0, 'POPFRAME', 0, 0, 0) == 1) exit(99);
             return 0;
         }
         //defvar var
         elseif(preg_match('/^defvar$/i', $pole[0]) == 1)
         {
-            //echo $pole[2];
-            if(count($pole) != 2) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 2) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(xml_instrukce(1, 'DEFVAR', $arg1, 0, 0) == 1) exit(99);
             return 0;
@@ -110,8 +113,8 @@ function muj_regex()
         //call label
         elseif(preg_match('/^call$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 2) exit(22);
-            if(is_label($pole[1]) == 1) exit(22);
+            if(count($pole) != 2) exit(23);
+            if(is_label($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "label", 2 => $pole[1]);
             if(xml_instrukce(1, 'CALL', $arg1, 0, 0) == 1) exit(99);
             return 0;
@@ -119,16 +122,16 @@ function muj_regex()
         //return
         elseif(preg_match('/^return$/i', $pole[0]) == 1)
         {
-            if(count($pole) == 0) exit(22);
+            if(count($pole) == 0) exit(23);
             if(xml_instrukce(0, 'RETURN', 0, 0, 0) == 1) exit(99);
             return 0;
         }
         //pushs symb
         if(preg_match('/^pushs$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 2) exit(22);
+            if(count($pole) != 2) exit(23);
             if(is_var($pole[1]) == 0) $arg1 = array(1 => "var", 2 => $pole[1]);
-            elseif(is_symb($pole[1]) == 1) exit(22);
+            elseif(is_symb($pole[1]) == 1) exit(23);
             else
             {   
                 $type = $pole[1];
@@ -141,8 +144,8 @@ function muj_regex()
         //pops var
         elseif(preg_match('/^pops$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 2) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 2) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(xml_instrukce(1, 'POPS', $arg1, 0, 0) == 1) exit(99);
             return 0;
@@ -150,11 +153,11 @@ function muj_regex()
         //add var symb symb
         elseif(preg_match('/^add$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 4) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 4) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {   
                 $type = $pole[2];
@@ -162,7 +165,7 @@ function muj_regex()
                 $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            elseif(is_symb($pole[3]) == 1) exit(23);
             else
             {   
                 $type = $pole[3];
@@ -175,11 +178,11 @@ function muj_regex()
         //sub var symb symb
         elseif(preg_match('/^sub$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 4) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 4) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {   
                 $type = $pole[2];
@@ -187,7 +190,7 @@ function muj_regex()
                 $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            elseif(is_symb($pole[3]) == 1) exit(23);
             else
             {   
                 $type = $pole[3];
@@ -200,11 +203,11 @@ function muj_regex()
         //mul var symb symb
         elseif(preg_match('/^mul$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 4) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 4) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {   
                 $type = $pole[2];
@@ -212,7 +215,7 @@ function muj_regex()
                 $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            elseif(is_symb($pole[3]) == 1) exit(23);
             else
             {   
                 $type = $pole[3];
@@ -225,11 +228,11 @@ function muj_regex()
         //idiv var symb symb
         elseif(preg_match('/^idiv$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 4) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 4) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {   
                 $type = $pole[2];
@@ -237,7 +240,7 @@ function muj_regex()
                 $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            elseif(is_symb($pole[3]) == 1) exit(23);
             else
             {   
                 $type = $pole[3];
@@ -250,11 +253,11 @@ function muj_regex()
         //lt var symb symb
         elseif(preg_match('/^lt$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 4) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 4) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {   
                 $type = $pole[2];
@@ -262,7 +265,7 @@ function muj_regex()
                 $arg2 = array(1 => $type, 2 => $pole[2]);
             } 
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            elseif(is_symb($pole[3]) == 1) exit(23);
             else
             {   
                 $type = $pole[3];
@@ -275,11 +278,11 @@ function muj_regex()
         //gt var symb symb
         elseif(preg_match('/^gt$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 4) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 4) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {
                 $type = $pole[2];
@@ -287,7 +290,7 @@ function muj_regex()
                 $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            elseif(is_symb($pole[3]) == 1) exit(23);
             else
             {
                 $type = $pole[3];
@@ -300,11 +303,11 @@ function muj_regex()
         //eq var symb symb
         elseif(preg_match('/^eq$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 4) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 4) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {
                 $type = $pole[2];
@@ -312,7 +315,7 @@ function muj_regex()
                 $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            elseif(is_symb($pole[3]) == 1) exit(23);
             else
             {
                 $type = $pole[3];
@@ -325,11 +328,11 @@ function muj_regex()
         //and var symb symb
         elseif(preg_match('/^and$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 4) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 4) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {
                 $type = $pole[2];
@@ -337,7 +340,7 @@ function muj_regex()
                 $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            elseif(is_symb($pole[3]) == 1) exit(23);
             else
             {
                 $type = $pole[3];
@@ -350,11 +353,11 @@ function muj_regex()
         //or var symb symb
         elseif(preg_match('/^or$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 4) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 4) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {
                 $type = $pole[2];
@@ -362,7 +365,7 @@ function muj_regex()
                 $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            elseif(is_symb($pole[3]) == 1) exit(23);
             else
             {
                 $type = $pole[3];
@@ -375,11 +378,11 @@ function muj_regex()
         //not var symb
         elseif(preg_match('/^not$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 3) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 3) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {
                 $type = $pole[2];
@@ -392,11 +395,11 @@ function muj_regex()
         //int2char var symb
         elseif(preg_match('/^int2char$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 3) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 3) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {
                 $type = $pole[2];
@@ -409,11 +412,11 @@ function muj_regex()
         //stri2int var symb symb
         elseif(preg_match('/^stri2int$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 4) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 4) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {
                 $type = $pole[2];
@@ -421,7 +424,7 @@ function muj_regex()
                 $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            elseif(is_symb($pole[3]) == 1) exit(23);
             else
             {
                 $type = $pole[3];
@@ -434,10 +437,10 @@ function muj_regex()
         //read var type
         elseif(preg_match('/^read$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 3) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 3) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
-            if(is_type($pole[2]) == 1) exit(22);
+            if(is_type($pole[2]) == 1) exit(23);
             $arg2 = array(1 => "type", 2 => $pole[2]);
             if(xml_instrukce(2, 'READ', $arg1, $arg2, 0) == 1) exit(99);
             return 0;
@@ -445,9 +448,9 @@ function muj_regex()
         //write symb
         elseif(preg_match('/^write$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 2) exit(22);
+            if(count($pole) != 2) exit(23);
             if(is_var($pole[1]) == 0) $arg1 = array(1 => "var", 2 => $pole[1]);
-            elseif(is_symb($pole[1]) == 1) exit(22);
+            elseif(is_symb($pole[1]) == 1) exit(23);
             else
             {
                 $type = $pole[1];
@@ -460,11 +463,11 @@ function muj_regex()
         //concat var symb symb
         elseif(preg_match('/^concat$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 4) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 4) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {
                 $type = $pole[2];
@@ -472,7 +475,7 @@ function muj_regex()
                 $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            elseif(is_symb($pole[3]) == 1) exit(23);
             else
             {
                 $type = $pole[3];
@@ -485,11 +488,11 @@ function muj_regex()
         //strlen var symb
         elseif(preg_match('/^strlen$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 3) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 3) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {
                 $type = $pole[2];
@@ -502,11 +505,11 @@ function muj_regex()
         //getchar var symb symb
         elseif(preg_match('/^getchar$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 4) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 4) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {
                 $type = $pole[2];
@@ -514,7 +517,7 @@ function muj_regex()
                 $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            elseif(is_symb($pole[3]) == 1) exit(23);
             else
             {
                 $type = $pole[3];
@@ -527,11 +530,11 @@ function muj_regex()
         //setchar var symb symb
         elseif(preg_match('/^setchar$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 4) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 4) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {
                 $type = $pole[2];
@@ -539,7 +542,7 @@ function muj_regex()
                 $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            elseif(is_symb($pole[3]) == 1) exit(23);
             else
             {
                 $type = $pole[3];
@@ -552,11 +555,11 @@ function muj_regex()
         //type var symb
         elseif(preg_match('/^type$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 3) exit(22);
-            if(is_var($pole[1]) == 1) exit(22);
+            if(count($pole) != 3) exit(23);
+            if(is_var($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "var", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {
                 $type = $pole[2];
@@ -569,8 +572,8 @@ function muj_regex()
         //label label
         elseif(preg_match('/^label$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 2) exit(22);
-            if(is_label($pole[1]) == 1) exit(22);
+            if(count($pole) != 2) exit(23);
+            if(is_label($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "label", 2 => $pole[1]);
             if(xml_instrukce(1, 'LABEL', $arg1, 0, 0) == 1) exit(99);
             return 0;
@@ -578,11 +581,11 @@ function muj_regex()
         //jumpifeq label symb symb
         elseif(preg_match('/^jumpifeq$/i', $pole[0]) == 1)
         {
-            //if(count($pole) != 4) exit(22);
-            //if(is_label($pole[1]) == 1) exit(22);
+            if(count($pole) != 4) exit(23);
+            if(is_label($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "label", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {
                 $type = $pole[2];
@@ -590,7 +593,7 @@ function muj_regex()
                 $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            elseif(is_symb($pole[3]) == 1) exit(23);
             else
             {
                 $type = $pole[3];
@@ -603,11 +606,11 @@ function muj_regex()
         //jumpifneq label symb symb
         elseif(preg_match('/^jumpifneq$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 4) exit(22);
-            if(is_label($pole[1]) == 1) exit(22);
+            if(count($pole) != 4) exit(23);
+            if(is_label($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "label", 2 => $pole[1]);
             if(is_var($pole[2]) == 0) $arg2 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            elseif(is_symb($pole[2]) == 1) exit(23);
             else
             {
                 $type = $pole[2];
@@ -615,7 +618,7 @@ function muj_regex()
                 $arg2 = array(1 => $type, 2 => $pole[2]);
             }
             if(is_var($pole[3]) == 0) $arg3 = array(1 => "var", 2 => $pole[3]);
-            elseif(is_symb($pole[3]) == 1) exit(22);
+            elseif(is_symb($pole[3]) == 1) exit(23);
             else
             {
                 $type = $pole[3];
@@ -628,8 +631,8 @@ function muj_regex()
         //jump label
         elseif(preg_match('/^jump$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 2) exit(22);
-            if(is_label($pole[1]) == 1) exit(22);
+            if(count($pole) != 2) exit(23);
+            if(is_label($pole[1]) == 1) exit(23);
             $arg1 = array(1 => "label", 2 => $pole[1]);
             if(xml_instrukce(1, 'JUMP', $arg1, 0, 0) == 1) exit(99);
             return 0;
@@ -637,14 +640,14 @@ function muj_regex()
         //exit symb
         elseif(preg_match('/^exit$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 2) exit(22);
-            if(is_var($pole[2]) == 0) $arg1 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            if(count($pole) != 2) exit(23);
+            if(is_var($pole[1]) == 0) $arg1 = array(1 => "var", 2 => $pole[1]);
+            elseif(is_symb($pole[1]) == 1) exit(23);
             else
             {
-                $type = $pole[2];
+                $type = $pole[1];
                 if(which_type($type) != 0) exit(99);
-                $arg1 = array(1 => $type, 2 => $pole[2]);
+                $arg1 = array(1 => $type, 2 => $pole[1]);
             }
             if(xml_instrukce(1, 'EXIT', $arg1, 0, 0) == 1) exit(99);
             return 0;
@@ -652,14 +655,14 @@ function muj_regex()
         //dprint symb
         elseif(preg_match('/^dprint$/i', $pole[0]) == 1)
         {
-            if(count($pole) != 2) exit(22);
-            if(is_var($pole[2]) == 0) $arg1 = array(1 => "var", 2 => $pole[2]);
-            elseif(is_symb($pole[2]) == 1) exit(22);
+            if(count($pole) != 2) exit(23);
+            if(is_var($pole[1]) == 0) $arg1 = array(1 => "var", 2 => $pole[1]);
+            elseif(is_symb($pole[1]) == 1) exit(23);
             else
             {
-                $type = $pole[2];
+                $type = $pole[1];
                 if(which_type($type) != 0) exit(99);
-                $arg1 = array(1 => $type, 2 => $pole[2]);
+                $arg1 = array(1 => $type, 2 => $pole[1]);
             }
             if(xml_instrukce(1, 'DPRINT', $arg1, 0, 0) == 1) exit(99);
             return 0;
@@ -673,6 +676,7 @@ function muj_regex()
         //neznamy chyba 22
         else
         {
+            printf("neznamy");
             exit(22);
         } 
     }
@@ -710,7 +714,8 @@ function is_symb($par)
     if(preg_match('/^[iI][nN][tT]@\-?[0-9]+/', $par) == 1) return 0;
     //bool
     elseif(preg_match('/^[bB][oO][oO][lL]@([tT][rR][uU][eE]|[fF][aA][lL][sS][eE])$/', $par) === 1) return 0;
-    elseif(preg_match('/string@.*(\\\\[0-9][0-9][0-9])+/i', $par)) return 0;
+    elseif(preg_match('/^string@.*(\\\\[0-9][0-9][0-9])+$/i', $par)) return 0;
+    elseif(preg_match('/^nil@nil$/', $par)) return 0;
     //string
     elseif(preg_match('/^[sS][tT][rR][iI][nN][gG]@.*(#|\\\\|\")+.*/', $par)) return 1;
     elseif(preg_match('/^[sS][tT][rR][iI][nN][gG]@.*/', $par) == 1) return 0;
