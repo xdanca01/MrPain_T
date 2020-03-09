@@ -35,7 +35,9 @@ while($radek = fgets(STDIN))
     {   
         $radek = preg_replace('/ *#.*/', '', $radek);
     } 
-    $pole = preg_split ("/ +/", $radek);
+    if($prvni_radek == 0) $pole = preg_split ("/ +/", $radek);
+    else $pole = array( "0" => $radek);
+    if(preg_match('/^\\s*$/', $pole[0]) == 1) continue;
     $rtrn_code = muj_regex();
     if($rtrn_code != 0) return $rtrn_code;
     $prvni_radek = 0;
@@ -684,7 +686,7 @@ function muj_regex()
     //na prvnim radku musi byt .ippcode2O (na velikosti pismen nezalezi)
     else
     {
-        if(preg_match('/^\.ippcode20$/i', $pole[0]) == 1)
+        if(preg_match('/^(\\s*\.|\.)ippcode20\\s*$/i', $pole[0]) == 1)
         {
             if(xmlwriter_start_document($IDK, '1.0', 'UTF-8') == FALSE) exit(99);
             if(xmlwriter_start_element($IDK, 'program') == FALSE) exit(99);
@@ -694,6 +696,7 @@ function muj_regex()
         }
         else
         {
+            echo $pole[0];
             exit(21);
         }
     }
@@ -703,7 +706,7 @@ function muj_regex()
 //@ret 0 pokud je, else 1
 function is_var($par)
 {
-    if(preg_match('/^[LTG]F@[A-z][A-z0-9\_\-\$\&\%\*\!\?]*/', $par) == 1) return 0;
+    if(preg_match('/^[LTG]F@[A-z\_\-\$\&\%\*\!\?][A-z0-9\_\-\$\&\%\*\!\?]*/', $par) == 1) return 0;
     else return 1;
 }
 
