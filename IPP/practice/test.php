@@ -12,6 +12,10 @@ $int_script = "./interpret.py";
 $parse_only = FALSE;
 $int_only = FALSE;
 $jexamxml = "/pub/courses/ipp/jexamxml/jexamxml.jar";
+$counter = 0;
+$FAIL_counter = 0;
+$PASS_counter = 0;
+
 
     //set variables of test.php
     if(array_key_exists("help",$options) == TRUE)
@@ -77,30 +81,38 @@ $jexamxml = "/pub/courses/ipp/jexamxml/jexamxml.jar";
         $rc_file = preg_replace('/src$/', "rc", $src_file);
         $xml_file = preg_replace('/src$/', "xml", $src_file);
         $test_name = preg_replace('/\.src$/', "", $src_file);
+        $test_name = preg_replace('/.*\//', "", $test_name);
         
         if(file_exists($in_file) == FALSE) exec("echo > $in_file");
         if(file_exists($out_file) == FALSE) exec("echo > $out_file");
         if(file_exists($rc_file) == FALSE) exec("echo 0 > $rc_file");
-        
+
+        $handle = fopen($rc_file, "r");
+        $rc_file_zero = fgets($handle);
+        $rc_file_zero = (int)$rc_file_zero;
+        fclose($handle);
+        $counter += 1;
         
         if($int_only == FALSE && $parse_only == FALSE)
         {
             exec("php $parse_script <$src_file >$xml_file", $parse_out, $parse_rc);
             if($parse_rc != 0)
             {
-                //TODO fail generovani
+                $FAIL_count += 1;
+                gen_HTML("FAIL", $test_name, $parse_rc, "Different");
             }
             else
             {
                 exec("$int_script --input=$in_file --source=$xml_file", $int_out, $int_rc);
-                exec("grep -e '^0$' <$rc_file", $return_code_rc, $rc_file_zero);
                 if($rc_file_zero == $parse_rc)
                 {
-                    //TODO gen pass
+                    $PASS_count += 1;
+                    gen_HTML("PASS", $test_name, $parse_rc, "Same");
                 }
                 else
                 {
-                    //TODO fail gen
+                    $FAIL_count += 1;
+                    gen_HTML("FAIL", $test_name, $parse_rc, "Different");
                 }
             }
             exec("rm $xml_file",$ignoruju);
@@ -109,20 +121,46 @@ $jexamxml = "/pub/courses/ipp/jexamxml/jexamxml.jar";
         {
             exec("php $parse_script <$src_file >$xml_file", $parse_out, $parse_rc);
             $xml_result = is_xml_ok($xml_file,$out_file);
-            if($xml_result == 1)
+            if($parse_rc == $rc_file_zero)
             {
-                gen_HTML("FAIL", $test_name, $parse_rc, "Different");
+                if($xml_result == 1)
+                {
+                    $FAIL_counter += 1;
+                    gen_HTML("FAIL", $test_name, $parse_rc, "Different");
+                }
+                elseif($xml_result == 0)
+                {
+                    $PASS_counter += 1;
+                    gen_HTML("PASS", $test_name, $parse_rc, "Same");
+                }
+                else exit(99);
             }
-            elseif($xml_result == 0)
+            else
             {
-                gen_HTML("PASS", $test_name, $parse_rc, "Same");
+                gen_HTML("FAIL", $test_name, $parse_rc, "Not tested");
             }
-            else exit(99);
             exec("rm $xml_file",$ignoruju);
         }
         elseif($int_only == TRUE)
         {
-            exec("$int_script --input=$in_file --source=$src_file", $int_out, $int_rc);
+            $my_out = "my1out.out";
+            exec("$int_script --input=$in_file --source=$src_file >$my_out", $int_out, $int_rc);
+            if($rc_file_zero == $int_rc)
+            {
+                exec("diff $my_out $out_file", $ignore, $diff_rc);
+                if($diff_rc == 0)
+                {
+                    gen_HTML("PASS", $test_name, $int_rc, "Same");
+                }
+                else
+                {
+                    gen_HTML("Fail", $test_name, $int_rc, "Different");
+                }
+            }
+            else
+            {
+                gen_HTML("Fail", $test_name, $int_rc, "Not tested");
+            }
         }
     }
 function is_xml_ok($file1, $file2)
@@ -133,16 +171,29 @@ function is_xml_ok($file1, $file2)
 }
 function gen_HTML($status, $jmeno, $return_code, $DIFF)
 {
-    echo "here";
     global $HTML_temp;
-    exec("sed -i 's/#replace_me/<tr>\n#replace_me/' $HTML_temp");
-    exec("sed -i 's/#replace_me/<td>$jmeno</td>\n#replace_me/' $HTML_temp");
-    exec("sed -i 's/#replace_me/<td>$return_code</td>\n#replace_me/' $HTML_temp");
-    exec("sed -i 's/#replace_me/<td>$DIFF</td>\n#replace_me/' $HTML_temp");
-    exec("sed -i 's/#replace_me/<td>$status</td>\n#replace_me/' $HTML_temp");
-    exec("sed -i 's/#replace_me/</tr>\n#replace_me/' $HTML_temp");
+    exec("sed -i 's/#replace_me/<tr>\\n#replace_me/' $HTML_temp");
+    exec("sed -i 's/#replace_me/<td>$jmeno<\/td>\\n#replace_me/' $HTML_temp");
+    exec("sed -i 's/#replace_me/<td>$return_code<\/td>\\n#replace_me/' $HTML_temp");
+    exec("sed -i 's/#replace_me/<td>$DIFF<\/td>\\n#replace_me/' $HTML_temp");
+    exec("sed -i 's/#replace_me/<td>$status<\/td>\\n#replace_me/' $HTML_temp");
+    exec("sed -i 's/#replace_me/<\/tr>\\n#replace_me/' $HTML_temp");
 }
-
+function gen_second_table()
+{
+    global $HTML_temp;
+    global $counter;
+    global $FAIL_counter;
+    global $PASS_counter;
+    exec("sed -i 's/#second_table/<tr>\\n#second_table/' $HTML_temp");
+    exec("sed -i 's/#second_table/<td>$counter<\/td>\\n#second_table/' $HTML_temp");
+    exec("sed -i 's/#second_table/<td>$PASS_counter<\/td>\\n#second_table/' $HTML_temp");
+    exec("sed -i 's/#second_table/<td>$FAIL_counter<\/td>\\n#second_table/' $HTML_temp");
+    exec("sed -i 's/#second_table/<\/tr>\\n#second_table/' $HTML_temp");
+}
+gen_second_table();
+exec("sed -i 's/#second_table//' $HTML_temp");
+exec("sed -i 's/#replace_me//' $HTML_temp");
 $out = fopen($HTML_temp, "r");
 while($vystup = fgets($out))
 {
