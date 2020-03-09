@@ -670,6 +670,7 @@ function muj_regex()
         //break
         elseif(preg_match('/^break$/i', $pole[0]) == 1)
         {
+            if(count($pole) != 1) exit(23);
             if(xml_instrukce(0, 'BREAK', 0, 0, 0) == 1) exit(99);
             return 0;
         }
