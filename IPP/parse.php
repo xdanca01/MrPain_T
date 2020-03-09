@@ -122,7 +122,7 @@ function muj_regex()
         //return
         elseif(preg_match('/^return$/i', $pole[0]) == 1)
         {
-            if(count($pole) == 0) exit(23);
+            if(count($pole) != 1) exit(23);
             if(xml_instrukce(0, 'RETURN', 0, 0, 0) == 1) exit(99);
             return 0;
         }
@@ -702,7 +702,7 @@ function muj_regex()
 //@ret 0 pokud je, else 1
 function is_var($par)
 {
-    if(preg_match('/^[lLtTgG][fF]@[A-z0-9\_\-\$\&\%\*\!\?]*/', $par) == 1) return 0;
+    if(preg_match('/^[LTG]F@[A-z][A-z0-9\_\-\$\&\%\*\!\?]*/', $par) == 1) return 0;
     else return 1;
 }
 
@@ -711,14 +711,14 @@ function is_var($par)
 function is_symb($par)
 {
     //int
-    if(preg_match('/^[iI][nN][tT]@\-?[0-9]+/', $par) == 1) return 0;
+    if(preg_match('/^int@(\-|\+)?[0-9]+/', $par) == 1) return 0;
     //bool
-    elseif(preg_match('/^[bB][oO][oO][lL]@([tT][rR][uU][eE]|[fF][aA][lL][sS][eE])$/', $par) === 1) return 0;
-    elseif(preg_match('/^string@.*(\\\\[0-9][0-9][0-9])+$/i', $par)) return 0;
+    elseif(preg_match('/^bool@(true|false)$/', $par) === 1) return 0;
+    elseif(preg_match('/^string@.*(\\\\[0-9][0-9][0-9])+/i', $par)) return 0;
     elseif(preg_match('/^nil@nil$/', $par)) return 0;
     //string
-    elseif(preg_match('/^[sS][tT][rR][iI][nN][gG]@.*(#|\\\\|\")+.*/', $par)) return 1;
-    elseif(preg_match('/^[sS][tT][rR][iI][nN][gG]@.*/', $par) == 1) return 0;
+    elseif(preg_match('/^string@.*(#|\\\\|\")+.*/', $par)) return 1;
+    elseif(preg_match('/^string@.*/', $par) == 1) return 0;
     else return 1;
 }
 
@@ -726,22 +726,23 @@ function is_symb($par)
 //@ret 0 pokud je, else 1
 function is_label($par)
 {
+    if(preg_match('/^\\\\/', $par) == 1) return 1;
     if(preg_match('/^[A-z0-9\_\-\$\&\%\*\!\?]+$/', $par) == 1) return 0;
-    else return 1;
+    return 1;
 }
 
 //je $par datový typ ?
 //@ret 0 pokud je, else 1
 function is_type($par)
 {
-    if(preg_match('/^([i][n][t]|[b][o][o][l]|[s][t][r][i][n][g])/i', $par) == 1) return 0;
+    if(preg_match('/^(int|bool|string)$/', $par) == 1) return 0;
     else return 1;
 }
 
 //@ret 0 pokud se má cutovat, else 1
 function should_cut($par, &$par2)
 {
-    $tab = array(0 => "string", 1 => "int", 2 => "bool");
+    $tab = array(0 => "string", 1 => "int", 2 => "bool", 3 => "nil");
     $count = count($tab);
     for($i = 0; $i < $count; $i++)
     {
