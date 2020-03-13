@@ -35,7 +35,9 @@ while($radek = fgets(STDIN))
     {   
         $radek = preg_replace('/ *#.*/', '', $radek);
     } 
-    $pole = preg_split ("/ +/", $radek);
+    if($prvni_radek == 0) $pole = preg_split ("/ +/", $radek);
+    else $pole = array( "0" => $radek);
+    if(preg_match('/^\\s*$/', $pole[0]) == 1) continue;
     $rtrn_code = muj_regex();
     if($rtrn_code != 0) return $rtrn_code;
     $prvni_radek = 0;
@@ -122,7 +124,7 @@ function muj_regex()
         //return
         elseif(preg_match('/^return$/i', $pole[0]) == 1)
         {
-            if(count($pole) == 0) exit(23);
+            if(count($pole) != 1) exit(23);
             if(xml_instrukce(0, 'RETURN', 0, 0, 0) == 1) exit(99);
             return 0;
         }
@@ -670,6 +672,7 @@ function muj_regex()
         //break
         elseif(preg_match('/^break$/i', $pole[0]) == 1)
         {
+            if(count($pole) != 1) exit(23);
             if(xml_instrukce(0, 'BREAK', 0, 0, 0) == 1) exit(99);
             return 0;
         }
@@ -683,7 +686,7 @@ function muj_regex()
     //na prvnim radku musi byt .ippcode2O (na velikosti pismen nezalezi)
     else
     {
-        if(preg_match('/^\.ippcode20$/i', $pole[0]) == 1)
+        if(preg_match('/^(\\s*\.|\.)ippcode20\\s*$/i', $pole[0]) == 1)
         {
             if(xmlwriter_start_document($IDK, '1.0', 'UTF-8') == FALSE) exit(99);
             if(xmlwriter_start_element($IDK, 'program') == FALSE) exit(99);
@@ -693,6 +696,7 @@ function muj_regex()
         }
         else
         {
+            echo $pole[0];
             exit(21);
         }
     }
@@ -702,7 +706,7 @@ function muj_regex()
 //@ret 0 pokud je, else 1
 function is_var($par)
 {
-    if(preg_match('/^[lLtTgG][fF]@[A-z0-9\_\-\$\&\%\*\!\?]*/', $par) == 1) return 0;
+    if(preg_match('/^[LTG]F@[A-z\_\-\$\&\%\*\!\?][A-z0-9\_\-\$\&\%\*\!\?]*/', $par) == 1) return 0;
     else return 1;
 }
 
@@ -711,14 +715,14 @@ function is_var($par)
 function is_symb($par)
 {
     //int
-    if(preg_match('/^[iI][nN][tT]@\-?[0-9]+/', $par) == 1) return 0;
+    if(preg_match('/^int@(\-|\+)?[0-9]+/', $par) == 1) return 0;
     //bool
-    elseif(preg_match('/^[bB][oO][oO][lL]@([tT][rR][uU][eE]|[fF][aA][lL][sS][eE])$/', $par) === 1) return 0;
-    elseif(preg_match('/^string@.*(\\\\[0-9][0-9][0-9])+$/i', $par)) return 0;
+    elseif(preg_match('/^bool@(true|false)$/', $par) === 1) return 0;
+    elseif(preg_match('/^string@.*(\\\\[0-9][0-9][0-9])+/i', $par)) return 0;
     elseif(preg_match('/^nil@nil$/', $par)) return 0;
     //string
-    elseif(preg_match('/^[sS][tT][rR][iI][nN][gG]@.*(#|\\\\|\")+.*/', $par)) return 1;
-    elseif(preg_match('/^[sS][tT][rR][iI][nN][gG]@.*/', $par) == 1) return 0;
+    elseif(preg_match('/^string@.*(#|\\\\|\")+.*/', $par)) return 1;
+    elseif(preg_match('/^string@.*/', $par) == 1) return 0;
     else return 1;
 }
 
@@ -726,22 +730,23 @@ function is_symb($par)
 //@ret 0 pokud je, else 1
 function is_label($par)
 {
+    if(preg_match('/^\\\\/', $par) == 1) return 1;
     if(preg_match('/^[A-z0-9\_\-\$\&\%\*\!\?]+$/', $par) == 1) return 0;
-    else return 1;
+    return 1;
 }
 
 //je $par datový typ ?
 //@ret 0 pokud je, else 1
 function is_type($par)
 {
-    if(preg_match('/^([i][n][t]|[b][o][o][l]|[s][t][r][i][n][g])/i', $par) == 1) return 0;
+    if(preg_match('/^(int|bool|string)$/', $par) == 1) return 0;
     else return 1;
 }
 
 //@ret 0 pokud se má cutovat, else 1
 function should_cut($par, &$par2)
 {
-    $tab = array(0 => "string", 1 => "int", 2 => "bool");
+    $tab = array(0 => "string", 1 => "int", 2 => "bool", 3 => "nil");
     $count = count($tab);
     for($i = 0; $i < $count; $i++)
     {

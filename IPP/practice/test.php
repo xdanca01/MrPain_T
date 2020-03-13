@@ -18,7 +18,7 @@ $jexamxml = "/pub/courses/ipp/jexamxml/jexamxml.jar";
 $counter = 0;
 $FAIL_counter = 0;
 $PASS_counter = 0;
-
+$options_counter = 0;
 
     //set variables of test.php
     if(array_key_exists("help",$options) == TRUE)
@@ -31,31 +31,41 @@ $PASS_counter = 0;
     }
     if(array_key_exists("directory",$options) == TRUE)
     {
+        $options_counter += 1;
         $dirpath = $options["directory"];
     }
-    if(array_key_exists("recursive",$options) == TRUE) $recursive = TRUE;
+    if(array_key_exists("recursive",$options) == TRUE)
+    {
+        $recursive = TRUE;
+        $options_counter += 1;
+    }
     if(array_key_exists("parse-only",$options) == TRUE)
     {
+        $options_counter += 1;
         $parse_only = TRUE;
     }
     if(array_key_exists("int-only",$options) == TRUE)
     {
         if(strcmp($parse_script,"parse.php") || $parse_only == TRUE)exit(10);
         $int_only = TRUE;
+        $options_counter += 1;
     }
     if(array_key_exists("int-script",$options) == TRUE)
     {
         $int_script = $options["int-script"];
         if($parse_only == TRUE) exit(10);
+        $options_counter += 1;
     }
     if(array_key_exists("parse-script",$options) == TRUE)
     {   
         $parse_script = $options["parse-script"];
         if($int_only == TRUE) exit(10);
+        $options_counter += 1;
     }
     if(array_key_exists("jexamxml",$options) == TRUE)
     {
         $jexamxml = $options["jexamxml"];
+        $options_counter += 1;
     }
 
     if($recursive == FALSE)
@@ -67,14 +77,13 @@ $PASS_counter = 0;
         exec("find $dirpath | grep \.src", $src_files);
     }
 
+
+
     //testing existence of files/directories
     if(is_dir($dirpath) == false) exit(11);
     if($int_only == FALSE) if(file_exists($parse_script) == FALSE) exit(11);
     if($parse_only == FALSE) if(file_exists($int_script) == FALSE) exit(11);
     if(file_exists($jexamxml) == FALSE ) exit(11);
-    //HTML template check
-    if(file_exists($HTML_template) == FALSE) exit(99);
-    exec("cp $HTML_template $HTML_temp", $ignore);
 
     //HTML header template to STDOUT
     $handle = fopen($HTML_header, "r");
@@ -89,7 +98,6 @@ $PASS_counter = 0;
         $rc_file = preg_replace('/src$/', "rc", $src_file);
         $xml_file = preg_replace('/src$/', "xml", $src_file);
         $test_name = preg_replace('/\.src$/', "", $src_file);
-        $test_name = preg_replace('/.*\//', "", $test_name);
         
         if(file_exists($in_file) == FALSE) exec("echo > $in_file");
         if(file_exists($out_file) == FALSE) exec("echo > $out_file");
@@ -107,7 +115,7 @@ $PASS_counter = 0;
             if($parse_rc != 0)
             {
                 $FAIL_count += 1;
-                gen_HTML("FAIL", $test_name, $parse_rc, "Different");
+                gen_HTML("FAIL", $test_name, $parse_rc, "NONE", $rc_file_zero);
             }
             else
             {
@@ -115,12 +123,12 @@ $PASS_counter = 0;
                 if($rc_file_zero == $parse_rc)
                 {
                     $PASS_count += 1;
-                    gen_HTML("PASS", $test_name, $parse_rc, "Same");
+                    gen_HTML("PASS", $test_name, $parse_rc, "Same", $rc_file_zero);
                 }
                 else
                 {
                     $FAIL_count += 1;
-                    gen_HTML("FAIL", $test_name, $parse_rc, "Different");
+                    gen_HTML("FAIL", $test_name, $parse_rc, "Different", $rc_file_zero);
                 }
             }
             exec("rm $xml_file",$ignoruju);
@@ -134,28 +142,28 @@ $PASS_counter = 0;
                 if($xml_result == 0 && $parse_rc == 0)
                 {
                     $PASS_counter += 1;
-                    gen_HTML("PASS", $test_name, $parse_rc, "Same");
+                    gen_HTML("PASS", $test_name, $parse_rc, "Same", $rc_file_zero);
                 }
                 elseif($parse_rc == 0 && $xml_result != 0)
                 {
                     $FAIL_counter += 1;
-                    gen_HTML("FAIL", $test_name, $parse_rc, "Different");
+                    gen_HTML("FAIL", $test_name, $parse_rc, "Different", $rc_file_zero);
                 }
                 elseif($parse_rc != 0)
                 {
                     $PASS_counter += 1;
-                    gen_HTML("PASS", $test_name, $parse_rc, "Not generated");
+                    gen_HTML("PASS", $test_name, $parse_rc, "NONE", $rc_file_zero);
                 }
                 else
                 {
                     $FAIL_counter += 1;
-                    gen_HTML("FAIL", $test_name, $parse_rc, "Different");
+                    gen_HTML("FAIL", $test_name, $parse_rc, "Different", $rc_file_zero);
                 }
             }
             else
             {
                 $FAIL_counter += 1;
-                gen_HTML("FAIL", $test_name, $parse_rc, "Not tested");
+                gen_HTML("FAIL", $test_name, $parse_rc, "NONE", $rc_file_zero);
             }
             exec("rm $xml_file",$ignoruju);
         }
@@ -168,16 +176,16 @@ $PASS_counter = 0;
                 exec("diff $my_out $out_file", $ignore, $diff_rc);
                 if($diff_rc == 0)
                 {
-                    gen_HTML("PASS", $test_name, $int_rc, "Same");
+                    gen_HTML("PASS", $test_name, $int_rc, "Same", $rc_file_zero);
                 }
                 else
                 {
-                    gen_HTML("Fail", $test_name, $int_rc, "Different");
+                    gen_HTML("Fail", $test_name, $int_rc, "Different", $rc_file_zero);
                 }
             }
             else
             {
-                gen_HTML("Fail", $test_name, $int_rc, "Not tested");
+                gen_HTML("Fail", $test_name, $int_rc, "NONE", $rc_file_zero);
             }
         }
     }
@@ -187,11 +195,12 @@ function is_xml_ok($file1, $file2)
     exec("java -jar $jexamxml $file1 $file2",$neco,$rc_code);
     return $rc_code;
 }
-function gen_HTML($status, $jmeno, $return_code, $DIFF)
+function gen_HTML($status, $jmeno, $return_code, $DIFF, $expected_rc)
 {
     echo "<tr>\n";
     echo "<td>$jmeno</td>\n";
     echo "<td>$return_code</td>\n";
+    echo "<td>$expected_rc</rd>\n";
     echo "<td>$DIFF</td>\n";
     echo "<td>$status</td>\n";
     echo "</tr>\n";
@@ -220,6 +229,5 @@ $handle = fopen($HTML_bottom, "r");
 while($vystup = fgets($handle)) echo $vystup;
 fclose($handle);
 
-exec("rm $HTML_temp", $ignore);
 exit(0);
 ?>
