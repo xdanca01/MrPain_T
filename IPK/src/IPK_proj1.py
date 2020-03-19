@@ -48,7 +48,7 @@ while True:
                 GET = re.findall('name=.*&', BUFFER)
                 if GET:
                     GET = GET[0][5:-1]
-                    REQUEST = re.findall('type=A HTTP/1.1', BUFFER)
+                    REQUEST = re.findall('type=A.*HTTP/1.1', BUFFER)
                     #A hostname -> IP
                     if REQUEST:
                         try:
@@ -61,7 +61,7 @@ while True:
                             conn.sendall(b'HTTP/1.1 404 Not Found\r\n')
                     #PTR IP -> hostname
                     else:
-                        REQUEST = re.findall('type=PTR HTTP/1.1', BUFFER)
+                        REQUEST = re.findall('type=PTR.*HTTP/1.1', BUFFER)
                         if REQUEST:
                             sockAdr = (GET, 443)
                             try:
