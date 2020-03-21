@@ -10,6 +10,11 @@ help_str = '--help - this help menu\n--source=file - source file with XML source
 
 XML_source = ''
 inputs = ''
+global_frame = []
+local_frame = []
+temporary_frame = ''
+
+
 
 def main():
     global XML_source
@@ -157,7 +162,7 @@ def main():
         #remove used instruction from array and decrease count
         my_instructions.remove(instr)
         count -= 1
-
+    
 class instrukce:
     def __init__(self, order, opcode, type1, arg1, type2, arg2, type3, arg3):
         self.order = order
@@ -169,6 +174,119 @@ class instrukce:
         self.type3 = type3
         self.arg3 = arg3
 
+def instr_exec(instr):
+    if instr.opcode == "MOVE":
+        if is_symb(instr.type1) != 1:
+            exit(32)
+        elif is_frame(instr.arg1)
+    elif instr.opcode == "CREATEFRAME":
+
+    elif instr.opcode == "PUSHFRAME":
+
+    elif instr.opcode == "POPFRAME":
+
+    elif instr.opcode == "DEFVAR":
+
+    elif instr.opcode == "CALL":
+
+    elif instr.opcode == "RETURN":
+
+    elif instr.opcode == "PUSHS":
+
+    elif instr.opcode == "POPS":
+
+    elif instr.opcode == "ADD":
+
+    elif instr.opcode == "SUB":
+
+    elif instr.opcode == "MUL":
+
+    elif instr.opcode == "IDIV":
+
+    elif instr.opcode == "LT" or instr.opcode == "GT" or instr.opcode == "EQ":
+
+    elif instr.opcode == "AND" or instr.opcode == "OR" or instr.opcode == "NOT":
+
+    elif instr.opcode == "INT2CHAR":
+
+    elif instr.opcode == "STRI2INT":
+
+    elif instr.opcode == "READ":
+
+    elif instr.opcode == "WRITE":
+
+    elif instr.opcode == "CONCAT":
+
+    elif instr.opcode == "STRLEN":
+
+    elif instr.opcode == "GETCHAR":
+
+    elif instr.opcode == "SETCHAR":
+
+    elif instr.opcode == "TYPE":
+
+    elif instr.opcode == "LABEL":
+
+    elif instr.opcode == "JUMP":
+
+    elif instr.opcode == "JUMPIFEQ":
+
+    elif instr.opcode == "JUMPIFNEQ":
+
+    elif instr.opcode == "EXIT":
+
+    elif instr.opcode == "DPRINT":
+
+    elif instr.opcode == "BREAK":
+
+#is par symb ? @ret if symb 0, 1 if var, else 2
+def is_symb(par):
+    if par == "int" or par == "bool" or par == "string" or par == "nil":
+        return 0
+    if par == "var":
+        return 1
+    return 2
+
+#is par frame ? @ret if global 0, if local 1, if temp 2, else 3
+def is_frame(par):
+    frame = re.match( '^gf@', par)
+    if not frame:
+        frame = re.match( '^lf@', par)
+        if not frame:
+            frame = re.match( '^tf@', par)
+            if not frame:
+                return 3
+            return 2
+        return 1
+    return 0
+#Does frame exist ? @ret 0 if global, 1 if local, 2 if temporary, else 3
+def frame_exist(par):
+
+    global global_frame
+    global local_frame
+    global temporary_frame
+
+
+    frame = is_frame(par)
+    if frame == 3:
+        return 3
+    elif frame == 0:
+        delka = len(global_frame)
+        cnt = 0
+        while cnt < delka:
+            if global_frame[cnt] == par:
+                return 0
+            cnt += 1
+    elif frame == 1:
+        cnt = 0
+        delka = len(local_frame)
+        while cnt < delka:
+            if local_frame[cnt] == par:
+                return 1
+            cnt += 1
+    elif frame == 2:
+        if par == temporary_frame:
+            return 2
 
 def close_them():
     if inputs:
