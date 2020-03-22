@@ -11,9 +11,10 @@ help_str = '--help - this help menu\n--source=file - source file with XML source
 XML_source = ''
 inputs = ''
 global_frame = []
+lf_cnt = -1
 local_frame = []
-temporary_frame = ''
-
+temporary_frame = []
+stack = []
 
 
 def main():
@@ -158,7 +159,12 @@ def main():
                 min_instr = cnt
             cnt += 1
         instr = my_instructions[min_instr]
-        print(instr.order)
+        print(instr.opcode)
+
+        #exec
+        instr_exec(instr)
+
+
         #remove used instruction from array and decrease count
         my_instructions.remove(instr)
         count -= 1
@@ -174,70 +180,179 @@ class instrukce:
         self.type3 = type3
         self.arg3 = arg3
 
+class promenna:
+    def __init__(self, arg):
+        self.name = arg.split('@')[1]
+    def change_val(self, value):
+        self.value = value
+    def change_type(self, val_type):
+        self.val_type = val_type
+
+#ret 0 if ok, else 1
 def instr_exec(instr):
-    if instr.opcode == "MOVE":
+
+    global local_frame
+    global temporary_frame
+    global global_frame
+    global lf_cnt
+
+    print(instr.opcode)
+    if instr.opcode.upper == "MOVE":
+        #type of arg2
+        blabla = is_symb(instr.type2)
+        
+        #var
         if is_symb(instr.type1) != 1:
             exit(32)
-        elif is_frame(instr.arg1)
-    elif instr.opcode == "CREATEFRAME":
+        elif blabla == 2:
+            exit(32)
+        var_type = var_exist(instr.arg1)
+        #variable must exist
+        if var_type == 3:
+            exit(54)
+        # MOVE GF
+        if var_type == 0:
+            # MOVE GF var
+            if blabla == 1:
+                var_type2 = var_exist(instr.arg2)
+                #must exist
+                if var_type2 == 3:
+                    exit(54)
+                # MOVE GF GF
+                if var_type2 == 0:
+                    print("neco")
+                # MOVE GF LF
+                if var_type2 == 1:
+                    print("neco")
+                # MOVE GF TF
+                if var_type2 == 2:
+                    print("neco")
 
-    elif instr.opcode == "PUSHFRAME":
 
-    elif instr.opcode == "POPFRAME":
+        # MOVE LF
+        elif var_type == 1:
+            # MOVE LF var
+            if blabla == 1:
+                var_type2 = var_exist(instr.arg2)
+                #must exist
+                if var_type2 == 3:
+                    exit(54)
+                # MOVE LF GF
+                if var_type2 == 0:
+                    print("neco")
+                # MOVE LF LF
+                if var_type2 == 1:
+                    print("neco")
+                # MOVE LF TF
+                if var_type2 == 2:
+                    print("neco")
 
-    elif instr.opcode == "DEFVAR":
+        # MOVE TF
+        elif var_type == 2:
+            # MOVE TF var
+            if blabla == 1:
+                var_type2 = var_exist(instr.arg2)
+                #must exist
+                if var_type2 == 3:
+                    exit(54)
+                # MOVE TF GF
+                if var_type2 == 0:
+                    print("neco")
+                # MOVE TF LF
+                if var_type2 == 1:
+                    print("neco")
+                # MOVE TF TF
+                if var_type2 == 2:
+                    print("neco")
 
-    elif instr.opcode == "CALL":
+        
+    elif instr.opcode.upper() == "CREATEFRAME":
+        temporary_frame.clear
 
-    elif instr.opcode == "RETURN":
+    elif instr.opcode.upper == "PUSHFRAME":
+        lf_cnt += 1
+        local_frame[lf_cnt].append(temporary_frame)
+        temporary_frame.clear()
 
-    elif instr.opcode == "PUSHS":
+    elif instr.opcode.upper == "POPFRAME":
+        temporary_frame = local_frame[lf_cnt]
+        if lf_cnt < 0:
+            exit(55)
+        local_frame[lf_cnt].clear()
+        lf_cnt -= 1
 
-    elif instr.opcode == "POPS":
+    elif instr.opcode.upper == "DEFVAR":
+        #var
+        if is_symb(instr.type1) != 1:
+            exit(32)
+        #redefinition of var
+        if var_exist(instr.arg1) != 3:
+            exit(52)
+        frame = is_frame(instr.arg1)
+        #gf
+        if frame == 0:
+            global_frame.append(promenna(instr.arg1))
+        #lf
+        elif frame == 1:
+            local_frame[lf_cnt].append(promenna(instr.arg1))
+        #tf
+        elif frame == 2:
+            temporary_frame.append(promenna(instr.arg1))
 
-    elif instr.opcode == "ADD":
+    #elif instr.opcode.upper == "CALL":
 
-    elif instr.opcode == "SUB":
+    #elif instr.opcode.upper == "RETURN":
 
-    elif instr.opcode == "MUL":
+    #elif instr.opcode.upper == "PUSHS":
 
-    elif instr.opcode == "IDIV":
+    #elif instr.opcode.upper == "POPS":
 
-    elif instr.opcode == "LT" or instr.opcode == "GT" or instr.opcode == "EQ":
+    #elif instr.opcode.upper == "ADD":
 
-    elif instr.opcode == "AND" or instr.opcode == "OR" or instr.opcode == "NOT":
+    #elif instr.opcode.upper == "SUB":
 
-    elif instr.opcode == "INT2CHAR":
+    #elif instr.opcode.upper == "MUL":
 
-    elif instr.opcode == "STRI2INT":
+    #elif instr.opcode.upper == "IDIV":
 
-    elif instr.opcode == "READ":
+    #elif instr.opcode.upper == "LT" or instr.opcode.upper == "GT" or instr.opcode.upper == "EQ":
 
-    elif instr.opcode == "WRITE":
+    #elif instr.opcode.upper == "AND" or instr.opcode.upper == "OR" or instr.opcode.upper == "NOT":
 
-    elif instr.opcode == "CONCAT":
+    #elif instr.opcode.upper == "INT2CHAR":
 
-    elif instr.opcode == "STRLEN":
+    #elif instr.opcode.upper == "STRI2INT":
 
-    elif instr.opcode == "GETCHAR":
+    #elif instr.opcode.upper == "READ":
 
-    elif instr.opcode == "SETCHAR":
+    #elif instr.opcode.upper == "WRITE":
 
-    elif instr.opcode == "TYPE":
+    #elif instr.opcode.upper == "CONCAT":
 
-    elif instr.opcode == "LABEL":
+    #elif instr.opcode.upper == "STRLEN":
 
-    elif instr.opcode == "JUMP":
+    #elif instr.opcode.upper == "GETCHAR":
 
-    elif instr.opcode == "JUMPIFEQ":
+    #elif instr.opcode.upper == "SETCHAR":
 
-    elif instr.opcode == "JUMPIFNEQ":
+    #elif instr.opcode.upper == "TYPE":
 
-    elif instr.opcode == "EXIT":
+    #elif instr.opcode.upper == "LABEL":
 
-    elif instr.opcode == "DPRINT":
+    #elif instr.opcode.upper == "JUMP":
 
-    elif instr.opcode == "BREAK":
+    #elif instr.opcode.upper == "JUMPIFEQ":
+
+    #elif instr.opcode.upper == "JUMPIFNEQ":
+
+    #elif instr.opcode.upper == "EXIT":
+
+    #elif instr.opcode.upper == "DPRINT":
+
+    #elif instr.opcode.upper == "BREAK":
+
+    else:
+        return 1
 
 #is par symb ? @ret if symb 0, 1 if var, else 2
 def is_symb(par):
@@ -249,23 +364,25 @@ def is_symb(par):
 
 #is par frame ? @ret if global 0, if local 1, if temp 2, else 3
 def is_frame(par):
-    frame = re.match( '^gf@', par)
-    if not frame:
-        frame = re.match( '^lf@', par)
-        if not frame:
-            frame = re.match( '^tf@', par)
-            if not frame:
+    #for case insensitive
+    par = par.lower()
+    frame = par.split('@')[0]
+    if frame.lower() != "gf":
+        if frame.lower() != "lf":
+            if frame.lower() != "tf":
                 return 3
             return 2
         return 1
     return 0
-#Does frame exist ? @ret 0 if global, 1 if local, 2 if temporary, else 3
-def frame_exist(par):
+
+
+#Does var exist ? @ret 0 if global, 1 if local, 2 if temporary, 3 if doesnt exist, else 4
+def var_exist(par):
 
     global global_frame
     global local_frame
     global temporary_frame
-
+    global lf_cnt
 
     frame = is_frame(par)
     if frame == 3:
@@ -279,15 +396,15 @@ def frame_exist(par):
             cnt += 1
     elif frame == 1:
         cnt = 0
-        delka = len(local_frame)
+        delka = len(local_frame[lf_cnt])
         while cnt < delka:
-            if local_frame[cnt] == par:
+            if local_frame[lf_cnt][cnt] == par:
                 return 1
             cnt += 1
     elif frame == 2:
         if par == temporary_frame:
             return 2
-
+    return 4
 def close_them():
     if inputs:
         close(inputs)
