@@ -25,7 +25,14 @@ $options_counter = 0;
     {
         if($argc != 2) exit(10);
         echo "help for test.php\n";
-        echo "args: --help, -h [THIS HELP]\n";
+	echo "args: --help, -h [THIS HELP]\n";
+	echo "	--directory\n";
+	echo "	--recursive\n";
+	echo "	--parse-only\n";
+	echo "	--int-only\n";
+	echo "	--int-script\n";
+	echo "	--parse-script\n";
+	echo "	--jexamxml\n";
         echo "written by Petr Dancak\n";
         exit(0);
     }
@@ -98,10 +105,27 @@ $options_counter = 0;
         $rc_file = preg_replace('/src$/', "rc", $src_file);
         $xml_file = preg_replace('/src$/', "xml", $src_file);
         $test_name = preg_replace('/\.src$/', "", $src_file);
-        
-        if(file_exists($in_file) == FALSE) exec("echo > $in_file");
-        if(file_exists($out_file) == FALSE) exec("echo > $out_file");
-        if(file_exists($rc_file) == FALSE) exec("echo 0 > $rc_file");
+        $bool_in = FALSE;
+        $bool_out = FALSE;
+        $bool_rc = FALSE;
+
+
+
+        if(file_exists($in_file) == FALSE) 
+        {
+            exec("echo > $in_file");
+            $bool_in = TRUE;
+        }
+        if(file_exists($out_file) == FALSE)
+        {
+            exec("echo > $out_file");
+            $bool_out = TRUE;
+        }
+        if(file_exists($rc_file) == FALSE)
+        {
+            exec("echo 0 > $rc_file");
+            $bool_rc = TRUE;
+        }
 
         $handle = fopen($rc_file, "r");
         $rc_file_zero = fgets($handle);
@@ -114,21 +138,29 @@ $options_counter = 0;
             exec("php $parse_script <$src_file >$xml_file", $parse_out, $parse_rc);
             if($parse_rc != 0)
             {
-                $FAIL_count += 1;
-                gen_HTML("FAIL", $test_name, $parse_rc, "NONE", $rc_file_zero);
+                if($parse_rc != $rc_file_zero)
+                {
+                    $FAIL_counter += 1;
+                    gen_HTML("FAIL", $test_name, $parse_rc, "NONE", $rc_file_zero);
+                }
+                else
+                {
+                    $PASS_counter += 1;
+                    gen_HTML("PASS", $test_name, $parse_rc, "NONE", $rc_file_zero);
+                }
             }
             else
             {
                 exec("$int_script --input=$in_file --source=$xml_file", $int_out, $int_rc);
-                if($rc_file_zero == $parse_rc)
+                if($rc_file_zero == $int_rc)
                 {
-                    $PASS_count += 1;
-                    gen_HTML("PASS", $test_name, $parse_rc, "Same", $rc_file_zero);
+                    $PASS_counter += 1;
+                    gen_HTML("PASS", $test_name, $int_rc, "Same", $rc_file_zero);
                 }
                 else
                 {
-                    $FAIL_count += 1;
-                    gen_HTML("FAIL", $test_name, $parse_rc, "Different", $rc_file_zero);
+                    $FAIL_counter += 1;
+                    gen_HTML("FAIL", $test_name, $int_rc, "Different", $rc_file_zero);
                 }
             }
             exec("rm $xml_file",$ignoruju);
@@ -188,6 +220,9 @@ $options_counter = 0;
                 gen_HTML("Fail", $test_name, $int_rc, "NONE", $rc_file_zero);
             }
         }
+        if ($bool_in == TRUE) exec("rm $in_file",$ignoruju);
+        if ($bool_rc == TRUE) exec("rm $rc_file",$ignoruju);
+        if ($bool_out == TRUE) exec("rm $out_file",$ignoruju);
     }
 function is_xml_ok($file1, $file2)
 {
