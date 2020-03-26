@@ -14,11 +14,15 @@ global_frame = []
 local_frame = []
 temporary_frame = None
 stack = []
-
+instr_list = ""
+my_instructions = ""
+call_cnt = 0
 
 def main():
     global XML_source
     global inputs
+    global my_instructions
+    global instr_list
     #GET options from args
     try:
         options, values = getopt.getopt(sys.argv[1:],'',['help', 'source=', 'input='])
@@ -157,8 +161,33 @@ def main():
         except:
             print("error when tried to append array of instructions, instruction:", opcode)
             exit(99)
+    instr_list = my_instructions.copy()
     #get count of instructions in array
     count = len(my_instructions)
+
+    #check that order isnt same on 2 places
+    while count > 0: 
+        cnt = 1
+        min_instr = 0
+        #search for lowest order value in array
+        while cnt < count:
+            if int(my_instructions[cnt].order) == int(my_instructions[min_instr].order):
+                exit(32)
+            if int(my_instructions[cnt].order) < int(my_instructions[min_instr].order):
+                min_instr = cnt
+            if my_instructions[cnt].opcode == my_instructions[min_instr].opcode and my_instructions[cnt].opcode == "LABEL":
+                if my_instructions[cnt].arg1 == my_instructions[min_instr].arg1:
+                    exit(54)
+            cnt += 1
+        instr = my_instructions[min_instr]
+
+        #remove used instruction from array and decrease count
+        my_instructions.remove(instr)
+        count -= 1
+
+    my_instructions = instr_list.copy()
+    count = len(my_instructions)
+
     #go through all instructions in array
     while count > 0:
         cnt = 1
@@ -171,7 +200,29 @@ def main():
         instr = my_instructions[min_instr]
 
         #exec
-        instr_exec(instr)
+        ret_val = instr_exec(instr)
+        if ret_val:
+            #jump to higher order (need to remove instr in list)
+            if int(instr.order) < ret_val:
+                cnt = 0
+                my_count = len(my_instructions)
+                while cnt < my_count:
+                    if int(my_instructions[cnt].order) < ret_val:
+                        my_instructions.remove(my_instructions[cnt])
+                        count -= 1
+                    my_count -= 1
+
+            #jump to lower order (need to append list by instructions
+            elif int(my_instructions[min_instr].order) > ret_val:
+                cnt = 0
+                my_list = instr_list.copy()
+                my_count = len(my_list)
+                while cnt < my_count:
+                    if int(my_list[cnt].order) < int(instr.order) and int(my_list[cnt].order) > ret_val:
+                        my_instructions.append(my_list[cnt])
+                        count += 1
+                    cnt += 1
+            continue
 
 
         #remove used instruction from array and decrease count
@@ -228,11 +279,14 @@ def check_syn(arg_type, arg):
             name = arg.split('@')[1]
         except:
             exit(32)
+
         match = re.match('^[0-9]', name)
         if match:
             exit(32)
         match = re.match(' ', name)
         if match:
+            exit(32)
+        if name == "":
             exit(32)
     #label
     elif arg_type == "label":
@@ -261,6 +315,7 @@ def instr_exec(instr):
     global temporary_frame
     global global_frame
     global inputs
+    global call_cnt
     lf_index = len(local_frame) - 1
 
     if instr.opcode == "MOVE":
@@ -402,9 +457,18 @@ def instr_exec(instr):
         #tf
         elif frame == 2:
             temporary_frame.append(promenna(instr.arg1))
-    #elif instr.opcode == "CALL":
 
-    #elif instr.opcode == "RETURN":
+    elif instr.opcode == "CALL":
+
+        is_label(instr.type1)
+        my_order = get_label(instr.arg1)
+        int_cycles(my_order)
+
+
+    elif instr.opcode == "RETURN":
+        if call_cnt == 0:
+            exit(56)
+        return "end"
 
     elif instr.opcode == "PUSHS":
         typ = is_symb(instr.type1)
@@ -455,9 +519,11 @@ def instr_exec(instr):
             exit(32)
 
     elif instr.opcode == "ADD" or instr.opcode == "SUB" or instr.opcode == "MUL" or instr.opcode == "IDIV":
+        
         symb = is_symb(instr.type1)
         symb2 = is_symb(instr.type2)
         symb3 = is_symb(instr.type3)
+
         #not var
         if symb != 1:
             exit(32)
@@ -640,6 +706,8 @@ def instr_exec(instr):
         if var2.val_type != "int":
             exit(53)
         variable = promenna(instr.arg1)
+        if not var2.value or int(var2.value) < 0 or int(var2.value) >= 1114112:
+            exit(58)
         variable.value = chr(int(var2.value))
         variable.val_type = "string"
         var_to_f(variable, instr.arg1.split('@')[0])
@@ -679,8 +747,6 @@ def instr_exec(instr):
             exit(58)
         variable.value = ord(var2.value[int(var3.value)])
         var_to_f(variable, instr.arg1.split('@')[0])
-
-
 
     elif instr.opcode == "READ":
         neco = inputs.readline()
@@ -872,7 +938,8 @@ def instr_exec(instr):
         if int(var2.value) >= len(str(variable.value)) or len(str(variable.value)) == 0:
             exit(58)
         variable_1 = list(str(variable.value))
-        print(variable_1)
+        if len(str(var3.value)) == 0:
+            exit(58)
         variable_1[int(var2.value)] = str(var3.value)[0]
         variable.value = "".join(variable_1)
         var_to_f(variable, instr.arg1.split('@')[0])
@@ -902,13 +969,88 @@ def instr_exec(instr):
 
 
 
-    #elif instr.opcode == "LABEL":
+    elif instr.opcode == "LABEL":
+        return
 
-    #elif instr.opcode == "JUMP":
+    elif instr.opcode == "JUMP":
+        is_label(instr.type1)
+        return get_label(instr.arg1)
 
-    #elif instr.opcode == "JUMPIFEQ":
+    elif instr.opcode == "JUMPIFEQ":
+        is_label(instr.type1)
+        symb2 = is_symb(instr.type2)
+        symb3 = is_symb(instr.type3)
+        labell = get_label(instr.arg1)
+        if symb2 == 2 or symb3 == 2:
+            exit(53)
+        #var
+        if symb2 == 1:
+            var2 = get_var(instr.arg2)
+        elif symb2 == 0:
+            var2 = promenna("temp@temp")
+            var2.value = instr.arg2
+            var2.val_type = instr.type2
+        #var
+        if symb3 == 1:
+            var3 = get_var(instr.arg3)
+        elif symb3 == 0:
+            var3 = promenna("temp@temp")
+            var3.value = instr.arg3
+            var3.val_type = instr.type3
+        if var2.val_type != var3.val_type:
+            exit(53)
+        if var2.val_type == "int":
+            if int(var2.value) == int(var3.value):
+                return labell
+        elif var2.val_type == "string":
+            if str(var2.value) == str(var3.value):
+                return labell
+        elif var2.val_type == "bool":
+            if bool(var2.value) == bool(var3.value):
+                return labell
+        elif var2.val_type == "nil":
+            if not var2.value and not var3.value:
+                return labell
 
-    #elif instr.opcode == "JUMPIFNEQ":
+    elif instr.opcode == "JUMPIFNEQ":
+
+        is_label(instr.type1)
+        symb2 = is_symb(instr.type2)
+        symb3 = is_symb(instr.type3)
+        labell = get_label(instr.arg1)
+        if symb2 == 2 or symb3 == 2:
+            exit(53)
+        #var
+        if symb2 == 1:
+            var2 = get_var(instr.arg2)
+        elif symb2 == 0:
+            var2 = promenna("temp@temp")
+            var2.value = instr.arg2
+            var2.val_type = instr.type2
+        #var
+        if symb3 == 1:
+            var3 = get_var(instr.arg3)
+        elif symb3 == 0:
+            var3 = promenna("temp@temp")
+            var3.value = instr.arg3
+            var3.val_type = instr.type3
+        if var2.val_type != var3.val_type:
+            exit(53)
+        if var2.val_type == "int":
+            if int(var2.value) != int(var3.value):
+                return labell
+
+        elif var2.val_type == "string":
+            if str(var2.value) != str(var3.value):
+                return labell
+
+        elif var2.val_type == "bool":
+            if bool(var2.value) != bool(var3.value):
+                return labell
+            
+        elif var2.val_type == "nil":
+            return labell
+
 
     elif instr.opcode == "EXIT":
         symb = is_symb(instr.type1)
@@ -941,7 +1083,8 @@ def instr_exec(instr):
             var.val_type = instr.type2
         print(var.value, file=sys.stderr)
 
-    #elif instr.opcode == "BREAK":
+    elif instr.opcode == "BREAK":
+        print("gf:",global_frame,"\nlf:",local_frame[lf_cnt],"\ntf:",temporary_frame, file=sys.stderr)
 
     else:
         exit(32)
@@ -992,6 +1135,11 @@ def is_symb(par):
     if par == "var":
         return 1
     return 2
+
+def is_label(label):
+    if label == "label":
+        return
+    exit(53)
 
 #is par frame ? @ret if global 0, if local 1, if temp 2, else 3
 def is_frame(par):
@@ -1083,6 +1231,90 @@ def var_exist(par):
                 return 2
             cnt += 1
     return 3
+
+def int_cycles(order):
+
+    global instr_list
+    global call_cnt
+    my_instructions = instr_list.copy()
+    count = len(instr_list)
+
+    #go through all instructions in array
+    while count > 0:
+        cnt = 1
+        min_instr = 0
+        #search for lowest order value in array
+        while cnt < count:
+            if int(my_instructions[cnt].order) < int(my_instructions[min_instr].order) :
+                min_instr = cnt
+            cnt += 1
+        if int(my_instructions[min_instr].order) == order:
+            break
+        instr = my_instructions[min_instr]
+
+        #remove used instruction from array and decrease count
+        my_instructions.remove(instr)
+        count -= 1
+
+    call_cnt += 1
+    #go through all instructions in array
+    while count > 0:
+        cnt = 1
+        min_instr = 0
+        #search for lowest order value in array
+        while cnt < count:
+            if int(my_instructions[cnt].order) < int(my_instructions[min_instr].order) :
+                min_instr = cnt
+            cnt += 1
+        instr = my_instructions[min_instr]
+
+        #exec
+        ret_val = instr_exec(instr)
+        if ret_val:
+            if ret_val == "end":
+                call_cnt -= 1
+                return
+            #jump to higher order (need to remove instr in list)
+            if int(instr.order) < int(ret_val):
+                cnt = 0
+                my_count = len(my_instructions)
+                while cnt < my_count:
+                    if int(my_instructions[cnt].order) < ret_val:
+                        my_instructions.remove(my_instructions[cnt])
+                        count -= 1
+                    my_count -= 1 
+
+            #jump to lower order (need to append list by instructions
+            elif int(my_instructions[min_instr].order) > int(ret_val):
+                cnt = 0
+                my_list = instr_list.copy()
+                my_count = len(my_list)
+                while cnt < my_count:
+                    if int(my_list[cnt].order) < int(instr.order) and int(my_list[cnt].order) > ret_val:
+                        my_instructions.append(my_list[cnt].copy())
+                        count += 1
+                    cnt += 1
+            continue
+
+
+
+        #remove used instruction from array and decrease count
+        my_instructions.remove(instr)
+        count -= 1
+
+
+#return order of label
+def get_label(label):
+    global instr_list
+
+    delka = len(instr_list)
+    cnt = 0
+    while delka > cnt:
+        if instr_list[cnt].opcode == "LABEL":
+            if instr_list[cnt].arg1 == label:
+                return int(instr_list[cnt].order)
+        cnt += 1
+    exit(52)
 
 
 def close_them():
