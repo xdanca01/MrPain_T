@@ -17,6 +17,8 @@ stack = []
 instr_list = ""
 my_instructions = ""
 call_cnt = 0
+my_output = ""
+
 
 def main():
     global XML_source
@@ -177,7 +179,7 @@ def main():
                 min_instr = cnt
             if my_instructions[cnt].opcode == my_instructions[min_instr].opcode and my_instructions[cnt].opcode == "LABEL":
                 if my_instructions[cnt].arg1 == my_instructions[min_instr].arg1:
-                    exit(54)
+                    exit(52)
             cnt += 1
         instr = my_instructions[min_instr]
 
@@ -231,6 +233,9 @@ def main():
     
 class instrukce:
     def __init__(self, order, opcode, type1, arg1, type2, arg2, type3, arg3):
+        arg1 = re.sub("\\\\(\d+)", lambda x : chr(int(x.group(1))), arg1)
+        arg2 = re.sub("\\\\(\d+)", lambda x : chr(int(x.group(1))), arg2)
+        arg3 = re.sub("\\\\(\d+)", lambda x : chr(int(x.group(1))), arg3)
         self.order = int(order)
         self.opcode = opcode
         self.type1 = type1
@@ -316,6 +321,7 @@ def instr_exec(instr):
     global global_frame
     global inputs
     global call_cnt
+    global my_output
     lf_index = len(local_frame) - 1
 
     if instr.opcode == "MOVE":
@@ -343,14 +349,20 @@ def instr_exec(instr):
                 index2 = find_index(instr.arg2.split('@')[0],instr.arg2.split('@')[1])
                 # MOVE GF GF
                 if var_type2 == 0:
-                    global_frame[index].value = global_frame[index2].value
-                    global_frame[index].val_type = global_frame[index2].val_type
+                    var2 = global_frame[index2]
+                    is_defined(var2)
+                    global_frame[index].value = var2.value
+                    global_frame[index].val_type = var2.val_type
                 # MOVE GF LF
                 elif var_type2 == 1:
-                    global_frame[index].value = local_frame[lf_index][index2].value
-                    global_frame[index].val_type = local_frame[lf_index][index2].val_type
+                    var2 = local_frame[lf_index][index2]
+                    is_defined(var2)
+                    global_frame[index].value = var2.value
+                    global_frame[index].val_type = var2.val_type
                 # MOVE GF TF
                 elif var_type2 == 2:
+                    var2 = temporary_frame[index2]
+                    is_defined(var2)
                     global_frame[index].value = temporary_frame[index2].value
                     global_frame[index].val_type = temporary_frame[index2].val_type
                 else:
@@ -374,16 +386,22 @@ def instr_exec(instr):
                 index2 = find_index(instr.arg2.split('@')[0],instr.arg2.split('@')[1])
                 # MOVE LF GF
                 if var_type2 == 0:
-                    local_frame[lf_index][index].value = global_frame[index2].value
-                    local_frame[lf_index][index].val_type = global_frame[index2].val_type
+                    var2 = global_frame[index2]
+                    is_defined(var2)
+                    local_frame[lf_index][index].value = var2.value
+                    local_frame[lf_index][index].val_type = var2.val_type
                 # MOVE LF LF
                 elif var_type2 == 1:
-                    local_frame[lf_index][index].value = local_frame[lf_index][index2].value
-                    local_frame[lf_index][index].val_type = local_frame[lf_index][index2].val_type
+                    var2 = local_frame[lf_index][index2]
+                    is_defined(var2)
+                    local_frame[lf_index][index].value = var2.value
+                    local_frame[lf_index][index].val_type = var2.val_type
                 # MOVE LF TF
                 elif var_type2 == 2:
-                    local_frame[lf_index][index].value = temporary_frame[index2].value
-                    local_frame[lf_index][index].val_type = temporary_frame[index2].val_type
+                    var2 = temporary_frame[index2]
+                    is_defined(var2)
+                    local_frame[lf_index][index].value = var2.value
+                    local_frame[lf_index][index].val_type = var2.val_type
                 else:
                     exit(99)
             # MOVE LF konst
@@ -403,16 +421,22 @@ def instr_exec(instr):
                 index2 = find_index(instr.arg2.split('@')[0],instr.arg2.split('@')[1])
                 # MOVE TF GF
                 if var_type2 == 0:
-                    temporary_frame[index].value = global_frame[index2].value
-                    temporary_frame[index].val_type = global_frame[index2].val_type
+                    var2 = global_frame[index2]
+                    is_defined(var2)
+                    temporary_frame[index].value = var2.value
+                    temporary_frame[index].val_type = var2.val_type
                 # MOVE TF LF
                 elif var_type2 == 1:
-                    temporary_frame[index].value = local_frame[lf_index][index2].value
-                    temporary_frame[index].val_type = local_frame[lf_index][index2].val_type
+                    var2 = local_frame[lf_index][index2]
+                    is_defined(var2)
+                    temporary_frame[index].value = var2.value
+                    temporary_frame[index].val_type = var2.val_type
                 # MOVE TF TF
                 elif var_type2 == 2:
-                    temporary_frame[index].value = temporary_frame[index2].value
-                    temporary_frame[index].val_type = temporary_frame[index2].val_type
+                    var2 = temporary_frame[index2]
+                    is_defined(var2)
+                    temporary_frame[index].value = var2.value
+                    temporary_frame[index].val_type = var2.val_type
                 else:
                     exit(99)
             # MOVE TF konst
@@ -479,14 +503,17 @@ def instr_exec(instr):
             #PUSHS GF
             if var_typ == 0:
                 var = global_frame[index]
+                is_defined(var)
                 stack.append(zas_item(var.value, var.val_type))
             #PUSHS LF
             elif var_typ == 1:
                 var = local_frame[lf_index][index]
+                is_defined(var)
                 stack.append(zas_item(var.value, var.val_type))
             #PUSHS TF
             elif var_typ == 2:
                 var = temporary_frame[index]
+                is_defined(var)
                 stack.append(zas_item(var.value, var.val_type))
         elif typ == 0:
             stack.append(zas_item(instr.arg1,instr.type1))
@@ -533,12 +560,14 @@ def instr_exec(instr):
             exit(99)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
+            is_defined(var2)
         elif symb2 == 0:
             var2 = promenna("temp@temp")
             var2.value = instr.arg2
             var2.val_type = instr.type2
         if symb3 == 1:
             var3 = get_var(instr.arg3)
+            is_defined(var3)
         elif symb3 == 0:
             var3 = promenna("temp@temp")
             var3.value = instr.arg3
@@ -582,12 +611,14 @@ def instr_exec(instr):
             exit(99)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
+            is_defined(var2)
         elif symb2 == 0:
             var2 = promenna("temp@temp")
             var2.value = instr.arg2
             var2.val_type = instr.type2
         if symb3 == 1:
             var3 = get_var(instr.arg3)
+            is_defined(var3)
         elif symb3 == 0:
             var3 = promenna("temp@temp")
             var3.value = instr.arg3
@@ -597,21 +628,20 @@ def instr_exec(instr):
         if not var2.val_type or not var3.val_type:
             exit(56)
         #bad operand type
-        if var2.val_type != var3.val_type:
+        if var2.val_type != var3.val_type and str(var2.val_type) != "nil" and str(var3.val_type) != "nil":
             exit(53)
-
 
         if instr.opcode == "EQ":
 
             variable.value = var2.value == var3.value
 
         elif instr.opcode == "LT":
-            if var2.val_type == "nil":
+            if str(var2.val_type) == "nil" or str(var3.val_type) == "nil":
                 exit(53)
             variable.value = var2.value < var3.value
 
         elif instr.opcode == "GT":
-            if var2.val_type == "nil":
+            if str(var2.val_type) == "nil" or str(var3.val_type) == "nil":
                 exit(53)
             variable.value = var2.value > var3.value
 
@@ -634,22 +664,20 @@ def instr_exec(instr):
             exit(99)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
+            is_defined(var2)
         elif symb2 == 0:
             var2 = promenna("temp@temp")
             var2.value = instr.arg2
             var2.val_type = instr.type2
         if symb3 == 1:
             var3 = get_var(instr.arg3)
+            is_defined(var3)
         elif symb3 == 0:
             var3 = promenna("temp@temp")
             var3.value = instr.arg3
             var3.val_type = instr.type3
         variable = promenna(instr.arg1)
         
-        #undefined var
-        if not var2.val_type or not var3.val_type:
-            exit(56)
-
         if var2.val_type != "bool" or var3.val_type != "bool":
             exit(53)
         variable.val_type = "bool"
@@ -670,13 +698,12 @@ def instr_exec(instr):
             exit(99)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
+            is_defined(var2)
         elif symb2 == 0:
             var2 = promenna("temp@temp")
             var2.value = instr.arg2
             var2.val_type = instr.type2
         #undefined
-        if not var2.val_type:
-            exit(56)
         if var2.val_type != "bool":
             exit(53)
         variable = promenna(instr.arg1)
@@ -695,14 +722,12 @@ def instr_exec(instr):
             exit(99)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
+            is_defined(var2)
         elif symb2 == 0:
             var2 = promenna("temp@temp")
             var2.value = instr.arg2
             var2.val_type = instr.type2
 
-        #undefined
-        if not var2.val_type:
-            exit(56)
         if var2.val_type != "int":
             exit(53)
         variable = promenna(instr.arg1)
@@ -725,25 +750,24 @@ def instr_exec(instr):
             exit(99)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
+            is_defined(var2)
         elif symb2 == 0:
             var2 = promenna("temp@temp")
             var2.value = instr.arg2
             var2.val_type = instr.type2
         if symb3 == 1:
             var3 = get_var(instr.arg3)
+            is_defined(var3)
         elif symb3 == 0:
             var3 = promenna("temp@temp")
             var3.value = instr.arg3
             var3.val_type = instr.type3
 
-        #undefined
-        if not var2.val_type or not var3.val_type:
-            exit(56)
         if var2.val_type != "string" or var3.val_type != "int":
             exit(53)
         variable = promenna(instr.arg1)
         variable.val_type = "int"
-        if int(var3.value) >= len(var2.value):
+        if int(var3.value) >= len(var2.value) or int(var3.value) < 0:
             exit(58)
         variable.value = ord(var2.value[int(var3.value)])
         var_to_f(variable, instr.arg1.split('@')[0])
@@ -777,39 +801,42 @@ def instr_exec(instr):
             #var in GF
             if var_type == 0:
                 var = global_frame[index]
+                is_defined(var)
                 if var.val_type == "bool":
-                    print(var.value)
+                    my_output += var.value
                 elif var.val_type == "nil":
-                    print("")
+                    my_output += ""
                 else:
-                    print(var.value)
+                    my_output += var.value
             #var in LF
             if var_type == 1:
                 var = local_frame[lf_index][index]
+                is_defined(var)
                 if var.val_type == "bool":
-                    print(var.value)
+                    my_output += var.value
                 elif var.val_type == "nil":
-                    print("")
+                    my_output += ""
                 else:
-                    print(var.value)
+                    my_output += var.value
             #var in TF
             if var_type == 2:
                 var = temporary_frame[index]
+                is_defined(var)
                 if var.val_type == "bool":
-                    print(var.value)
+                    my_output += var.value
                 elif var.val_type == "nil":
-                    print("")
+                    my_output += ""
                 else:
-                    print(var.value)
+                    my_output += var.value
         elif value == 0:
             kon_type = instr.type1
             kon_value = instr.arg1
             if  kon_type == "bool":
-                print(kon_value)
+                my_output += kon_value
             elif kon_type == "nil":
-                print("")
+                my_output += ""
             else:
-                print(instr.arg1)
+                my_output += instr.arg1
 
     elif instr.opcode == "CONCAT":
         symb = is_symb(instr.type1)
@@ -824,12 +851,14 @@ def instr_exec(instr):
             exit(99)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
+            is_defined(var2)
         elif symb2 == 0:
             var2 = promenna("temp@temp")
             var2.value = instr.arg2
             var2.val_type = instr.type2
         if symb3 == 1:
             var3 = get_var(instr.arg3)
+            is_defined(var3)
         elif symb3 == 0:
             var3 = promenna("temp@temp")
             var3.value = instr.arg3
@@ -857,6 +886,7 @@ def instr_exec(instr):
             exit(99)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
+            is_defined(var2)
         elif symb2 == 0:
             var2 = promenna("temp@temp")
             var2.value = instr.arg2
@@ -883,12 +913,14 @@ def instr_exec(instr):
             exit(99)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
+            is_defined(var2)
         elif symb2 == 0:
             var2 = promenna("temp@temp")
             var2.value = instr.arg2
             var2.val_type = instr.type2
         if symb3 == 1:
             var3 = get_var(instr.arg3)
+            is_defined(var3)
         elif symb3 == 0:
             var3 = promenna("temp@temp")
             var3.value = instr.arg3
@@ -899,7 +931,7 @@ def instr_exec(instr):
             exit(53)
         elif var3.val_type != "int":
             exit(53)
-        if len(var2.value) <= int(var3.value):
+        if len(var2.value) <= int(var3.value) or int(var3.value) < 0:
             exit(58)
         variable.value = str(var2.value)[int(var3.value)]
         var_to_f(variable, instr.arg1.split('@')[0])
@@ -917,12 +949,14 @@ def instr_exec(instr):
             exit(99)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
+            is_defined(var2)
         elif symb2 == 0:
             var2 = promenna("temp@temp")
             var2.value = instr.arg2
             var2.val_type = instr.type2
         if symb3 == 1:
             var3 = get_var(instr.arg3)
+            is_defined(var3)
         elif symb3 == 0:
             var3 = promenna("temp@temp")
             var3.value = instr.arg3
@@ -935,7 +969,7 @@ def instr_exec(instr):
             exit(53)
         elif var3.val_type != "string":
             exit(53)
-        if int(var2.value) >= len(str(variable.value)) or len(str(variable.value)) == 0:
+        if int(var2.value) < 0 or int(var2.value) >= len(str(variable.value)) or len(str(variable.value)) == 0:
             exit(58)
         variable_1 = list(str(variable.value))
         if len(str(var3.value)) == 0:
@@ -961,10 +995,9 @@ def instr_exec(instr):
             var2.val_type = instr.type2
         variable = promenna(instr.arg1)
         variable.val_type = "string"
-        if str(var2.val_type) == "nil":
+        variable.value = str(var2.val_type)
+        if not var2.val_type:
             variable.value = ""
-        else:
-            variable.value = str(var2.val_type)
         var_to_f(variable, instr.arg1.split('@')[0])
 
 
@@ -986,6 +1019,7 @@ def instr_exec(instr):
         #var
         if symb2 == 1:
             var2 = get_var(instr.arg2)
+            is_defined(var2)
         elif symb2 == 0:
             var2 = promenna("temp@temp")
             var2.value = instr.arg2
@@ -993,23 +1027,24 @@ def instr_exec(instr):
         #var
         if symb3 == 1:
             var3 = get_var(instr.arg3)
+            is_defined(var3)
         elif symb3 == 0:
             var3 = promenna("temp@temp")
             var3.value = instr.arg3
             var3.val_type = instr.type3
-        if var2.val_type != var3.val_type:
+        if var2.val_type != var3.val_type and str(var2.val_type) != "nil" and str(var3.val_type) != "nil":
             exit(53)
-        if var2.val_type == "int":
+        if var2.val_type == "int" and var3.val_type == "int":
             if int(var2.value) == int(var3.value):
                 return labell
-        elif var2.val_type == "string":
+        elif var2.val_type == "string" and var3.val_type == "string":
             if str(var2.value) == str(var3.value):
                 return labell
-        elif var2.val_type == "bool":
-            if bool(var2.value) == bool(var3.value):
+        elif var2.val_type == "bool" and var3.val_type == "bool":
+            if var2.value == var3.value:
                 return labell
-        elif var2.val_type == "nil":
-            if not var2.value and not var3.value:
+        elif var2.val_type == "nil" and var3.val_type == "nil":
+            if str(var2.value) and str(var3.value):
                 return labell
 
     elif instr.opcode == "JUMPIFNEQ":
@@ -1023,6 +1058,7 @@ def instr_exec(instr):
         #var
         if symb2 == 1:
             var2 = get_var(instr.arg2)
+            is_defined(var2)
         elif symb2 == 0:
             var2 = promenna("temp@temp")
             var2.value = instr.arg2
@@ -1030,26 +1066,29 @@ def instr_exec(instr):
         #var
         if symb3 == 1:
             var3 = get_var(instr.arg3)
+            is_defined(var3)
         elif symb3 == 0:
             var3 = promenna("temp@temp")
             var3.value = instr.arg3
             var3.val_type = instr.type3
-        if var2.val_type != var3.val_type:
+        if var2.val_type != var3.val_type and str(var2.val_type) != "nil" and str(var3.val_type) != "nil":
             exit(53)
-        if var2.val_type == "int":
-            if int(var2.value) != int(var3.value):
-                return labell
+        if var2.val_type == "int" and var3.val_type == "int":
+            if int(var2.value) == int(var3.value):
+                return
 
-        elif var2.val_type == "string":
-            if str(var2.value) != str(var3.value):
-                return labell
+        elif var2.val_type == "string" and var3.val_type == "string":
+            if str(var2.value) == str(var3.value):
+                return
 
-        elif var2.val_type == "bool":
-            if bool(var2.value) != bool(var3.value):
-                return labell
+        elif var2.val_type == "bool" and var3.val_type == "bool":
+            if var2.value == var3.value:
+                return
             
-        elif var2.val_type == "nil":
-            return labell
+        elif var2.val_type == "nil" and var3.val_type == "nil":
+            if var2.value == var3.value:
+                return
+        return labell
 
 
     elif instr.opcode == "EXIT":
@@ -1058,6 +1097,7 @@ def instr_exec(instr):
             exit(99)
         elif symb == 1:
             var = get_var(instr.arg1)
+            is_defined(var)
         elif symb == 0:
             var = promenna("temp@temp")
             var.value = instr.arg1
@@ -1077,6 +1117,7 @@ def instr_exec(instr):
             exit(99)
         elif symb == 1:
             var = get_var(instr.arg1)
+            is_defined(var)
         elif symb == 0:
             var = promenna("temp@temp")
             var.value = instr.arg2
@@ -1215,7 +1256,7 @@ def var_exist(par):
     elif frame == 1:
         #empty local_frame
         if len(local_frame) == 0:
-            return 3
+            exit(55)
         delka = len(local_frame[lf_index])
         while cnt < delka:
             if local_frame[lf_index][cnt].name == name:
@@ -1303,6 +1344,10 @@ def int_cycles(order):
         count -= 1
 
 
+def is_defined(var):
+    if not var.val_type:
+        exit(56)
+
 #return order of label
 def get_label(label):
     global instr_list
@@ -1323,3 +1368,4 @@ def close_them():
         print("closed inputs")
 
 main()
+print(my_output)
