@@ -88,7 +88,6 @@ public class Homework2Test {
         Street s1, s2, s3;
         Stop stop1, stop3;
         Line line1;
-
         c1 = Coordinate.create(100, 100);
         c2 = Coordinate.create(100, 200);
         c3 = Coordinate.create(150, 200);        
@@ -135,7 +134,7 @@ public class Homework2Test {
                     + entry.getValue()
                     + ";")
             .collect(Collectors.joining());
-        //System.out.println(res);        
+        System.out.println(res);        
         Assertions.assertEquals(res, expected, "Reprezentace cesty linky.");
     }
 

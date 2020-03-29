@@ -103,6 +103,7 @@ public class MyStreet implements Street
             {
                 if(c3.getY() == c1.getY() && ((c3.getX() >= c1.getX() && c3.getX() <= c2.getX()) || (c3.getX() <= c1.getX() && c3.getX() >= c2.getX()) ))
                 {
+                    stop.setStreet(this);
                     this.zastavky.add(stop);
                     return true;
                 }
@@ -130,6 +131,25 @@ public class MyStreet implements Street
 
     }
 
+    public Street clone()
+    {
+        Street s;
+        if(this.seznam.size() == 2)
+        {
+            s = new MyStreet(this.getId(), this.seznam.get(0).clone(), this.seznam.get(1).clone());
+        }
+        else
+        {
+            s = new MyStreet(this.getId(), this.seznam.get(0).clone(), this.seznam.get(1).clone(), this.seznam.get(2).clone());
+        }
+        int delka = this.zastavky.size();
+        for(int i = 0; i < delka; ++i)
+        {
+            s.addStop(this.zastavky.get(i).clone());
+        }
 
+        return s;
+        
+    }
 
 }

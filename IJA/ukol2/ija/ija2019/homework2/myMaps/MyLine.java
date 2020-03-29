@@ -23,12 +23,13 @@ public class MyLine implements Line{
 
     public boolean addStop(Stop stop)
     {
-        Street s = stop.getStreet();
+        Stop s = stop;
+        Street stret = s.getStreet();
         int delka = this.zastavky.size();
         if(delka == 0)
         {
-            this.zastavky.add(stop);
-            this.ulice.add(s);
+            this.zastavky.add(s);
+            this.ulice.add(stret);
             return true;
         }
         return false;
@@ -49,7 +50,7 @@ public class MyLine implements Line{
             Stop stop = this.zastavky.get(cnt);
             Street s2 = stop.getStreet();
             SimpleEntry Se;
-            if(s1.getId() == s2.getId())
+            if(s1 != null && s2 != null && s1.getId() == s2.getId())
             {
                 Se = new SimpleEntry<Street,Stop>(s1,stop);
                 ++cnt;

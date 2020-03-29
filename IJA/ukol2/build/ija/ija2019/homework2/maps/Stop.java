@@ -9,6 +9,7 @@ public interface Stop{
     public String getId();
     public Street getStreet();
     public void setStreet(Street s);
+    public Stop clone();
     public static Stop defaultStop(String id, Coordinate c){
         return new MyStop(id, c);
     }

@@ -20,6 +20,8 @@ public interface Street{
 
 	public boolean follows (Street s);
 
+    public Street clone();
+
     static Street defaultStreet(String id, Coordinate c1, Coordinate c2)
     {
         return new MyStreet(id,c1,c2);

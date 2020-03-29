@@ -51,6 +51,13 @@ public class MyStop implements Stop
         this.ulice = s;
     }
 
+    public Stop clone()
+    {
+        Coordinate c2 = this.getCoordinate();
+        Coordinate c = Coordinate.create(c2.getX(), c2.getY());
+        return new MyStop(this.getId(), c);
+    }
+
     /**
      * Vrátí ulici, na které je zastávka umístěna.
      * @return Ulice, na které je zastávka umístěna. Pokud zastávka existuje, ale dosud nemá umístění, vrací null.

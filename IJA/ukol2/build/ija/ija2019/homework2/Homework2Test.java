@@ -88,7 +88,6 @@ public class Homework2Test {
         Street s1, s2, s3;
         Stop stop1, stop3;
         Line line1;
-
         c1 = Coordinate.create(100, 100);
         c2 = Coordinate.create(100, 200);
         c3 = Coordinate.create(150, 200);        
@@ -115,8 +114,6 @@ public class Homework2Test {
         line1 = Line.defaultLine("10");
         Assertions.assertTrue(line1.addStop(stop1), "Prvni vlozeni zastavky vzdy uspesne");
         Assertions.assertFalse(line1.addStop(stop3), "Stop3 nelze vlozit - ulice nenavazuji");
-        System.out.println(line1.getStreet("first")); 
-        System.out.println(stop1.getId()); 
         assertRoute(line1, "first:stop(stop1);");
         Assertions.assertTrue(line1.addStreet(s2), "Ulice second navazuje, bez zastavky");
         assertRoute(line1, "first:stop(stop1);second:null;");
@@ -137,7 +134,7 @@ public class Homework2Test {
                     + entry.getValue()
                     + ";")
             .collect(Collectors.joining());
-        //System.out.println(res);        
+        System.out.println(res);        
         Assertions.assertEquals(res, expected, "Reprezentace cesty linky.");
     }
 

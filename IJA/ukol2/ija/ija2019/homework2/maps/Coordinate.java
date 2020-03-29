@@ -30,6 +30,10 @@ public class Coordinate{
 		Coordinate test = (Coordinate) obj;
 		return this.getX() == test.getX() && this.getY() == test.getY();
 	}
+    public Coordinate clone()
+    {
+        return Coordinate.create(this.getX(), this.getY());
+    }
 	//public int hashCode()
 
 
