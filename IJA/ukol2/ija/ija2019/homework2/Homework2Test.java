@@ -88,6 +88,7 @@ public class Homework2Test {
         Street s1, s2, s3;
         Stop stop1, stop3;
         Line line1;
+
         c1 = Coordinate.create(100, 100);
         c2 = Coordinate.create(100, 200);
         c3 = Coordinate.create(150, 200);        
@@ -119,7 +120,7 @@ public class Homework2Test {
         assertRoute(line1, "first:stop(stop1);second:null;");
         Assertions.assertTrue(line1.addStop(stop3), "Vlozeni stop3, ulice third navazuje");
         assertRoute(line1, "first:stop(stop1);second:null;third:stop(stop3);");
-        
+        System.out.println(line1);
         testImmutableRoute(line1);
     }
     
@@ -128,13 +129,12 @@ public class Homework2Test {
      * Pro zastávku je využita implicitní konverze na String - reprezentace řetězcem "stop(id)" nebo "null" (pokud zastávka není).
      */
     private void assertRoute(Line line, String expected) {
-        String res = line.getRoute().stream()
-            .map(entry -> entry.getKey().getId() 
+        String res = line.getRoute().stream().map(entry -> entry.getKey().getId() 
                     + ":" 
                     + entry.getValue()
                     + ";")
             .collect(Collectors.joining());
-        System.out.println(res);        
+        //System.out.println(res);        
         Assertions.assertEquals(res, expected, "Reprezentace cesty linky.");
     }
 
