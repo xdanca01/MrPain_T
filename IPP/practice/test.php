@@ -53,7 +53,9 @@ $options_counter = 0;
     }
     if(array_key_exists("int-only",$options) == TRUE)
     {
-        if(strcmp($parse_script,"parse.php") || $parse_only == TRUE)exit(10);
+        echo "test";
+        if($parse_only == TRUE)exit(10);
+        echo "test";
         $int_only = TRUE;
         $options_counter += 1;
     }
@@ -108,17 +110,17 @@ $options_counter = 0;
         $bool_in = FALSE;
         $bool_out = FALSE;
         $bool_rc = FALSE;
-
+        $int_diff_file = "my_int_file.out";
 
 
         if(file_exists($in_file) == FALSE) 
         {
-            exec("echo > $in_file");
+            exec("touch $in_file");
             $bool_in = TRUE;
         }
         if(file_exists($out_file) == FALSE)
         {
-            exec("echo > $out_file");
+            exec("touch $out_file");
             $bool_out = TRUE;
         }
         if(file_exists($rc_file) == FALSE)
@@ -132,72 +134,91 @@ $options_counter = 0;
         $rc_file_zero = (int)$rc_file_zero;
         fclose($handle);
         $counter += 1;
-        
+
+
+        #both
         if($int_only == FALSE && $parse_only == FALSE)
         {
-            exec("php $parse_script <$src_file >$xml_file", $parse_out, $parse_rc);
+            exec("php7.4 $parse_script <$src_file >$xml_file", $parse_out, $parse_rc);
             if($parse_rc != 0)
             {
                 if($parse_rc != $rc_file_zero)
                 {
                     $FAIL_counter += 1;
-                    gen_HTML("FAIL", $test_name, $parse_rc, "NONE", $rc_file_zero);
+                    gen_HTML("FAIL", $test_name, $parse_rc, "NONE", $rc_file_zero, "red");
                 }
                 else
                 {
                     $PASS_counter += 1;
-                    gen_HTML("PASS", $test_name, $parse_rc, "NONE", $rc_file_zero);
+                    gen_HTML("PASS", $test_name, $parse_rc, "NONE", $rc_file_zero, "green");
                 }
             }
             else
             {
-                exec("$int_script --input=$in_file --source=$xml_file", $int_out, $int_rc);
+                exec("$int_script --input=$in_file --source=$xml_file >$int_diff_file", $int_out, $int_rc);
                 if($rc_file_zero == $int_rc)
                 {
-                    $PASS_counter += 1;
-                    gen_HTML("PASS", $test_name, $int_rc, "Same", $rc_file_zero);
+                    if($int_rc == 0)
+                    {
+                        exec("diff $out_file $int_diff_file", $diff_out, $diff_rc);
+                        if($diff_rc == 0)
+                        {
+                            $PASS_counter += 1;
+                            gen_HTML("PASS", $test_name, $int_rc, "SAME", $rc_file_zero, "green");
+                        }
+                        elseif($diff_rc == 1)
+                        {
+                            $FAIL_counter += 1;
+                            gen_HTML("FAIL", $test_name, $int_rc, "DIFFERENT", $rc_file_zero, "red");
+                        }
+                        else gen_HTML("FAIL", $test_name, $int_rc, "ERROR", $rc_file_zero, "red");
+                    }
+                    else
+                    {
+                        $PASS_counter += 1;
+                        gen_HTML("PASS", $test_name, $int_rc, "NONE", $rc_file_zero, "green");
+                    }
                 }
                 else
                 {
                     $FAIL_counter += 1;
-                    gen_HTML("FAIL", $test_name, $int_rc, "Different", $rc_file_zero);
+                    gen_HTML("FAIL", $test_name, $int_rc, "NONE", $rc_file_zero, "red");
                 }
             }
+            exec("rm $int_diff_file",$ignoruju);
             exec("rm $xml_file",$ignoruju);
         }
         elseif($parse_only == TRUE)
         {
-            exec("php $parse_script <$src_file >$xml_file", $parse_out, $parse_rc);
-            $xml_result = is_xml_ok($xml_file,$out_file);
+            exec("php7.4 $parse_script <$src_file >$xml_file", $parse_out, $parse_rc);
             if($parse_rc == $rc_file_zero)
             {
-                if($xml_result == 0 && $parse_rc == 0)
+                if($parse_rc == 0)
                 {
-                    $PASS_counter += 1;
-                    gen_HTML("PASS", $test_name, $parse_rc, "Same", $rc_file_zero);
-                }
-                elseif($parse_rc == 0 && $xml_result != 0)
-                {
-                    $FAIL_counter += 1;
-                    gen_HTML("FAIL", $test_name, $parse_rc, "Different", $rc_file_zero);
+                    $xml_result = is_xml_ok($xml_file,$out_file);
+                    if($xml_result == 0)
+                    {
+                        $PASS_counter += 1;
+                        gen_HTML("PASS", $test_name, $parse_rc, "SAME", $rc_file_zero, "green");
+                    }
+                    else
+                    {
+                        $FAIL_counter += 1;
+                        gen_HTML("FAIL", $test_name, $parse_rc, "DIFFERENT", $rc_file_zero, "red");
+                    }
+                    exec("rm $xml_file",$ignoruju);
                 }
                 elseif($parse_rc != 0)
                 {
                     $PASS_counter += 1;
-                    gen_HTML("PASS", $test_name, $parse_rc, "NONE", $rc_file_zero);
-                }
-                else
-                {
-                    $FAIL_counter += 1;
-                    gen_HTML("FAIL", $test_name, $parse_rc, "Different", $rc_file_zero);
+                    gen_HTML("PASS", $test_name, $parse_rc, "NONE", $rc_file_zero, "green");
                 }
             }
             else
             {
                 $FAIL_counter += 1;
-                gen_HTML("FAIL", $test_name, $parse_rc, "NONE", $rc_file_zero);
+                gen_HTML("FAIL", $test_name, $parse_rc, "NONE", $rc_file_zero, "red");
             }
-            exec("rm $xml_file",$ignoruju);
         }
         elseif($int_only == TRUE)
         {
@@ -205,19 +226,30 @@ $options_counter = 0;
             exec("$int_script --input=$in_file --source=$src_file >$my_out", $int_out, $int_rc);
             if($rc_file_zero == $int_rc)
             {
-                exec("diff $my_out $out_file", $ignore, $diff_rc);
-                if($diff_rc == 0)
+                if($int_rc == 0)
                 {
-                    gen_HTML("PASS", $test_name, $int_rc, "Same", $rc_file_zero);
+                    exec("diff $my_out $out_file", $ignore, $diff_rc);
+                    if($diff_rc == 0)
+                    {
+                        $PASS_counter += 1;
+                        gen_HTML("PASS", $test_name, $int_rc, "SAME", $rc_file_zero, "green");
+                    }
+                    else
+                    {
+                        $FAIL_counter += 1;
+                        gen_HTML("FAIL", $test_name, $int_rc, "DIFFERENT", $rc_file_zero, "red");
+                    }
                 }
                 else
                 {
-                    gen_HTML("Fail", $test_name, $int_rc, "Different", $rc_file_zero);
+                    $PASS_counter += 1;
+                    gen_HTML("PASS", $test_name, $int_rc, "NONE", $rc_file_zero, "green");
                 }
             }
             else
             {
-                gen_HTML("Fail", $test_name, $int_rc, "NONE", $rc_file_zero);
+                $FAIL_counter += 1;
+                gen_HTML("FAIL", $test_name, $int_rc, "NONE", $rc_file_zero, "red");
             }
         }
         if ($bool_in == TRUE) exec("rm $in_file",$ignoruju);
@@ -227,12 +259,21 @@ $options_counter = 0;
 function is_xml_ok($file1, $file2)
 {
     global $jexamxml;
-    exec("java -jar $jexamxml $file1 $file2",$neco,$rc_code);
+    $jexamxml_options = substr($jexamxml, 0, -12);
+    $jexamxml_options = $jexamxml_options . "options";
+    exec("java -jar $jexamxml $file1 $file2 /dev/null $jexamxml_options",$neco,$rc_code);
+    if ($rc_code == 2)
+    {
+        $fffile= $file2 . ".log";
+        exec("rm $fffile 2>/dev/null",$ignore,$ignore);
+        $ffile = $file1 . ".log";
+        exec("rm $ffile 2>/dev/null",$ignore,$ignore);
+    }
     return $rc_code;
 }
-function gen_HTML($status, $jmeno, $return_code, $DIFF, $expected_rc)
+function gen_HTML($status, $jmeno, $return_code, $DIFF, $expected_rc, $color)
 {
-    echo "<tr>\n";
+    echo "<tr style='background-color: $color'>\n";
     echo "<td>$jmeno</td>\n";
     echo "<td>$return_code</td>\n";
     echo "<td>$expected_rc</rd>\n";

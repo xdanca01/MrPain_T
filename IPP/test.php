@@ -132,10 +132,12 @@ $options_counter = 0;
         $rc_file_zero = (int)$rc_file_zero;
         fclose($handle);
         $counter += 1;
-        
+
+
+        #both
         if($int_only == FALSE && $parse_only == FALSE)
         {
-            exec("php7.4 $parse_script <$src_file >$xml_file", $parse_out, $parse_rc);
+            exec("php $parse_script <$src_file >$xml_file", $parse_out, $parse_rc);
             if($parse_rc != 0)
             {
                 if($parse_rc != $rc_file_zero)
@@ -151,16 +153,35 @@ $options_counter = 0;
             }
             else
             {
-                exec("$int_script --input=$in_file --source=$xml_file", $int_out, $int_rc);
+                exec("$int_script --input=$in_file --source=$xml_file ", $int_out, $int_rc);
                 if($rc_file_zero == $int_rc)
                 {
-                    $PASS_counter += 1;
-                    gen_HTML("PASS", $test_name, $int_rc, "Same", $rc_file_zero);
+                    if($int_rc == 0)
+                    {
+                        print($int_out);
+                        exec("diff $out_file - <<<$int_out", $diff_out, $diff_rc);
+                        if($diff_rc == 0)
+                        {
+                            $PASS_counter += 1;
+                            gen_HTML("PASS", $test_name, $int_rc, "SAME", $rc_file_zero);
+                        }
+                        elseif($diff_rc == 1)
+                        {
+                            $FAIL_counter += 1;
+                            gen_HTML("FAIL", $test_name, $int_rc, "DIFFERENT", $rc_file_zero);
+                        }
+                        else gen_HTML("FAIL", $test_name, $int_rc, "ERROR", $rc_file_zero);
+                    }
+                    else
+                    {
+                        $PASS_counter += 1;
+                        gen_HTML("PASS", $test_name, $int_rc, "NONE", $rc_file_zero);
+                    }
                 }
                 else
                 {
                     $FAIL_counter += 1;
-                    gen_HTML("FAIL", $test_name, $int_rc, "Different", $rc_file_zero);
+                    gen_HTML("FAIL", $test_name, $int_rc, "NONE", $rc_file_zero);
                 }
             }
             exec("rm $xml_file",$ignoruju);

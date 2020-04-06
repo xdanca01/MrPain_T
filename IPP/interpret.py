@@ -17,7 +17,6 @@ stack = []
 instr_list = ""
 my_instructions = ""
 call_cnt = 0
-my_output = ""
 
 
 def main():
@@ -74,7 +73,7 @@ def main():
         root = tree.getroot()
     except:
         print("problem with xml file structure")
-        exit()
+        exit(31)
     #<program>
     if root.tag != 'program':
         print("element program missing, got:", root.tag)
@@ -162,7 +161,7 @@ def main():
             my_instructions.append(instrukce(int(order), opcode, type1, arg1, type2, arg2, type3, arg3))
         except:
             print("error when tried to append array of instructions, instruction:", opcode)
-            exit(99)
+            exit(32)
     instr_list = my_instructions.copy()
     #get count of instructions in array
     count = len(my_instructions)
@@ -182,14 +181,14 @@ def main():
                     exit(52)
             cnt += 1
         instr = my_instructions[min_instr]
-
+        if instr.order <= 0:
+            exit(32)
         #remove used instruction from array and decrease count
         my_instructions.remove(instr)
         count -= 1
 
     my_instructions = instr_list.copy()
     count = len(my_instructions)
-
     #go through all instructions in array
     while count > 0:
         cnt = 1
@@ -200,22 +199,21 @@ def main():
                 min_instr = cnt
             cnt += 1
         instr = my_instructions[min_instr]
-
         #exec
         ret_val = instr_exec(instr)
         if ret_val:
             #jump to higher order (need to remove instr in list)
-            if int(instr.order) < ret_val:
+            if int(instr.order) < int(ret_val):
                 cnt = 0
-                my_count = len(my_instructions)
-                while cnt < my_count:
-                    if int(my_instructions[cnt].order) < ret_val:
-                        my_instructions.remove(my_instructions[cnt])
+                my_count = len(my_instructions) - 1
+                while cnt <= my_count:
+                    if int(my_instructions[my_count].order) < ret_val:
+                        my_instructions.remove(my_instructions[my_count])
                         count -= 1
                     my_count -= 1
 
             #jump to lower order (need to append list by instructions
-            elif int(my_instructions[min_instr].order) > ret_val:
+            elif int(my_instructions[min_instr].order) > int(ret_val):
                 cnt = 0
                 my_list = instr_list.copy()
                 my_count = len(my_list)
@@ -226,17 +224,17 @@ def main():
                     cnt += 1
             continue
 
-
         #remove used instruction from array and decrease count
         my_instructions.remove(instr)
-        count -= 1
+        count = len(my_instructions)
     
 class instrukce:
     def __init__(self, order, opcode, type1, arg1, type2, arg2, type3, arg3):
+        opcode = opcode.upper()
         arg1 = re.sub("\\\\(\d+)", lambda x : chr(int(x.group(1))), arg1)
         arg2 = re.sub("\\\\(\d+)", lambda x : chr(int(x.group(1))), arg2)
         arg3 = re.sub("\\\\(\d+)", lambda x : chr(int(x.group(1))), arg3)
-        self.order = int(order)
+        self.order = order
         self.opcode = opcode
         self.type1 = type1
         self.arg1 = arg1
@@ -244,6 +242,92 @@ class instrukce:
         self.arg2 = arg2
         self.type3 = type3
         self.arg3 = arg3
+        count = 0
+        if type1:
+            count += 1
+            if type2:
+                count += 1
+                if type3:
+                    count += 1
+        if opcode == "MOVE" and count == 2:
+            return
+        elif opcode == "CREATEFRAME" and count == 0:
+            return
+        elif opcode == "PUSHFRAME" and count == 0:
+            return
+        elif opcode == "POPFRAME" and count == 0:
+            return
+        elif opcode == "DEFVAR" and count == 1:
+            return
+        elif opcode == "CALL" and count == 1:
+            return
+        elif opcode == "RETURN" and count == 0:
+            return
+        elif opcode == "PUSHS" and count == 1:
+            return
+        elif opcode == "POPS" and count == 1:
+            return
+        elif opcode == "ADD" and count == 3:
+            return
+        elif opcode == "SUB" and count == 3:
+            return
+        elif opcode == "MUL" and count == 3:
+            return
+        elif opcode == "IDIV" and count == 3:
+            return
+        elif opcode == "LT" and count == 3:
+            return
+        elif opcode == "GT" and count == 3:
+            return
+        elif opcode == "EQ" and count == 3:
+            return
+        elif opcode == "AND" and count == 3:
+            return
+        elif opcode == "OR" and count == 3:
+            return
+        elif opcode == "NOT" and count == 2:
+            return
+        elif opcode == "INT2CHAR" and count == 2:
+            return
+        elif opcode == "STRI2INT" and count == 3:
+            return
+        elif opcode == "READ" and count == 2:
+            return
+        elif opcode == "WRITE" and count == 1:
+            return
+        elif opcode == "CONCAT" and count == 3:
+            return
+        elif opcode == "STRLEN" and count == 2:
+            return
+        elif opcode == "GETCHAR" and count == 3:
+            return
+        elif opcode == "SETCHAR" and count == 3:
+            return
+        elif opcode == "TYPE" and count == 2:
+            return
+        elif opcode == "LABEL" and count == 1:
+            return
+        elif opcode == "JUMP" and count == 1:
+            return
+        elif opcode == "JUMPIFEQ" and count == 3:
+            return
+        elif opcode == "JUMPIFNEQ" and count == 3:
+            return
+        elif opcode == "EXIT" and count == 1:
+            return
+        elif opcode == "DPRINT" and count == 1:
+            return
+        elif opcode == "BREAK" and count == 0:
+            return
+        else:
+            exit(32)
+
+
+
+
+
+
+
 
 class promenna:
     value = ''
@@ -321,7 +405,6 @@ def instr_exec(instr):
     global global_frame
     global inputs
     global call_cnt
-    global my_output
     lf_index = len(local_frame) - 1
 
     if instr.opcode == "MOVE":
@@ -592,7 +675,7 @@ def instr_exec(instr):
         elif instr.opcode == "IDIV":
             if int(var3.value) == 0:
                 exit(57)
-            variable.value = int(var2.value) / int(var3.value)
+            variable.value = int(var2.value) // int(var3.value)
         variable.val_type = "int"
         var_to_f(variable, instr.arg1.split('@')[0])
             
@@ -633,17 +716,72 @@ def instr_exec(instr):
 
         if instr.opcode == "EQ":
 
-            variable.value = var2.value == var3.value
+            if var2.val_type == "nil" or var3.val_type == "nil":
+                variable.value = var2.value == var3.value
+                variable.value = str(variable.value).lower()
+            elif(var2.val_type == "int" or var3.val_type == "int"):
+                variable.value = int(var2.value) == int(var3.value)
+                variable.value = str(variable.value).lower()
+            elif(var2.val_type == "string" or var3.val_type == "string"):
+                variable.value = str(var2.value) == str(var3.value)
+                variable.value = str(variable.value).lower()
+            elif(var2.val_type == "bool" or var3.val_type == "bool"):
+                if var2.value == "false":
+                    var2.value = 0
+                else:
+                    var2.value = 1
+                if var3.value == "false":
+                    var3.value = 0
+                else:
+                    var3.value = 1
+                variable.value = int(var2.value) == int(var3.value)
+                variable.value = str(variable.value).lower()
+            else:
+                variable.value = var2.value == var3.value
+                variable.value = variable.value.lower()
+
 
         elif instr.opcode == "LT":
             if str(var2.val_type) == "nil" or str(var3.val_type) == "nil":
                 exit(53)
-            variable.value = var2.value < var3.value
+            if(var2.val_type == "int"):
+                variable.value = int(var2.value) < int(var3.value)
+                variable.value = str(variable.value).lower()
+            elif(var2.val_type == "string"):
+                variable.value = str(var2.value) < str(var3.value)
+                variable.value = str(variable.value).lower()
+            elif(var2.val_type == "bool"):
+                if var2.value == "false":
+                    var2.value = 0
+                else:
+                    var2.value = 1
+                if var3.value == "false":
+                    var3.value = 0
+                else:
+                    var3.value = 1
+                variable.value = int(var2.value) < int(var3.value)
+                variable.value = str(variable.value).lower()
 
         elif instr.opcode == "GT":
             if str(var2.val_type) == "nil" or str(var3.val_type) == "nil":
                 exit(53)
-            variable.value = var2.value > var3.value
+            if(var2.val_type == "int"):
+                variable.value = int(var2.value) > int(var3.value)
+                variable.value = str(variable.value).lower()
+            elif(var2.val_type == "string"):
+                variable.value = str(var2.value) > str(var3.value)
+                variable.value = str(variable.value).lower()
+            elif(var2.val_type == "bool"):
+                if var2.value == "false":
+                    var2.value = 0
+                else:
+                    var2.value = 1
+                if var3.value == "false":
+                    var3.value = 0
+                else:
+                    var3.value = 1
+                variable.value = int(var2.value) > int(var3.value)
+                variable.value = str(variable.value).lower()
 
         else:
             exit(99)
@@ -682,9 +820,15 @@ def instr_exec(instr):
             exit(53)
         variable.val_type = "bool"
         if instr.opcode == "AND":
-            variable.value = bool(var2.value) and bool(var3.value)
+            if str(var2.value) == "true" and str(var3.value) == "true":
+                variable.value = "true"
+            else:
+                variable.value = "false"
         elif instr.opcode == "OR":
-            variable.value = bool(var2.value) or bool(var3.value)
+            if str(var2.value) == "false" and str(var3.value) == "false":
+                variable.value = "false"
+            else:
+                variable.value = "true"
         var_to_f(variable, instr.arg1.split('@')[0])
 
     elif instr.opcode == "NOT":
@@ -707,7 +851,10 @@ def instr_exec(instr):
         if var2.val_type != "bool":
             exit(53)
         variable = promenna(instr.arg1)
-        variable.value = not bool(var2.value)
+        if str(var2.value) != "true":
+            variable.value = "true"
+        else:
+            variable.value = "false"
         variable.val_type = "bool"
         var_to_f(variable, instr.arg1.split('@')[0])
 
@@ -774,6 +921,12 @@ def instr_exec(instr):
 
     elif instr.opcode == "READ":
         neco = inputs.readline()
+        konec = True
+        if len(neco) != 1:
+            neco = neco.rstrip("\n")
+        else:
+            neco = neco.rstrip("\n")
+            konec = False
         if instr.type2 != "type":
             exit(32)
         #not var
@@ -781,13 +934,25 @@ def instr_exec(instr):
             exit(32)
         variable = promenna(instr.arg1)
         variable.val_type = instr.arg2
-        if instr.arg2 == "bool":
-            variable.value = neco.lower() == "true"
-        elif neco == "":
+        if len(neco) == 0 and konec == True:
             variable.value = ""
             variable.val_type = "nil"
+        elif instr.arg2 == "bool":
+            if neco.lower() == "true":
+                variable.value = "true"
+            else:
+                variable.value = "false"
+            variable.val_type = "bool"
+        elif instr.arg2 == "int":
+            match = re.match('^(-|\+)*[0-9]+$', neco)
+            if not match:
+                variable.value = ""
+                variable.val_type = "nil"
+            else:
+                variable.value = neco
         else:
             variable.value = neco
+            variable.val_type = instr.arg2
         var_to_f(variable, instr.arg1.split('@')[0])
 
 
@@ -803,40 +968,40 @@ def instr_exec(instr):
                 var = global_frame[index]
                 is_defined(var)
                 if var.val_type == "bool":
-                    my_output += var.value
+                    print(var.value, end='')
                 elif var.val_type == "nil":
-                    my_output += ""
+                    print("", end='')
                 else:
-                    my_output += var.value
+                    print(var.value, end='')
             #var in LF
             if var_type == 1:
                 var = local_frame[lf_index][index]
                 is_defined(var)
                 if var.val_type == "bool":
-                    my_output += var.value
+                    print(var.value, end='')
                 elif var.val_type == "nil":
-                    my_output += ""
+                    print("", end='')
                 else:
-                    my_output += var.value
+                    print(var.value, end='')
             #var in TF
             if var_type == 2:
                 var = temporary_frame[index]
                 is_defined(var)
                 if var.val_type == "bool":
-                    my_output += var.value
+                    print(var.value, end='')
                 elif var.val_type == "nil":
-                    my_output += ""
+                    print("", end='')
                 else:
-                    my_output += var.value
+                    print(var.value, end='')
         elif value == 0:
             kon_type = instr.type1
             kon_value = instr.arg1
             if  kon_type == "bool":
-                my_output += kon_value
+                print(kon_value, end='')
             elif kon_type == "nil":
-                my_output += ""
+                print("", end='')
             else:
-                my_output += instr.arg1
+                print(kon_value, end='')
 
     elif instr.opcode == "CONCAT":
         symb = is_symb(instr.type1)
@@ -1041,7 +1206,7 @@ def instr_exec(instr):
             if str(var2.value) == str(var3.value):
                 return labell
         elif var2.val_type == "bool" and var3.val_type == "bool":
-            if var2.value == var3.value:
+            if str(var2.value) == str(var3.value):
                 return labell
         elif var2.val_type == "nil" and var3.val_type == "nil":
             if str(var2.value) and str(var3.value):
@@ -1125,7 +1290,7 @@ def instr_exec(instr):
         print(var.value, file=sys.stderr)
 
     elif instr.opcode == "BREAK":
-        print("gf:",global_frame,"\nlf:",local_frame[lf_cnt],"\ntf:",temporary_frame, file=sys.stderr)
+        print("\nBREAK:\ngf:",global_frame,"\nlf:",local_frame[lf_cnt],"\ntf:",temporary_frame, file=sys.stderr)
 
     else:
         exit(32)
@@ -1351,7 +1516,6 @@ def is_defined(var):
 #return order of label
 def get_label(label):
     global instr_list
-
     delka = len(instr_list)
     cnt = 0
     while delka > cnt:
@@ -1368,4 +1532,3 @@ def close_them():
         print("closed inputs")
 
 main()
-print(my_output)
