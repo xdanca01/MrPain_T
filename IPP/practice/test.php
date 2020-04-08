@@ -107,6 +107,7 @@ $options_counter = 0;
         $rc_file = preg_replace('/src$/', "rc", $src_file);
         $xml_file = preg_replace('/src$/', "xml", $src_file);
         $test_name = preg_replace('/\.src$/', "", $src_file);
+        $test_name = preg_replace('/.*\//', "", $test_name);
         $bool_in = FALSE;
         $bool_out = FALSE;
         $bool_rc = FALSE;
