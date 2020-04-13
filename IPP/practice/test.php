@@ -53,9 +53,7 @@ $options_counter = 0;
     }
     if(array_key_exists("int-only",$options) == TRUE)
     {
-        echo "test";
         if($parse_only == TRUE)exit(10);
-        echo "test";
         $int_only = TRUE;
         $options_counter += 1;
     }
@@ -140,7 +138,7 @@ $options_counter = 0;
         #both
         if($int_only == FALSE && $parse_only == FALSE)
         {
-            exec("php7.4 $parse_script <$src_file >$xml_file", $parse_out, $parse_rc);
+            exec("php7.4 $parse_script <$src_file >$xml_file 2>/dev/null", $parse_out, $parse_rc);
             if($parse_rc != 0)
             {
                 if($parse_rc != $rc_file_zero)
@@ -156,12 +154,12 @@ $options_counter = 0;
             }
             else
             {
-                exec("$int_script --input=$in_file --source=$xml_file >$int_diff_file", $int_out, $int_rc);
+                exec("$int_script --input=$in_file --source=$xml_file >$int_diff_file 2>/dev/null", $int_out, $int_rc);
                 if($rc_file_zero == $int_rc)
                 {
                     if($int_rc == 0)
                     {
-                        exec("diff $out_file $int_diff_file", $diff_out, $diff_rc);
+                        exec("diff $out_file $int_diff_file 2>/dev/null", $diff_out, $diff_rc);
                         if($diff_rc == 0)
                         {
                             $PASS_counter += 1;
@@ -186,12 +184,12 @@ $options_counter = 0;
                     gen_HTML("FAIL", $test_name, $int_rc, "NONE", $rc_file_zero, "red");
                 }
             }
-            exec("rm $int_diff_file",$ignoruju);
-            exec("rm $xml_file",$ignoruju);
+            exec("rm $int_diff_file 2>/dev/null",$ignoruju);
+            exec("rm $xml_file 2>/dev/null",$ignoruju);
         }
         elseif($parse_only == TRUE)
         {
-            exec("php7.4 $parse_script <$src_file >$xml_file", $parse_out, $parse_rc);
+            exec("php7.4 $parse_script <$src_file >$xml_file 2>/dev/null", $parse_out, $parse_rc);
             if($parse_rc == $rc_file_zero)
             {
                 if($parse_rc == 0)
@@ -207,7 +205,7 @@ $options_counter = 0;
                         $FAIL_counter += 1;
                         gen_HTML("FAIL", $test_name, $parse_rc, "DIFFERENT", $rc_file_zero, "red");
                     }
-                    exec("rm $xml_file",$ignoruju);
+                    exec("rm $xml_file 2>/dev/null",$ignoruju);
                 }
                 elseif($parse_rc != 0)
                 {
@@ -224,12 +222,12 @@ $options_counter = 0;
         elseif($int_only == TRUE)
         {
             $my_out = "my1out.out";
-            exec("$int_script --input=$in_file --source=$src_file >$my_out", $int_out, $int_rc);
+            exec("$int_script --input=$in_file --source=$src_file >$my_out 2>/dev/null", $int_out, $int_rc);
             if($rc_file_zero == $int_rc)
             {
                 if($int_rc == 0)
                 {
-                    exec("diff $my_out $out_file", $ignore, $diff_rc);
+                    exec("diff $my_out $out_file 2>/dev/null", $ignore, $diff_rc);
                     if($diff_rc == 0)
                     {
                         $PASS_counter += 1;
@@ -262,7 +260,7 @@ function is_xml_ok($file1, $file2)
     global $jexamxml;
     $jexamxml_options = substr($jexamxml, 0, -12);
     $jexamxml_options = $jexamxml_options . "options";
-    exec("java -jar $jexamxml $file1 $file2 /dev/null $jexamxml_options",$neco,$rc_code);
+    exec("java -jar $jexamxml $file1 $file2 /dev/null $jexamxml_options 2>/dev/null",$neco,$rc_code);
     if ($rc_code == 2)
     {
         $fffile= $file2 . ".log";

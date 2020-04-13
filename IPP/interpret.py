@@ -35,7 +35,6 @@ def main():
     for opt, arg in options:
         if opt in '--help':
             print(help_str)
-            close_them()
             exit(0)
         elif opt in '--source':
             #check, that xml file can be opened
@@ -43,24 +42,23 @@ def main():
                 f = open(arg)
                 f.close()
             except:
-                print("file:", arg,"doesnt exists, or cant be opened")
+                print("file:", arg,"doesnt exists, or cant be opened", file=sys.stderr)
                 exit(11)
             XML_source = arg
         elif opt == '--input':
             try:
                 inputs = open(arg, "r")
             except:
-                print("unexpected problem with opening file:", arg)
+                print("unexpected problem with opening file:", arg, file=sys.stderr)
                 exit(11)
         else:
-            print("bad argument")
-            close_them()
+            print("bad argument", file=sys.stderr)
             exit(10)
 
     #
     if not XML_source:
         if not inputs:
-            print("--source or --input must be specified")
+            print("--source or --input must be specified", file=sys.stderr)
             exit(10)
         else:
             XML_source = sys.stdin
@@ -72,31 +70,37 @@ def main():
         tree = ET.parse(XML_source)
         root = tree.getroot()
     except:
-        print("problem with xml file structure")
+        print("problem with xml file structure", file=sys.stderr)
         exit(31)
     #<program>
     if root.tag != 'program':
-        print("element program missing, got:", root.tag)
+        print("element program missing, got:", root.tag, file=sys.stderr)
         exit(32)
+    else:
+        try:
+            root.attrib["language"]
+        except:
+            print("missing atribute language", file=sys.stderr)
+            exit(32)
     my_instructions = []
     for child in root:
         #<instruction>
         if not child.tag or child.tag != "instruction":
-            print("missing element instruction")
+            print("missing element instruction", file=sys.stderr)
             exit(32)
         try:
             order = child.attrib["order"]
         except:
-            print("missing attribute order")
+            print("missing attribute order", file=sys.stderr)
             exit(32)
         vzt = re.match('^\+*[0-9]+$', order)
         if not vzt:
-            print("wrong order type")
+            print("wrong order type", file=sys.stderr)
             exit(32)
         try:
             opcode = child.attrib["opcode"]
         except:
-            print("missing attribute opcode")
+            print("missing attribute opcode", file=sys.stderr)
             exit(32)
         type1 = ''
         arg1 = ''
@@ -111,12 +115,12 @@ def main():
                 try:
                     type1 = child2.attrib["type"]
                 except:
-                    print("arg1 missing attribute type")
+                    print("arg1 missing attribute type", file=sys.stderr)
                     exit(32)
                 try:
                     arg1 = child2.text
                 except:
-                    print("arg1 missing attribute type")
+                    print("arg1 missing attribute type", file=sys.stderr)
                     exit(32)
                 if not arg1:
                     arg1 = ""
@@ -126,12 +130,12 @@ def main():
                 try:
                     type2 = child2.attrib["type"]
                 except:
-                    print("arg2 missing attribute type")
+                    print("arg2 missing attribute type", file=sys.stderr)
                     exit(32)
                 try:
                     arg2 = child2.text
                 except:
-                    print("arg2 missing attribute type")
+                    print("arg2 missing attribute type", file=sys.stderr)
                     exit(32)
                 if not arg2:
                     arg2 = ""
@@ -141,26 +145,25 @@ def main():
                 try:
                     type3 = child2.attrib["type"]
                 except:
-                    print("arg3 missing attribute type")
+                    print("arg3 missing attribute type", file=sys.stderr)
                     exit(32)
                 try:
                     arg3 = child2.text
                 except:
-                    print("arg3 missing attribute type")
+                    print("arg3 missing attribute type", file=sys.stderr)
                     exit(32)
                 if not arg3:
                     arg3 = ""
                 check_syn(type3, arg3)
-
             #wrong attribute
             else:
-                print("wrong attribute:", child.tag)
+                print("wrong attribute:", child.tag, file=sys.stderr)
                 exit(32)
 
         try:
             my_instructions.append(instrukce(int(order), opcode, type1, arg1, type2, arg2, type3, arg3))
         except:
-            print("error when tried to append array of instructions, instruction:", opcode)
+            print("error when tried to append array of instructions, instruction:", opcode, file=sys.stderr)
             exit(32)
     instr_list = my_instructions.copy()
     #get count of instructions in array
@@ -227,13 +230,16 @@ def main():
         #remove used instruction from array and decrease count
         my_instructions.remove(instr)
         count = len(my_instructions)
-    
+    try:
+        close(inputs)
+    except:
+        ignorrrr = True
+    exit(0)
 class instrukce:
     def __init__(self, order, opcode, type1, arg1, type2, arg2, type3, arg3):
-        opcode = opcode.upper()
-        arg1 = re.sub("\\\\(\d+)", lambda x : chr(int(x.group(1))), arg1)
-        arg2 = re.sub("\\\\(\d+)", lambda x : chr(int(x.group(1))), arg2)
-        arg3 = re.sub("\\\\(\d+)", lambda x : chr(int(x.group(1))), arg3)
+        arg1 = re.sub("\\\\(\d{3})", lambda x : chr(int(x.group(1))), arg1)
+        arg2 = re.sub("\\\\(\d{3})", lambda x : chr(int(x.group(1))), arg2)
+        arg3 = re.sub("\\\\(\d{3})", lambda x : chr(int(x.group(1))), arg3)
         self.order = order
         self.opcode = opcode
         self.type1 = type1
@@ -250,6 +256,10 @@ class instrukce:
                 if type3:
                     count += 1
         if opcode == "MOVE" and count == 2:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
             return
         elif opcode == "CREATEFRAME" and count == 0:
             return
@@ -258,64 +268,196 @@ class instrukce:
         elif opcode == "POPFRAME" and count == 0:
             return
         elif opcode == "DEFVAR" and count == 1:
+            if is_symb(type1) != 1:
+                exit(32)
             return
         elif opcode == "CALL" and count == 1:
+            if type1 != "label":
+                exit(32)
             return
         elif opcode == "RETURN" and count == 0:
             return
         elif opcode == "PUSHS" and count == 1:
+            if is_symb(type1) == 2:
+                exit(32)
             return
         elif opcode == "POPS" and count == 1:
+            if is_symb(type1) != 1:
+                exit(32)
             return
         elif opcode == "ADD" and count == 3:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
+            elif is_symb(type3) == 2:
+                exit(32)
             return
         elif opcode == "SUB" and count == 3:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
+            elif is_symb(type3) == 2:
+                exit(32)
             return
         elif opcode == "MUL" and count == 3:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
+            elif is_symb(type3) == 2:
+                exit(32)
             return
         elif opcode == "IDIV" and count == 3:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
+            elif is_symb(type3) == 2:
+                exit(32)
             return
         elif opcode == "LT" and count == 3:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
+            elif is_symb(type3) == 2:
+                exit(32)
             return
         elif opcode == "GT" and count == 3:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
+            elif is_symb(type3) == 2:
+                exit(32)
             return
         elif opcode == "EQ" and count == 3:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
+            elif is_symb(type3) == 2:
+                exit(32)
             return
         elif opcode == "AND" and count == 3:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
+            elif is_symb(type3) == 2:
+                exit(32)
             return
         elif opcode == "OR" and count == 3:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
+            elif is_symb(type3) == 2:
+                exit(32)
             return
         elif opcode == "NOT" and count == 2:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
             return
         elif opcode == "INT2CHAR" and count == 2:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type1) == 2:
+                exit(32)
             return
         elif opcode == "STRI2INT" and count == 3:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
+            elif is_symb(type3) == 2:
+                exit(32)
             return
         elif opcode == "READ" and count == 2:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif type2 != "type":
+                exit(32)
+            elif is_symb(arg2) != 0:
+                exit(32)
+            elif arg2.lower() == "nil":
+                exit(32)
             return
         elif opcode == "WRITE" and count == 1:
+            if is_symb(type1) == 2:
+                exit(32)
             return
         elif opcode == "CONCAT" and count == 3:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
+            elif is_symb(type3) == 2:
+                exit(32)
             return
         elif opcode == "STRLEN" and count == 2:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
             return
         elif opcode == "GETCHAR" and count == 3:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
+            elif is_symb(type3) == 2:
+                exit(32)
             return
         elif opcode == "SETCHAR" and count == 3:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
+            elif is_symb(type3) == 2:
+                exit(32)
             return
         elif opcode == "TYPE" and count == 2:
+            if is_symb(type1) != 1:
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
             return
         elif opcode == "LABEL" and count == 1:
+            if type1 != "label":
+                exit(32)
             return
         elif opcode == "JUMP" and count == 1:
+            if type1 != "label":
+                exit(32)
             return
         elif opcode == "JUMPIFEQ" and count == 3:
+            if type1 != "label":
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
+            elif is_symb(type3) == 2:
+                exit(32)
             return
         elif opcode == "JUMPIFNEQ" and count == 3:
+            if type1 != "label":
+                exit(32)
+            elif is_symb(type2) == 2:
+                exit(32)
+            elif is_symb(type3) == 2:
+                exit(32)
             return
         elif opcode == "EXIT" and count == 1:
+            if is_symb(type1) == 2:
+                exit(32)
             return
         elif opcode == "DPRINT" and count == 1:
+            if is_symb(type1) == 2:
+                exit(32)
             return
         elif opcode == "BREAK" and count == 0:
             return
@@ -354,7 +496,7 @@ def check_syn(arg_type, arg):
             exit(32)
     #string
     elif arg_type == "string":
-        arg
+        return 0
     #bool
     elif arg_type == "bool":
         if arg != "true" and arg != "false":
@@ -413,9 +555,9 @@ def instr_exec(instr):
         
         #var
         if is_symb(instr.type1) != 1:
-            exit(99)
+            exit(32)
         elif blabla == 2:
-            exit(99)
+            exit(32)
         var_type = var_exist(instr.arg1)
         #variable must exist
         if var_type == 3:
@@ -449,7 +591,7 @@ def instr_exec(instr):
                     global_frame[index].value = temporary_frame[index2].value
                     global_frame[index].val_type = temporary_frame[index2].val_type
                 else:
-                    exit(99)
+                    exit(32)
             #MOVE GF konst
             elif blabla == 0:
                 global_frame[index].value = instr.arg2
@@ -486,7 +628,7 @@ def instr_exec(instr):
                     local_frame[lf_index][index].value = var2.value
                     local_frame[lf_index][index].val_type = var2.val_type
                 else:
-                    exit(99)
+                    exit(32)
             # MOVE LF konst
             elif blabla == 0:
                 local_frame[lf_index][index].value = instr.arg2
@@ -521,13 +663,13 @@ def instr_exec(instr):
                     temporary_frame[index].value = var2.value
                     temporary_frame[index].val_type = var2.val_type
                 else:
-                    exit(99)
+                    exit(32)
             # MOVE TF konst
             elif blabla == 0:
                 temporary_frame[index].value = instr.arg2
                 temporary_frame[index].val_type = instr.type2
         else:
-            exit(99)
+            exit(32)
         
     elif instr.opcode == "CREATEFRAME":
         temporary_frame = []
@@ -601,7 +743,7 @@ def instr_exec(instr):
         elif typ == 0:
             stack.append(zas_item(instr.arg1,instr.type1))
         else:
-            exit(99)
+            exit(32)
 
     elif instr.opcode == "POPS":
         typ = is_symb(instr.type1)
@@ -638,9 +780,9 @@ def instr_exec(instr):
         if symb != 1:
             exit(32)
         if symb2 == 2:
-            exit(99)
+            exit(32)
         if symb3 == 2:
-            exit(99)
+            exit(32)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
             is_defined(var2)
@@ -689,9 +831,9 @@ def instr_exec(instr):
         if symb != 1:
             exit(32)
         if symb2 == 2:
-            exit(99)
+            exit(32)
         if symb3 == 2:
-            exit(99)
+            exit(32)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
             is_defined(var2)
@@ -784,7 +926,7 @@ def instr_exec(instr):
                 variable.value = str(variable.value).lower()
 
         else:
-            exit(99)
+            exit(32)
 
         variable.val_type = "bool"
         var_to_f(variable, instr.arg1.split('@')[0])
@@ -797,9 +939,9 @@ def instr_exec(instr):
         if symb != 1:
             exit(32)
         if symb2 == 2:
-            exit(99)
+            exit(32)
         if symb3 == 2:
-            exit(99)
+            exit(32)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
             is_defined(var2)
@@ -839,7 +981,7 @@ def instr_exec(instr):
         if symb != 1:
             exit(32)
         if symb2 == 2:
-            exit(99)
+            exit(32)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
             is_defined(var2)
@@ -866,7 +1008,7 @@ def instr_exec(instr):
         if symb != 1:
             exit(32)
         if symb2 == 2:
-            exit(99)
+            exit(32)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
             is_defined(var2)
@@ -892,9 +1034,9 @@ def instr_exec(instr):
         if symb != 1:
             exit(32)
         if symb2 == 2:
-            exit(99)
+            exit(32)
         if symb3 == 2:
-            exit(99)
+            exit(32)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
             is_defined(var2)
@@ -1011,9 +1153,9 @@ def instr_exec(instr):
         if symb != 1:
             exit(32)
         if symb2 == 2:
-            exit(99)
+            exit(32)
         if symb3 == 2:
-            exit(99)
+            exit(32)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
             is_defined(var2)
@@ -1048,7 +1190,7 @@ def instr_exec(instr):
         if symb != 1:
             exit(32)
         if symb2 == 2:
-            exit(99)
+            exit(32)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
             is_defined(var2)
@@ -1073,9 +1215,9 @@ def instr_exec(instr):
         if symb != 1:
             exit(32)
         if symb2 == 2:
-            exit(99)
+            exit(32)
         if symb3 == 2:
-            exit(99)
+            exit(32)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
             is_defined(var2)
@@ -1109,9 +1251,9 @@ def instr_exec(instr):
         if symb != 1:
             exit(32)
         if symb2 == 2:
-            exit(99)
+            exit(32)
         if symb3 == 2:
-            exit(99)
+            exit(32)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
             is_defined(var2)
@@ -1151,7 +1293,7 @@ def instr_exec(instr):
         if symb != 1:
             exit(32)
         if symb2 == 2:
-            exit(99)
+            exit(32)
         if symb2 == 1:
             var2 = get_var(instr.arg2)
         elif symb2 == 0:
@@ -1259,7 +1401,7 @@ def instr_exec(instr):
     elif instr.opcode == "EXIT":
         symb = is_symb(instr.type1)
         if symb == 2:
-            exit(99)
+            exit(32)
         elif symb == 1:
             var = get_var(instr.arg1)
             is_defined(var)
@@ -1279,7 +1421,7 @@ def instr_exec(instr):
     elif instr.opcode == "DPRINT":
         symb = is_symb(instr.type1)
         if symb == 2:
-            exit(99)
+            exit(32)
         elif symb == 1:
             var = get_var(instr.arg1)
             is_defined(var)
@@ -1290,8 +1432,72 @@ def instr_exec(instr):
         print(var.value, file=sys.stderr)
 
     elif instr.opcode == "BREAK":
-        print("\nBREAK:\ngf:",global_frame,"\nlf:",local_frame[lf_cnt],"\ntf:",temporary_frame, file=sys.stderr)
+        print("---BREAK---", file=sys.stderr)
+        print("GF:", file=sys.stderr)
+        dd = len(global_frame)
+        ccnt = 0
+        #vypis global_frame promennych
+        while dd > ccnt:
+            print(" promenna:",global_frame[ccnt].name, file=sys.stderr)
+            if str(global_frame[ccnt].val_type) == "":
+                print("  variable not defined", file=sys.stderr)
+            else:
+                print("  type:",str(global_frame[ccnt].val_type),"value:",str(global_frame[ccnt].value), file=sys.stderr)
+            ccnt += 1
+        #vypis local_frame ...
+        print("LF:", file=sys.stderr)
+        ccnt = 0
+        not_defined = False
+        dd = len(local_frame)
+        if dd <= 0:
+            not_defined = True
+        if not_defined == True:
+            print(" local frame not defined", file=sys.stderr)
+        else:
+            while dd > ccnt:
+                dd2 = len(local_frame[ccnt])
+                ccnt2 = 0
+                while dd2 > ccnt2:
+                    print(" promenna:",local_frame[ccnt][ccnt2].name, file=sys.stderr)
+                    if str(local_frame[ccnt][ccnt2].val_type) == "":
+                        print("  variable not defined", file=sys.stderr)
+                    else:
+                        print("  type:",str(local_frame[ccnt][ccnt2].val_type),"value:",local_frame[ccnt][ccnt2].value, file=sys.stderr)
+                    ccnt2 += 1
+                ccnt += 1
+        print("TF:", file=sys.stderr)
+        ccnt = 0
+        not_defined = False
+        try:
+            dd = len(temporary_frame)
+        except:
+            not_defined = True
+        if not_defined == True:
+            print(" temporary frame not defined", file=sys.stderr)
+        else:
+            while dd > ccnt:
+                print(" promenna:",temporary_frame[ccnt].name, file=sys.stderr)
+                if str(temporary_frame[ccnt].val_type) == "":
+                    print("  variable not defined", file=sys.stderr)
+                else:
+                    print("  type:",str(temporary_frame[ccnt].val_type,"value:",temporary_frame[ccnt].value))
+                ccnt += 1
+        print("STACK:", file=sys.stderr)
+        ccnt = 0
+        dd = len(stack)
+        if dd == 0:
+            print(" stack empty", file=sys.stderr)
+        else:
+            print(" top:")
+            while dd > ccnt:
+                print("  type:",str(stack[ccnt].value_type),"value:",str(stack[ccnt].value))
+                ccnt += 1
+        print("---BREAK END---", file=sys.stderr)
 
+
+
+
+    #neznama promenna
     else:
         exit(32)
 
@@ -1314,7 +1520,7 @@ def get_var(name):
     elif var_ex == 2:
         return temporary_frame[index]
     else:
-        exit(99)
+        exit(32)
 
 #add var to frame, @ret 0 if ok
 def var_to_f(var, frame):
@@ -1507,7 +1713,7 @@ def int_cycles(order):
         #remove used instruction from array and decrease count
         my_instructions.remove(instr)
         count -= 1
-
+    exit(0)
 
 def is_defined(var):
     if not var.val_type:
@@ -1524,11 +1730,5 @@ def get_label(label):
                 return int(instr_list[cnt].order)
         cnt += 1
     exit(52)
-
-
-def close_them():
-    if inputs:
-        close(inputs)
-        print("closed inputs")
 
 main()
