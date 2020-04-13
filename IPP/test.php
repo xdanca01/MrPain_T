@@ -75,11 +75,11 @@ $options_counter = 0;
 
     if($recursive == FALSE)
     {
-        exec("find -maxdepth 1 $dirpath | grep \.src", $src_files);
+        exec("find -maxdepth 1 $dirpath | grep \.src 2>/dev/null", $src_files);
     }
     else
     {
-        exec("find $dirpath | grep \.src", $src_files);
+        exec("find $dirpath | grep \.src 2>/dev/null", $src_files);
     }
 
 
@@ -136,7 +136,7 @@ $options_counter = 0;
         #both
         if($int_only == FALSE && $parse_only == FALSE)
         {
-            exec("php7.4 $parse_script <$src_file >$xml_file ", $parse_out, $parse_rc);
+            exec("php7.4 $parse_script <$src_file >$xml_file 2>/dev/null", $parse_out, $parse_rc);
             if($parse_rc != 0)
             {
                 if($parse_rc != $rc_file_zero)
@@ -152,12 +152,12 @@ $options_counter = 0;
             }
             else
             {
-                exec("python3 $int_script --input=$in_file --source=$xml_file >$int_diff_file ", $int_out, $int_rc);
+                exec("python3 $int_script --input=$in_file --source=$xml_file >$int_diff_file 2>/dev/null", $int_out, $int_rc);
                 if($rc_file_zero == $int_rc)
                 {
                     if($int_rc == 0)
                     {
-                        exec("diff $out_file $int_diff_file ", $diff_out, $diff_rc);
+                        exec("diff $out_file $int_diff_file 2>/dev/null", $diff_out, $diff_rc);
                         if($diff_rc == 0)
                         {
                             $PASS_counter += 1;
@@ -182,8 +182,8 @@ $options_counter = 0;
                     gen_HTML("FAIL", $test_name, $int_rc, "NONE", $rc_file_zero, "red");
                 }
             }
-            exec("rm $int_diff_file ",$ignoruju);
-            exec("rm $xml_file ",$ignoruju);
+            exec("rm $int_diff_file 2>/dev/null",$ignoruju);
+            exec("rm $xml_file 2>/dev/null",$ignoruju);
         }
         elseif($parse_only == TRUE)
         {
@@ -249,22 +249,22 @@ $options_counter = 0;
                 gen_HTML("FAIL", $test_name, $int_rc, "NONE", $rc_file_zero, "red");
             }
         }
-        if ($bool_in == TRUE) exec("rm $in_file",$ignoruju);
-        if ($bool_rc == TRUE) exec("rm $rc_file",$ignoruju);
-        if ($bool_out == TRUE) exec("rm $out_file",$ignoruju);
+        if ($bool_in == TRUE) exec("rm $in_file 2>/dev/null",$ignoruju);
+        if ($bool_rc == TRUE) exec("rm $rc_file 2>/dev/null",$ignoruju);
+        if ($bool_out == TRUE) exec("rm $out_file 2>/dev/null",$ignoruju);
     }
 function is_xml_ok($file1, $file2)
 {
     global $jexamxml;
     $jexamxml_options = substr($jexamxml, 0, -12);
     $jexamxml_options = $jexamxml_options . "options";
-    exec("java -jar $jexamxml $file1 $file2 /dev/null $jexamxml_options ",$neco,$rc_code);
+    exec("java -jar $jexamxml $file1 $file2 /dev/null $jexamxml_options 2>/dev/null",$neco,$rc_code);
     if ($rc_code == 2)
     {
         $fffile= $file2 . ".log";
-        exec("rm $fffile ",$ignore,$ignore);
+        exec("rm $fffile 2>/dev/null",$ignore,$ignore);
         $ffile = $file1 . ".log";
-        exec("rm $ffile ",$ignore,$ignore);
+        exec("rm $ffile 2>/dev/null",$ignore,$ignore);
     }
     return $rc_code;
 }
