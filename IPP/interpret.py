@@ -18,7 +18,7 @@ instr_list = ""
 my_instructions = ""
 call_cnt = 0
 
-
+#main function, which controls program flow
 def main():
     global XML_source
     global inputs
@@ -235,6 +235,7 @@ def main():
     except:
         ignorrrr = True
     exit(0)
+#class instruction, which contain all instruction data
 class instrukce:
     def __init__(self, order, opcode, type1, arg1, type2, arg2, type3, arg3):
         arg1 = re.sub("\\\\(\d{3})", lambda x : chr(int(x.group(1))), arg1)
@@ -470,19 +471,21 @@ class instrukce:
 
 
 
-
+#class that contain data about variables and is saved in variables frame
 class promenna:
     value = ''
     val_type = ''
     def __init__(self, arg):
         self.name = arg.split('@')[1]
 
+#class that contain data about item on stack
 class zas_item:
     def __init__(self, value, value_type):
         self.value = value
         self.val_type = value_type
 
 
+#function that checks syntax of arg based on arg_type
 def check_syn(arg_type, arg):
     arg_type = arg_type.lower()
     if not arg_type:
@@ -540,6 +543,7 @@ def check_syn(arg_type, arg):
     return 0
 
 #ret 0 if ok, else 1
+#execute provided instruction
 def instr_exec(instr):
 
     global local_frame
@@ -1501,7 +1505,7 @@ def instr_exec(instr):
     else:
         exit(32)
 
-#return 
+#return variable, that is found by name
 def get_var(name):
 
     global global_frame
@@ -1644,6 +1648,7 @@ def var_exist(par):
             cnt += 1
     return 3
 
+#function, that is called by instruction CALL and creates whole new queue with instructions
 def int_cycles(order):
 
     global instr_list
@@ -1715,6 +1720,7 @@ def int_cycles(order):
         count -= 1
     exit(0)
 
+#checks, that variable is defined
 def is_defined(var):
     if not var.val_type:
         exit(56)

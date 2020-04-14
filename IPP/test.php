@@ -152,7 +152,7 @@ $options_counter = 0;
             }
             else
             {
-                exec("python3 $int_script --input=$in_file --source=$xml_file >$int_diff_file 2>/dev/null", $int_out, $int_rc);
+                exec("python3.8 $int_script --input=$in_file --source=$xml_file >$int_diff_file 2>/dev/null", $int_out, $int_rc);
                 if($rc_file_zero == $int_rc)
                 {
                     if($int_rc == 0)
@@ -185,6 +185,7 @@ $options_counter = 0;
             exec("rm $int_diff_file 2>/dev/null",$ignoruju);
             exec("rm $xml_file 2>/dev/null",$ignoruju);
         }
+	//parse-only
         elseif($parse_only == TRUE)
         {
             exec("php7.4 $parse_script <$src_file >$xml_file 2>/dev/null", $parse_out, $parse_rc);
@@ -217,10 +218,11 @@ $options_counter = 0;
                 gen_HTML("FAIL", $test_name, $parse_rc, "NONE", $rc_file_zero, "red");
             }
         }
+	//int-only
         elseif($int_only == TRUE)
         {
             $my_out = "my1out.out";
-            exec("python3 $int_script --input=$in_file --source=$src_file >$my_out 2>/dev/null", $int_out, $int_rc);
+            exec("python3.8 $int_script --input=$in_file --source=$src_file >$my_out 2>/dev/null", $int_out, $int_rc);
             if($rc_file_zero == $int_rc)
             {
                 if($int_rc == 0)
@@ -253,6 +255,8 @@ $options_counter = 0;
         if ($bool_rc == TRUE) exec("rm $rc_file 2>/dev/null",$ignoruju);
         if ($bool_out == TRUE) exec("rm $out_file 2>/dev/null",$ignoruju);
     }
+
+//like diff, but for xml files
 function is_xml_ok($file1, $file2)
 {
     global $jexamxml;
@@ -268,6 +272,8 @@ function is_xml_ok($file1, $file2)
     }
     return $rc_code;
 }
+
+//generates HTML output based on arguments
 function gen_HTML($status, $jmeno, $return_code, $DIFF, $expected_rc, $color)
 {
     echo "<tr style='background-color: $color'>\n";
@@ -278,6 +284,8 @@ function gen_HTML($status, $jmeno, $return_code, $DIFF, $expected_rc, $color)
     echo "<td>$status</td>\n";
     echo "</tr>\n";
 }
+
+//generates second table with sum of passed and failed tests
 function gen_second_table()
 {
     global $counter;
