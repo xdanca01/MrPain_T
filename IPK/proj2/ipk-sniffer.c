@@ -8,20 +8,23 @@
 #include <netinet/ether.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <sys/socket.h>
 
 
 //callback funkce pro zpracovani dat packetu
 void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u_char* packet)
 {
     char CAS[100];
-    int x = pkthdr->len - 2;
+    int x = pkthdr->len;
     time_t ttime = pkthdr->ts.tv_sec;
     struct tm *tmp = localtime(&ttime);
     char format[] = "%H:%M:%S";
     strftime(CAS,sizeof(CAS), format,tmp);
-    int sourcePort = 0;
-    memcpy(&(((char *)&sourcePort)[2]),(void *)&packet[35],2);
-    printf("%d %s.%06ld %d\n", x,CAS,pkthdr->ts.tv_usec,sourcePort);
+    unsigned int sourcePort = packet[34] << 8 | packet[35];
+    unsigned int destPort = packet[36] << 8 | packet[37];
+    unsigned int destinationIP[4] = {packet[26], packet[27], packet[28], packet[29] };
+    unsigned int sourceIP[4] = {packet[30], packet[31], packet[32], packet[33] };
+    printf("%s.%06ld %d.%d.%d.%d:%d > %d.%d.%d.%d:%d\nlength: %d\n",CAS,pkthdr->ts.tv_usec,sourceIP[0],sourceIP[1],sourceIP[2],sourceIP[3],sourcePort,destinationIP[0],destinationIP[1],destinationIP[2],destinationIP[3],destPort,x);
     unsigned char *output;
     output = malloc(x*sizeof(unsigned char));
     if (output == NULL)
@@ -29,23 +32,19 @@ void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u
     printf(" "); 
     for (int q = 0; q < x; ++q)
     {
-        if(q == 12)
-        {
-            q = q + 1;
-            continue;
-        }
+        if(q % 8 == 0 && q != 0) printf(" ");
         if(q % 16 == 0 && q != 0)
         {
             printf(" ");
             for(int d = q-16; d < q; ++d)
             {
-                if(d % 8 == 0 && d != 0) printf(" ");
+                if(d % 8 == 0) printf(" ");
                 printf("%c", output[d]);
             }
             printf("\n");
         }
         if (q > 0) printf(" ");
-        printf("%02X",packet[q]);
+        printf("%02x",packet[q]);
         //0xff
         if((int)packet[q] >= 32 && (int)packet[q] <= 127)
         {
@@ -58,12 +57,12 @@ void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u
         if(q + 1 == x && q % 16 != 0)
         {
             printf(" ");
-            for(int d = x - (q % 16); d < x; ++d)
+            for(int d = x - (q % 16) - 1; d < x; ++d)
             {
                 if(d % 8 == 0 && d != 0) printf(" ");
                 printf("%c", output[d]);
             }
-            printf("\n");
+            printf("\n\n");
         }
     }
     free(output);
@@ -131,17 +130,20 @@ int main(int argc, char *argv[])
             }
             return 0;
         }
-        pcap_lookupnet(interface,&netip,&maska,errbuf);
         printf("DEBUG: odchytavam na: %s\n",interface);
         //ziska handle
-        open_dev = pcap_open_live(interface, snaplen, 1000, 0, errbuf);
+        open_dev = pcap_open_live(interface, snaplen, 1, 0, errbuf);
         if (open_dev == NULL)
         {
             fprintf(stderr, "Nastal error: %s\n", errbuf);
             return(1);
         }
 
-
+        if( pcap_lookupnet(interface,&netip,&maska,errbuf) < 0 )
+        {
+            printf("pcap_lookupnet: %s\n", errbuf);
+            return 1;
+        }
         //proces nastaveni filteru
         struct bpf_program fp;
         if(tcp == true)
@@ -191,7 +193,7 @@ int main(int argc, char *argv[])
 
         }
         printf("DEBUG: protokol: %s\n", protokol);
-        if(pcap_compile(open_dev, &fp, protokol, 0, netip) == -1)
+        if(pcap_compile(open_dev, &fp, protokol, 0, maska) == -1)
         {
             pcap_perror(open_dev,"prefix:");
             printf("%s\n", pcap_geterr(open_dev));
