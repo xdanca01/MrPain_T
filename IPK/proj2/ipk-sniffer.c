@@ -7,9 +7,10 @@
 #include <string.h>
 #include <netinet/ether.h>
 #include <netinet/in.h>
+#include <netinet/ip.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
-
+#include <netdb.h>
 
 //callback funkce pro zpracovani dat packetu
 void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u_char* packet)
@@ -20,11 +21,18 @@ void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u
     struct tm *tmp = localtime(&ttime);
     char format[] = "%H:%M:%S";
     strftime(CAS,sizeof(CAS), format,tmp);
+    unsigned int sourceIP2[4] = {packet[26], packet[27], packet[28], packet[29] };
+    unsigned int destinationIP[4] = {packet[30], packet[31], packet[32], packet[33] };
     unsigned int sourcePort = packet[34] << 8 | packet[35];
     unsigned int destPort = packet[36] << 8 | packet[37];
-    unsigned int destinationIP[4] = {packet[26], packet[27], packet[28], packet[29] };
-    unsigned int sourceIP[4] = {packet[30], packet[31], packet[32], packet[33] };
-    printf("%s.%06ld %d.%d.%d.%d:%d > %d.%d.%d.%d:%d\nlength: %d\n",CAS,pkthdr->ts.tv_usec,sourceIP[0],sourceIP[1],sourceIP[2],sourceIP[3],sourcePort,destinationIP[0],destinationIP[1],destinationIP[2],destinationIP[3],destPort,x);
+    char sourceIP[300], destIP[300];
+    sprintf(sourceIP, "%d.%d.%d.%d",sourceIP2[0],sourceIP2[1],sourceIP2[2],sourceIP2[3]);
+    sprintf(destIP, "%d.%d.%d.%d",destinationIP[0],destinationIP[1],destinationIP[2],destinationIP[3]);
+    struct hostent* srcHOST = gethostbyaddr(sourceIP, sizeof(sourceIP), AF_INET);
+    struct hostent* destHOST = gethostbyaddr(destIP, sizeof(destIP), AF_INET);
+    if(srcHOST) if(srcHOST->h_name)printf("hostname:%s\n",srcHOST->h_name);
+    if(destHOST) if(destHOST->h_name)printf("hostname:%s\n",destHOST->h_name);
+    printf("%s.%06ld %s:%d > %s:%d\nlength: %d\n",CAS,pkthdr->ts.tv_usec,sourceIP,sourcePort,destIP,destPort,x);
     unsigned char *output;
     output = malloc(x*sizeof(unsigned char));
     if (output == NULL)
@@ -200,7 +208,7 @@ int main(int argc, char *argv[])
             fprintf(stderr, "Nastal error behem compilovani filteru\n");
             return 1;
         }
-        if(pcap_setfilter(open_dev, &fp) == -1)
+        if(pcap_setfilter(open_dev, &fp) < 0)
         {
             fprintf(stderr, "Nastal error behem nastavovani filteru\n");
             return 1;
