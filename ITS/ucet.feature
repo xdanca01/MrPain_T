@@ -1,23 +1,25 @@
 Feature: Správa účtu na webu
     Scenario: Registrace nového uživatele
-        Given Výskyt na stránce registrace nového účtu
-        When Provede registraci se správnými údaji
+        Given Výskyt na stránce "index.php?route=account/register"
+        When Provede registraci se správnými údaji "test@mail.com" "heslo"
         Then Objeví se potvrzení o registraci
 
     Scenario: Přihlášení uživatele
-        Given Uživatel je zaregistrován
-        And Vyskytuje se na stránce pro přihlášení
-        When Zadá správné údaje
+        Given Uživatel je odhlášen
+        And Vyskytuje se na stránce "index.php?route=account/login"
+        When Zadá správné údaje "test@mail.com" "heslo"
         Then Dojde k přihlášení
 
     Scenario: Změna hesla
-        Given Uživatel je přihlášen
-        And Vyskytuje se na stránce pro změnu hesla
-        When Zadá správně nové heslo
+        Given Uživatel "test@mail.com" "heslo" je přihlášen
+        And Vyskytuje se na stránce "index.php?route=account/password"
+        When Zadá správně nové heslo "heslo1"
+        And Uloží změny
         Then Potvrdí se změna hesla
         
     Scenario: Změna osobních informací
-        Given Uživatel je přihlášen
-        And Vyskytuje se na stránce pro změnu osobních informací
-        When Změní některou z informací v údajích
+        Given Uživatel "test@mail.com" "heslo1" je přihlášen
+        And Vyskytuje se na stránce "index.php?route=account/edit"
+        When Změní informaci "1144"
+        And Uloží změny
         Then Potvrdí se změna informací

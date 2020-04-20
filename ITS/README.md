@@ -56,20 +56,20 @@
  - Testování z administrátorského prostředí s přesnějším zaměřením na stránku správy produktů.
  - Testuje se základní funkčnost práce s produkty v nabídce, které se buď nově přidají nebo se změní jejich stav.
 ### 1. Přidání produktu do nabídky
- - Požadavky: Administrátorská práva a výskyt na stránce produktu
+ - Požadavky: Uživatel je přihlášen na administrátorském účtu a výskyt na stránce produktu
  - Testování: Vytvoří se nový produkt a vyplní informace o produktu
  - Výsledek: V seznamu produktů se objeví nový produkt
 ### 2. Změna statusu produktu
- - Požadavky: Administrátorská práva, výskyt na stránce produktu a existence libovolného produktu
+ - Požadavky: Uživatel je přihlášen na administrátorském účtu, výskyt na stránce produktu a existence libovolného produktu
  - Testování: Přejde se na informace o produktu a změní se status produktu
  - Výsledek: V seznamu produktů bude u produktu změněný status
 ### 3. Změna počtu kusů produktu
- - Požadavky: Administrátorská práva, výskyt na stránce produktu a existence
+ - Požadavky: Uživatel je přihlášen na administrátorském účtu, výskyt na stránce produktu a existence
  libovolného produktu
  - Testování: Přejde se na stránku s informacemi o produktu a změní se informace o počtu kusů produktu
  - Výsledek: Dojde k změně informace o počtu kusů v seznamu produktů
 ### 4. Změna ceny produktu
- - Požadavky: Administrátorská práva, výskyt na stránce produktu a existence
+ - Požadavky: Uživatel je přihlášen na administrátorském účtu, výskyt na stránce produktu a existence
  libovolného produktu
  - Testování: Přejde se na stránku s informacemi o produktu a změní se informace o ceně produktu
  - Výsledek: Dojde ke změně informace o ceně u danného produktu
@@ -78,20 +78,20 @@
  - Soubor se scénáři pro test administrátorské stránky pro správu objednávek.
  - V testování správy objednávek se pracuje se stavem objednávky, obsahem objednávky a zobrazením objednávky.
 ### 1. Změna statusu objednávky
- - Požadavky: administrátorská práva, výskyt na stránce s objednávkami a existence objednávky
+ - Požadavky: Uživatel je přihlášen na administrátorském účtu, výskyt na stránce s objednávkami a existence objednávky
  - Testování: Změní se status objednávky
  - Výsledek: Status objednávky bude odlišný
 ### 2. Změna měny objednávky
- - Požadavky: administrátorská práva, výskyt na stránce s objednávkami a existence objednávky
+ - Požadavky: Uživatel je přihlášen na administrátorském účtu, výskyt na stránce s objednávkami a existence objednávky
  - Testování: Přejde se na detaily jedné z objednávek a změní se měna objednávky
  - Výsledek: Změní se měna a cena objednávky
 ### 3. Přidání produktu do objednávky
- - Požadavky: administrátorská práva, výskyt na stránce s objednávkami a exi
+ - Požadavky: Uživatel je přihlášen na administrátorském účtu, výskyt na stránce s objednávkami a exi
 stence objednávky
  - Testování: Přejde se na stránku s detaily objednávky a přidá se do seznamu produktů objednávky nějaký z produktů v nabídce
  - Výsledek: Změní se cena objednávky
 ### 4. Smazání objednávky
- - Požadavky: administrátorská práva, výskyt na stránce s objednávkami a exi
+ - Požadavky: Uživatel je přihlášen na administrátorském účtu, výskyt na stránce s objednávkami a exi
 stence objednávky
  - Testování: Vybere se jedna z objednávek a smaže se
  - Výsledek: Objednávka se nadále nevyskytuje mezi objednávkami
