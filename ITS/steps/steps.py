@@ -48,9 +48,8 @@ def step_impl(context, mail, heslo):
 
 @then(u'Objeví se potvrzení o registraci')
 def step_impl(context):
-    url = context.driver.current_url
-    print(url)
-    assert "success" in url
+    WebDriverWait(context.driver, 5).until(expected_conditions.text_to_be_present_in_element((By.CSS_SELECTOR, "h1"), "Your Account Has Been Created!"))
+    assert context.driver.find_element(By.CSS_SELECTOR, "h1").text == "Your Account Has Been Created!"
 
 @given(u'Uživatel je odhlášen')
 def step_impl(context):
@@ -62,6 +61,7 @@ def step_impl(context, prihlaseni):
 
 @when(u'Zadá správné údaje "{mail}" "{heslo}"')
 def step_impl(context, mail, heslo):
+    WebDriverWait(context.driver, 2).until(expected_conditions.text_to_be_present_in_element((By.CSS_SELECTOR, ".col-sm-6:nth-child(2) h2"), "Returning Customer"))
     context.driver.find_element(By.ID, "input-email").click()
     context.driver.find_element(By.ID, "input-email").send_keys(mail)
     context.driver.find_element(By.ID, "input-password").click()
@@ -70,6 +70,7 @@ def step_impl(context, mail, heslo):
 
 @then(u'Dojde k přihlášení')
 def step_impl(context):
+    WebDriverWait(context.driver, 2)
     url = context.driver.current_url
     assert "account/account" in url
 
@@ -79,6 +80,7 @@ def step_impl(context, mail, heslo):
     elements = context.driver.find_elements(By.LINK_TEXT, "Logout")
     if len(elements) == 0:
         context.driver.get(context.base_url + "index.php?route=account/login")
+        WebDriverWait(context.driver, 5).until(expected_conditions.text_to_be_present_in_element((By.CSS_SELECTOR, ".col-sm-6:nth-child(2) h2"), "Returning Customer"))
         context.driver.find_element(By.ID, "input-email").click()
         context.driver.find_element(By.ID, "input-email").send_keys(mail)
         context.driver.find_element(By.ID, "input-password").click()
@@ -101,6 +103,7 @@ def step_impl(context):
 
 @then(u'Potvrdí se změna hesla')
 def step_impl(context):
+    WebDriverWait(context.driver, 2)
     assert context.driver.find_element(By.CSS_SELECTOR, ".alert").text == "Success: Your password has been successfully updated."
 
 @when(u'Změní informaci "{phone}"')
@@ -110,6 +113,7 @@ def step_impl(context, phone):
 
 @then(u'Potvrdí se změna informací')
 def step_impl(context):
+    WebDriverWait(context.driver, 2)
     assert context.driver.find_element(By.CSS_SELECTOR, ".alert").text == "Success: Your account has been successfully updated."
 
 @when(u'Přidá produkt do košíku')
@@ -119,6 +123,7 @@ def step_impl(context):
 @then(u'"{produkt}" se objeví v košíku')
 def step_impl(context, produkt):
     context.driver.get(context.base_url + "index.php?route=checkout/cart")
+    WebDriverWait(context.driver, 2)
     elements = context.driver.find_elements(By.LINK_TEXT, produkt)
     assert len(elements) > 0
 
@@ -127,8 +132,10 @@ def step_impl(context, produkt):
     elements = context.driver.find_elements(By.LINK_TEXT, produkt)
     if len(elements) == 0:
         context.driver.get(context.base_url + "index.php?route=product/product&product_id=40")
+        WebDriverWait(context.driver, 1)
         context.driver.find_element(By.ID, "button-cart").click()
         context.driver.get(context.base_url + "index.php?route=checkout/cart")
+        WebDriverWait(context.driver, 1)
         elements = context.driver.find_elements(By.LINK_TEXT, produkt)
     assert len(elements) > 0
 
@@ -144,6 +151,7 @@ def step_impl(context):
     context.driver.find_element(By.ID, "button-shipping-address").click()
     WebDriverWait(context.driver, 8).until(expected_conditions.element_to_be_clickable((By.ID, "button-shipping-method")))
     context.driver.find_element(By.ID, "button-shipping-method").click()
+    WebDriverWait(context.driver, 2).until(expected_conditions.text_to_be_present_in_element((By.CSS_SELECTOR, ".buttons:nth-child(5) > .pull-right"), "I have read and agree to the Terms & Conditions  "))
     context.driver.find_element(By.NAME, "agree").click()
     WebDriverWait(context.driver, 8).until(expected_conditions.element_to_be_clickable((By.ID, "button-payment-method")))
     context.driver.find_element(By.ID, "button-payment-method").click()
@@ -152,8 +160,8 @@ def step_impl(context):
 
 @then(u'Vytvoří se objednávka')
 def step_impl(context):
+    WebDriverWait(context.driver, 6).until(expected_conditions.text_to_be_present_in_element((By.CSS_SELECTOR, "h1"), "Your order has been placed!"))
     assert context.driver.find_element(By.CSS_SELECTOR, "h1").text == "Your order has been placed!"
-    #cleanup
 
 @when(u'Přidá produkt na wishlist')
 def step_impl(context):

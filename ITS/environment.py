@@ -13,9 +13,9 @@ import re, time, unittest
 
 
 def before_feature(context, feature):
-    #self.driver = webdriver.Remote(command_executor='http://mys01.fit.vutbr.cz:8013/wd/hub', desired_capabilities=DesiredCapabilities.FIREFOX)
-    context.driver = webdriver.Firefox()
-    context.driver.implicitly_wait(30)
+    context.driver = webdriver.Remote(command_executor='http://mys01.fit.vutbr.cz:4444/wd/hub', desired_capabilities=DesiredCapabilities.FIREFOX)
+    #context.driver = webdriver.Firefox()
+    context.driver.implicitly_wait(15)
     context.base_url = "http://mys01.fit.vutbr.cz:8013/"
     context.verificationErrors = []
     context.accept_next_alert = True
