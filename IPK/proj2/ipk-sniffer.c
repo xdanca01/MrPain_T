@@ -28,11 +28,28 @@ void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u
     char sourceIP[300], destIP[300];
     sprintf(sourceIP, "%d.%d.%d.%d",sourceIP2[0],sourceIP2[1],sourceIP2[2],sourceIP2[3]);
     sprintf(destIP, "%d.%d.%d.%d",destinationIP[0],destinationIP[1],destinationIP[2],destinationIP[3]);
-    struct hostent* srcHOST = gethostbyaddr(sourceIP, sizeof(sourceIP), AF_INET);
-    struct hostent* destHOST = gethostbyaddr(destIP, sizeof(destIP), AF_INET);
-    if(srcHOST) if(srcHOST->h_name)printf("hostname:%s\n",srcHOST->h_name);
-    if(destHOST) if(destHOST->h_name)printf("hostname:%s\n",destHOST->h_name);
-    printf("%s.%06ld %s:%d > %s:%d\nlength: %d\n",CAS,pkthdr->ts.tv_usec,sourceIP,sourcePort,destIP,destPort,x);
+    struct sockaddr_in srcHOST;
+    srcHOST.sin_family = AF_INET;
+    srcHOST.sin_port = sourcePort;
+    inet_aton(sourceIP, &srcHOST.sin_addr);
+    char SRChostt[200];
+    int SRC = getnameinfo((struct sockaddr *)&srcHOST,sizeof(srcHOST),&SRChostt[0],200,NULL,0,0);
+    struct sockaddr_in destHOST;
+    destHOST.sin_family = AF_INET;
+    destHOST.sin_port = destPort;
+    inet_aton(destIP, &destHOST.sin_addr);
+    char DSThostt[200];
+    int DST = getnameinfo((struct sockaddr *)&destHOST,sizeof(destHOST),&DSThostt[0],200,NULL,0,0);
+
+    if(SRC == 0 && DST == 0)
+    {
+        printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,SRChostt,sourcePort,DSThostt,destPort,x);
+    }
+    else if(SRC == 0 && DST) printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,SRChostt,sourcePort,destIP,destPort,x);
+    else if(SRC && DST == 0) printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,sourceIP,sourcePort,DSThostt,destPort,x);
+    else printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,sourceIP,sourcePort,destIP,destPort,x);
+    
+    
     unsigned char *output;
     output = malloc(x*sizeof(unsigned char));
     if (output == NULL)
@@ -52,6 +69,7 @@ void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u
             printf("\n");
         }
         if (q > 0) printf(" ");
+        if(q % 16 == 0) printf("0x%04X: ",q);
         printf("%02x",packet[q]);
         //0xff
         if((int)packet[q] >= 32 && (int)packet[q] <= 127)
@@ -64,13 +82,13 @@ void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u
         }
         if(q + 1 == x && q % 16 != 0)
         {
-            printf(" ");
+            printf("  ");
             for(int d = x - (q % 16) - 1; d < x; ++d)
             {
                 if(d % 8 == 0 && d != 0) printf(" ");
                 printf("%c", output[d]);
             }
-            printf("\n\n");
+            printf("\n");
         }
     }
     free(output);
@@ -87,26 +105,29 @@ int main(int argc, char *argv[])
         char *port = NULL;
         char *interface = NULL;
         struct pcap_pkthdr header;
-        static struct option long_options[] = {{"tcp", 0, NULL, 't'}, {"udp", 0, NULL, 'u'}};
-        int argument = argument = getopt_long(argc, argv, "i:p:n:", long_options ,NULL);
+        static struct option long_options[] = {{"tcp", 0, NULL, 'x'}, {"udp", 0, NULL, 'y'}};
+        int argument = getopt_long(argc, argv, "i:p:n:tu", long_options ,NULL);
         bool tcp = false, udp = false;
         char *protokol = NULL;
         struct ether_header *ether_ptr;
         bpf_u_int32 maska;
         bpf_u_int32 netip;
 
-
+        
         while(argument != -1)
         {
             switch (argument)
             {
                 case 't':
+                case 'x':
                     tcp = true;
                     break;
+                case 'y':
                 case 'u':
                     udp = true;
                     break;
                 case 'i':
+                    printf("%s\n",optarg);
                     interface = optarg;
                     break;
                 case 'p':
@@ -115,11 +136,13 @@ int main(int argc, char *argv[])
                 case 'n':
                     count = atoi(optarg);
                     break;
+                case '?':
+                    break;
                 default:
                     fprintf(stderr, "Error with argument occupied\n");
                     return 1 ;
             }
-            argument = getopt_long(argc, argv, "i:p:n:", long_options ,NULL);
+            argument = getopt_long(argc, argv, "i::p:n:tu", long_options ,NULL);
         }
         //najdi vsechna dostupna rozhrani
         if(interface == NULL)
