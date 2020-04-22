@@ -15,41 +15,73 @@
 //callback funkce pro zpracovani dat packetu
 void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u_char* packet)
 {
+    struct ether_header *ether = (struct ether_header*)packet;
     char CAS[100];
     int x = pkthdr->len;
     time_t ttime = pkthdr->ts.tv_sec;
     struct tm *tmp = localtime(&ttime);
     char format[] = "%H:%M:%S";
     strftime(CAS,sizeof(CAS), format,tmp);
-    unsigned int sourceIP2[4] = {packet[26], packet[27], packet[28], packet[29] };
-    unsigned int destinationIP[4] = {packet[30], packet[31], packet[32], packet[33] };
-    unsigned int sourcePort = packet[34] << 8 | packet[35];
-    unsigned int destPort = packet[36] << 8 | packet[37];
     char sourceIP[300], destIP[300];
-    sprintf(sourceIP, "%d.%d.%d.%d",sourceIP2[0],sourceIP2[1],sourceIP2[2],sourceIP2[3]);
-    sprintf(destIP, "%d.%d.%d.%d",destinationIP[0],destinationIP[1],destinationIP[2],destinationIP[3]);
-    struct sockaddr_in srcHOST;
-    srcHOST.sin_family = AF_INET;
-    srcHOST.sin_port = sourcePort;
-    inet_aton(sourceIP, &srcHOST.sin_addr);
-    char SRChostt[200];
-    int SRC = getnameinfo((struct sockaddr *)&srcHOST,sizeof(srcHOST),&SRChostt[0],200,NULL,0,0);
-    struct sockaddr_in destHOST;
-    destHOST.sin_family = AF_INET;
-    destHOST.sin_port = destPort;
-    inet_aton(destIP, &destHOST.sin_addr);
-    char DSThostt[200];
-    int DST = getnameinfo((struct sockaddr *)&destHOST,sizeof(destHOST),&DSThostt[0],200,NULL,0,0);
-
-    if(SRC == 0 && DST == 0)
+    if(ether->ether_type == 8)
     {
-        printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,SRChostt,sourcePort,DSThostt,destPort,x);
+        unsigned int sourcePort = packet[34] << 8 | packet[35];
+        unsigned int destPort = packet[36] << 8 | packet[37];
+        sprintf(sourceIP, "%d.%d.%d.%d",ether->ether_shost[0],ether->ether_shost[1],ether->ether_shost[2],ether->ether_shost[3]);
+        sprintf(destIP, "%d.%d.%d.%d",ether->ether_dhost[0],ether->ether_dhost[1],ether->ether_dhost[2],ether->ether_dhost[3]);
+        struct sockaddr_in srcHOST;
+        srcHOST.sin_family = AF_INET;
+        srcHOST.sin_port = sourcePort;
+        inet_aton(sourceIP, &srcHOST.sin_addr);
+        char SRChostt[200];
+        int SRC = getnameinfo((struct sockaddr *)&srcHOST,sizeof(srcHOST),&SRChostt[0],200,NULL,0,0);
+        struct sockaddr_in destHOST;
+        destHOST.sin_family = AF_INET;
+        destHOST.sin_port = destPort;
+        inet_aton(destIP, &destHOST.sin_addr);
+        char DSThostt[200];
+        int DST = getnameinfo((struct sockaddr *)&destHOST,sizeof(destHOST),&DSThostt[0],200,NULL,0,0);
+        if(SRC == 0 && DST == 0)
+        {
+            printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,SRChostt,sourcePort,DSThostt,destPort,x);
+        }
+        else if(SRC == 0 && DST) printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,SRChostt,sourcePort,destIP,destPort,x);
+        else if(SRC && DST == 0) printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,sourceIP,sourcePort,DSThostt,destPort,x);
+        else printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,sourceIP,sourcePort,destIP,destPort,x);
     }
-    else if(SRC == 0 && DST) printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,SRChostt,sourcePort,destIP,destPort,x);
-    else if(SRC && DST == 0) printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,sourceIP,sourcePort,DSThostt,destPort,x);
-    else printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,sourceIP,sourcePort,destIP,destPort,x);
+    else if(ether->ether_type == 56710)
+    {
+        unsigned int dstIP[16] = {packet[38],packet[39],packet[40],packet[41],packet[42],packet[43],packet[44],packet[45],packet[46],packet[47],packet[48],packet[49],packet[50],packet[51],packet[52],packet[53]};
+        unsigned int srcIP[16] = {packet[22],packet[23],packet[24],packet[25],packet[26],packet[27],packet[28],packet[29],packet[30],packet[31],packet[32],packet[33],packet[34],packet[35],packet[36],packet[37]};
+        unsigned int sourcePort = packet[34] << 8 | packet[35];
+        unsigned int destPort = packet[36] << 8 | packet[37];
+        sprintf(sourceIP, "%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x",srcIP[0],srcIP[1],srcIP[2],srcIP[3],srcIP[4],srcIP[5],srcIP[6],srcIP[7],srcIP[8],srcIP[9],srcIP[10],srcIP[11],srcIP[12],srcIP[13],srcIP[14],srcIP[15]);
+        sprintf(destIP, "%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x",dstIP[0],dstIP[1],dstIP[2],dstIP[3],dstIP[4],dstIP[5],dstIP[6],dstIP[7],dstIP[8],dstIP[9],dstIP[10],dstIP[11],dstIP[12],dstIP[13],dstIP[14],dstIP[15]);
+        struct sockaddr_in srcHOST;
+        srcHOST.sin_family = AF_INET6;
+        srcHOST.sin_port = sourcePort;
+        inet_aton(sourceIP, &srcHOST.sin_addr);
+        char SRChostt[200];
+        int SRC = getnameinfo((struct sockaddr *)&srcHOST,sizeof(srcHOST),&SRChostt[0],200,NULL,0,0);
+        struct sockaddr_in destHOST;
+        destHOST.sin_family = AF_INET6;
+        destHOST.sin_port = destPort;
+        inet_aton(destIP, &destHOST.sin_addr);
+        char DSThostt[200];
+        int DST = getnameinfo((struct sockaddr *)&destHOST,sizeof(destHOST),&DSThostt[0],200,NULL,0,0);
+        printf("%d %d\n\n",DST,SRC);
+        if(SRC == 0 && DST == 0)
+        {   
+            printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,SRChostt,sourcePort,DSThostt,destPort,x);
+        }
+        else if(SRC == 0 && DST) printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,SRChostt,sourcePort,destIP,destPort,x);
+        else if(SRC && DST == 0) printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,sourceIP,sourcePort,DSThostt,destPort,x);
+        else printf("%s.%06ld %s : %d > %s : %d\n length: %d\n",CAS,pkthdr->ts.tv_usec,sourceIP,sourcePort,destIP,destPort,x);
+
+    }
+
     
-    
+    struct ether_header necoe;
     unsigned char *output;
     output = malloc(x*sizeof(unsigned char));
     if (output == NULL)
