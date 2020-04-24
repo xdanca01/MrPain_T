@@ -27,8 +27,9 @@ void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u
     strftime(CAS,sizeof(CAS), format,tmp);
     char sourceIP[300], destIP[300];
     printf("\n");
-    //pokud je packet typu ipv4
-    if(ether->ether_type == 8)
+    printf("%d\n\n\n",ntohs(ether->ether_type));
+    //pokud je packet typu ipv4 - 0x0800
+    if(ether->ether_type == 2048)
     {
         //ziska delku ip headeru pro offset k portum
         unsigned int IPlen = (unsigned int)(packet[14] & 15) << 2;
@@ -86,8 +87,8 @@ void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u
     }
     //end IPV4
     
-    //IPV6
-    else if(ether->ether_type == 56710)
+    //IPV6 - 0x86DD
+    else if(ether->ether_type == 34525)
     {
         //převod z dat packetu do pole int
         struct in6_addr dstIP;
@@ -139,7 +140,12 @@ void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u
         else printf("%s.%06ld %s : %d > %s : %d\n length: %d\n\n",CAS,pkthdr->ts.tv_usec,srcIP.s6_addr,sourcePort,dstIP.s6_addr,destPort,x);
 
     }
-
+    //not supported
+    else
+    {
+        fprintf(stderr, "Nepodporovaný EtherType\n");
+        return;
+    }
     
     unsigned char *output;
     output = malloc(x*sizeof(unsigned char));
@@ -217,12 +223,10 @@ int main(int argc, char *argv[])
         int count = 1;
         char *port = NULL;
         char *interface = NULL;
-        struct pcap_pkthdr header;
         static struct option long_options[] = {{"tcp", 0, NULL, 'x'}, {"udp", 0, NULL, 'y'}};
         int argument = getopt_long(argc, argv, "i:p:n:tu", long_options ,NULL);
         bool tcp = false, udp = false;
         char *protokol = NULL;
-        struct ether_header *ether_ptr;
         
         while(argument != -1)
         {
