@@ -30,24 +30,27 @@ void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u
     //pokud je packet typu ipv4
     if(ether->ether_type == 8)
     {
-        //srcPort na 34 a 35 bajtu v packetu
-        unsigned int sourcePort = packet[34] << 8 | packet[35];
-        //dstPort na 36 a 37 bajtu v packetu
-        unsigned int destPort = packet[36] << 8 | packet[37];
+        //ziska delku ip headeru pro offset k portum
+        unsigned int IPlen = (unsigned int)(packet[14] & 15) << 2;
+        //srcPort na ethernet + ipheader len + 0
+        uint16_t sourcePort = ntohs(*(uint16_t *)&packet[14+IPlen]);
+        //dstPort na ethernet + ipheader len + 2
+        uint16_t destPort = ntohs(*(uint16_t *)&packet[16+IPlen]);
         
-        //převede získaná data z ether do stringu pro lepší práci
-        sprintf(sourceIP, "%d.%d.%d.%d",packet[26],packet[27],packet[28],packet[29]);
-        
-        //to stejný, jen pro dstIP
-        sprintf(destIP, "%d.%d.%d.%d",packet[30],packet[31],packet[32],packet[33]);
+        struct in_addr srcADR,dstADR;
+        //získá bajty z packetu
+        memcpy((void *)&srcADR,(void *)&packet[26],4);
+        memcpy((void *)&dstADR,(void *)&packet[30],4);
+       
+        //převede bajty na IPv4 se správným byte order
+        char *pamet = inet_ntoa(srcADR);
+        char *pamet2 = inet_ntoa(dstADR);
         
         struct sockaddr_in srcHOST;
         //IPV4
         srcHOST.sin_family = AF_INET;
         srcHOST.sin_port = sourcePort;
-
-        //převod srcIP
-        inet_aton(sourceIP, &srcHOST.sin_addr);
+        srcHOST.sin_addr = srcADR;
         char SRChostt[200];
 
         //zkusi ziskat hostname na srcIP
@@ -59,7 +62,7 @@ void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u
         destHOST.sin_family = AF_INET;
         destHOST.sin_port = destPort;
 
-        inet_aton(destIP, &destHOST.sin_addr);
+        destHOST.sin_addr = dstADR;
         char DSThostt[200];
 
         int DST = getnameinfo((struct sockaddr *)&destHOST,sizeof(destHOST),&DSThostt[0],200,NULL,0,0);
@@ -72,13 +75,13 @@ void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u
         }
 
         //resolvnuti src hostname
-        else if(SRC == 0 && DST) printf("%s.%06ld %s : %d > %s : %d\n\n length: %d\n",CAS,pkthdr->ts.tv_usec,SRChostt,sourcePort,destIP,destPort,x);
+        else if(SRC == 0 && DST) printf("%s.%06ld %s : %d > %s : %d\n\n length: %d\n",CAS,pkthdr->ts.tv_usec,SRChostt,sourcePort,pamet2,destPort,x);
         
         //resolvnuti dst hostname
-        else if(SRC && DST == 0) printf("%s.%06ld %s : %d > %s : %d\n\n length: %d\n",CAS,pkthdr->ts.tv_usec,sourceIP,sourcePort,DSThostt,destPort,x);
+        else if(SRC && DST == 0) printf("%s.%06ld %s : %d > %s : %d\n\n length: %d\n",CAS,pkthdr->ts.tv_usec,pamet,sourcePort,DSThostt,destPort,x);
         
         //bez resolvnuti
-        else printf("%s.%06ld %s : %d > %s : %d\n length: %d\n\n",CAS,pkthdr->ts.tv_usec,sourceIP,sourcePort,destIP,destPort,x);
+        else printf("%s.%06ld %s : %d > %s : %d\n length: %d\n\n",CAS,pkthdr->ts.tv_usec,pamet,sourcePort,pamet2,destPort,x);
     
     }
     //end IPV4
@@ -87,39 +90,34 @@ void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u
     else if(ether->ether_type == 56710)
     {
         //převod z dat packetu do pole int
-        unsigned int dstIP[16] = {packet[24],packet[25],packet[26],packet[27],packet[28],packet[29],packet[30],packet[31],packet[32],packet[33],packet[34],packet[35],packet[36],packet[37],packet[38],packet[39]};
+        struct in6_addr dstIP;
+        memcpy((void *)&dstIP,(void *)&packet[38],16);
         
         //převod z dat packetu do pole int
-        unsigned int srcIP[16] = {packet[8],packet[9],packet[10],packet[11],packet[12],packet[13],packet[14],packet[15],packet[16],packet[17],packet[18],packet[19],packet[20],packet[21],packet[22],packet[23]};
+        struct in6_addr srcIP;
+        memcpy((void *)&srcIP,(void *)&packet[22],16);
         
-        
-        //ziskani portů
-        unsigned int sourcePort = packet[40] << 8 | packet[41];
-        unsigned int destPort = packet[42] << 8 | packet[43];
+        //srcPort na ethernet (14) + ipv6 (40) + 0
+        uint16_t sourcePort = ntohs(*(uint16_t *)&packet[54]);
+        //dstPort na ethernet (14) + ipv6 (40) + 2
+        uint16_t destPort = ntohs(*(uint16_t *)&packet[56]);
 
-        //převod do stringů
-        sprintf(sourceIP, "%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x",srcIP[0],srcIP[1],srcIP[2],srcIP[3],srcIP[4],srcIP[5],srcIP[6],srcIP[7],srcIP[8],srcIP[9],srcIP[10],srcIP[11],srcIP[12],srcIP[13],srcIP[14],srcIP[15]);
-        
-        sprintf(destIP, "%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x",dstIP[0],dstIP[1],dstIP[2],dstIP[3],dstIP[4],dstIP[5],dstIP[6],dstIP[7],dstIP[8],dstIP[9],dstIP[10],dstIP[11],dstIP[12],dstIP[13],dstIP[14],dstIP[15]);
-        
-        
-        struct sockaddr_in srcHOST;
+        struct sockaddr_in6 srcHOST, destHOST;
         //IPv6
-        srcHOST.sin_family = AF_INET6;
-        srcHOST.sin_port = sourcePort;
+        srcHOST.sin6_family = AF_INET6;
+        srcHOST.sin6_port = sourcePort;
 
-        inet_aton(sourceIP, &srcHOST.sin_addr);
+        srcHOST.sin6_addr = srcIP;
         char SRChostt[200];
 
         //resolvnuti src hostname
         int SRC = getnameinfo((struct sockaddr *)&srcHOST,sizeof(srcHOST),&SRChostt[0],200,NULL,0,0);
-        struct sockaddr_in destHOST;
 
         //IPv6
-        destHOST.sin_family = AF_INET6;
-        destHOST.sin_port = destPort;
+        destHOST.sin6_family = AF_INET6;
+        destHOST.sin6_port = destPort;
 
-        inet_aton(destIP, &destHOST.sin_addr);
+        destHOST.sin6_addr = dstIP;
         char DSThostt[200];
 
         //resolvnuti dst hostname
@@ -132,13 +130,13 @@ void callback_for_packet(u_char *args, const struct pcap_pkthdr* pkthdr, const u
         }
 
         //resolvnutí src
-        else if(SRC == 0 && DST) printf("%s.%06ld %s : %d > %s : %d\n length: %d\n\n",CAS,pkthdr->ts.tv_usec,SRChostt,sourcePort,destIP,destPort,x);
+        else if(SRC == 0 && DST) printf("%s.%06ld %s : %d > %s : %d\n length: %d\n\n",CAS,pkthdr->ts.tv_usec,SRChostt,sourcePort,dstIP.s6_addr,destPort,x);
         
         //resolvnutí dst
-        else if(SRC && DST == 0) printf("%s.%06ld %s : %d > %s : %d\n length: %d\n\n",CAS,pkthdr->ts.tv_usec,sourceIP,sourcePort,DSThostt,destPort,x);
+        else if(SRC && DST == 0) printf("%s.%06ld %s : %d > %s : %d\n length: %d\n\n",CAS,pkthdr->ts.tv_usec,srcIP.s6_addr,sourcePort,DSThostt,destPort,x);
         
         //bez resolvnutí
-        else printf("%s.%06ld %s : %d > %s : %d\n length: %d\n\n",CAS,pkthdr->ts.tv_usec,sourceIP,sourcePort,destIP,destPort,x);
+        else printf("%s.%06ld %s : %d > %s : %d\n length: %d\n\n",CAS,pkthdr->ts.tv_usec,srcIP.s6_addr,sourcePort,dstIP.s6_addr,destPort,x);
 
     }
 
@@ -239,7 +237,6 @@ int main(int argc, char *argv[])
                     udp = true;
                     break;
                 case 'i':
-                    printf("%s\n",optarg);
                     interface = optarg;
                     break;
                 case 'p':
@@ -274,7 +271,6 @@ int main(int argc, char *argv[])
             }
             return 0;
         }
-        printf("Capturing on interface: %s\n",interface);
         //ziska handle
         open_dev = pcap_open_live(interface, snaplen, 1, 0, errbuf);
         if (open_dev == NULL)
