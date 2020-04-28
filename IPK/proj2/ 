@@ -1,0 +1,2 @@
+cmdline: /usr/lib/x86_64-linux-gnu/wireshark/extcap/randpktdump --capture --extcap-interface randpkt --fifo /tmp/wireshark_extcap_randpkt_20200424122504_D8JTMR --maxbytes 5000 --count 1000 --random-type false --all-random false --type tcp --debug false --debug-file   
+Generating packets: tcp
