@@ -1,5 +1,6 @@
 #include "Street.h"
 #include <math.h>
+#include <QDebug>
 
 Street::Street(string name, Coordinate *c1, Coordinate *c2)
 {
@@ -54,7 +55,7 @@ bool Street::addStop(Stop *s)
             if(this->Stops == nullptr) this->Stops = new vector<Stop*>();
             this->Stops->push_back(s);
             s->setStreet(this);
-            break;
+            return true;
         }
     }
     return false;
@@ -77,6 +78,17 @@ void Street::close()
 bool Street::status()
 {
     return this->closed;
+}
+
+bool Street::stop_on(Stop* s)
+{
+    if(this->Stops == nullptr) return false;
+    int len = this->Stops->size();
+    for(int i = 0; i < len;++i)
+    {
+        if(this->Stops->at(i)->getId() == s->getId()) return true;
+    }
+    return false;
 }
 
 

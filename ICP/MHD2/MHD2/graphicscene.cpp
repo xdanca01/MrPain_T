@@ -59,9 +59,8 @@ void GraphicScene::busses(bus* b)
 {
     if(b->status() == false)
     {
+        b->show();
         b->setLine(b->getX()-5,b->getY()-5,b->getX()+5,b->getY()+5);
-        b->setPen(QPen({Qt::black}, 8));
-        this->addItem(b);
     }
     else b->hide();
 }

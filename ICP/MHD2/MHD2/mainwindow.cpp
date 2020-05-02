@@ -32,9 +32,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     Street* ulice2 = new Street("Tercina",c5,c4);
     Street* ulice3 = new Street("Petrova",c4,c6);
-    Street* ulice4 = new Street("Petrova",c5,c6);
-    Street* ulice5 = new Street("Petrova",c1,c4);
-    Street* ulice6 = new Street("Petrova",c1,c5);
+    Street* ulice4 = new Street("Petrova3",c5,c6);
+    Street* ulice5 = new Street("Petrova1",c1,c4);
+    Street* ulice6 = new Street("Petrova2",c1,c5);
 
     timer = new QTimer();
     timer->setInterval(1000.0/ui->btn_speed->value());
@@ -43,39 +43,63 @@ MainWindow::MainWindow(QWidget *parent) :
     *time = ui->my_timer->time();
     Stop* s1 = new Stop("first",c5);
     Stop* s2 = new Stop("second",c1);
+    Stop* s3 = new Stop("third",c4);
+    Stop* s4 = new Stop("fourth",c6);
     Street* ulice = new Street("Palackeho",c4,c1);
     auto* casy = new vector<QTime*>();
     auto* casy2 = new vector<QTime*>();
     auto* ulic = new vector<Street*>();
+    auto* ulic2 = new vector<Street*>();
     auto* stopky =new vector<Stop*>();
+    auto* stopky2 =new vector<Stop*>();
     casy->push_back(new QTime(12,0,0,0));
     casy->push_back(new QTime(12,10,59,0));
-    casy2->push_back(new QTime(12,1,0,0));
-    casy2->push_back(new QTime(12,11,59,0));
+    casy2->push_back(new QTime(12,0,0,0));
+    casy2->push_back(new QTime(12,3,59,0));
+    casy2->push_back(new QTime(12,4,59,0));
+    casy2->push_back(new QTime(12,7,59,0));
     ulic->push_back(ulice2);
     ulic->push_back(ulice);
+    ulic2->push_back(ulice3);
+    ulic2->push_back(ulice4);
+    ulic2->push_back(ulice2);
+    ulic2->push_back(ulice3);
+    stopky2->push_back(s3);
+    stopky2->push_back(s4);
+    stopky2->push_back(s1);
+    stopky2->push_back(s3);
     stopky->push_back(s1);
     stopky->push_back(s2);
     bus *b = new bus;
     bus *b2 = new bus;
-    b2->update(20.0,20.0);
+    b2->update(40.0,-60.0);
+
     b->update(20.0,20.0);
-    traffic_t* traff2 = new traffic_t(b2, *ulic,*casy2, *stopky);
+    traffic_t* traff2 = new traffic_t(b2, *ulic2,*casy2, *stopky2);
     traffic_t* traff = new traffic_t(b,*ulic,*casy,*stopky);
     linka->addBus(traff);
-    //linka->addBus(traff2);
-    doprava->push_back(traff2);
+    linka->addBus(traff2);
+
     doprava->push_back(traff);
+    doprava->push_back(traff2);
+
 
     linka->addStreet(ulice);
     linka->addStreet(ulice2);
-   /* linka->addStreet(ulice3);
+    linka->addStreet(ulice3);
     linka->addStreet(ulice4);
     linka->addStreet(ulice5);
-    linka->addStreet(ulice6);*/
+    linka->addStreet(ulice6);
+
     linka->addStop(s1);
     linka->addStop(s2);
+    linka->addStop(s3);
+    linka->addStop(s4);
     scene->showLine(linka);
+    scene->addItem(b);
+    b2->hide();
+    b->hide();
+    scene->addItem(b2);
     ui->graphicsView->setScene(scene);
 
 
@@ -149,7 +173,6 @@ void MainWindow::tick()
 {
     ui->my_timer->setTime(ui->my_timer->time().addSecs(1));
     this->update_traf();
-    qDebug()<< "time:" << *time;
 }
 
 void MainWindow::update_traf()
@@ -162,11 +185,11 @@ void MainWindow::update_traf()
         traffic_t* traf = this->doprava->at(i);
 
         int length = traf->getT().size();
-        qDebug() << this->time->secsTo(*traf->getT().at(0)) << this->time->secsTo(*traf->getT().at(traf->getT().size()-1));
+
         if(this->time->secsTo(*traf->getT().at(0)) <= 0 && this->time->secsTo(*traf->getT().at(traf->getT().size()-1)) > 0)
         {
 
-            traf->getB()->start();
+
             Stop* s1 = traf->getStop().at(0);
             Stop* s2 = traf->getStop().at(traf->getT().size()-1);
             QTime* t1 = traf->getT().at(0);
@@ -174,28 +197,33 @@ void MainWindow::update_traf()
 
             for(int y = 1;y<length;++y)
             {
-                if(*traf->getT().at(y) > *t1 && *traf->getT().at(y) <= *this->time)
+                if(*traf->getT().at(y) >= *t1 && *traf->getT().at(y) <= *this->time)
                 {
                     t1 = traf->getT().at(y);
                     s1 = traf->getStop().at(y);
                 }
-                else if(*traf->getT().at(y) < *t2 && *traf->getT().at(y) > *this->time)
+                else if(*traf->getT().at(y) <= *t2 && *traf->getT().at(y) > *this->time)
+                {
                     t2 = traf->getT().at(y);
                     s2 = traf->getStop().at(y);
-            }
-
-            int start, end;
-            for(int q = 0;q< traf->getS().size();++q)
-            {
-                if(s1->getStreet()->getId() == traf->getS().at(q)->getId())
-                {
-                    start = q;
                 }
-                else if(s2->getStreet()->getId() == traf->getS().at(q)->getId())
+            }
+            int start, end;
+            for(int q = 0;q < traf->getS().size();++q)
+            {
+                if(traf->getS().at(q)->stop_on(s2))
                 {
                     end = q;
                 }
             }
+            for(int q = 0;q < end;++q)
+            {
+                if(traf->getS().at(q)->stop_on(s1))
+                {
+                    start = q;
+                }
+            }
+
             Coordinate* c1;
             Coordinate* c2;
             Coordinate* c3;
@@ -264,19 +292,18 @@ void MainWindow::update_traf()
             }
             c1 = vzdalenosti->at(index);
             c2 = vzdalenosti->at(index+1);
-            qDebug() << c1->getX() << c1->getY();
-            qDebug() << c2->getX() << c2->getY();
+
             pomer = celkem/vzdal.at(index/2);
             double dx = (c1->getX() - c2->getX()) * pomer;
             double dy = (c1->getY() - c2->getY()) * pomer;
-            qDebug() << dx << dy;
+
             double addX = dx + c2->getX();
             double addY = dy + c2->getY();
-            qDebug() << addY << addX;
+            traf->getB()->start();
             traf->getB()->update(addX,addY);
-            scene->busses(traf->getB());
         }
         else traf->getB()->end();
+        scene->busses(traf->getB());
     }
 }
 

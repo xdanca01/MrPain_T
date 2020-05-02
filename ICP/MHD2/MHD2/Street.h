@@ -27,7 +27,7 @@ class Street{
         bool follows(Street* s);
         void close();
         bool status();
-
+        bool stop_on(Stop* s);
 
 
 };

@@ -4,6 +4,8 @@
 #include "Coordinate.h"
 #include <QGraphicsLineItem>
 #include <QPen>
+#include <QDebug>
+#include <QGraphicsSceneMouseEvent>
 
 class bus : public QGraphicsLineItem
 {
@@ -21,6 +23,9 @@ public:
     void start();
     void end();
     bool status();
+
+protected:
+    virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override;
 };
 
 #endif // BUS_H

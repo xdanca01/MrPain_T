@@ -10,9 +10,12 @@ line::line(string s)
 bool line::addStop(Stop *stop)
 {
     int length = 0;
+    bool ret = false;
     if(this->getRoute()) length = this->getRoute()->size();
+    else this->streets = new vector<Street*>();
     int len = 0;
     if(this->getStops()) len = this->getStops()->size();
+    else this->Stops = new vector<Stop*>();
     for(int i = 0; i < len;++i)
     {
         if(stop->equals(this->getStops()[0][i]))
@@ -23,10 +26,10 @@ bool line::addStop(Stop *stop)
         if(this->streets->at(i)->addStop(stop) == true)
         {
             this->Stops->push_back(stop);
-            return true;
+            ret = true;
         }
     }
-    return false;
+    return ret;
 }
 
 bool line::addStreet(Street* s)
