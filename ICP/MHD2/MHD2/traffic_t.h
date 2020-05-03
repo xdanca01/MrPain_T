@@ -7,6 +7,8 @@
 #include <vector>
 #include <QTime>
 
+class bus;
+
 class traffic_t
 {
     bus* b = nullptr;

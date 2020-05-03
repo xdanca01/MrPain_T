@@ -26,13 +26,13 @@ bool GraphicScene::showLine(line *linka)
                     {
 
                         auto line = this->addLine(crds->at(y-1)->getX(),crds->at(y-1)->getY(),crds->at(y)->getX(),crds->at(y)->getY());
-                        line->setPen(QPen({Qt::blue}, 2));
+                        line->setPen(QPen({Qt::blue}, 1));
                     }
                     else
                     {
 
                         auto line = this->addLine(crds->at(y-1)->getX(),crds->at(y-1)->getY(),crds->at(y)->getX(),crds->at(y)->getY());
-                        line->setPen(QPen({Qt::red}, 2));
+                        line->setPen(QPen({Qt::red}, 1));
                     }
                 }
             }

@@ -63,7 +63,7 @@ public:
     QGraphicsView *graphicsView;
     QVBoxLayout *verticalLayout_5;
     QListWidget *listWidget;
-    QTableWidget *tableWidget;
+    QTableWidget *traf_info;
     QStatusBar *statusBar;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -197,6 +197,11 @@ public:
 
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(graphicsView->sizePolicy().hasHeightForWidth());
+        graphicsView->setSizePolicy(sizePolicy1);
 
         horizontalLayout_4->addWidget(graphicsView);
 
@@ -205,37 +210,32 @@ public:
         verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
         listWidget = new QListWidget(centralWidget);
         listWidget->setObjectName(QStringLiteral("listWidget"));
-        listWidget->setMinimumSize(QSize(402, 100));
-        listWidget->setMaximumSize(QSize(402, 100));
+        sizePolicy.setHeightForWidth(listWidget->sizePolicy().hasHeightForWidth());
+        listWidget->setSizePolicy(sizePolicy);
+        listWidget->setMinimumSize(QSize(202, 100));
+        listWidget->setMaximumSize(QSize(220, 100));
 
         verticalLayout_5->addWidget(listWidget);
 
-        tableWidget = new QTableWidget(centralWidget);
-        if (tableWidget->columnCount() < 4)
-            tableWidget->setColumnCount(4);
-        QFont font;
-        font.setPointSize(11);
+        traf_info = new QTableWidget(centralWidget);
+        if (traf_info->columnCount() < 2)
+            traf_info->setColumnCount(2);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
-        __qtablewidgetitem->setFont(font);
-        tableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem);
+        traf_info->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(1, __qtablewidgetitem1);
-        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(2, __qtablewidgetitem2);
-        QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(3, __qtablewidgetitem3);
-        tableWidget->setObjectName(QStringLiteral("tableWidget"));
-        QSizePolicy sizePolicy1(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(tableWidget->sizePolicy().hasHeightForWidth());
-        tableWidget->setSizePolicy(sizePolicy1);
-        tableWidget->setMinimumSize(QSize(402, 0));
-        tableWidget->setMaximumSize(QSize(402, 9000000));
-        tableWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-        tableWidget->horizontalHeader()->setMinimumSectionSize(30);
+        traf_info->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+        traf_info->setObjectName(QStringLiteral("traf_info"));
+        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(traf_info->sizePolicy().hasHeightForWidth());
+        traf_info->setSizePolicy(sizePolicy2);
+        traf_info->setMinimumSize(QSize(202, 0));
+        traf_info->setMaximumSize(QSize(220, 9000000));
+        traf_info->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        traf_info->horizontalHeader()->setMinimumSectionSize(30);
 
-        verticalLayout_5->addWidget(tableWidget);
+        verticalLayout_5->addWidget(traf_info);
 
 
         horizontalLayout_4->addLayout(verticalLayout_5);
@@ -296,14 +296,10 @@ public:
         btn_right->setText(QApplication::translate("MainWindow", "Right", 0));
         my_timer->setDisplayFormat(QApplication::translate("MainWindow", "HH:mm:ss", 0));
         label_4->setText(QApplication::translate("MainWindow", "Time:", 0));
-        QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
-        ___qtablewidgetitem->setText(QApplication::translate("MainWindow", "#", 0));
-        QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);
-        ___qtablewidgetitem1->setText(QApplication::translate("MainWindow", "Stop", 0));
-        QTableWidgetItem *___qtablewidgetitem2 = tableWidget->horizontalHeaderItem(2);
-        ___qtablewidgetitem2->setText(QApplication::translate("MainWindow", "Arrival", 0));
-        QTableWidgetItem *___qtablewidgetitem3 = tableWidget->horizontalHeaderItem(3);
-        ___qtablewidgetitem3->setText(QApplication::translate("MainWindow", "Delay", 0));
+        QTableWidgetItem *___qtablewidgetitem = traf_info->horizontalHeaderItem(0);
+        ___qtablewidgetitem->setText(QApplication::translate("MainWindow", "Stop", 0));
+        QTableWidgetItem *___qtablewidgetitem1 = traf_info->horizontalHeaderItem(1);
+        ___qtablewidgetitem1->setText(QApplication::translate("MainWindow", "Arrival", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuOpen_recent->setTitle(QApplication::translate("MainWindow", "Open recent", 0));
         menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0));

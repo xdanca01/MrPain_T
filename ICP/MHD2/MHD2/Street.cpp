@@ -1,13 +1,13 @@
 #include "Street.h"
-#include <math.h>
-#include <QDebug>
 
-Street::Street(string name, Coordinate *c1, Coordinate *c2)
+
+Street::Street(QGraphicsItem *parent, string name, Coordinate *c1, Coordinate *c2) : QGraphicsLineItem(parent)
 {
     this->Id = name;
     this->Cords = new vector<Coordinate*>();
     this->Cords->push_back(c1);
     this->Cords->push_back(c2);
+    this->setPen(QPen({Qt::blue}, 2));
 }
 
 string Street::getId()

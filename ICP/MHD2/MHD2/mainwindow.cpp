@@ -29,12 +29,11 @@ MainWindow::MainWindow(QWidget *parent) :
     Coordinate* c5 = new Coordinate(40,90);
     Coordinate* c6 = new Coordinate(200,80);
 
-
-    Street* ulice2 = new Street("Tercina",c5,c4);
-    Street* ulice3 = new Street("Petrova",c4,c6);
-    Street* ulice4 = new Street("Petrova3",c5,c6);
-    Street* ulice5 = new Street("Petrova1",c1,c4);
-    Street* ulice6 = new Street("Petrova2",c1,c5);
+    Street* ulice2 = new Street(nullptr,"Tercina",c5,c4);
+    Street* ulice3 = new Street(nullptr,"Petrova",c4,c6);
+    Street* ulice4 = new Street(nullptr,"Petrova3",c5,c6);
+    Street* ulice5 = new Street(nullptr,"Petrova1",c1,c4);
+    Street* ulice6 = new Street(nullptr,"Petrova2",c1,c5);
 
     timer = new QTimer();
     timer->setInterval(1000.0/ui->btn_speed->value());
@@ -45,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     Stop* s2 = new Stop("second",c1);
     Stop* s3 = new Stop("third",c4);
     Stop* s4 = new Stop("fourth",c6);
-    Street* ulice = new Street("Palackeho",c4,c1);
+    Street* ulice = new Street(nullptr,"Palackeho",c4,c1);
     auto* casy = new vector<QTime*>();
     auto* casy2 = new vector<QTime*>();
     auto* ulic = new vector<Street*>();
@@ -70,16 +69,16 @@ MainWindow::MainWindow(QWidget *parent) :
     stopky2->push_back(s3);
     stopky->push_back(s1);
     stopky->push_back(s2);
-    bus *b = new bus;
-    bus *b2 = new bus;
+    bus *b = new bus(nullptr, ui->traf_info);
+    bus *b2 = new bus(nullptr, ui->traf_info);
     b2->update(40.0,-60.0);
-
     b->update(20.0,20.0);
     traffic_t* traff2 = new traffic_t(b2, *ulic2,*casy2, *stopky2);
     traffic_t* traff = new traffic_t(b,*ulic,*casy,*stopky);
     linka->addBus(traff);
     linka->addBus(traff2);
-
+    b2->add_T(traff2);
+    b->add_T(traff);
     doprava->push_back(traff);
     doprava->push_back(traff2);
 
@@ -102,11 +101,6 @@ MainWindow::MainWindow(QWidget *parent) :
     scene->addItem(b2);
     ui->graphicsView->setScene(scene);
 
-
-    //auto line = scene->addLine(0,0,100,100);
-    //auto stop = new Stop("Nejaka",new Coordinate(0,0));
-    //auto circle = scene->addEllipse(s1->getCoordinate()->getX(),s1->getCoordinate()->getY(),10,10);
-    //line->setPen(QPen({Qt::red}, 4));
 
 }
 
