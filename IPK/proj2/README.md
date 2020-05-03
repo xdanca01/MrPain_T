@@ -2,3 +2,7 @@
 
  - Projekt slouží k zachycení packetů na technologii ethernet. Program dokáže správně zachytit packety protokolu TCP/UDP, ostatní nebyly testovány. Testování proběhlo pouze na IPv4, ale pokoušel jsem se otestovat i podporu IPv6, u které jsem měl možnost pouze ping -6 localhost. Celý projekt byl inspirován wiresharkem.
  - Omezení projektu se vztahují na některé protokoly, jako je například ICMP6, kde se by default ukazují i porty source a destination, protože jsou vždy tisknuty a nekontroluji typ protokolu. Omezení na délku packetu by neměla existovat, jelikož je nastavena na největší možnou velikost a to 65535 bajtů. Dále jsem narazil na problém při odposlouchávání na rozhraní any, kde se pravděpodobně vyskytuje nějaké zapouzdření, jelikož se v packetu vyskytly nějaké bajty navíc. Navíc nevim, jak moc zdařilý je převod byte order u ipv6, kde mě nenapadl způsob na převod z network byte order na host byte order.
+
+- Spuštění: make; ./ipk-sniffer [-i rozhraní] [-p port] [--tcp/-t] [--udp/u] [-n cislo]
+- Pokud nedojde k zadání rozhraní vypíší se dostupná rozhraní
+- Odevzdané soubory: README.md, ipk-sniffer.c, Makefile, manual.pdf
