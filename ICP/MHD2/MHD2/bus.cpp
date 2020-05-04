@@ -37,9 +37,9 @@ void bus::add_T(traffic_t *t)
     this->traf = t;
 }
 
-void bus::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+void bus::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    this->tab->setRowCount(0);
+
     int len = this->traf->getStop().size();
     for(int i = 0;i < len;++i)
     {
@@ -48,11 +48,22 @@ void bus::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         this->tab->setItem(i,1,new QTableWidgetItem(this->traf->getT().at(i)->toString()));
     }
     len = this->traf->getS().size();
-   /* for(int i = 0;i < len;++i)
+    for(int i = 0;i < len;++i)
     {
-        this->traf->getS().at(i)->
-    }*/
-    QGraphicsLineItem::mouseDoubleClickEvent(event);
+        this->traf->getS().at(i)->setPen(QPen({Qt::blue}, 3));
+    }
+    QGraphicsLineItem::mousePressEvent(event);
+}
+
+void bus::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    this->tab->setRowCount(0);
+    int len = this->traf->getS().size();
+    for(int i = 0;i < len;++i)
+    {
+        this->traf->getS().at(i)->setPen(QPen({Qt::blue}, 1));
+    }
+    QGraphicsLineItem::mouseReleaseEvent(event);
 }
 
 double bus::getX()

@@ -18,8 +18,8 @@ bool line::addStop(Stop *stop)
     else this->Stops = new vector<Stop*>();
     for(int i = 0; i < len;++i)
     {
-        if(stop->equals(this->getStops()[0][i]))
-            return false;
+        if(stop->equals(this->getStops()->at(i)))
+            return true;
     }
     for(int i = 0; i < length;++i)
     {
@@ -34,13 +34,22 @@ bool line::addStop(Stop *stop)
 
 bool line::addStreet(Street* s)
 {
-    int length = 0;
-    if(this->getRoute()) length = this->getRoute()->size();
+    if(this->getRoute() == nullptr) return false;
+
+
+    int length = this->getRoute()->size();
+    vector<Street*>* str = this->getRoute();
     for(int i = 0; i < length;++i)
     {
-        Street* s2 = this->streets->at(i);
+        Street* s2 = str->at(i);
+        if(s2 == s) return true;
         if(s2->begin()->equals(s->begin()) || s2->begin()->equals(s->end()) || s2->end()->equals(s->begin()) || s2->end()->equals(s->end()))
         {
+            for(i = i + 1;i < length;++i)
+            {
+                s2 = str->at(i);
+                if(s2 == s) return true;
+            }
             this->streets->push_back(s);
             if(s->getStops() == nullptr) return true;
             int len = s->getStops()->size();
@@ -76,10 +85,43 @@ vector<Stop *> *line::getStops()
     return this->Stops;
 }
 
-bool line::addBus(traffic_t *t)
+vector<traffic_t *> *line::getTraf()
 {
+    return this->traff;
+}
+
+bool line::addBus(bus *t)
+{
+    if(t == nullptr) return false;
+    if(this->buses == nullptr) this->buses = new vector<bus*>();
+    this->buses->push_back(t);
+    return true;
+}
+
+
+//přidání jízdního řádu spoje do linky
+bool line::addTraf(traffic_t *t)
+{
+    if(t == nullptr) return false;
     if(this->traff == nullptr) this->traff = new vector<traffic_t*>();
     this->traff->push_back(t);
+
+
+    vector<Street*> sstreet = t->getS();
+    int len = sstreet.size();
+    for(int i = 0;i< len;++i)
+    {
+        this->addStreet(sstreet.at(i));
+    }
+
+    vector<Stop*> sstop = t->getStop();
+    len = sstop.size();
+    for(int i = 0;i<len;++i)
+    {
+        this->addStop(sstop.at(i));
+    }
+
+    return this->addBus(t->getB());
 }
 
 

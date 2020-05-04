@@ -7,7 +7,7 @@ Street::Street(QGraphicsItem *parent, string name, Coordinate *c1, Coordinate *c
     this->Cords = new vector<Coordinate*>();
     this->Cords->push_back(c1);
     this->Cords->push_back(c2);
-    this->setPen(QPen({Qt::blue}, 2));
+    this->setPen(QPen({Qt::blue}, 1));
 }
 
 string Street::getId()
@@ -39,6 +39,11 @@ vector<Stop *>* Street::getStops()
     return this->Stops;
 }
 
+int Street::getDelay()
+{
+    return this->delay;
+}
+
 bool Street::addStop(Stop *s)
 {
     unsigned int length = this->Cords->size();
@@ -59,6 +64,11 @@ bool Street::addStop(Stop *s)
         }
     }
     return false;
+}
+
+void Street::setDelay(int d)
+{
+    this->delay = d;
 }
 
 bool Street::follows(Street *s)

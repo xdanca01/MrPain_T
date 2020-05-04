@@ -24,7 +24,9 @@ public:
     bool addStreet(Street* s);
     vector<Street*>* getRoute();
     vector<Stop*>* getStops();
-    bool addBus(traffic_t* t);
+    vector<traffic_t*>* getTraf();
+    bool addBus(bus* t);
+    bool addTraf(traffic_t* t);
 
 };
 

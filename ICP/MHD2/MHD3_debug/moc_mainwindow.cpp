@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[12];
-    char stringdata0[73];
+    QByteArrayData data[11];
+    char stringdata0[62];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,15 +36,14 @@ QT_MOC_LITERAL(3, 17, 5), // "minus"
 QT_MOC_LITERAL(4, 23, 4), // "Zoom"
 QT_MOC_LITERAL(5, 28, 4), // "left"
 QT_MOC_LITERAL(6, 33, 5), // "right"
-QT_MOC_LITERAL(7, 39, 10), // "whats_time"
-QT_MOC_LITERAL(8, 50, 7), // "speedos"
-QT_MOC_LITERAL(9, 58, 4), // "play"
-QT_MOC_LITERAL(10, 63, 4), // "tick"
-QT_MOC_LITERAL(11, 68, 4) // "stop"
+QT_MOC_LITERAL(7, 39, 7), // "speedos"
+QT_MOC_LITERAL(8, 47, 4), // "play"
+QT_MOC_LITERAL(9, 52, 4), // "tick"
+QT_MOC_LITERAL(10, 57, 4) // "stop"
 
     },
     "MainWindow\0plus\0\0minus\0Zoom\0left\0right\0"
-    "whats_time\0speedos\0play\0tick\0stop"
+    "speedos\0play\0tick\0stop"
 };
 #undef QT_MOC_LITERAL
 
@@ -54,7 +53,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -62,16 +61,15 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   64,    2, 0x08 /* Private */,
-       3,    0,   65,    2, 0x08 /* Private */,
-       4,    1,   66,    2, 0x08 /* Private */,
-       5,    0,   69,    2, 0x08 /* Private */,
-       6,    0,   70,    2, 0x08 /* Private */,
-       7,    1,   71,    2, 0x08 /* Private */,
-       8,    1,   74,    2, 0x08 /* Private */,
-       9,    0,   77,    2, 0x08 /* Private */,
-      10,    0,   78,    2, 0x08 /* Private */,
-      11,    0,   79,    2, 0x08 /* Private */,
+       1,    0,   59,    2, 0x08 /* Private */,
+       3,    0,   60,    2, 0x08 /* Private */,
+       4,    1,   61,    2, 0x08 /* Private */,
+       5,    0,   64,    2, 0x08 /* Private */,
+       6,    0,   65,    2, 0x08 /* Private */,
+       7,    1,   66,    2, 0x08 /* Private */,
+       8,    0,   69,    2, 0x08 /* Private */,
+       9,    0,   70,    2, 0x08 /* Private */,
+      10,    0,   71,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -79,7 +77,6 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, QMetaType::Int,    2,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QTime,    2,
     QMetaType::Void, QMetaType::Double,    2,
     QMetaType::Void,
     QMetaType::Void,
@@ -99,11 +96,10 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->Zoom((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 3: _t->left(); break;
         case 4: _t->right(); break;
-        case 5: _t->whats_time((*reinterpret_cast< QTime(*)>(_a[1]))); break;
-        case 6: _t->speedos((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 7: _t->play(); break;
-        case 8: _t->tick(); break;
-        case 9: _t->stop(); break;
+        case 5: _t->speedos((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 6: _t->play(); break;
+        case 7: _t->tick(); break;
+        case 8: _t->stop(); break;
         default: ;
         }
     }
@@ -134,13 +130,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 9;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 9)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 10;
+        _id -= 9;
     }
     return _id;
 }

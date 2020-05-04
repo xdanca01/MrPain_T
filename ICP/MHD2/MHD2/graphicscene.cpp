@@ -24,15 +24,12 @@ bool GraphicScene::showLine(line *linka)
                 {
                     if(lnks->at(i)->status() == false)
                     {
-
-                        auto line = this->addLine(crds->at(y-1)->getX(),crds->at(y-1)->getY(),crds->at(y)->getX(),crds->at(y)->getY());
-                        line->setPen(QPen({Qt::blue}, 1));
+                        this->addItem(lnks->at(i));
+                        lnks->at(i)->setLine(crds->at(y-1)->getX(),crds->at(y-1)->getY(),crds->at(y)->getX(),crds->at(y)->getY());
                     }
                     else
                     {
-
-                        auto line = this->addLine(crds->at(y-1)->getX(),crds->at(y-1)->getY(),crds->at(y)->getX(),crds->at(y)->getY());
-                        line->setPen(QPen({Qt::red}, 1));
+                        lnks->at(i)->setPen(QPen({Qt::red}, 1));
                     }
                 }
             }
@@ -43,8 +40,8 @@ bool GraphicScene::showLine(line *linka)
                 int length = stps->size();
                 for(int y = 0; y < length;++y)
                 {
-                    auto circle = this->addEllipse(stps->at(y)->getCoordinate()->getX()-6,stps->at(y)->getCoordinate()->getY()-6,12,12);
-                    circle->setPen(QPen({Qt::green}, 12));
+                    auto circle = this->addEllipse(stps->at(y)->getCoordinate()->getX()-3,stps->at(y)->getCoordinate()->getY()-3,6,6);
+                    circle->setPen(QPen({Qt::green}, 6));
                 }
 
             }

@@ -31,7 +31,6 @@ private slots:
     void Zoom(int);
     void left();
     void right();
-    void whats_time(QTime);
     void speedos(double);
     void play();
     void tick();
@@ -40,9 +39,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QTime *time;
     QTimer *timer;
-    vector<traffic_t*>* doprava = nullptr;
+    vector<line*> doprava;
     GraphicScene* scene;
     void update_traf();
 };

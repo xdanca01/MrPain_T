@@ -32,7 +32,9 @@ public:
     void add_T(traffic_t* t);
 
 protected:
-    virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override;
+
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 };
 
 #endif // BUS_H

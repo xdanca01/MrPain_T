@@ -43,6 +43,10 @@ public:
     QAction *actionPreferences;
     QAction *actionQuit;
     QAction *actionStop;
+    QAction *actionAddStreet;
+    QAction *actionAddBus;
+    QAction *actionAddStop;
+    QAction *actionAbout;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout_4;
@@ -62,7 +66,7 @@ public:
     QLabel *label_4;
     QGraphicsView *graphicsView;
     QVBoxLayout *verticalLayout_5;
-    QListWidget *listWidget;
+    QListWidget *street_info;
     QTableWidget *traf_info;
     QStatusBar *statusBar;
     QMenuBar *menuBar;
@@ -89,6 +93,14 @@ public:
         actionQuit->setObjectName(QStringLiteral("actionQuit"));
         actionStop = new QAction(MainWindow);
         actionStop->setObjectName(QStringLiteral("actionStop"));
+        actionAddStreet = new QAction(MainWindow);
+        actionAddStreet->setObjectName(QStringLiteral("actionAddStreet"));
+        actionAddBus = new QAction(MainWindow);
+        actionAddBus->setObjectName(QStringLiteral("actionAddBus"));
+        actionAddStop = new QAction(MainWindow);
+        actionAddStop->setObjectName(QStringLiteral("actionAddStop"));
+        actionAbout = new QAction(MainWindow);
+        actionAbout->setObjectName(QStringLiteral("actionAbout"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout_3 = new QVBoxLayout(centralWidget);
@@ -208,14 +220,14 @@ public:
         verticalLayout_5 = new QVBoxLayout();
         verticalLayout_5->setSpacing(6);
         verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
-        listWidget = new QListWidget(centralWidget);
-        listWidget->setObjectName(QStringLiteral("listWidget"));
-        sizePolicy.setHeightForWidth(listWidget->sizePolicy().hasHeightForWidth());
-        listWidget->setSizePolicy(sizePolicy);
-        listWidget->setMinimumSize(QSize(202, 100));
-        listWidget->setMaximumSize(QSize(220, 100));
+        street_info = new QListWidget(centralWidget);
+        street_info->setObjectName(QStringLiteral("street_info"));
+        sizePolicy.setHeightForWidth(street_info->sizePolicy().hasHeightForWidth());
+        street_info->setSizePolicy(sizePolicy);
+        street_info->setMinimumSize(QSize(202, 100));
+        street_info->setMaximumSize(QSize(220, 100));
 
-        verticalLayout_5->addWidget(listWidget);
+        verticalLayout_5->addWidget(street_info);
 
         traf_info = new QTableWidget(centralWidget);
         if (traf_info->columnCount() < 2)
@@ -270,6 +282,7 @@ public:
         menuFile->addAction(actionPreferences);
         menuFile->addAction(actionQuit);
         menuOpen_recent->addSeparator();
+        menuHelp->addAction(actionAbout);
         toolBar->addAction(actionPlay);
         toolBar->addAction(actionStop);
 
@@ -287,6 +300,10 @@ public:
         actionPreferences->setText(QApplication::translate("MainWindow", "Preferences", 0));
         actionQuit->setText(QApplication::translate("MainWindow", "Quit", 0));
         actionStop->setText(QApplication::translate("MainWindow", "Stop", 0));
+        actionAddStreet->setText(QApplication::translate("MainWindow", "AddStreet", 0));
+        actionAddBus->setText(QApplication::translate("MainWindow", "AddBus", 0));
+        actionAddStop->setText(QApplication::translate("MainWindow", "AddStop", 0));
+        actionAbout->setText(QApplication::translate("MainWindow", "About", 0));
         btn_minus->setText(QApplication::translate("MainWindow", "-", 0));
         btn_plus->setText(QApplication::translate("MainWindow", "+", 0));
         label->setText(QApplication::translate("MainWindow", "Speed:", 0));

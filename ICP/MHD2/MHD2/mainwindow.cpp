@@ -8,26 +8,34 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //propojení gui se sloty v třídě main window
+
+    //propojí tlačítko + s funkcí pro přiblížení scény
     connect(ui->btn_plus, &QPushButton::clicked, this, &MainWindow::plus);
+    //propojí tlačítko - s funkci pro oddálení scény
     connect(ui->btn_minus, &QPushButton::clicked, this, &MainWindow::minus);
+    //propojení slideru s funkcí pro změnu zoomu scény
     connect(ui->slide_zoom, &QSlider::valueChanged, this, &MainWindow::Zoom);
+    //propojení tlačítka otočení vpravo
     connect(ui->btn_right, &QPushButton::clicked, this, &MainWindow::right);
+    //propojení tlačítka otočení vlevo
     connect(ui->btn_left, &QPushButton::clicked, this, &MainWindow::left);
-    connect(ui->my_timer, &QTimeEdit::timeChanged, this, &MainWindow::whats_time);
+    //propojení tlačítka pro změnu rychlosti s funkcí pro změnu rychlosti běhu času
     connect(ui->btn_speed, SIGNAL(valueChanged(double)), this, SLOT(speedos(double)));
+    //propojení tlačítka play se spuštěním běhu
     connect(ui->actionPlay, &QAction::triggered, this, &MainWindow::play);
+    //propojení tlačítka play se zastavením běhu
     connect(ui->actionStop, &QAction::triggered, this, &MainWindow::stop);
 
     scene = new GraphicScene(ui->graphicsView);
     ui->graphicsView->setScene(scene);
-    doprava = new vector<traffic_t*>();
     line* linka = new line("linka 1");
+    line* linka2 = new line("linka 2");
     Coordinate* c1 = new Coordinate(20,20);
-    Coordinate* c2 = new Coordinate(-80,-50);
-    Coordinate* c3 = new Coordinate(-70,-50);
-    Coordinate* c4 = new Coordinate(40,-60);
+    Coordinate* c4 = new Coordinate(60,-60);
     Coordinate* c5 = new Coordinate(40,90);
-    Coordinate* c6 = new Coordinate(200,80);
+    Coordinate* c6 = new Coordinate(200,200);
+    Coordinate* c2 = new Coordinate(130,70);
 
     Street* ulice2 = new Street(nullptr,"Tercina",c5,c4);
     Street* ulice3 = new Street(nullptr,"Petrova",c4,c6);
@@ -38,12 +46,11 @@ MainWindow::MainWindow(QWidget *parent) :
     timer = new QTimer();
     timer->setInterval(1000.0/ui->btn_speed->value());
     connect(timer, &QTimer::timeout, this, &MainWindow::tick);
-    time = new QTime();
-    *time = ui->my_timer->time();
     Stop* s1 = new Stop("first",c5);
     Stop* s2 = new Stop("second",c1);
     Stop* s3 = new Stop("third",c4);
     Stop* s4 = new Stop("fourth",c6);
+    Stop* s5 = new Stop("moje",c2);
     Street* ulice = new Street(nullptr,"Palackeho",c4,c1);
     auto* casy = new vector<QTime*>();
     auto* casy2 = new vector<QTime*>();
@@ -54,6 +61,7 @@ MainWindow::MainWindow(QWidget *parent) :
     casy->push_back(new QTime(12,0,0,0));
     casy->push_back(new QTime(12,10,59,0));
     casy2->push_back(new QTime(12,0,0,0));
+    casy2->push_back(new QTime(12,1,59,0));
     casy2->push_back(new QTime(12,3,59,0));
     casy2->push_back(new QTime(12,4,59,0));
     casy2->push_back(new QTime(12,7,59,0));
@@ -64,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ulic2->push_back(ulice2);
     ulic2->push_back(ulice3);
     stopky2->push_back(s3);
+    stopky2->push_back(s5);
     stopky2->push_back(s4);
     stopky2->push_back(s1);
     stopky2->push_back(s3);
@@ -71,16 +80,15 @@ MainWindow::MainWindow(QWidget *parent) :
     stopky->push_back(s2);
     bus *b = new bus(nullptr, ui->traf_info);
     bus *b2 = new bus(nullptr, ui->traf_info);
-    b2->update(40.0,-60.0);
-    b->update(20.0,20.0);
+
     traffic_t* traff2 = new traffic_t(b2, *ulic2,*casy2, *stopky2);
     traffic_t* traff = new traffic_t(b,*ulic,*casy,*stopky);
-    linka->addBus(traff);
-    linka->addBus(traff2);
+    linka->addTraf(traff);
+    linka2->addTraf(traff2);
     b2->add_T(traff2);
     b->add_T(traff);
-    doprava->push_back(traff);
-    doprava->push_back(traff2);
+    doprava.push_back(linka);
+    doprava.push_back(linka2);
 
 
     linka->addStreet(ulice);
@@ -94,6 +102,7 @@ MainWindow::MainWindow(QWidget *parent) :
     linka->addStop(s2);
     linka->addStop(s3);
     linka->addStop(s4);
+    linka->addStop(s5);
     scene->showLine(linka);
     scene->addItem(b);
     b2->hide();
@@ -141,13 +150,6 @@ void MainWindow::right()
     ui->graphicsView->setTransform(transform.rotate(10));
 }
 
-
-
-void MainWindow::whats_time(QTime t)
-{
-    *time = t;
-}
-
 void MainWindow::speedos(double)
 {
     timer->setInterval(1000.0/ui->btn_speed->value());
@@ -172,132 +174,139 @@ void MainWindow::tick()
 void MainWindow::update_traf()
 {
 
-    int len = this->doprava->size();
+    //získáme počet spojů
+    int len = this->doprava.size();
+    //projdeme každý spoj
     for(int i = 0; i < len;++i)
     {
-
-        traffic_t* traf = this->doprava->at(i);
-
-        int length = traf->getT().size();
-
-        if(this->time->secsTo(*traf->getT().at(0)) <= 0 && this->time->secsTo(*traf->getT().at(traf->getT().size()-1)) > 0)
+        int len2 = this->doprava.at(i)->getTraf()->size();
+        for(int r = 0;r < len2;++r)
         {
+            traffic_t* traf = this->doprava.at(i)->getTraf()->at(r);
 
+            //získáme počet časů
+            int length = traf->getT().size();
 
-            Stop* s1 = traf->getStop().at(0);
-            Stop* s2 = traf->getStop().at(traf->getT().size()-1);
-            QTime* t1 = traf->getT().at(0);
-            QTime* t2 = traf->getT().at(traf->getT().size()-1);
-
-            for(int y = 1;y<length;++y)
-            {
-                if(*traf->getT().at(y) >= *t1 && *traf->getT().at(y) <= *this->time)
-                {
-                    t1 = traf->getT().at(y);
-                    s1 = traf->getStop().at(y);
-                }
-                else if(*traf->getT().at(y) <= *t2 && *traf->getT().at(y) > *this->time)
-                {
-                    t2 = traf->getT().at(y);
-                    s2 = traf->getStop().at(y);
-                }
-            }
-            int start, end;
-            for(int q = 0;q < traf->getS().size();++q)
-            {
-                if(traf->getS().at(q)->stop_on(s2))
-                {
-                    end = q;
-                }
-            }
-            for(int q = 0;q < end;++q)
-            {
-                if(traf->getS().at(q)->stop_on(s1))
-                {
-                    start = q;
-                }
-            }
-
-            Coordinate* c1;
-            Coordinate* c2;
-            Coordinate* c3;
-
-            vector<Coordinate*>* vzdalenosti = new vector<Coordinate*>();
-            for(int q = start; q < end;++q)
+            if(ui->my_timer->time().secsTo(*traf->getT().at(0)) <= 0 && ui->my_timer->time().secsTo(*traf->getT().at(traf->getT().size()-1)) > 0)
             {
 
-                c1 = traf->getS().at(q)->begin();
-                c2 = traf->getS().at(q)->end();
-                if(traf->getS().at(q+1)->begin() == c1)
+
+                Stop* s1 = traf->getStop().at(0);
+                Stop* s2 = traf->getStop().at(traf->getT().size()-1);
+                QTime* t1 = traf->getT().at(0);
+                QTime* t2 = traf->getT().at(traf->getT().size()-1);
+
+                for(int y = 1;y<length;++y)
                 {
-                    c3 = traf->getS().at(q+1)->begin();
+                    if(*traf->getT().at(y) >= *t1 && *traf->getT().at(y) <= ui->my_timer->time())
+                    {
+                        t1 = traf->getT().at(y);
+                        s1 = traf->getStop().at(y);
+                    }
+                    else if(*traf->getT().at(y) <= *t2 && *traf->getT().at(y) > ui->my_timer->time())
+                    {
+                        t2 = traf->getT().at(y);
+                        s2 = traf->getStop().at(y);
+                    }
+                }
+                int start, end;
+                for(int q = 0;q < traf->getS().size();++q)
+                {
+                    if(traf->getS().at(q)->stop_on(s2))
+                    {
+                        end = q;
+                    }
+                }
+                for(int q = 0;q < end;++q)
+                {
+                    if(traf->getS().at(q)->stop_on(s1))
+                    {
+                        start = q;
+                    }
+                }
+
+                Coordinate* c1;
+                Coordinate* c2;
+                Coordinate* c3;
+
+                vector<Coordinate*>* vzdalenosti = new vector<Coordinate*>();
+                for(int q = start; q < end;++q)
+                {
+
+                    c1 = traf->getS().at(q)->begin();
+                    c2 = traf->getS().at(q)->end();
+                    if(traf->getS().at(q+1)->begin() == c1)
+                    {
+                        c3 = traf->getS().at(q+1)->begin();
                     c1 = c2;
-                }
-                else if(traf->getS().at(q+1)->end() == c1)
-                {
-                    c3 = traf->getS().at(q+1)->end();
-                    c1 = c2;
-                }
-                else if(traf->getS().at(q+1)->begin() == c2)
-                {
-                    c3 = traf->getS().at(q+1)->begin();
-                }
-                else if(traf->getS().at(q+1)->end() == c2)
-                {
-                    c3 = traf->getS().at(q+1)->end();
-                }
-                if(q == start) vzdalenosti->push_back(s1->getCoordinate());
-                else vzdalenosti->push_back(c1);
-                vzdalenosti->push_back(c3);
-                if(q+1 == end)
-                {
+                    }
+                    else if(traf->getS().at(q+1)->end() == c1)
+                    {
+                        c3 = traf->getS().at(q+1)->end();
+                        c1 = c2;
+                    }
+                    else if(traf->getS().at(q+1)->begin() == c2)
+                    {
+                        c3 = traf->getS().at(q+1)->begin();
+                    }
+                    else if(traf->getS().at(q+1)->end() == c2)
+                    {
+                        c3 = traf->getS().at(q+1)->end();
+                    }
+                    if(q == start) vzdalenosti->push_back(s1->getCoordinate());
+                    else vzdalenosti->push_back(c1);
                     vzdalenosti->push_back(c3);
-                    vzdalenosti->push_back(s2->getCoordinate());
+                    if(q+1 == end)
+                    {
+                        vzdalenosti->push_back(c3);
+                        vzdalenosti->push_back(s2->getCoordinate());
+                    }
                 }
-            }
-            int lenn = (vzdalenosti->size() - 1);
-            vector<double> vzdal;
-            double celkem = 0;
-            double step = 0;
-            for(int t = 0;t < lenn;t += 2)
-            {
-
-                step = sqrt((pow(vzdalenosti->at(t)->getX()-vzdalenosti->at(t+1)->getX(),2.0),pow(vzdalenosti->at(t)->getY()-vzdalenosti->at(t+1)->getY(),2.0)));
-                vzdal.push_back(step);
-                celkem += step;
-            }
-
-            double secs = abs(t1->secsTo(*t2));
-            double to_stop = time->secsTo(*t2);
-
-            double pomer = to_stop/secs;
-            celkem = celkem * pomer;
-
-            lenn = vzdal.size() - 1;
-            int index;
-            for(int e = lenn; e >= 0;--e)
-            {
-                if(celkem - vzdal.at(e) <= 0)
+                int lenn = (vzdalenosti->size() - 1);
+                vector<double> vzdal;
+                double celkem = 0;
+                double step = 0;
+                for(int t = 0;t < lenn;t += 2)
                 {
-                    index = e*2;
-                    break;
+
+                    step = sqrt((pow(vzdalenosti->at(t)->getX()-vzdalenosti->at(t+1)->getX(),2.0),pow(vzdalenosti->at(t)->getY()-vzdalenosti->at(t+1)->getY(),2.0)));
+                    vzdal.push_back(step);
+                    celkem += step;
                 }
-                celkem -= vzdal.at(e);
-            }
-            c1 = vzdalenosti->at(index);
-            c2 = vzdalenosti->at(index+1);
 
-            pomer = celkem/vzdal.at(index/2);
-            double dx = (c1->getX() - c2->getX()) * pomer;
-            double dy = (c1->getY() - c2->getY()) * pomer;
+                double secs = abs(t1->secsTo(*t2));
+                double to_stop = ui->my_timer->time().secsTo(*t2);
 
-            double addX = dx + c2->getX();
-            double addY = dy + c2->getY();
-            traf->getB()->start();
-            traf->getB()->update(addX,addY);
+                double pomer = to_stop/secs;
+                celkem = celkem * pomer;
+
+                lenn = vzdal.size() - 1;
+                int index;
+                for(int e = lenn; e >= 0;--e)
+                {
+                    if(celkem - vzdal.at(e) <= 0)
+                    {
+                        index = e*2;
+                        break;
+                    }
+                    celkem -= vzdal.at(e);
+                }
+                c1 = vzdalenosti->at(index);
+                c2 = vzdalenosti->at(index+1);
+
+                pomer = celkem/vzdal.at(index/2);
+                double dx = (c1->getX() - c2->getX()) * pomer;
+                double dy = (c1->getY() - c2->getY()) * pomer;
+
+                double addX = dx + c2->getX();
+                double addY = dy + c2->getY();
+                traf->getB()->start();
+                traf->getB()->update(addX,addY);
+                }
+
+            else traf->getB()->end();
+            scene->busses(traf->getB());
         }
-        else traf->getB()->end();
-        scene->busses(traf->getB());
     }
 }
 
