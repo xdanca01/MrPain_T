@@ -1,0 +1,5 @@
+line,street,stop
+1,uliceC1,prvni
+1,uliceC2,
+1,uliceC4,
+1,uliceC5,treti

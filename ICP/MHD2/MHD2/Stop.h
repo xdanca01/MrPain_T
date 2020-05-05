@@ -7,18 +7,19 @@
 
 #include "Coordinate.h"
 #include "Street.h"
+#include <QGraphicsEllipseItem>
 
 class Street;
 
 using namespace std;
-class Stop{
+class Stop : public QGraphicsEllipseItem{
     
     string Id;
     Coordinate* cords = nullptr;
     Street* stret = nullptr;
 
     public:
-        Stop(string str, Coordinate* c);
+        Stop(QGraphicsEllipseItem *parent = nullptr, string str = "", Coordinate* c = nullptr);
         string getId();
         Coordinate* getCoordinate();
         void setStreet(Street* s);

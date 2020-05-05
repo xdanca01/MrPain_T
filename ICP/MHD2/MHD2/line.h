@@ -7,26 +7,31 @@
 #include <Street.h>
 #include "bus.h"
 #include "traffic_t.h"
+#include <QDebug>
 
 using namespace std;
 class line
 {
     string Id;
-    vector<Street*>* streets = nullptr;
-    vector<Stop*>* Stops = nullptr;
-    vector<bus*>* buses = nullptr;
-    vector<traffic_t*>* traff = nullptr;
+    vector<Street*> streets;
+    vector<Stop*> Stops;
+    vector<bus*> buses;
+    vector<traffic_t*> traff;
+    vector<int> stops_on;
 
 
 public:
     line(string s);
+    bool addStop(Stop* stop,int on);
     bool addStop(Stop* stop);
     bool addStreet(Street* s);
-    vector<Street*>* getRoute();
-    vector<Stop*>* getStops();
-    vector<traffic_t*>* getTraf();
+    string getId();
+    vector<Street*> getRoute();
+    vector<Stop*> getStops();
+    vector<traffic_t*> getTraf();
     bool addBus(bus* t);
-    bool addTraf(traffic_t* t);
+    bool addTraff(traffic_t* t);
+    int stop_on(int y);
 
 };
 

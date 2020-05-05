@@ -2,19 +2,24 @@
 
 
 
-bus::bus(QGraphicsItem *parent, QTableWidget* table) :
-    QGraphicsLineItem(parent)
+bus::bus(QGraphicsItem *parent, QTableWidget* table, traffic_t *t) :
+    QGraphicsEllipseItem(this->x-1,this->y-1,2,2,parent)
 {
     this->tab = table;
-    this->setPen(QPen({Qt::black}, 8));
+    this->setPen(QPen({Qt::black}, 2));
     this->setFlag(QGraphicsItem::ItemIsSelectable);
+    this->traf = t;
+    t->addBus(this);
+    this->hide();
 
 }
 
 void bus::update(double Xx, double Yy)
 {
-    x = Xx;
+    this->setX(Xx);
+    this->setY(Yy);
     y = Yy;
+    x = Xx;
 }
 
 void bus::start()
@@ -52,7 +57,7 @@ void bus::mousePressEvent(QGraphicsSceneMouseEvent *event)
     {
         this->traf->getS().at(i)->setPen(QPen({Qt::blue}, 3));
     }
-    QGraphicsLineItem::mousePressEvent(event);
+    QGraphicsEllipseItem::mousePressEvent(event);
 }
 
 void bus::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -63,7 +68,7 @@ void bus::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     {
         this->traf->getS().at(i)->setPen(QPen({Qt::blue}, 1));
     }
-    QGraphicsLineItem::mouseReleaseEvent(event);
+    QGraphicsEllipseItem::mouseReleaseEvent(event);
 }
 
 double bus::getX()

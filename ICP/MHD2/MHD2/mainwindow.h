@@ -9,6 +9,10 @@
 #include "bus.h"
 #include <QTimer>
 #include <vector>
+#include <iostream>
+#include <QDebug>
+#include <optional>
+#include "csv.h"
 
 class GraphicScene;
 
@@ -35,14 +39,22 @@ private slots:
     void play();
     void tick();
     void stop();
-
+    vector<Stop*> addStops();
+    vector<Street*> addStreets();
+    void addBus();
+    void addTraf();
+    void addLine();
 
 private:
     Ui::MainWindow *ui;
     QTimer *timer;
     vector<line*> doprava;
+    vector<Stop*> stops;
+    vector<Street*> streets;
     GraphicScene* scene;
     void update_traf();
+    vector<Stop*> getStops();
+    vector<Street*> getStreets();
 };
 
 #endif // MAINWINDOW_H

@@ -3,11 +3,11 @@
 
 class Coordinate{
     //Coordinates
-    int x,y;
+    double x,y;
     public:
-        Coordinate(int x, int y);
-        int getX();
-        int getY();
+        Coordinate(double x,double y);
+        double getX();
+        double getY();
         bool equals(Coordinate* c);
             
 };

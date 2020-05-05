@@ -1,0 +1,4 @@
+stop_name,stop_lat,stop_lon
+prvni,10.0,10.0
+druha,20.0,20.0
+treti,0.0,20.0

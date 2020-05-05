@@ -1,16 +1,33 @@
 #include "traffic_t.h"
 
-traffic_t::traffic_t(bus *b, vector<Street*> stret, vector<QTime*> times, vector<Stop*> s)
+traffic_t::traffic_t(string nam)
 {
-    this->b = b;
+    this->name = nam;
+}
+
+void traffic_t::addT(QTime *t)
+{
+    this->times.push_back(t);
+}
+
+void traffic_t::addStop(vector<Stop *> stop)
+{
+    this->stopp = stop;
+}
+
+void traffic_t::addStreet(vector<Street *> stret)
+{
     this->stretts = stret;
-    this->times = times;
-    this->stopp = s;
 }
 
 bus *traffic_t::getB()
 {
-    return this->b;
+    return this->bs;
+}
+
+void traffic_t::addBus(bus *bb)
+{
+    this->bs = bb;
 }
 
 vector<Street*> traffic_t::getS()
@@ -21,6 +38,11 @@ vector<Street*> traffic_t::getS()
 vector<QTime*> traffic_t::getT()
 {
     return this->times;
+}
+
+string traffic_t::getName()
+{
+    return this->name;
 }
 
 vector<Stop*> traffic_t::getStop()

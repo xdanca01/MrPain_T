@@ -2,7 +2,7 @@
 #define BUS_H
 
 #include "Coordinate.h"
-#include <QGraphicsLineItem>
+#include <QGraphicsEllipseItem>
 #include <QPen>
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
@@ -11,7 +11,7 @@
 
 class traffic_t;
 
-class bus : public QGraphicsLineItem
+class bus : public QGraphicsEllipseItem
 {
     int id;
     double x;
@@ -19,10 +19,9 @@ class bus : public QGraphicsLineItem
     traffic_t* traf = nullptr;
     bool garage = true;
     QTableWidget* tab;
-    //vector<>
 
 public:
-    bus(QGraphicsItem *parent = nullptr, QTableWidget* table = nullptr);
+    bus(QGraphicsItem *parent = nullptr, QTableWidget* table = nullptr, traffic_t* t = nullptr);
     void update(double Xx, double Yy);
     double getX();
     double getY();

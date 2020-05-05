@@ -19,17 +19,17 @@ class Street : public QGraphicsLineItem
 {
     bool closed = false;
     string Id;
-    vector<Coordinate*>* Cords  = nullptr;
-    vector<Stop*>* Stops  = nullptr;
+    vector<Coordinate*> Cords;
+    vector<Stop*> Stops;
     int delay = 1;
 
     public:
         Street(QGraphicsItem *parent = nullptr,string name = "", Coordinate* c1 = nullptr, Coordinate* c2 = nullptr);
         string getId();
-        vector<Coordinate*>* getCoordinates();
+        vector<Coordinate*> getCoordinates();
         Coordinate* begin();
         Coordinate* end();
-        vector<Stop*>* getStops();
+        vector<Stop*> getStops();
         int getDelay();
         bool addStop(Stop* s);
         void setDelay(int d);

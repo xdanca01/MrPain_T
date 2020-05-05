@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[11];
-    char stringdata0[62];
+    QByteArrayData data[18];
+    char stringdata0[135];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -39,11 +39,20 @@ QT_MOC_LITERAL(6, 33, 5), // "right"
 QT_MOC_LITERAL(7, 39, 7), // "speedos"
 QT_MOC_LITERAL(8, 47, 4), // "play"
 QT_MOC_LITERAL(9, 52, 4), // "tick"
-QT_MOC_LITERAL(10, 57, 4) // "stop"
+QT_MOC_LITERAL(10, 57, 4), // "stop"
+QT_MOC_LITERAL(11, 62, 8), // "addStops"
+QT_MOC_LITERAL(12, 71, 13), // "vector<Stop*>"
+QT_MOC_LITERAL(13, 85, 10), // "addStreets"
+QT_MOC_LITERAL(14, 96, 15), // "vector<Street*>"
+QT_MOC_LITERAL(15, 112, 6), // "addBus"
+QT_MOC_LITERAL(16, 119, 7), // "addTraf"
+QT_MOC_LITERAL(17, 127, 7) // "addLine"
 
     },
     "MainWindow\0plus\0\0minus\0Zoom\0left\0right\0"
-    "speedos\0play\0tick\0stop"
+    "speedos\0play\0tick\0stop\0addStops\0"
+    "vector<Stop*>\0addStreets\0vector<Street*>\0"
+    "addBus\0addTraf\0addLine"
 };
 #undef QT_MOC_LITERAL
 
@@ -53,7 +62,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -61,15 +70,20 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   59,    2, 0x08 /* Private */,
-       3,    0,   60,    2, 0x08 /* Private */,
-       4,    1,   61,    2, 0x08 /* Private */,
-       5,    0,   64,    2, 0x08 /* Private */,
-       6,    0,   65,    2, 0x08 /* Private */,
-       7,    1,   66,    2, 0x08 /* Private */,
-       8,    0,   69,    2, 0x08 /* Private */,
-       9,    0,   70,    2, 0x08 /* Private */,
-      10,    0,   71,    2, 0x08 /* Private */,
+       1,    0,   84,    2, 0x08 /* Private */,
+       3,    0,   85,    2, 0x08 /* Private */,
+       4,    1,   86,    2, 0x08 /* Private */,
+       5,    0,   89,    2, 0x08 /* Private */,
+       6,    0,   90,    2, 0x08 /* Private */,
+       7,    1,   91,    2, 0x08 /* Private */,
+       8,    0,   94,    2, 0x08 /* Private */,
+       9,    0,   95,    2, 0x08 /* Private */,
+      10,    0,   96,    2, 0x08 /* Private */,
+      11,    0,   97,    2, 0x08 /* Private */,
+      13,    0,   98,    2, 0x08 /* Private */,
+      15,    0,   99,    2, 0x08 /* Private */,
+      16,    0,  100,    2, 0x08 /* Private */,
+      17,    0,  101,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -78,6 +92,11 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Double,    2,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    0x80000000 | 12,
+    0x80000000 | 14,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -100,6 +119,13 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 6: _t->play(); break;
         case 7: _t->tick(); break;
         case 8: _t->stop(); break;
+        case 9: { vector<Stop*> _r = _t->addStops();
+            if (_a[0]) *reinterpret_cast< vector<Stop*>*>(_a[0]) = _r; }  break;
+        case 10: { vector<Street*> _r = _t->addStreets();
+            if (_a[0]) *reinterpret_cast< vector<Street*>*>(_a[0]) = _r; }  break;
+        case 11: _t->addBus(); break;
+        case 12: _t->addTraf(); break;
+        case 13: _t->addLine(); break;
         default: ;
         }
     }
@@ -130,13 +156,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 14)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 9;
+        _id -= 14;
     }
     return _id;
 }

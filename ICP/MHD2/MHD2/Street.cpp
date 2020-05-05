@@ -1,12 +1,11 @@
 #include "Street.h"
 
 
-Street::Street(QGraphicsItem *parent, string name, Coordinate *c1, Coordinate *c2) : QGraphicsLineItem(parent)
+Street::Street(QGraphicsItem *parent, string name, Coordinate *c1, Coordinate *c2) : QGraphicsLineItem(c1->getX(),c1->getY(),c2->getX(),c2->getY(),parent)
 {
     this->Id = name;
-    this->Cords = new vector<Coordinate*>();
-    this->Cords->push_back(c1);
-    this->Cords->push_back(c2);
+    this->Cords.push_back(c1);
+    this->Cords.push_back(c2);
     this->setPen(QPen({Qt::blue}, 1));
 }
 
@@ -15,26 +14,22 @@ string Street::getId()
     return this->Id;
 }
 
-vector<Coordinate *>* Street::getCoordinates()
+vector<Coordinate *> Street::getCoordinates()
 {
     return this->Cords;
 }
 
 Coordinate *Street::begin()
 {
-    if(this->Cords)
-        return this->Cords[0][0];
-    return nullptr;
+    return this->Cords.at(0);
 }
 
 Coordinate *Street::end()
 {
-    if(this->Cords)
-        return this->Cords->at(this->Cords->size()-1);
-    return nullptr;
+    return this->Cords.at(this->Cords.size()-1);
 }
 
-vector<Stop *>* Street::getStops()
+vector<Stop *> Street::getStops()
 {
     return this->Stops;
 }
@@ -46,19 +41,18 @@ int Street::getDelay()
 
 bool Street::addStop(Stop *s)
 {
-    unsigned int length = this->Cords->size();
+    unsigned int length = this->Cords.size();
     Coordinate* c3 = s->getCoordinate();
     for(unsigned i = 1; i < length; ++i)
     {
-        Coordinate* c1 = this->Cords->at(i - 1);
-        Coordinate* c2 = this->Cords->at(i);
+        Coordinate* c1 = this->Cords.at(i - 1);
+        Coordinate* c2 = this->Cords.at(i);
         double d1 = sqrt(pow(c3->getX()-c2->getX(),2.0)+pow(c3->getY()-c2->getY(),2.0));
         double d2 = sqrt(pow(c1->getX()-c3->getX(),2.0)+pow(c1->getY()-c3->getY(),2.0));
         double d3 = sqrt(pow(c1->getX()-c2->getX(),2.0)+pow(c1->getY()-c2->getY(),2.0));
         if((d3 >= d2+d1 && d3-0.001 <= d2+d1) || (d3 <= d2+d1 && d3+0.001 >= d2+d1))
         {
-            if(this->Stops == nullptr) this->Stops = new vector<Stop*>();
-            this->Stops->push_back(s);
+            this->Stops.push_back(s);
             s->setStreet(this);
             return true;
         }
@@ -92,11 +86,10 @@ bool Street::status()
 
 bool Street::stop_on(Stop* s)
 {
-    if(this->Stops == nullptr) return false;
-    int len = this->Stops->size();
+    int len = this->Stops.size();
     for(int i = 0; i < len;++i)
     {
-        if(this->Stops->at(i)->getId() == s->getId()) return true;
+        if(this->Stops.at(i)->getId() == s->getId()) return true;
     }
     return false;
 }

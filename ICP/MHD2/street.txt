@@ -1,0 +1,5 @@
+street_name,street_x1,street_y1,street_x2,street_y2
+uliceC1,30.0,30.0,0.0,0.0
+uliceC2,30.0,30.0,30.0,60.0
+uliceC4,0.0,60.0,30.0,60.0
+uliceC5,0.0,60.0,0.0,0.0
