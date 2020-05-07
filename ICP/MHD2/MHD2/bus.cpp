@@ -3,7 +3,7 @@
 
 
 bus::bus(QGraphicsItem *parent, QTableWidget* table, traffic_t *t) :
-    QGraphicsEllipseItem(this->x-1,this->y-1,2,2,parent)
+    QGraphicsEllipseItem(-1,-1,2,2,parent)
 {
     this->tab = table;
     this->setPen(QPen({Qt::black}, 2));
@@ -24,17 +24,12 @@ void bus::update(double Xx, double Yy)
 
 void bus::start()
 {
-    this->garage = false;
+    this->show();
 }
 
 void bus::end()
 {
-    this->garage = true;
-}
-
-bool bus::status()
-{
-    return this->garage;
+    this->hide();
 }
 
 void bus::add_T(traffic_t *t)

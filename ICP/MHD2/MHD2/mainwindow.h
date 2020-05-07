@@ -12,6 +12,7 @@
 #include <iostream>
 #include <QDebug>
 #include <optional>
+#include <QFileDialog>
 #include "csv.h"
 
 class GraphicScene;
@@ -39,11 +40,13 @@ private slots:
     void play();
     void tick();
     void stop();
-    vector<Stop*> addStops();
-    vector<Street*> addStreets();
+    void addStops();
+    void addStreets();
     void addBus();
     void addTraf();
     void addLine();
+    void quit();
+    void check_sel(int);
 
 private:
     Ui::MainWindow *ui;

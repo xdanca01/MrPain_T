@@ -2,3 +2,5 @@ stop_name,stop_lat,stop_lon
 prvni,10.0,10.0
 druha,20.0,20.0
 treti,0.0,20.0
+ctrvta,-30.0,-30.0
+pata,0.0,-30.0

@@ -17,7 +17,6 @@ class bus : public QGraphicsEllipseItem
     double x;
     double y;
     traffic_t* traf = nullptr;
-    bool garage = true;
     QTableWidget* tab;
 
 public:
@@ -27,7 +26,6 @@ public:
     double getY();
     void start();
     void end();
-    bool status();
     void add_T(traffic_t* t);
 
 protected:

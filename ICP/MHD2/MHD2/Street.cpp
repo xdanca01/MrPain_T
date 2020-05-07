@@ -1,12 +1,14 @@
 #include "Street.h"
 
 
-Street::Street(QGraphicsItem *parent, string name, Coordinate *c1, Coordinate *c2) : QGraphicsLineItem(c1->getX(),c1->getY(),c2->getX(),c2->getY(),parent)
+Street::Street(QGraphicsItem *parent, QSpinBox *sp, string name, Coordinate *c1, Coordinate *c2) : QGraphicsLineItem(c1->getX(),c1->getY(),c2->getX(),c2->getY(),parent)
 {
+    this->spin = sp;
     this->Id = name;
     this->Cords.push_back(c1);
     this->Cords.push_back(c2);
     this->setPen(QPen({Qt::blue}, 1));
+    this->setFlag(QGraphicsItem::ItemIsSelectable);
 }
 
 string Street::getId()
@@ -92,6 +94,15 @@ bool Street::stop_on(Stop* s)
         if(this->Stops.at(i)->getId() == s->getId()) return true;
     }
     return false;
+}
+
+
+
+void Street::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    this->spin->setValue(this->delay);
+
+    QGraphicsLineItem::mouseDoubleClickEvent(event);
 }
 
 

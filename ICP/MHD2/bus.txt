@@ -1,2 +1,4 @@
 bus_name,traf_id
 bus1,1
+bus2,2
+bus3,3

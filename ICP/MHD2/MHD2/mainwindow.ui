@@ -75,10 +75,10 @@
           <item row="12" column="0">
            <widget class="QSlider" name="slide_zoom">
             <property name="minimum">
-             <number>10</number>
+             <number>50</number>
             </property>
             <property name="maximum">
-             <number>400</number>
+             <number>800</number>
             </property>
             <property name="singleStep">
              <number>10</number>
@@ -213,24 +213,28 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="QListWidget" name="street_info">
+         <widget class="QLabel" name="label_5">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="minimumSize">
-           <size>
-            <width>202</width>
-            <height>100</height>
-           </size>
-          </property>
           <property name="maximumSize">
            <size>
-            <width>220</width>
-            <height>100</height>
+            <width>16777215</width>
+            <height>20</height>
            </size>
+          </property>
+          <property name="text">
+           <string>Delay of selected street in seconds</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="Delay">
+          <property name="maximum">
+           <number>900000</number>
           </property>
          </widget>
         </item>
@@ -292,16 +296,17 @@
     <property name="title">
      <string>File</string>
     </property>
-    <widget class="QMenu" name="menuOpen_recent">
+    <widget class="QMenu" name="menuOpen">
      <property name="title">
-      <string>Open recent</string>
+      <string>Open...</string>
      </property>
-     <addaction name="separator"/>
+     <addaction name="actionStop_3"/>
+     <addaction name="actionStreet_2"/>
+     <addaction name="actionLine_2"/>
+     <addaction name="actionTraffic"/>
+     <addaction name="actionBus_2"/>
     </widget>
-    <addaction name="actionNew"/>
-    <addaction name="actionOpen"/>
-    <addaction name="menuOpen_recent"/>
-    <addaction name="actionPreferences"/>
+    <addaction name="menuOpen"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -335,11 +340,6 @@
   <action name="actionNew">
    <property name="text">
     <string>New</string>
-   </property>
-  </action>
-  <action name="actionOpen">
-   <property name="text">
-    <string>Open...</string>
    </property>
   </action>
   <action name="actionPlay">
@@ -380,6 +380,56 @@
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
+   </property>
+  </action>
+  <action name="actionStop_2">
+   <property name="text">
+    <string>Stop</string>
+   </property>
+  </action>
+  <action name="actionStreet">
+   <property name="text">
+    <string>Street</string>
+   </property>
+  </action>
+  <action name="actionLine">
+   <property name="text">
+    <string>Line</string>
+   </property>
+  </action>
+  <action name="actionTraf">
+   <property name="text">
+    <string>Traff</string>
+   </property>
+  </action>
+  <action name="actionBus">
+   <property name="text">
+    <string>Bus</string>
+   </property>
+  </action>
+  <action name="actionStop_3">
+   <property name="text">
+    <string>Stop</string>
+   </property>
+  </action>
+  <action name="actionStreet_2">
+   <property name="text">
+    <string>Street</string>
+   </property>
+  </action>
+  <action name="actionLine_2">
+   <property name="text">
+    <string>Line</string>
+   </property>
+  </action>
+  <action name="actionTraffic">
+   <property name="text">
+    <string>Traffic</string>
+   </property>
+  </action>
+  <action name="actionBus_2">
+   <property name="text">
+    <string>Bus</string>
    </property>
   </action>
  </widget>

@@ -13,9 +13,6 @@ class GraphicScene : public QGraphicsScene
     Q_OBJECT
 public:
     explicit GraphicScene(QObject *parent = 0);
-    bool showLine(line* linka);
-    void busses(bus* b);
-
 
 signals:
 

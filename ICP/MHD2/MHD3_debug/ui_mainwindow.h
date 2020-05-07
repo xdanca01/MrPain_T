@@ -19,12 +19,12 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QTimeEdit>
@@ -38,7 +38,6 @@ class Ui_MainWindow
 {
 public:
     QAction *actionNew;
-    QAction *actionOpen;
     QAction *actionPlay;
     QAction *actionPreferences;
     QAction *actionQuit;
@@ -47,6 +46,16 @@ public:
     QAction *actionAddBus;
     QAction *actionAddStop;
     QAction *actionAbout;
+    QAction *actionStop_2;
+    QAction *actionStreet;
+    QAction *actionLine;
+    QAction *actionTraf;
+    QAction *actionBus;
+    QAction *actionStop_3;
+    QAction *actionStreet_2;
+    QAction *actionLine_2;
+    QAction *actionTraffic;
+    QAction *actionBus_2;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout_4;
@@ -66,12 +75,13 @@ public:
     QLabel *label_4;
     QGraphicsView *graphicsView;
     QVBoxLayout *verticalLayout_5;
-    QListWidget *street_info;
+    QLabel *label_5;
+    QSpinBox *Delay;
     QTableWidget *traf_info;
     QStatusBar *statusBar;
     QMenuBar *menuBar;
     QMenu *menuFile;
-    QMenu *menuOpen_recent;
+    QMenu *menuOpen;
     QMenu *menuHelp;
     QToolBar *toolBar;
 
@@ -83,8 +93,6 @@ public:
         MainWindow->setMinimumSize(QSize(800, 500));
         actionNew = new QAction(MainWindow);
         actionNew->setObjectName(QStringLiteral("actionNew"));
-        actionOpen = new QAction(MainWindow);
-        actionOpen->setObjectName(QStringLiteral("actionOpen"));
         actionPlay = new QAction(MainWindow);
         actionPlay->setObjectName(QStringLiteral("actionPlay"));
         actionPreferences = new QAction(MainWindow);
@@ -101,6 +109,26 @@ public:
         actionAddStop->setObjectName(QStringLiteral("actionAddStop"));
         actionAbout = new QAction(MainWindow);
         actionAbout->setObjectName(QStringLiteral("actionAbout"));
+        actionStop_2 = new QAction(MainWindow);
+        actionStop_2->setObjectName(QStringLiteral("actionStop_2"));
+        actionStreet = new QAction(MainWindow);
+        actionStreet->setObjectName(QStringLiteral("actionStreet"));
+        actionLine = new QAction(MainWindow);
+        actionLine->setObjectName(QStringLiteral("actionLine"));
+        actionTraf = new QAction(MainWindow);
+        actionTraf->setObjectName(QStringLiteral("actionTraf"));
+        actionBus = new QAction(MainWindow);
+        actionBus->setObjectName(QStringLiteral("actionBus"));
+        actionStop_3 = new QAction(MainWindow);
+        actionStop_3->setObjectName(QStringLiteral("actionStop_3"));
+        actionStreet_2 = new QAction(MainWindow);
+        actionStreet_2->setObjectName(QStringLiteral("actionStreet_2"));
+        actionLine_2 = new QAction(MainWindow);
+        actionLine_2->setObjectName(QStringLiteral("actionLine_2"));
+        actionTraffic = new QAction(MainWindow);
+        actionTraffic->setObjectName(QStringLiteral("actionTraffic"));
+        actionBus_2 = new QAction(MainWindow);
+        actionBus_2->setObjectName(QStringLiteral("actionBus_2"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout_3 = new QVBoxLayout(centralWidget);
@@ -137,8 +165,8 @@ public:
 
         slide_zoom = new QSlider(centralWidget);
         slide_zoom->setObjectName(QStringLiteral("slide_zoom"));
-        slide_zoom->setMinimum(10);
-        slide_zoom->setMaximum(400);
+        slide_zoom->setMinimum(50);
+        slide_zoom->setMaximum(800);
         slide_zoom->setSingleStep(10);
         slide_zoom->setValue(100);
         slide_zoom->setOrientation(Qt::Vertical);
@@ -220,14 +248,22 @@ public:
         verticalLayout_5 = new QVBoxLayout();
         verticalLayout_5->setSpacing(6);
         verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
-        street_info = new QListWidget(centralWidget);
-        street_info->setObjectName(QStringLiteral("street_info"));
-        sizePolicy.setHeightForWidth(street_info->sizePolicy().hasHeightForWidth());
-        street_info->setSizePolicy(sizePolicy);
-        street_info->setMinimumSize(QSize(202, 100));
-        street_info->setMaximumSize(QSize(220, 100));
+        label_5 = new QLabel(centralWidget);
+        label_5->setObjectName(QStringLiteral("label_5"));
+        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(label_5->sizePolicy().hasHeightForWidth());
+        label_5->setSizePolicy(sizePolicy2);
+        label_5->setMaximumSize(QSize(16777215, 20));
 
-        verticalLayout_5->addWidget(street_info);
+        verticalLayout_5->addWidget(label_5);
+
+        Delay = new QSpinBox(centralWidget);
+        Delay->setObjectName(QStringLiteral("Delay"));
+        Delay->setMaximum(900000);
+
+        verticalLayout_5->addWidget(Delay);
 
         traf_info = new QTableWidget(centralWidget);
         if (traf_info->columnCount() < 2)
@@ -237,9 +273,6 @@ public:
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
         traf_info->setHorizontalHeaderItem(1, __qtablewidgetitem1);
         traf_info->setObjectName(QStringLiteral("traf_info"));
-        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Minimum);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(traf_info->sizePolicy().hasHeightForWidth());
         traf_info->setSizePolicy(sizePolicy2);
         traf_info->setMinimumSize(QSize(202, 0));
@@ -264,8 +297,8 @@ public:
         menuBar->setGeometry(QRect(0, 0, 922, 20));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
-        menuOpen_recent = new QMenu(menuFile);
-        menuOpen_recent->setObjectName(QStringLiteral("menuOpen_recent"));
+        menuOpen = new QMenu(menuFile);
+        menuOpen->setObjectName(QStringLiteral("menuOpen"));
         menuHelp = new QMenu(menuBar);
         menuHelp->setObjectName(QStringLiteral("menuHelp"));
         MainWindow->setMenuBar(menuBar);
@@ -276,12 +309,13 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuHelp->menuAction());
-        menuFile->addAction(actionNew);
-        menuFile->addAction(actionOpen);
-        menuFile->addAction(menuOpen_recent->menuAction());
-        menuFile->addAction(actionPreferences);
+        menuFile->addAction(menuOpen->menuAction());
         menuFile->addAction(actionQuit);
-        menuOpen_recent->addSeparator();
+        menuOpen->addAction(actionStop_3);
+        menuOpen->addAction(actionStreet_2);
+        menuOpen->addAction(actionLine_2);
+        menuOpen->addAction(actionTraffic);
+        menuOpen->addAction(actionBus_2);
         menuHelp->addAction(actionAbout);
         toolBar->addAction(actionPlay);
         toolBar->addAction(actionStop);
@@ -295,7 +329,6 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
         actionNew->setText(QApplication::translate("MainWindow", "New", 0));
-        actionOpen->setText(QApplication::translate("MainWindow", "Open...", 0));
         actionPlay->setText(QApplication::translate("MainWindow", "Play", 0));
         actionPreferences->setText(QApplication::translate("MainWindow", "Preferences", 0));
         actionQuit->setText(QApplication::translate("MainWindow", "Quit", 0));
@@ -304,6 +337,16 @@ public:
         actionAddBus->setText(QApplication::translate("MainWindow", "AddBus", 0));
         actionAddStop->setText(QApplication::translate("MainWindow", "AddStop", 0));
         actionAbout->setText(QApplication::translate("MainWindow", "About", 0));
+        actionStop_2->setText(QApplication::translate("MainWindow", "Stop", 0));
+        actionStreet->setText(QApplication::translate("MainWindow", "Street", 0));
+        actionLine->setText(QApplication::translate("MainWindow", "Line", 0));
+        actionTraf->setText(QApplication::translate("MainWindow", "Traff", 0));
+        actionBus->setText(QApplication::translate("MainWindow", "Bus", 0));
+        actionStop_3->setText(QApplication::translate("MainWindow", "Stop", 0));
+        actionStreet_2->setText(QApplication::translate("MainWindow", "Street", 0));
+        actionLine_2->setText(QApplication::translate("MainWindow", "Line", 0));
+        actionTraffic->setText(QApplication::translate("MainWindow", "Traffic", 0));
+        actionBus_2->setText(QApplication::translate("MainWindow", "Bus", 0));
         btn_minus->setText(QApplication::translate("MainWindow", "-", 0));
         btn_plus->setText(QApplication::translate("MainWindow", "+", 0));
         label->setText(QApplication::translate("MainWindow", "Speed:", 0));
@@ -313,12 +356,13 @@ public:
         btn_right->setText(QApplication::translate("MainWindow", "Right", 0));
         my_timer->setDisplayFormat(QApplication::translate("MainWindow", "HH:mm:ss", 0));
         label_4->setText(QApplication::translate("MainWindow", "Time:", 0));
+        label_5->setText(QApplication::translate("MainWindow", "Delay of selected street in seconds", 0));
         QTableWidgetItem *___qtablewidgetitem = traf_info->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QApplication::translate("MainWindow", "Stop", 0));
         QTableWidgetItem *___qtablewidgetitem1 = traf_info->horizontalHeaderItem(1);
         ___qtablewidgetitem1->setText(QApplication::translate("MainWindow", "Arrival", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
-        menuOpen_recent->setTitle(QApplication::translate("MainWindow", "Open recent", 0));
+        menuOpen->setTitle(QApplication::translate("MainWindow", "Open...", 0));
         menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0));
         toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0));
     } // retranslateUi

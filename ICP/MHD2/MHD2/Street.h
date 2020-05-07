@@ -6,6 +6,7 @@
 #include "Coordinate.h"
 #include <QPen>
 #include <QGraphicsLineItem>
+#include <QSpinBox>
 #include <string>
 #include <vector>
 #include <math.h>
@@ -17,14 +18,16 @@ class Stop;
 
 class Street : public QGraphicsLineItem
 {
+
     bool closed = false;
     string Id;
     vector<Coordinate*> Cords;
     vector<Stop*> Stops;
-    int delay = 1;
+    int delay = 10;
+    QSpinBox* spin;
 
     public:
-        Street(QGraphicsItem *parent = nullptr,string name = "", Coordinate* c1 = nullptr, Coordinate* c2 = nullptr);
+        Street(QGraphicsItem *parent = nullptr, QSpinBox* sp = nullptr, string name = "", Coordinate* c1 = nullptr, Coordinate* c2 = nullptr);
         string getId();
         vector<Coordinate*> getCoordinates();
         Coordinate* begin();
@@ -38,6 +41,8 @@ class Street : public QGraphicsLineItem
         bool status();
         bool stop_on(Stop* s);
 
+
+        virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) override;
 
 };
 #endif
