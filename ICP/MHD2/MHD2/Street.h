@@ -23,7 +23,7 @@ class Street : public QGraphicsLineItem
     string Id;
     vector<Coordinate*> Cords;
     vector<Stop*> Stops;
-    int delay = 10;
+    int delay = 0;
     QSpinBox* spin;
 
     public:

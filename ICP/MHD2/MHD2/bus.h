@@ -11,22 +11,28 @@
 
 class traffic_t;
 
+//třída symbolizující autobus na mapě
 class bus : public QGraphicsEllipseItem
 {
-    int id;
+    string iid;
     double x;
     double y;
     traffic_t* traf = nullptr;
     QTableWidget* tab;
 
 public:
-    bus(QGraphicsItem *parent = nullptr, QTableWidget* table = nullptr, traffic_t* t = nullptr);
+    //předá se table a jízdní řád pro zápis trasy
+    bus(QGraphicsItem *parent = nullptr, QTableWidget* table = nullptr, traffic_t* t = nullptr, string name = "");
+    //aktualizace souřadnic na mapě
     void update(double Xx, double Yy);
     double getX();
     double getY();
+    //zobrazí autobus na mapě
     void start();
+    //schová autobus na mapě
     void end();
-    void add_T(traffic_t* t);
+    string getId();
+
 
 protected:
 

@@ -2,7 +2,7 @@
 
 
 
-bus::bus(QGraphicsItem *parent, QTableWidget* table, traffic_t *t) :
+bus::bus(QGraphicsItem *parent, QTableWidget* table, traffic_t *t, string name) :
     QGraphicsEllipseItem(-1,-1,2,2,parent)
 {
     this->tab = table;
@@ -11,7 +11,7 @@ bus::bus(QGraphicsItem *parent, QTableWidget* table, traffic_t *t) :
     this->traf = t;
     t->addBus(this);
     this->hide();
-
+    this->iid = name;
 }
 
 void bus::update(double Xx, double Yy)
@@ -32,9 +32,9 @@ void bus::end()
     this->hide();
 }
 
-void bus::add_T(traffic_t *t)
+string bus::getId()
 {
-    this->traf = t;
+    return this->iid;
 }
 
 void bus::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -50,7 +50,7 @@ void bus::mousePressEvent(QGraphicsSceneMouseEvent *event)
     len = this->traf->getS().size();
     for(int i = 0;i < len;++i)
     {
-        this->traf->getS().at(i)->setPen(QPen({Qt::blue}, 3));
+        this->traf->getS().at(i)->setPen(QPen({Qt::red}, 2));
     }
     QGraphicsEllipseItem::mousePressEvent(event);
 }

@@ -17,6 +17,8 @@ bool line::addStop(Stop *stop, int on)
     {
         if(stop->equals(this->getStops().at(i)) == true)
         {
+            this->Stops.push_back(stop);
+            this->stops_on.push_back(on);
             return true;
         }
     }
@@ -26,30 +28,6 @@ bool line::addStop(Stop *stop, int on)
         {
             this->Stops.push_back(stop);
             this->stops_on.push_back(on);
-            ret = true;
-        }
-    }
-    return ret;
-}
-
-bool line::addStop(Stop *stop)
-{
-
-    int length = this->getRoute().size();
-    bool ret = false;
-    int len = this->getStops().size();
-    for(int i = 0; i < len;++i)
-    {
-        if(stop->equals(this->getStops().at(i)) == true)
-        {
-            return true;
-        }
-    }
-    for(int i = 0; i < length;++i)
-    {
-        if(this->streets.at(i)->addStop(stop) == true)
-        {
-            this->Stops.push_back(stop);
             ret = true;
         }
     }
@@ -72,22 +50,12 @@ bool line::addStreet(Street* s)
                 if(s2 == s) return true;
             }
             this->streets.push_back(s);
-            int len = s->getStops().size();
-            for(int y = 0;y < len;++y)
-            {
-                this->addStop(s->getStops().at(y));
-            }
             return true;
         }
     }
     if(length == 0)
     {
         this->streets.push_back(s);
-        int len = s->getStops().size();
-        for(int y = 0;y < len;++y)
-        {
-            this->addStop(s->getStops().at(y));
-        }
         return true;
     }
     return false;
@@ -111,6 +79,11 @@ vector<Stop *> line::getStops()
 vector<traffic_t *> line::getTraf()
 {
     return this->traff;
+}
+
+vector<int> line::Stops_pos()
+{
+    return this->stops_on;
 }
 
 bool line::addBus(bus *t)

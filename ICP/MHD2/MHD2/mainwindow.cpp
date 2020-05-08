@@ -150,22 +150,19 @@ void MainWindow::addBus()
         {
             vector<traffic_t*> t = this->doprava.at(i)->getTraf();
             int llen = t.size();
-            bool added = false;
             bus* b = nullptr;
             for(int g = 0;g < llen;++g)
             {
                 if(t.at(g)->getName() == id)
                 {
 
-                    b = new bus(nullptr,ui->traf_info,t.at(g));
+                    b = new bus(nullptr,ui->traf_info,t.at(g),name);
                     scene->addItem(b);
-                    added = true;
                     t.at(g)->addBus(b);
                     this->doprava.at(i)->addBus(b);
                     break;
                 }
             }
-            if(added == false) exit(2);
         }
     }
     return;
@@ -238,10 +235,16 @@ void MainWindow::addLine()
     string l_name;
     string street;
     optional<string> stop(inpt.has_column("stop") ? make_optional(string()) : nullopt);
+    string l_name_bckp = "";
     int cislo = 0;
     //projdi všechny řádky
     while(inpt.read_row(l_name,street,*stop))
     {
+        if(l_name != l_name_bckp)
+        {
+            cislo = 0;
+            l_name_bckp = l_name;
+        }
         //získej počet linek
         int len = doprava.size();
         line* linn = nullptr;
@@ -266,12 +269,13 @@ void MainWindow::addLine()
             {
                 //přidání zastávek do linky
                 len = this->getStops().size();
-                int e,prr;
+                int e,prr = -1;
                 for(int i = 0;i < len;++i)
                 {
 
                     if(this->getStops().at(i)->getId() == stop)
                     {
+                        qDebug() << cislo;
                         if(linn->getRoute().size() > 0 && street == linn->getRoute().at(linn->getRoute().size()-1)->getId()) prr = linn->stop_on(i-1);
                         else prr = cislo;
                         e = i;
@@ -279,7 +283,10 @@ void MainWindow::addLine()
                     }
                 }
                 linn->addStreet(this->getStreets().at(i));
-                linn->addStop(this->getStops().at(e),prr);
+                if(prr != -1)
+                {
+                    linn->addStop(this->getStops().at(e),prr);
+                }
                 break;
             }
         }
@@ -336,98 +343,261 @@ void MainWindow::update_traf()
         {
             line* llline = this->doprava.at(i);
             traffic_t* traf = llline->getTraf().at(r);
-            //získáme počet časů
-            int length = traf->getT().size();
 
             int street_cnt = traf->getS().size();
             vector<int> delays;
             int max_delay = 0;
             //získáme delaye
+            vector<Street*> STREETS = llline->getRoute();
+            vector<Coordinate*> COORDINATES;
+            vector<int> stop_end;
             for(int delay_cnt = 0;delay_cnt < street_cnt;++delay_cnt)
             {
-                int c = traf->getS().at(delay_cnt)->getDelay();
-                max_delay += c;
-                delays.push_back(c);
+                double vzdal1 = 0;
+                double vzdal2 = 0;
+                int stop_on = -1;
+                int stop_on2 = -1;
+                for(unsigned iks = 0;iks < llline->Stops_pos().size();++iks)
+                {
+                    if(llline->Stops_pos().at(iks) == delay_cnt)
+                    {
+                        stop_on = iks;
+                        if(iks + 1 < llline->Stops_pos().size() && llline->Stops_pos().at(iks+1) == delay_cnt+1 && STREETS.at(llline->stop_on(iks + 1))->getId() == STREETS.at(llline->stop_on(stop_on))->getId())
+                        {
+                            stop_on2 = iks + 1;
+                        }
+                        break;
+                    }
+                    else if(delay_cnt +1 == street_cnt && iks + 1 < llline->Stops_pos().size() && llline->Stops_pos().at(iks+1) == delay_cnt+1)
+                    {
+                        stop_on = iks + 1;
+                        break;
+                    }
+                }
+                double pomer = 1.0;
+                int c;
+                //první Cord je stop
+                if(stop_on != -1 && stop_on2 == -1)
+                {
+                    //poslední ulice
+                    if(delay_cnt + 1 == street_cnt)
+                    {
+                        Coordinate* c1 = STREETS.at(delay_cnt-1)->begin();
+                        Coordinate* c2 = STREETS.at(delay_cnt-1)->end();
+                        Coordinate* c3 = STREETS.at(delay_cnt)->begin();
+                        Coordinate* c4 = STREETS.at(delay_cnt)->end();
+                        Coordinate* c5 = llline->getStops().at(stop_on)->getCoordinate();
+
+                        vzdal1 = sqrt(pow(c1->getX()-c2->getX(),2.0) + pow(c1->getY()-c2->getY(),2.0));
+                        if(c1->equals(c3) || c2->equals(c3))
+                        {
+                            COORDINATES.push_back(c3);
+                            COORDINATES.push_back(c5);
+                            vzdal2 = sqrt(pow(c5->getX()-c3->getX(),2.0) + pow(c5->getY()-c3->getY(),2.0));
+                        }
+                        else if(c1->equals(c4) || c2->equals(c4))
+                        {
+                            COORDINATES.push_back(c4);
+                            COORDINATES.push_back(c5);
+                            vzdal2 = sqrt(pow(c5->getX()-c4->getX(),2.0) + pow(c5->getY()-c4->getY(),2.0));
+                        }
+                        stop_end.push_back(delays.size());
+                        pomer = abs(vzdal2/vzdal1);
+                        c = traf->getS().at(delay_cnt)->getDelay() * pomer;
+                        max_delay += c;
+                        delays.push_back(c);
+
+                    }
+                    //Od zastavky do konce ulice
+                    else
+                    {
+                        Coordinate* c1 = STREETS.at(delay_cnt)->begin();
+                        Coordinate* c2 = STREETS.at(delay_cnt)->end();
+                        Coordinate* c3 = STREETS.at(delay_cnt+1)->begin();
+                        Coordinate* c4 = STREETS.at(delay_cnt+1)->end();
+                        Coordinate* c5 = llline->getStops().at(stop_on)->getCoordinate();
+                        vzdal1 = sqrt(pow(c1->getX()-c2->getX(),2.0) + pow(c1->getY()-c2->getY(),2.0));
+                        if(c1->equals(c3) || c2->equals(c3))
+                        {
+                            if(stop_on != 0 && c1->equals(c3))
+                            {
+                                COORDINATES.push_back(c2);
+                                COORDINATES.push_back(c5);
+
+                            }
+                            else if(stop_on != 0)
+                            {
+                                COORDINATES.push_back(c1);
+                                COORDINATES.push_back(c5);
+
+                            }
+                            COORDINATES.push_back(c5);
+                            COORDINATES.push_back(c3);
+
+                            vzdal2 = sqrt(pow(c5->getX()-c3->getX(),2.0) + pow(c5->getY()-c3->getY(),2.0));
+
+                        }
+                        else if(c1->equals(c4) || c2->equals(c4))
+                        {
+                            if(stop_on != 0 && c1->equals(c4))
+                            {
+                                COORDINATES.push_back(c2);
+                                COORDINATES.push_back(c5);
+                            }
+                            else if(stop_on != 0)
+                            {
+                                COORDINATES.push_back(c1);
+                                COORDINATES.push_back(c5);
+                            }
+                            COORDINATES.push_back(c5);
+                            COORDINATES.push_back(c3);
+
+                            vzdal2 = sqrt(pow(c5->getX()-c4->getX(),2.0) + pow(c5->getY()-c4->getY(),2.0));
+                        }
+                        if(stop_on != 0)
+                        {
+                            double vzdal3 = vzdal1 - vzdal2;
+                            pomer = abs(vzdal3/vzdal1);
+                            c = traf->getS().at(delay_cnt)->getDelay() * pomer;
+                            max_delay += c;
+                            delays.push_back(c);
+                        }
+
+                        stop_end.push_back(delays.size());
+                        pomer = abs(vzdal2/vzdal1);
+                        c = traf->getS().at(delay_cnt)->getDelay() * pomer;
+                        max_delay += c;
+                        delays.push_back(c);
+
+
+                    }
+
+
+                }
+                else if(stop_on2 != -1)
+                {
+                    Coordinate* c1 = STREETS.at(delay_cnt)->begin();
+                    Coordinate* c2 = STREETS.at(delay_cnt)->end();
+                    Coordinate* c5 = llline->getStops().at(stop_on)->getCoordinate();
+                    Coordinate* c6 = llline->getStops().at(stop_on)->getCoordinate();
+                    vzdal1 = sqrt(pow(c1->getX()-c2->getX(),2.0) + pow(c1->getY()-c2->getY(),2.0));
+                    vzdal2 = sqrt(pow(c5->getX()-c6->getX(),2.0) + pow(c5->getY()-c6->getY(),2.0));
+                    pomer = abs(vzdal2/vzdal1);
+                    c = traf->getS().at(delay_cnt)->getDelay() * pomer;
+                    max_delay += c;
+                    delays.push_back(c);
+                }
+                else
+                {
+                    Coordinate* c1 = STREETS.at(delay_cnt)->begin();
+                    Coordinate* c2 = STREETS.at(delay_cnt)->end();
+                    Coordinate* c3 = STREETS.at(delay_cnt+1)->begin();
+                    Coordinate* c4 = STREETS.at(delay_cnt+1)->end();
+                    if(c1->equals(c3))
+                    {
+                        COORDINATES.push_back(c2);
+                        COORDINATES.push_back(c3);
+                    }
+                    else if(c2->equals(c3))
+                    {
+                        COORDINATES.push_back(c1);
+                        COORDINATES.push_back(c3);
+                    }
+                    else if(c1->equals(c4))
+                    {
+                        COORDINATES.push_back(c2);
+                        COORDINATES.push_back(c4);
+                    }
+                    else if(c2->equals(c4))
+                    {
+                        COORDINATES.push_back(c1);
+                        COORDINATES.push_back(c4);
+                    }
+                    c = traf->getS().at(delay_cnt)->getDelay();
+                    max_delay += c;
+                    delays.push_back(c);
+                }
+
+
             }
+
+            //získáme počet časů
+            int length = stop_end.size()-1;
             //pokud má být autobus na cestě first_stop_time <= actual_time && last_stop_time >= actual_time
             if(ui->my_timer->time().secsTo(*traf->getT().at(0)) <= 0 && ui->my_timer->time().secsTo(*traf->getT().at(traf->getT().size()-1)) + max_delay > 0)
             {
 
-                //ziskame prvni a posledni zastavku
-                Stop* s1 = traf->getStop().at(0);
-                Stop* s2 = traf->getStop().at(traf->getStop().size()-1);
                 //ziskame prvni a posledni cas
                 QTime t1 = *traf->getT().at(0);
+                QTime t4 = t1;
                 QTime t2 = *traf->getT().at(traf->getT().size()-1);
-                int start = 0, end = this->doprava.at(i)->stop_on(traf->getStop().size()-1);
+                QTime t3 = t2;
+                int start = 0, end = stop_end.at(stop_end.size()-1);
                 int dly = 0;
                 int dly2 = 0;
                 //projdeme všechny časy/zastávky a najdeme ty, které nejvíce vyhovují
-                for(int y = 1;y<length;++y)
+                for(int y = 0;y <= length;++y)
                 {
+
                     dly = 0;
                     dly2 = 0;
-                    for(int pls = 0; pls <= llline->stop_on(y);++pls)
+                    if(y+1 <= length)
                     {
-                        dly += delays.at(pls);
-                        if(y > 0 && pls < llline->stop_on((y-1)))
-                            dly2 += delays.at(pls);
+                        for(int pls = 0; pls < stop_end.at(y+1);++pls)
+                        {
+                            dly += delays.at(pls);
+                        }
                     }
+                    else
+                    {
+                        for(int pls = 0; pls <= stop_end.at(y);++pls)
+                        {
+                            dly += delays.at(pls);
+                        }
+                    }
+
+                    for(int pls = 0; pls < stop_end.at(y);++pls)
+                    {
+                        dly2 += delays.at(pls);
+                    }
+                    if(y == 0)
+                    {
+                        t2 = t2.addSecs(dly);
+                    }
+                    //qDebug() << "first cycle" << traf->getT().at(y)->addSecs(dly) << ui->my_timer->time() << traf->getT().at(y)->addSecs(dly2) << t1.addSecs(dly) << t2.addSecs(dly2);
                     //hledáme první zastávku/čas, který je největší, ale zároveň není větší než aktuální čas (čas předchozí zastávky)
-                    if( traf->getT().at(y)->addSecs(dly) <= ui->my_timer->time() && traf->getT().at(y)->addSecs(dly2) >= t1.addSecs(dly))
+                    if(y < length && traf->getT().at(y)->addSecs(dly2) <= ui->my_timer->time())
                     {
                         t1 = traf->getT().at(y)->addSecs(dly2);
-                        s1 = traf->getStop().at(y);
-                        start = this->doprava.at(i)->stop_on(y);
+                        start = stop_end.at(y);
+                        t4 = *traf->getT().at(y);
                     }
+                    qDebug() << "casy" << *traf->getT().at(y) << t2 << dly << dly2;
                     //hledáme čas, který je nejmenší, ale zároveň není menší než aktuální čas( čas další zastávky)
-                    else if(traf->getT().at(y)->addSecs(dly) >= ui->my_timer->time() && traf->getT().at(y)->addSecs(dly) <= t2.addSecs(dly2))
+                    if(y > 0 && traf->getT().at(y)->addSecs(dly2) >= ui->my_timer->time() && traf->getT().at(y)->addSecs(dly) <= t2 && traf->getT().at(y)->addSecs(dly2) > t1)
                     {
-                        t2 = *traf->getT().at(y);
-                        s2 = traf->getStop().at(y);
-                        end = this->doprava.at(i)->stop_on(y);
+                        t2 = traf->getT().at(y)->addSecs(dly2);
+                        t3 = *traf->getT().at(y);
+                        end = stop_end.at(y);
+                        if(y == length)
+                        {
+                            end += 1;
+                        }
                     }
                 }
-
-
-                Coordinate* c1;
-                Coordinate* c2;
-                Coordinate* c3;
+                qDebug() << t1 << t2;
+                qDebug() << "start" << start << "end" << end;
 
                 vector<Coordinate*> vzdalenosti;
-                for(int q = start; q < end;++q)
+                if(end == stop_end.at(stop_end.size()-1)) end += 1;
+                for(int j = start*2; j < end*2;j += 2)
                 {
-                    c1 = traf->getS().at(q)->begin();
-                    c2 = traf->getS().at(q)->end();
-                    if(traf->getS().at(q+1)->begin()->equals(c1))
-                    {
-                        c3 = traf->getS().at(q+1)->begin();
-                        c1 = c2;
-                    }
-                    else if(traf->getS().at(q+1)->end()->equals(c1))
-                    {
-                        c3 = traf->getS().at(q+1)->end();
-                        c1 = c2;
-                    }
-                    else if(traf->getS().at(q+1)->begin()->equals(c2))
-                    {
-                        c3 = traf->getS().at(q+1)->begin();
-                    }
-                    else if(traf->getS().at(q+1)->end()->equals(c2))
-                    {
-                        c3 = traf->getS().at(q+1)->end();
-                    }
-                    if(q == start) vzdalenosti.push_back(s1->getCoordinate());
-                    else vzdalenosti.push_back(c1);
-                    vzdalenosti.push_back(c3);
-                    if(q+1 == end)
-                    {
-                        vzdalenosti.push_back(c3);
-                        vzdalenosti.push_back(s2->getCoordinate());
-                    }
+                    vzdalenosti.push_back(COORDINATES.at(j));
+                    vzdalenosti.push_back(COORDINATES.at(j+1));
                 }
+                qDebug() << vzdalenosti.size();
 
-                int lenn = (vzdalenosti.size() - 1);
+                int lenn = vzdalenosti.size();
                 vector<double> vzdal;
                 double celkem = 0;
                 double step = 0;
@@ -446,18 +616,20 @@ void MainWindow::update_traf()
                 lenn = vzdal.size();
                 vector<QTime> times;
                 times.push_back(t1);
-                double speed = celkem / t1.secsTo(t2);
-                qDebug() << "speed:" << speed << t1 << t2;
+                t3 = t3.addSecs(t4.secsTo(t1));
+                double speed = celkem / t1.secsTo(t3);
+                //qDebug() << "speed:" << speed << t1 << t2;
 
                 double x, y;
                 for(int tr = 0; tr < lenn;++tr)
                 {
                     //delay na ulici
-                    double delayik = traf->getS().at(start+tr)->getDelay();
+                    double delayik = delays.at(start+tr);
                     double vzdalenost = vzdal.at(tr);
                     delayik += vzdalenost/speed;
                     times.push_back(times.at(tr).addSecs(delayik));
-                    if(times.at(tr+1) >= ui->my_timer->time())
+                    qDebug() << "times debug" << delayik << times.at(tr+1) << ui->my_timer->time();
+                    if(times.at(tr+1) >= ui->my_timer->time() || (tr + 1 == lenn))
                     {
 
                         int x1 = vzdalenosti.at(tr*2)->getX();
@@ -468,84 +640,17 @@ void MainWindow::update_traf()
                         double cas = times.at(tr).secsTo(times.at(tr+1));
                         double cas2 = times.at(tr).secsTo(ui->my_timer->time());
                         double pomer = cas2/cas;
-                        qDebug() << pomer;
+                        if(pomer > 1.0) pomer = 1.0;
                         x = x1 + (x2 - x1)*pomer;
                         y = y1 + (y2 - y1)*pomer;
                         break;
                     }
+
                 }
                 bus* b = traf->getB();
                 b->update(x,y);
                 b->start();
-                /*times.push_back(t2.addSecs(dly));
-                QTime* testik = new QTime(0,0,0);
-                for(int sr = start; sr <= end;++sr)
-                {
-                    int seconds = testik->secsTo(times.at(times.size()-1)) - delays.at(end-sr);
-                    int hour = seconds/3600;
-                    seconds -= hour * 3600;
-                    int minutes = seconds/60;
-                    seconds -= minutes * 60;
-                    QTime* r = new QTime(hour,minutes,seconds);
-                    qDebug() << *r;
-                    times.push_back(*r);
-                }
-                int pocet_ulic = end - start;
-                for(int t_cnt = 0;t_cnt < pocet_ulic;++t_cnt)
-                {
-                    qDebug() << "t2" << t2;
-                    double traveled = 0;
-                    for(int po = 0; po <= t_cnt;++po)
-                    {
-                        traveled += vzdal.at(po);
-                    }
-                    int time_to_travel = t1.secsTo(t2);
-                    // km/s
-                    double speed = celkem/time_to_travel;
-                    int actual_t = t1.secsTo(ui->my_timer->time());
-                    int act_traveled = actual_t*speed;
-                    double pomer = double(act_traveled)/double(traveled);
-                    qDebug() << pomer;
-                    int secondds = double(t2.secsTo(times.at(times.size()-1-t_cnt)))*pomer;
-                    int hours = t2.hour() + secondds/3600;
-                    secondds = secondds%3600;
-                    int minutes = t2.minute() +  secondds/60;
-                    secondds = secondds%60;
-                    int seconds = t2.second() + secondds;
-                    QTime* t3 = new QTime(hours,minutes,seconds);
-                    t2 = *t3;
-                    qDebug() << t2;
-                    if(traveled > act_traveled) break;
-                }
-                qDebug() << t2;
-                double secs = t1.secsTo(t2);
-                double to_stop = ui->my_timer->time().secsTo(t2);
 
-                double pomer = to_stop/secs;
-                celkem = celkem * pomer;
-
-                lenn = vzdal.size() - 1;
-                int index;
-                for(int e = lenn; e >= 0;--e)
-                {
-                    if(celkem - vzdal.at(e) <= 0)
-                    {
-                        index = e*2;
-                        break;
-                    }
-                    celkem -= vzdal.at(e);
-                    qDebug() << e << vzdal.at(e);
-                }
-                c1 = vzdalenosti->at(index);
-                c2 = vzdalenosti->at(index+1);
-
-                pomer = celkem/vzdal.at(index/2);
-                double dx = (c1->getX() - c2->getX()) * pomer;
-                double dy = (c1->getY() - c2->getY()) * pomer;
-
-                double addX = dx + c2->getX();
-                double addY = dy + c2->getY();*/
-                //traf->getB()->update(addX,addY);
                 }
 
             else traf->getB()->end();

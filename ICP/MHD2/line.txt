@@ -3,3 +3,9 @@ line,street,stop
 1,uliceC2,
 1,uliceC4,
 1,uliceC5,treti
+1,uliceC9,pata
+2,uliceC6,ctvrta
+2,uliceC8,osma
+2,uliceC5,treti
+2,uliceC9,pata
+2,uliceC15,ctvrta

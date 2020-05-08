@@ -23,15 +23,16 @@ class line
 public:
     line(string s);
     bool addStop(Stop* stop,int on);
-    bool addStop(Stop* stop);
     bool addStreet(Street* s);
     string getId();
     vector<Street*> getRoute();
     vector<Stop*> getStops();
     vector<traffic_t*> getTraf();
+    vector<int> Stops_pos();
     bool addBus(bus* t);
     bool addTraff(traffic_t* t);
     int stop_on(int y);
+
 
 };
 
