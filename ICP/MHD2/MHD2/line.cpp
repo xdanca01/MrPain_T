@@ -41,7 +41,7 @@ bool line::addStreet(Street* s)
     for(int i = 0; i < length;++i)
     {
         Street* s2 = str.at(i);
-        if(s2 == s) return true;
+        //does it connect to any street in line ?
         if(s2->begin()->equals(s->begin()) || s2->begin()->equals(s->end()) || s2->end()->equals(s->begin()) || s2->end()->equals(s->end()))
         {
             for(i = i + 1;i < length;++i)
@@ -53,6 +53,7 @@ bool line::addStreet(Street* s)
             return true;
         }
     }
+    //new street
     if(length == 0)
     {
         this->streets.push_back(s);

@@ -32,15 +32,21 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionStop_3, &QAction::triggered, this, &MainWindow::addStops);
     //propojení tlačítka open Street s přidáním zastávek
     connect(ui->actionStreet_2, &QAction::triggered, this, &MainWindow::addStreets);
+    //propojení tlačítka open Linka s přidáním linek
     connect(ui->actionLine_2, &QAction::triggered, this, &MainWindow::addLine);
+    //propojení tlačítka open Traffic s přidáním jízdních řádů
     connect(ui->actionTraffic, &QAction::triggered, this, &MainWindow::addTraf);
+    //propojení tlačítka open Bus s přidáním autobusů
     connect(ui->actionBus_2, &QAction::triggered, this, &MainWindow::addBus);
+    //propojení tlačítka quit s ukončením programu
     connect(ui->actionQuit, &QAction::triggered, this, &MainWindow::quit);
+
 
     scene = new GraphicScene(ui->graphicsView);
     ui->graphicsView->setScene(scene);
 
     timer = new QTimer();
+    //timer na tick
     timer->setInterval(1000.0/ui->btn_speed->value());
     connect(timer, &QTimer::timeout, this, &MainWindow::tick);
 }
@@ -52,17 +58,20 @@ MainWindow::~MainWindow()
 
 
 
-
+//přiblížení scény
 void MainWindow::plus()
 {
     ui->slide_zoom->setValue(ui->slide_zoom->value() + 10);
 }
 
+//oddálení scény
 void MainWindow::minus()
 {
     ui->slide_zoom->setValue(ui->slide_zoom->value() - 10);
 }
 
+
+//přiblížení oddálení pomocí slideru
 void MainWindow::Zoom(int z)
 {
     auto scale = z / 100.00;
@@ -70,33 +79,39 @@ void MainWindow::Zoom(int z)
     ui->graphicsView->setTransform(QTransform(scale, past.m12(), past.m21(), scale, past.dx(), past.dy()));
 }
 
+//otočení scény o 10 stupňů doleva
 void MainWindow::left()
 {
     auto transform = ui->graphicsView->transform();
     ui->graphicsView->setTransform(transform.rotate(-10));
 }
 
+//otočení scény o 10 stupňů doprava
 void MainWindow::right()
 {
     auto transform = ui->graphicsView->transform();
     ui->graphicsView->setTransform(transform.rotate(10));
 }
 
+//změna rychlosti
 void MainWindow::speedos(double)
 {
     timer->setInterval(1000.0/ui->btn_speed->value());
 }
 
+//zapnutí běhu scény
 void MainWindow::play()
 {
     timer->start();
 }
 
+//zastavení scény
 void MainWindow::stop()
 {
     timer->stop();
 }
 
+//nahrání stopek do ui->stops
 void MainWindow::addStops()
 {
     QString f_name = QFileDialog::getOpenFileName(this, "STOP");
@@ -110,11 +125,13 @@ void MainWindow::addStops()
     {
         Stop* s = new Stop(nullptr,name,new Coordinate(x,y));
         this->stops.push_back(s);
+        //přidání grafického prvku do scény
         scene->addItem(s);
     }
     return;
 }
 
+//nahrání ulic do ui->streets
 void MainWindow::addStreets()
 {
     QString f_name = QFileDialog::getOpenFileName(this, "STREET");
@@ -129,11 +146,13 @@ void MainWindow::addStreets()
         Street* s = new Street(nullptr, ui->Delay, name, new Coordinate(x1,y1), new Coordinate(x2,y2));
 
         this->streets.push_back(s);
+        //přidání ulice do grafické scény
         scene->addItem(s);
     }
     return;
 }
 
+//nahrání autobusů do scény/ jízdního řádu/ linky
 void MainWindow::addBus()
 {
     QString f_name = QFileDialog::getOpenFileName(this, "BUS");
@@ -240,6 +259,7 @@ void MainWindow::addLine()
     //projdi všechny řádky
     while(inpt.read_row(l_name,street,*stop))
     {
+        //pokud je linka nová začni s indexováním od 0
         if(l_name != l_name_bckp)
         {
             cislo = 0;
@@ -275,7 +295,6 @@ void MainWindow::addLine()
 
                     if(this->getStops().at(i)->getId() == stop)
                     {
-                        qDebug() << cislo;
                         if(linn->getRoute().size() > 0 && street == linn->getRoute().at(linn->getRoute().size()-1)->getId()) prr = linn->stop_on(i-1);
                         else prr = cislo;
                         e = i;
@@ -341,34 +360,46 @@ void MainWindow::update_traf()
         //projdeme každý řád v lince
         for(int r = 0;r < len2;++r)
         {
+            //získá linku
             line* llline = this->doprava.at(i);
+            //získá dopravní řád
             traffic_t* traf = llline->getTraf().at(r);
 
+            //počet ulic v jízdním řádu
             int street_cnt = traf->getS().size();
+            //vektor pro uložení delayů linky
             vector<int> delays;
+            //celkový delay linky
             int max_delay = 0;
-            //získáme delaye
+
             vector<Street*> STREETS = llline->getRoute();
             vector<Coordinate*> COORDINATES;
             vector<int> stop_end;
+            //získáme delaye
             for(int delay_cnt = 0;delay_cnt < street_cnt;++delay_cnt)
             {
+                //délka celé ulice
                 double vzdal1 = 0;
+                //délka úseku pro výpočet poměru
                 double vzdal2 = 0;
                 int stop_on = -1;
                 int stop_on2 = -1;
+                //získáme pozice stopek v lince
                 for(unsigned iks = 0;iks < llline->Stops_pos().size();++iks)
                 {
+                    //pokud je pozice stopky odpovídá aktuální ulici vrať index v poli
                     if(llline->Stops_pos().at(iks) == delay_cnt)
                     {
+                        //pozice v poli
                         stop_on = iks;
+                        //dvě zastávky na stejné ulici
                         if(iks + 1 < llline->Stops_pos().size() && llline->Stops_pos().at(iks+1) == delay_cnt+1 && STREETS.at(llline->stop_on(iks + 1))->getId() == STREETS.at(llline->stop_on(stop_on))->getId())
                         {
                             stop_on2 = iks + 1;
                         }
                         break;
                     }
-                    else if(delay_cnt +1 == street_cnt && iks + 1 < llline->Stops_pos().size() && llline->Stops_pos().at(iks+1) == delay_cnt+1)
+                    else if(delay_cnt + 1 == street_cnt && iks + 1 < llline->Stops_pos().size() && llline->Stops_pos().at(iks+1) == delay_cnt+1)
                     {
                         stop_on = iks + 1;
                         break;
@@ -379,7 +410,7 @@ void MainWindow::update_traf()
                 //první Cord je stop
                 if(stop_on != -1 && stop_on2 == -1)
                 {
-                    //poslední ulice
+                    //poslední ulice (jedna)
                     if(delay_cnt + 1 == street_cnt)
                     {
                         Coordinate* c1 = STREETS.at(delay_cnt-1)->begin();
@@ -391,12 +422,14 @@ void MainWindow::update_traf()
                         vzdal1 = sqrt(pow(c1->getX()-c2->getX(),2.0) + pow(c1->getY()-c2->getY(),2.0));
                         if(c1->equals(c3) || c2->equals(c3))
                         {
+                            //uložení souřadnic ve správném pořadí
                             COORDINATES.push_back(c3);
                             COORDINATES.push_back(c5);
                             vzdal2 = sqrt(pow(c5->getX()-c3->getX(),2.0) + pow(c5->getY()-c3->getY(),2.0));
                         }
                         else if(c1->equals(c4) || c2->equals(c4))
                         {
+                            //uložení souřadnic ve správném pořadí
                             COORDINATES.push_back(c4);
                             COORDINATES.push_back(c5);
                             vzdal2 = sqrt(pow(c5->getX()-c4->getX(),2.0) + pow(c5->getY()-c4->getY(),2.0));
@@ -408,7 +441,7 @@ void MainWindow::update_traf()
                         delays.push_back(c);
 
                     }
-                    //Od zastavky do konce ulice
+                    //Pokud je zastávka někde mezi ulicí, tak ulož oba úseky od začátku ulice po stopku, od stopky po konec ulice
                     else
                     {
                         Coordinate* c1 = STREETS.at(delay_cnt)->begin();
@@ -474,6 +507,7 @@ void MainWindow::update_traf()
 
 
                 }
+                //2 stopky na stejné ulici TODO (možná uložit víc jak 1 úsek/pár souřadnic)
                 else if(stop_on2 != -1)
                 {
                     Coordinate* c1 = STREETS.at(delay_cnt)->begin();
@@ -487,6 +521,7 @@ void MainWindow::update_traf()
                     max_delay += c;
                     delays.push_back(c);
                 }
+                //prázdná ulice
                 else
                 {
                     Coordinate* c1 = STREETS.at(delay_cnt)->begin();
@@ -533,7 +568,9 @@ void MainWindow::update_traf()
                 QTime t2 = *traf->getT().at(traf->getT().size()-1);
                 QTime t3 = t2;
                 int start = 0, end = stop_end.at(stop_end.size()-1);
+                //zpoždění po zastávku
                 int dly = 0;
+                //zpoždění před začátkem ulice pro výpočet správného času po zpoždění z předchozích ulic
                 int dly2 = 0;
                 //projdeme všechny časy/zastávky a najdeme ty, které nejvíce vyhovují
                 for(int y = 0;y <= length;++y)
@@ -589,6 +626,7 @@ void MainWindow::update_traf()
                 qDebug() << "start" << start << "end" << end;
 
                 vector<Coordinate*> vzdalenosti;
+                //kalibrace pomáhá zjednodušit podmínky
                 if(end == stop_end.at(stop_end.size()-1)) end += 1;
                 for(int j = start*2; j < end*2;j += 2)
                 {
@@ -599,6 +637,7 @@ void MainWindow::update_traf()
 
                 int lenn = vzdalenosti.size();
                 vector<double> vzdal;
+                //celková vzdálenost mezi zastávkami
                 double celkem = 0;
                 double step = 0;
                 for(int t = 0;t < lenn;t += 2)
@@ -614,8 +653,15 @@ void MainWindow::update_traf()
                     celkem += step;
                 }
                 lenn = vzdal.size();
+
+
+
+
+                // VÝPOČET ČASŮ //
+
                 vector<QTime> times;
                 times.push_back(t1);
+                //kalibrace času (čas bez zpoždění)
                 t3 = t3.addSecs(t4.secsTo(t1));
                 double speed = celkem / t1.secsTo(t3);
                 //qDebug() << "speed:" << speed << t1 << t2;
@@ -629,6 +675,7 @@ void MainWindow::update_traf()
                     delayik += vzdalenost/speed;
                     times.push_back(times.at(tr).addSecs(delayik));
                     qDebug() << "times debug" << delayik << times.at(tr+1) << ui->my_timer->time();
+                    //výběr souřadnic podle času
                     if(times.at(tr+1) >= ui->my_timer->time() || (tr + 1 == lenn))
                     {
 
@@ -648,11 +695,14 @@ void MainWindow::update_traf()
 
                 }
                 bus* b = traf->getB();
+                //aktualizace souřadnic
                 b->update(x,y);
+                //zobrazení na grafické scéně
                 b->start();
 
                 }
 
+            //schová bus na scéně
             else traf->getB()->end();
         }
     }

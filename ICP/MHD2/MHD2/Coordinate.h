@@ -1,6 +1,7 @@
 #ifndef cooord
 #define cooord
 
+//třída pro uchování souřadnic
 class Coordinate{
     //Coordinates
     double x,y;

@@ -39,6 +39,7 @@ class Street : public QGraphicsLineItem
         bool follows(Street* s);
         void close();
         bool status();
+        //is stop on street ?
         bool stop_on(Stop* s);
 
 

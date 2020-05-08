@@ -46,6 +46,7 @@ private slots:
     void addTraf();
     void addLine();
     void quit();
+    //zkontroluje jaká ulice je selectnutá pro změnu hodnoty delaye
     void check_sel(int);
 
 private:
@@ -55,6 +56,7 @@ private:
     vector<Stop*> stops;
     vector<Street*> streets;
     GraphicScene* scene;
+    //hlavní funkce pro update dopravy za tick
     void update_traf();
     vector<Stop*> getStops();
     vector<Street*> getStreets();
