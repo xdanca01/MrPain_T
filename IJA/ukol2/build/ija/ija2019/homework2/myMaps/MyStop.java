@@ -9,7 +9,12 @@ public class MyStop implements Stop
     private String Id;
     private Coordinate souradnice;
     private Street ulice;
-    
+
+
+    public String toString()
+    {
+        return "stop(" + this.getId() + ")";
+    }
 
     public MyStop(String neco)
     {

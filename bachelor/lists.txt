@@ -1,5 +1,9 @@
-command service
+command service host-ip option
 command 
     date
 service
     cups
+host-ip
+    ./get_host_ip
+option
+    ./cmd_options.sh
