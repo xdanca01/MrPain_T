@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 #include <sys/types.h>
 //in_port_t, in_addr_t
@@ -19,6 +20,68 @@
 
 using namespace std;
 
+
+//check type of request (supported is only A type)
+//ret 0 if ok, else 1
+int check_type(char *buff, int len)
+{
+	//type is at 4 bytes before end
+	int type = 0;
+	memcpy((void*)&type, (void*)buff+len-5, 2);
+	if(type != 1)
+	{
+		cerr << "This program supports only A type request, got: " << type;
+		return 1;
+	}
+	return 0;
+}
+
+
+//return 0 if not found in filter, 1 if found in filter
+int check_filter(ifstream *file, char *buff, int len)
+{
+	
+	//Before name is always 12bytes
+	int hostname_len = len - 12;
+	
+	//copy data from hostname
+	string str = string(&buff[12]);
+	
+	int f_len = str.length();
+	
+	//change END OF TEXT - 3 to DOT - 46 (in ascii)
+	for(int i = 0; i < f_len;++i)
+	{
+		if(str[i] == 3)
+		{
+			str[i] = 46;
+		}
+	}
+	
+	//string is ready to be compared with filters
+	string line;
+	//compare hostname to filter
+	while(getline(*file,line))
+	{
+		cout << "getline: " << line << ", " << str << "\n";
+		
+		if(str.find(line) != string::npos)
+		{
+			file->clear();
+			file->seekg(0, ios::beg);
+			return 1;
+		}
+		
+	}
+	
+	file->clear();
+	file->seekg(0, ios::beg);
+	cout << "Filtered hostname: " << str << " len: " << str.length() <<"\n";
+	return 0;
+}
+
+
+//send response from DNS back to SOURCE
 int send_response(char *buff, char* ip, int length, int source_port, int sockfd)
 {
 	struct sockaddr_in SOURCE;
@@ -64,7 +127,7 @@ int send_next(char* str, string ip, int length, char *source_ip, int source_port
 	send_response(buffer, source_ip, len, source_port, sockfd);
 	
 	
-	cout << "send: " << str << "\n" << "received: " << buffer << "\n";
+	cout << "send: " << str << "\n" << "received: " << buffer << "\n\n";
 	return 0;
 }
 
@@ -155,8 +218,17 @@ int main(int argc, char **argv)
 	socklen_t addr_size;
 	int REQ_len;
 	char buffer[PAYLOAD];
+	
+	ifstream file;
+	file.open(filter_file);
+	if(file.is_open() == false)
+	{
+		cerr << "Couldnt open file: " << filter_file << "\n";
+		return 4;
+	}
+	
 	//never ending loop
-	cout << "listening\n";
+	cout << "listening\n\n";
 	while(true)
 	{
 		addr_size = sizeof(SOURCE);
@@ -168,8 +240,19 @@ int main(int argc, char **argv)
 		}
 		inet_ntop(AF_INET, &SOURCE.sin_addr, source_ip, sizeof(source_ip));
 		string str = string(buffer);
-		cout << "Data received: " << buffer << " on port: " << ntohs(SOURCE.sin_port) << "\n" << str << str.length() <<"\n";
-		send_next(buffer, server_DNS, REQ_len, source_ip, ntohs(SOURCE.sin_port), sockfd, sock_DNS);
+		cout << "Data received: " << buffer << " on port: " << ntohs(SOURCE.sin_port) <<"\n";
+		if(check_type(buffer, REQ_len))
+		{
+			return 1;
+		}
+		if(check_filter(&file, buffer, REQ_len) == 0)
+		{
+			send_next(buffer, server_DNS, REQ_len, source_ip, ntohs(SOURCE.sin_port), sockfd, sock_DNS);
+		}
+		else
+		{
+			cout << "Filtered hostname\n";
+		}
 	}
 	
 	return 0;
