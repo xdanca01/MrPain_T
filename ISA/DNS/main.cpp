@@ -5,6 +5,8 @@
 //in_port_t, in_addr_t
 #include <netinet/in.h>
 
+#include <sys/time.h>
+
 #include <sys/socket.h>
 
 //ntohs(),...
@@ -22,15 +24,14 @@ using namespace std;
 
 
 //check type of request (supported is only A type)
-//ret 0 if ok, else 1
 int check_type(char *buff, int len)
 {
 	//type is at 4 bytes before end
 	int type = 0;
-	memcpy((void*)&type, (void*)buff+len-5, 2);
+	memcpy((void*)&type, (void*)buff+len-3, 2);
 	if(type != 1)
 	{
-		cerr << "This program supports only A type request, got: " << type;
+		cerr << "This program supports only A type request, got: " << type << "\n";
 		return 1;
 	}
 	return 0;
@@ -41,21 +42,23 @@ int check_type(char *buff, int len)
 int check_filter(ifstream *file, char *buff, int len)
 {
 	
-	//Before name is always 12bytes
-	int hostname_len = len - 12;
+	//copy data from hostname which starts at 12, but at 12 is len of subname, so 13
+	string str = string(&buff[13]);
 	
-	//copy data from hostname
-	string str = string(&buff[12]);
+	//at the end of string are 4 other bytes
+	int f_len = str.length() - 4;
 	
-	int f_len = str.length();
-	
-	//change END OF TEXT - 3 to DOT - 46 (in ascii)
+	//len of subname
+	int dot = (int)buff[12];
+	//change each len of subname to DOT - 46 (in ascii)
 	for(int i = 0; i < f_len;++i)
 	{
-		if(str[i] == 3)
-		{
-			str[i] = 46;
-		}
+		//locate next len
+		i += dot;
+		//save next len
+		dot = (int)str[i];
+		//change len to dot
+		str[i] = 46;
 	}
 	
 	//string is ready to be compared with filters
@@ -63,8 +66,12 @@ int check_filter(ifstream *file, char *buff, int len)
 	//compare hostname to filter
 	while(getline(*file,line))
 	{
-		cout << "getline: " << line << ", " << str << "\n";
-		
+		//ignore lines that start with # or are empty
+		if(line.empty() || line[0] == '#')
+		{
+			continue;
+		}
+		//check that line is not substring in str, if it is return 1
 		if(str.find(line) != string::npos)
 		{
 			file->clear();
@@ -76,7 +83,6 @@ int check_filter(ifstream *file, char *buff, int len)
 	
 	file->clear();
 	file->seekg(0, ios::beg);
-	cout << "Filtered hostname: " << str << " len: " << str.length() <<"\n";
 	return 0;
 }
 
@@ -84,6 +90,7 @@ int check_filter(ifstream *file, char *buff, int len)
 //send response from DNS back to SOURCE
 int send_response(char *buff, char* ip, int length, int source_port, int sockfd)
 {
+	
 	struct sockaddr_in SOURCE;
 	SOURCE.sin_family = AF_INET;
 	SOURCE.sin_port = htons(source_port);
@@ -98,21 +105,54 @@ int send_response(char *buff, char* ip, int length, int source_port, int sockfd)
 }
 
 //resend packet to server
-int send_next(char* str, string ip, int length, char *source_ip, int source_port, int sockfd, int sock_DNS)
+int send_next(char* str, string ip, int length, char *source_ip, int source_port, int sockfd)
 {
+	
+	int sock_DNS = socket(AF_INET,SOCK_DGRAM,17);
+	
+	//couldnt create socket
+	if(sock_DNS == -1)
+	{
+		cerr << "Cant create socket, check that executable has rights\n";
+		return 1;
+	}
+	
+	//the argument should be non-zero to enable a boolean option
+	int Flag = 1;
+	struct timeval time;
+	time.tv_sec = 10;
+	time.tv_usec = 0;
+	
+	//set socket to timeout after some time of waiting - timeout set to 10s
+	if(setsockopt(sock_DNS, SOL_SOCKET, SO_RCVTIMEO, &time, sizeof(time)))
+	{
+		cerr << "Cant set timeout for receive on socket\n";
+		return 1;
+	}
+	//set socket to recv and send
+	if(setsockopt(sock_DNS, SOL_SOCKET, SO_REUSEADDR, &Flag, sizeof(Flag)))
+	{
+		cerr << "Cant set receive and send to same socket\n";
+		return 1;
+	}
+	
+	//standard DNS port
 	int port = 53;
+	
 	struct sockaddr_in RESOLVER, SOURCE;
-	char IP[ip.length()];
-	strcpy(IP, ip.c_str());
 	socklen_t addr_size;
+	//IPv4
 	RESOLVER.sin_family = AF_INET;
+	//convert and save
 	RESOLVER.sin_port = htons(port);
-	RESOLVER.sin_addr.s_addr = inet_addr(IP);
+	//convert and save
+	RESOLVER.sin_addr.s_addr = inet_addr(ip.c_str());
 	//send request to DNS server
 	int something = sendto(sock_DNS, str, length, 0, (struct sockaddr*)&RESOLVER, sizeof(RESOLVER));
-	if(something == -1)
+	//sendto returns len of data sent, so compare that with data that I input
+	if(something < length)
 	{
-		cerr << "Cant send packet to: " << IP << "\n";
+		cerr << "ERROR: occured when sending packet to DNS resolver\n";
 		return 1;
 	}
 	//DNS UDP has payload 512 bytes
@@ -120,6 +160,11 @@ int send_next(char* str, string ip, int length, char *source_ip, int source_port
 	socklen_t SRC_len = sizeof(SOURCE);
 	//get response from DNS server
 	int len = recvfrom(sock_DNS, buffer, PAYLOAD, 0, (struct sockaddr*)&SOURCE, &SRC_len);
+	if(len == -1)
+	{
+		cerr << "ERROR: didnt get reply from server. Server doesnt exist, or udp packet was lost.\n";
+		return 1;
+	}
 	
 	
 	
@@ -127,7 +172,6 @@ int send_next(char* str, string ip, int length, char *source_ip, int source_port
 	send_response(buffer, source_ip, len, source_port, sockfd);
 	
 	
-	cout << "send: " << str << "\n" << "received: " << buffer << "\n\n";
 	return 0;
 }
 
@@ -175,30 +219,8 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	
-	int port_DNS = 6064, sock_DNS = socket(AF_INET,SOCK_DGRAM,17);
-	
-	//couldnt create socket
-	if(sock_DNS == -1)
-	{
-		cerr << "Cant create socket, check that executable has rights\n";
-		return 1;
-	}
-	sockaddr_in addr2;
-	addr2.sin_addr.s_addr = htonl(INADDR_ANY);
-	addr2.sin_family = AF_INET;
-	addr2.sin_port = htons(port_DNS);
-	
 	const int trueFlag = 1;
 	setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &trueFlag, sizeof(int));
-	setsockopt(sock_DNS, SOL_SOCKET, SO_REUSEADDR, &trueFlag, sizeof(int));
-	
-	
-	int bnd2 = bind(sock_DNS, (struct sockaddr*)&addr2, sizeof(addr2));
-	if (bnd2 == -1)
-	{
-		cerr << "Cant bind socket ---- ERRNO:" << errno << "\n";
-		return 2;
-	}
 	
 	sockaddr_in addr;
 	addr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -228,7 +250,6 @@ int main(int argc, char **argv)
 	}
 	
 	//never ending loop
-	cout << "listening\n\n";
 	while(true)
 	{
 		addr_size = sizeof(SOURCE);
@@ -238,20 +259,17 @@ int main(int argc, char **argv)
 			cerr << "Some error with communication occured\n";
 			return 3;
 		}
+		//convert network address structure to string
 		inet_ntop(AF_INET, &SOURCE.sin_addr, source_ip, sizeof(source_ip));
 		string str = string(buffer);
-		cout << "Data received: " << buffer << " on port: " << ntohs(SOURCE.sin_port) <<"\n";
 		if(check_type(buffer, REQ_len))
 		{
-			return 1;
+			continue;
 		}
+		//should server ignore/filter dns request ?
 		if(check_filter(&file, buffer, REQ_len) == 0)
 		{
-			send_next(buffer, server_DNS, REQ_len, source_ip, ntohs(SOURCE.sin_port), sockfd, sock_DNS);
-		}
-		else
-		{
-			cout << "Filtered hostname\n";
+			send_next(buffer, server_DNS, REQ_len, source_ip, ntohs(SOURCE.sin_port), sockfd);
 		}
 	}
 	
