@@ -5,6 +5,8 @@
 //in_port_t, in_addr_t
 #include <netinet/in.h>
 
+#include <pthread.h>
+
 #include <sys/time.h>
 
 #include <sys/socket.h>
@@ -23,6 +25,31 @@
 using namespace std;
 
 
+//response back to source with error code type
+int response_filter(char* buf, char* ip, int source_port, int sockfd, int length, int response)
+{
+	//need to set 1. bit to 1 - response
+	buf[2] = buf[2] | 128;
+	//set 6. bit to 0 - not authoritative server
+	buf[2] = buf[2] & 251;
+	
+	//set 1. bit to 1 - recursive
+	//set last 4 bits to response - not checked that response is not higher than 4 bits
+	buf[3] = buf[3] | 128+response;
+	
+	struct sockaddr_in SOURCE;
+	SOURCE.sin_family = AF_INET;
+	SOURCE.sin_port = htons(source_port);
+	SOURCE.sin_addr.s_addr = inet_addr(ip);
+	int something = sendto(sockfd, buf, length, 0, (struct sockaddr*)&SOURCE, sizeof(SOURCE));
+	if(something == -1)
+	{
+		cerr << "Cant send packet to: " << ip << "\n";
+		return 1;
+	}
+	return 0;
+}
+
 //check type of request (supported is only A type)
 int check_type(char *buff, int len)
 {
@@ -39,7 +66,7 @@ int check_type(char *buff, int len)
 
 
 //return 0 if not found in filter, 1 if found in filter
-int check_filter(ifstream *file, char *buff, int len)
+int check_filter(string f_file, char *buff, int len)
 {
 	
 	//copy data from hostname which starts at 12, but at 12 is len of subname, so 13
@@ -63,8 +90,18 @@ int check_filter(ifstream *file, char *buff, int len)
 	
 	//string is ready to be compared with filters
 	string line;
+	
+	ifstream file;
+	file.open(f_file);
+	
+	if(file.is_open() == false)
+	{
+		cerr << "Couldnt open file: " << f_file << "\n";
+		return 4;
+	}
+	
 	//compare hostname to filter
-	while(getline(*file,line))
+	while(getline(file,line))
 	{
 		//ignore lines that start with # or are empty
 		if(line.empty() || line[0] == '#')
@@ -74,20 +111,19 @@ int check_filter(ifstream *file, char *buff, int len)
 		//check that line is not substring in str, if it is return 1
 		if(str.find(line) != string::npos)
 		{
-			file->clear();
-			file->seekg(0, ios::beg);
+			file.close();
 			return 1;
 		}
 		
 	}
 	
-	file->clear();
-	file->seekg(0, ios::beg);
+	file.close();
 	return 0;
 }
 
 
 //send response from DNS back to SOURCE
+//return 0 on succer, else 1
 int send_response(char *buff, char* ip, int length, int source_port, int sockfd)
 {
 	
@@ -175,39 +211,53 @@ int send_next(char* str, string ip, int length, char *source_ip, int source_port
 	return 0;
 }
 
+//return 1 when socket cant be created
+//return 2 when cant bind socket
+//return 3 when error with argument occured
 int main(int argc, char **argv)
 {
 	
-	//argument parsing
+	//argument parsing--------------------------------------------------------------------------------------------------------------------------------
 	if(argc != 5 && argc != 7)
 	{
-		cerr << "Wrong number of arguments: " << argc-1 << "\n";
+		cerr << "Wrong number of arguments: " << argc-1 << " Accepted number of arguments is: 4 or 6"<< "\n";
 		return 3;
 	}
 	
-	//if argument port is not used switch to 3
-	int c = 5, port = strtol(argv[4], NULL, 10);
+	//if argument port is not filter file is at index 3
+	int c = 3, port = 53;
 	
-	
+	//missing argument s - not optional
 	if(strcmp(argv[1],"-s") != 0)
 	{
 		cerr << "Expected -s argument got: \"" << argv[1] << "\"\n";
 		return 3;
 	}
-	else if(strcmp(argv[3],"-p") != 0)
+	
+	//optional argument port added - set port
+	if(strcmp(argv[3],"-p") == 0)
 	{
-		port = 53;
-		c = 3;
+		c = 5;
+		port = strtol(argv[4], NULL, 10);
 	}
-	if(strcmp(argv[c],"-f") != 0 || (c == 3 & argc == 7))
+	
+	//missing filter file argument
+	if(strcmp(argv[c],"-f") != 0)
 	{
 		cerr << "Expected -f argument got: \"" << argv[c] << "\"\n";
 		return 3;
 	}
 	
+	//c should be 2 less than argc, because of positioning filter file 
+	if(c == 3 && argc == 7)
+	{
+		cerr << "Got unknown argument on position 5 and 6\n";
+		return 3;
+	}
+	
 	string filter_file = string(argv[c+1]), server_DNS = string(argv[2]);
 	
-	//end of argument parsing
+	//end of argument parsing-------------------------------------------------------------------------------------------------------------------------------
 	
 	//AF_INET - IPV4, 17 is UDP, SOCK_DGRAM - UDP
 	int sockfd = socket(AF_INET,SOCK_DGRAM,17);
@@ -215,61 +265,92 @@ int main(int argc, char **argv)
 	//couldnt create socket
 	if(sockfd == -1)
 	{
-		cerr << "Cant create socket, check that executable has rights\n";
+		cerr << "Cant create socket. Make sure program run with suitable rights\n";
 		return 1;
 	}
 	
-	const int trueFlag = 1;
-	setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &trueFlag, sizeof(int));
+	//enable reusage of socket for read and write
+	int Flag = 1;
 	
-	sockaddr_in addr;
+	setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &Flag, sizeof(int));
+	
+	//settings for bind to socket
+	struct sockaddr_in addr;
 	addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(port);
-	//int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+	
+	//set port for socket
 	int bnd = bind(sockfd, (struct sockaddr*)&addr, sizeof(addr));
+	
 	if (bnd == -1)
 	{
 		cerr << "Cant bind socket ---- ERRNO:" << errno << "\n";
 		return 2;
 	}
 	
+	//save info about source from recvfrom
 	struct sockaddr_in SOURCE;
-	char source_ip[16];
-	memset(&SOURCE, '\0', sizeof(SOURCE));
-	socklen_t addr_size;
-	int REQ_len;
-	char buffer[PAYLOAD];
 	
-	ifstream file;
-	file.open(filter_file);
-	if(file.is_open() == false)
-	{
-		cerr << "Couldnt open file: " << filter_file << "\n";
-		return 4;
-	}
+	char source_ip[16];
+	
+	socklen_t addr_size;
+	
+	int REQ_len;
+	
+	char buffer[PAYLOAD];
 	
 	//never ending loop
 	while(true)
 	{
+		
 		addr_size = sizeof(SOURCE);
+		
+		//wait for communication and save data len
 		REQ_len = recvfrom(sockfd, buffer, PAYLOAD, 0, (struct sockaddr*)&SOURCE, &addr_size);
+		
 		if(REQ_len == -1)
 		{
 			cerr << "Some error with communication occured\n";
-			return 3;
-		}
-		//convert network address structure to string
-		inet_ntop(AF_INET, &SOURCE.sin_addr, source_ip, sizeof(source_ip));
-		string str = string(buffer);
-		if(check_type(buffer, REQ_len))
-		{
 			continue;
 		}
-		//should server ignore/filter dns request ?
-		if(check_filter(&file, buffer, REQ_len) == 0)
+		
+		//convert network address structure to string
+		inet_ntop(AF_INET, &SOURCE.sin_addr, source_ip, sizeof(source_ip));
+		
+		string str = string(buffer);
+		
+		//check that data are A type request if not ignore packet
+		if(check_type(buffer, REQ_len))
 		{
-			send_next(buffer, server_DNS, REQ_len, source_ip, ntohs(SOURCE.sin_port), sockfd);
+			//0100 - NOT IMPLEMENTED
+			int response = 4;
+			response_filter(buffer, source_ip, ntohs(SOURCE.sin_port), sockfd, REQ_len, response);
+			continue;
+		}
+		
+		//check that resolved address is not in filter file
+		if(check_filter(filter_file, buffer, REQ_len) == 0)
+		{
+			//resend request to DNS server
+			int res = send_next(buffer, server_DNS, REQ_len, source_ip, ntohs(SOURCE.sin_port), sockfd);
+			
+			if(res)
+			{
+				//0010 - SERVER FAIL
+				int response = 2;
+				response_filter(buffer, source_ip, ntohs(SOURCE.sin_port), sockfd, REQ_len, response);
+				continue;
+			}
+		}
+		else
+		{
+			
+			//0101 - REFUSED - type of response
+			int response = 5;
+			response_filter(buffer, source_ip, ntohs(SOURCE.sin_port), sockfd, REQ_len, response);
+			continue;
+			
 		}
 	}
 	
