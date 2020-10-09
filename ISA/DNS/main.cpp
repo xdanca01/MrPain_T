@@ -243,6 +243,10 @@ void* send_next(void* my_args)
 	socklen_t SRC_len = sizeof(SOURCE);
 	//get response from DNS server
 	int len = recvfrom(sock_DNS, buffer, PAYLOAD, 0, (struct sockaddr*)&SOURCE, &SRC_len);
+	
+	//close socket
+	shutdown(sock_DNS,2);
+	
 	if(len == -1)
 	{
 		cerr << "ERROR: didnt get reply from server. Server doesnt exist, or udp packet was lost.\n";
@@ -254,8 +258,6 @@ void* send_next(void* my_args)
 		free(ARGS);
 		pthread_exit(NULL);
 	}
-	
-	shutdown(sock_DNS,2);
 	
 	//send response back to source_ip
 	send_response(buffer, source_ip, len, source_port, sockfd);
