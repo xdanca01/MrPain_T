@@ -24,3 +24,10 @@ specifikovaného za argumentem -f a posílá vyfiltrované požadavky na server 
 
 ### Smazání vytvořených souborů:
 - make clean
+---
+## Soubory:
+- main.cpp
+- manual.pdf
+- Makefile
+- README.md
+- test.sh
