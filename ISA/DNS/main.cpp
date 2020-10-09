@@ -20,10 +20,21 @@
 
 #include <errno.h>
 
+//max size of UDP data
 #define PAYLOAD 512*8
+//max number of threads
+#define THREADS 100
 
 using namespace std;
 
+//custom structure to add arguments for new thread
+struct Argumenty
+{
+	char* buffer;
+	char source_ip[16]; 
+	int buf_len, port, sockfd;
+	string* server_DNS;
+};
 
 //response back to source with error code type
 int response_filter(char* buf, char* ip, int source_port, int sockfd, int length, int response)
@@ -35,18 +46,21 @@ int response_filter(char* buf, char* ip, int source_port, int sockfd, int length
 	
 	//set 1. bit to 1 - recursive
 	//set last 4 bits to response - not checked that response is not higher than 4 bits
-	buf[3] = buf[3] | 128+response;
+	buf[3] = buf[3] | (128+response);
 	
 	struct sockaddr_in SOURCE;
 	SOURCE.sin_family = AF_INET;
 	SOURCE.sin_port = htons(source_port);
 	SOURCE.sin_addr.s_addr = inet_addr(ip);
+	
+	//send response with error message
 	int something = sendto(sockfd, buf, length, 0, (struct sockaddr*)&SOURCE, sizeof(SOURCE));
 	if(something == -1)
 	{
 		cerr << "Cant send packet to: " << ip << "\n";
 		return 1;
 	}
+	
 	return 0;
 }
 
@@ -55,7 +69,8 @@ int check_type(char *buff, int len)
 {
 	//type is at 4 bytes before end
 	int type = 0;
-	memcpy((void*)&type, (void*)buff+len-3, 2);
+	
+	memcpy((void*)&type, (void*)(buff+len-3), 2);
 	if(type != 1)
 	{
 		cerr << "This program supports only A type request, got: " << type << "\n";
@@ -141,42 +156,68 @@ int send_response(char *buff, char* ip, int length, int source_port, int sockfd)
 }
 
 //resend packet to server
-int send_next(char* str, string ip, int length, char *source_ip, int source_port, int sockfd)
+//int send_next(char* str, string ip, int length, char *source_ip, int source_port, int sockfd)
+void* send_next(void* my_args)
 {
-	
+	//map arguments from structure Argumenty
+	struct Argumenty* ARGS = (struct Argumenty*)my_args;
+	char* str = ARGS->buffer;
+	string ip = *ARGS->server_DNS;
+	int length = ARGS->buf_len;
+	char* source_ip = ARGS->source_ip;
+	int source_port = ARGS->port;
+	int sockfd = ARGS->sockfd;
 	int sock_DNS = socket(AF_INET,SOCK_DGRAM,17);
-	
 	//couldnt create socket
 	if(sock_DNS == -1)
 	{
 		cerr << "Cant create socket, check that executable has rights\n";
-		return 1;
+		//0010 - SERVER FAIL
+		int response = 2;
+		response_filter(str, source_ip, source_port, sockfd, length, response);
+		free(str);
+		free(ARGS->server_DNS);
+		free(ARGS);
+		pthread_exit(NULL);
 	}
 	
 	//the argument should be non-zero to enable a boolean option
 	int Flag = 1;
 	struct timeval time;
-	time.tv_sec = 10;
+	time.tv_sec = 5;
 	time.tv_usec = 0;
 	
-	//set socket to timeout after some time of waiting - timeout set to 10s
+	//set socket to timeout after some time of waiting - timeout set to 5s
 	if(setsockopt(sock_DNS, SOL_SOCKET, SO_RCVTIMEO, &time, sizeof(time)))
 	{
 		cerr << "Cant set timeout for receive on socket\n";
-		return 1;
+		shutdown(sock_DNS,2);
+		//0010 - SERVER FAIL
+		int response = 2;
+		response_filter(str, source_ip, source_port, sockfd, length, response);
+		free(str);
+		free(ARGS->server_DNS);
+		free(ARGS);
+		pthread_exit(NULL);
 	}
 	//set socket to recv and send
 	if(setsockopt(sock_DNS, SOL_SOCKET, SO_REUSEADDR, &Flag, sizeof(Flag)))
 	{
 		cerr << "Cant set receive and send to same socket\n";
-		return 1;
+		shutdown(sock_DNS,2);
+		//0010 - SERVER FAIL
+		int response = 2;
+		response_filter(str, source_ip, source_port, sockfd, length, response);
+		free(str);
+		free(ARGS->server_DNS);
+		free(ARGS);
+		pthread_exit(NULL);
 	}
 	
 	//standard DNS port
 	int port = 53;
 	
 	struct sockaddr_in RESOLVER, SOURCE;
-	socklen_t addr_size;
 	//IPv4
 	RESOLVER.sin_family = AF_INET;
 	//convert and save
@@ -189,7 +230,13 @@ int send_next(char* str, string ip, int length, char *source_ip, int source_port
 	if(something < length)
 	{
 		cerr << "ERROR: occured when sending packet to DNS resolver\n";
-		return 1;
+		//0010 - SERVER FAIL
+		int response = 2;
+		response_filter(str, source_ip, source_port, sockfd, length, response);
+		free(str);
+		free(ARGS->server_DNS);
+		free(ARGS);
+		pthread_exit(NULL);
 	}
 	//DNS UDP has payload 512 bytes
 	char buffer[PAYLOAD];
@@ -199,16 +246,24 @@ int send_next(char* str, string ip, int length, char *source_ip, int source_port
 	if(len == -1)
 	{
 		cerr << "ERROR: didnt get reply from server. Server doesnt exist, or udp packet was lost.\n";
-		return 1;
+		//0010 - SERVER FAIL
+		int response = 2;
+		response_filter(buffer, source_ip, port, sockfd, length, response);
+		free(str);
+		free(ARGS->server_DNS);
+		free(ARGS);
+		pthread_exit(NULL);
 	}
 	
-	
+	shutdown(sock_DNS,2);
 	
 	//send response back to source_ip
 	send_response(buffer, source_ip, len, source_port, sockfd);
 	
-	
-	return 0;
+	free(str);
+	free(ARGS->server_DNS);
+	free(ARGS);
+	pthread_exit(NULL);
 }
 
 //return 1 when socket cant be created
@@ -300,6 +355,13 @@ int main(int argc, char **argv)
 	
 	char buffer[PAYLOAD];
 	
+	pthread_t threads[THREADS];
+	
+	//number of actual thread
+	int actual = 0;
+	
+	
+	
 	//never ending loop
 	while(true)
 	{
@@ -318,8 +380,6 @@ int main(int argc, char **argv)
 		//convert network address structure to string
 		inet_ntop(AF_INET, &SOURCE.sin_addr, source_ip, sizeof(source_ip));
 		
-		string str = string(buffer);
-		
 		//check that data are A type request if not ignore packet
 		if(check_type(buffer, REQ_len))
 		{
@@ -330,20 +390,30 @@ int main(int argc, char **argv)
 		}
 		
 		//check that resolved address is not in filter file
-		if(check_filter(filter_file, buffer, REQ_len) == 0)
+		int check = check_filter(filter_file, buffer, REQ_len);
+		
+		if(check == 0)
 		{
-			//resend request to DNS server
-			int res = send_next(buffer, server_DNS, REQ_len, source_ip, ntohs(SOURCE.sin_port), sockfd);
+			struct Argumenty* ARGS = (struct Argumenty*)malloc(sizeof(struct Argumenty));
+			//save arguments for new thread
+			ARGS->port = ntohs(SOURCE.sin_port);
+			ARGS->buffer = (char*)malloc(sizeof(buffer));
+			memcpy((void*)ARGS->buffer,(void*)buffer,sizeof(buffer));
+			memcpy((void*)ARGS->source_ip,(void*)source_ip,16);
+			ARGS->server_DNS = new string(server_DNS.c_str());
+			ARGS->buf_len = REQ_len;
+			ARGS->sockfd = sockfd;
 			
-			if(res)
-			{
-				//0010 - SERVER FAIL
-				int response = 2;
-				response_filter(buffer, source_ip, ntohs(SOURCE.sin_port), sockfd, REQ_len, response);
-				continue;
-			}
+			//create new thread and resend request to DNS server
+			pthread_create(&threads[actual], NULL, send_next, (void*)ARGS);
+			
+			//choose next thread
+			actual = actual % THREADS;
+			continue;
+
 		}
-		else
+		//found in filter file
+		else if(check == 1)
 		{
 			
 			//0101 - REFUSED - type of response
@@ -352,6 +422,15 @@ int main(int argc, char **argv)
 			continue;
 			
 		}
+		//probably filter file couldnt be opened
+		else
+		{
+			//0010 - SERVFAIL - type of response
+			int response = 2;
+			response_filter(buffer, source_ip, ntohs(SOURCE.sin_port), sockfd, REQ_len, response);
+			continue;
+		}
+		
 	}
 	
 	return 0;
