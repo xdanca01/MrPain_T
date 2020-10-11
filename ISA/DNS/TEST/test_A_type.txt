@@ -1,1 +1,0 @@
-nslookup -port=4400 google.com 127.0.0.1
