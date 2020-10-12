@@ -4,6 +4,10 @@ port=4400
 ip=127.0.0.1
 score=0
 
+./dns -s 8.8.8.8 -p $port -f TEST/filter_test.txt 2>/dev/null &
+
+PID=$(echo $!)
+
 #TEST1 - Correct
 nslookup -port=$port -type=A google.com $ip >/dev/null
 ret="$(echo $?)"
@@ -45,3 +49,5 @@ else
 fi
 
 echo "Number of failed tests: $score"
+
+kill -7 $PID
