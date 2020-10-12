@@ -17,7 +17,7 @@ specifikovaného za argumentem -f a posílá vyfiltrované požadavky na server 
 - make
 
 ### Spuštění:
-- ./main -s <server> [-p <port>] -f <soubor>
+- ./dns -s <server> [-p <port>] -f <soubor>
 
 ### Spuštění serveru a testů:
 - make test
@@ -30,4 +30,5 @@ specifikovaného za argumentem -f a posílá vyfiltrované požadavky na server 
 - manual.pdf
 - Makefile
 - README.md
-- test.sh
+- TEST/test.sh
+- TEST/filter_test.txt
