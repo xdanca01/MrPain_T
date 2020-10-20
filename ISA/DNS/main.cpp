@@ -11,6 +11,8 @@
 
 #include <sys/socket.h>
 
+#include <netdb.h>
+
 //ntohs(),...
 #include <arpa/inet.h>
 
@@ -284,11 +286,27 @@ int main(int argc, char **argv)
 	//if argument port is not filter file is at index 3
 	int c = 3, port = 53;
 	
+	string server_DNS;
+	
+	
 	//missing argument s - not optional
 	if(strcmp(argv[1],"-s") != 0)
 	{
 		cerr << "Expected -s argument got: \"" << argv[1] << "\"\n";
 		return 3;
+	}
+	//set DNS server
+	else
+	{
+		//try to resolve hostname
+		struct hostent *serverFromArg = gethostbyname(argv[2]);
+		//error
+		if(serverFromArg == NULL)
+		{
+			cerr << "ERROR: Cant resolve DNS server ip:" <<  argv[2] << "\n";
+			return 1;
+		}
+		server_DNS = string(inet_ntoa(*(struct in_addr*)serverFromArg->h_addr));
 	}
 	
 	//optional argument port added - set port
@@ -312,7 +330,7 @@ int main(int argc, char **argv)
 		return 3;
 	}
 	
-	string filter_file = string(argv[c+1]), server_DNS = string(argv[2]);
+	string filter_file = string(argv[c+1]);
 	
 	//end of argument parsing-------------------------------------------------------------------------------------------------------------------------------
 	
