@@ -1,8 +1,21 @@
-.PHONY: clean All
+VAGONS=$(vagony)
+TIME=$(cas)
 
-All:
-	@echo "----------Building project:[ IMS - Debug ]----------"
-	@"$(MAKE)" -f  "IMS.mk"
+ARG1="--vagony=$(vagony)"
+ARG2="--cas=$(cas)"
+
+ifndef VAGONS
+ARG1=
+endif
+ifndef TIME
+ARG2=
+endif
+
+run: model
+	./model $(ARG1) $(ARG2)
+
+model: model.cc
+	g++ -g -O2 -lsimlib -lm -o model model.cc
+
 clean:
-	@echo "----------Cleaning project:[ IMS - Debug ]----------"
-	@"$(MAKE)" -f  "IMS.mk" clean
+	rm model
