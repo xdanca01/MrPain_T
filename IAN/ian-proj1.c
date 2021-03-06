@@ -13,6 +13,7 @@ int getSegType(size_t type, char* string){
 	else if(type == 3) strcpy(string,"INTERP");
 	else if(type == 4) strcpy(string,"NOTE");
 	else if(type == 5) strcpy(string,"SHLIB");
+	else if(type == 6) strcpy(string,"PHDR");
 	else if(type == 1685382483){
 		strcpy(string,"GNU_PROPERTY");
 		return 2;
