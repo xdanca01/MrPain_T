@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 port=4400
 ip=127.0.0.1

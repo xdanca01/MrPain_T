@@ -5,6 +5,7 @@
 #include <gelf.h>
 #include <elf.h>
 #include <string.h>
+#include <stdlib.h>
 
 int getSegType(size_t type, char* string){
 	if(type == 0) strcpy(string,"NULL");
@@ -14,6 +15,7 @@ int getSegType(size_t type, char* string){
 	else if(type == 4) strcpy(string,"NOTE");
 	else if(type == 5) strcpy(string,"SHLIB");
 	else if(type == 6) strcpy(string,"PHDR");
+	else if(type == 7) strcpy(string,"TLS");
 	else if(type == 1685382483){
 		strcpy(string,"GNU_PROPERTY");
 		return 2;
@@ -32,7 +34,8 @@ int getSegType(size_t type, char* string){
 	}
 	//IGNORE
 	else{
-		return 1;
+		sprintf(string,"%d",type);
+		return 0;
 	}
 	return 0;
 }
@@ -121,8 +124,8 @@ int main(int argc, char **argv){
 		getSegPer(phdr->p_flags, perm);
 		int t = getSegType(phdr->p_type, type);
 		
-		if(t == 0) printf("%d	%s		%s	%s\n", i, type, perm, sections);
-		else if(t == 2) printf("%d	%s	%s	%s\n", i, type, perm, sections);
+		if(t == 0) printf("%2d	%s		%s	%s\n", i, type, perm, sections);
+		else if(t == 2) printf("%2d	%s	%s	%s\n", i, type, perm, sections);
 	}
 	elf_end(elf);
 	close(file);

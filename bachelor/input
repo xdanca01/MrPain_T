@@ -6,8 +6,10 @@ sa
 dsa
 dsa
 d
----- [neco=test]
+[#replace=<hstip>=host-ip,hello]
+----
 text
+<hstip>
 
 
 

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="DNS" Database="" Version="10000">
-  <Project Name="DNS" Path="../DNS.project" Active="Yes"/>
+  <Project Name="IMS" Path="../../../IMS/IMS/IMS.project" Active="Yes"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment/>
-      <Project Name="DNS" ConfigName="Debug"/>
+      <Project Name="IMS" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="no">
+    <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
-      <Project Name="DNS" ConfigName="Release"/>
+      <Project Name="IMS" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

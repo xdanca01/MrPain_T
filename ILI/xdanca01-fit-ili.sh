@@ -24,6 +24,7 @@ if [ $ret -eq 1 ] ; then
     yum install util-linux -y > /dev/null
 fi
 
+echo "Creating loop devices"
 for i in `seq 1 4`; do
     dd if=/dev/zero of=$tmpdir/file$i bs=200M count=1 > /dev/null 2>&1
     echo "Created file $tmpdir/file$i"
@@ -46,10 +47,10 @@ if [ $ret -eq 1 ] ; then
 fi
 
 echo "Creating RAID1"
-echo "y" | mdadm --create /dev/md0 --level=mirror --raid-devices=2 /dev/loop1 /dev/loop2 > /dev/null
+echo "y" | mdadm --create /dev/md0 --level=mirror --raid-devices=2 /dev/loop1 /dev/loop2 > /dev/null 2>/dev/null
 
 echo "Creating RAID0"
-echo "y" | mdadm --create /dev/md1 --level=mirror --raid-devices=2 /dev/loop3 /dev/loop4 > /dev/null
+echo "y" | mdadm --create /dev/md1 --level=mirror --raid-devices=2 /dev/loop3 /dev/loop4 > /dev/null 2>/dev/null
 
 
 #TASK 3 - volume group on top of 2 RAID devices
@@ -64,29 +65,29 @@ if [ $ret -eq 1 ] ; then
 fi
 
 echo "Creating volume group FIT_vg"
-vgcreate FIT_vg /dev/md0 /dev/md1 > /dev/null
+vgcreate FIT_vg /dev/md0 /dev/md1 > /dev/null 2>/dev/null
 
 
 #TASK 4 - 2 logical volumes from FIT_vg
 echo "Task 4 - Creating 2 logical volumes based on FIT_vg"
 
 echo "Creating logical volume FIT_lv1"
-lvcreate FIT_vg -n FIT_lv1 -L100M
+lvcreate FIT_vg -n FIT_lv1 -L100M >/dev/null
 
 echo "Creating logical volume FIT_lv2"
-lvcreate FIT_vg -n FIT_lv2 -L100M
+lvcreate FIT_vg -n FIT_lv2 -L100M >/dev/null
 
 #TASK 5 - set fs on FIT_lv1 to ext4
 echo "Task 5 - Set fs on FIT_lv1 to ext4"
 
 echo "Setting ext4 fs on /dev/FIT_vg/FIT_lv1"
-mkfs -t ext4 /dev/FIT_vg/FIT_lv1
+mkfs -t ext4 /dev/FIT_vg/FIT_lv1 >/dev/null 2>/dev/null
 
 #TASK 6 - set fs on FIT_lv2 to xfs
 echo "Task 6 - Set fs on FIT_lv2 to xfs"
 
 echo "Setting xfs fs on /dev/FIT_vg/FIT_lv2"
-mkfs -t xfs /dev/FIT_vg/FIT_lv2
+mkfs -t xfs /dev/FIT_vg/FIT_lv2 >/dev/null
 
 #TASK 7 - mount FIT_lv1
 echo "Task 7 - mount FIT_lv1 and FIT_lv2"
@@ -107,7 +108,7 @@ mount /dev/FIT_vg/FIT_lv2 /mnt/test2
 echo "Task 8 - Resize FIT_lv1 to max capacity from volume group"
 
 echo "Extending logical volume size to max capacity"
-lvextend -l +100%FREE /dev/FIT_vg/FIT_lv1
+lvextend -l +100%FREE /dev/FIT_vg/FIT_lv1 >/dev/null 2>/dev/null
 
 echo "Checking package e2fsprogs - resize2fs"
 rpm -q e2fsprogs > /dev/null
@@ -118,33 +119,33 @@ if [ $ret -eq 1 ] ; then
 fi
 
 echo "Resizing fs to new size"
-resize2fs /dev/FIT_vg/FIT_lv1
+resize2fs /dev/FIT_vg/FIT_lv1 >/dev/null 2>/dev/null
 
 #TASK 9 - Create 300MB file by command dd
 echo "Task 9 - Create 3OOMB file by command dd"
 
 echo "Creating file /mnt/test1/big_file"
-dd if=/dev/urandom of=/mnt/test1/big_file bs=300M count=1
+dd if=/dev/urandom of=/mnt/test1/big_file bs=300M count=1 >/dev/null 2>/dev/null
 
 echo "Creating checksum of file /mnt/test1/big_file"
-sha512sum /mnt/test1/big_file
+sha512sum /mnt/test1/big_file >/dev/null 2>/dev/null 
 
 #TASK 10 - Emulate faulty disk
 echo "Task 10 - Emulate faulty disk"
 
 echo "Creating file for new loop device"
-dd if=/dev/zero of=$tmpdir/file5 bs=200M count=1 > /dev/null 2>&1
+dd if=/dev/zero of=$tmpdir/file5 bs=200M count=1 >/dev/null 2>&1
 losetup loop5 $tmpdir/file5 > /dev/null 2>&1
 echo "Created loop device: loop5"
 
 echo "Adding loop5 to /dev/md0 - RAID1"
-mdadm --manage /dev/md0 --add /dev/loop5
+mdadm --manage /dev/md0 --add /dev/loop5 2>/dev/null
 
 echo "Replacing loop1 with loop5"
-mdadm --manage /dev/md0 --replace /dev/loop1 --with /dev/loop5
+mdadm --manage /dev/md0 --replace /dev/loop1 --with /dev/loop5 2>/dev/null
 
 echo "Verifing recovery from faulty disk"
-mdadm --detail /dev/md0 | grep "loop5" | grep "active"
+mdadm --detail /dev/md0 | grep "loop5" | grep "active" >/dev/null
 ret=$(echo $?)
 if [ $ret -eq 0 ] ; then
     echo "Recovery wasnt successfull"
