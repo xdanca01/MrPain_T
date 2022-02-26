@@ -1,0 +1,40 @@
+# Operators and IO
+
+The main topics for week 5 are operator overloading (which will
+build on what we learned about function and method overloading in
+week 4). The second topic for this week will be IO: we will look at
+formatted input and output and at reading and writing files.
+
+Demonstrations:
+
+ 1. ‹arithmetic› – introduction to operator overloading,
+ 2. ‹relational› – implementing equality and ordering,
+ 3. ‹access›     – dereference, indexing and other access ops,
+ 4. ‹convert›    – conversion and assignment,
+ 5. ‹files›      – opening files, reading and writing strings
+ 6. ‹streams›    – from values to strings and back
+ 7. ‹format›     – overloading formatting operators
+
+Elementary exercises:
+
+ 1. ‹cartesian›  – complex numbers in algebraic form,
+ 2. ‹force›      – composing and scaling forces,
+ 3. ‹forcefmt›   – vectors redux, this time with IO
+
+Preparatory exercises:
+
+ 1. ‹polar›      – complex numbers in polar form,
+ 2. ‹rational›   – rational numbers with ordering,
+ 3. ‹tmpfile›    – an auto-erasing temporary file
+ 4. ‹nibble›     – a pointer-like class for sub-byte access,
+ 5. ‹grep›       – print matching lines
+ 6. ‹fixnum›     – more numbers, this time with a parser.
+
+Regular exercises:
+
+ 1. ‹poly›       – polynomials with addition and multiplication
+ 2. ‹csv›        – parse comma-separated numeric data
+ 3. ‹set›        – a set of integers with set operators,
+ 4. ‹email›      – a simplified RFC 822 parser
+ 5. ‹json›       – format a string → string map as JSON
+ 6. ‹cpp› †      – a very simple C preprocessor

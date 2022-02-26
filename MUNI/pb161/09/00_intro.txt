@@ -1,0 +1,44 @@
+# Templates
+
+You have hopefully already noticed that certain classes in the C++
+standard library are «parametric»: they can be «instantiated» with
+different «type parameters»: that is, we can create an ‹std::vector›
+of integers, but we can also create an ‹std::vector› of
+floating-point numbers. Even more interestingly, we can create an
+‹std::vector› of instances of our own classes. It is probably quite
+clear that there is a single entity called ‹std::vector›: this
+entity is called a «class template». Unfortunately, the terminology
+gets slightly confusing here: the «instances» of «class templates»
+are «classes».  This is different from «objects» which are also
+known as «class instances».
+
+Demonstrations:
+
+ 1. ‹zipper›   – our favourite data structure, now generic
+ 2. ‹expr›     – a different take on expressions
+ 3. ‹fold›     – function templates
+ 4. ‹rel›      – non-type template arguments
+
+Elementary exercises:
+
+ 1. ‹iota›     – generate an integer sequence
+ 2. ‹quot›     – quotient fields (aka fields of fractions)
+ 3. ‹split›    – slice a string view into two on a delimiter
+
+Preparatory exercises:
+
+ 1. ‹circular› – a circular list, but generic
+ 2. ‹buffer›   – a fixed-size queue-like data structure
+ 3. ‹stats›    – median, quartiles, mode over any container
+ 4. ‹sparse›   – sparse copy-on-write arrays
+ 5. ‹bbox›     – a bounding box of a point collection
+ 6. ‹visit›    – call a function on each node of a graph
+
+Regular exercises:
+
+ 1. ‹tfold›    – fold a tree using an arbitrary function
+ 2. ‹tmap›     – apply a function to each node
+ 3. ‹monoid›   – free monoids and homomorphisms
+ 4. ‹treap›    – a combination of a heap and a binary search tree
+ 5. ‹critbit›  – binary tries with generic values
+ 6. ‹finally›  – a generic RAII wrapper

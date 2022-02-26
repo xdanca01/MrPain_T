@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "projekt"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"cmath": "cpp"
+		}
+	}
+}

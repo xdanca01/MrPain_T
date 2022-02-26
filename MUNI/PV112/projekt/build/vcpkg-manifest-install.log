@@ -1,0 +1,56 @@
+Detecting compiler hash for triplet x64-linux...
+All requested packages are currently installed.
+Restored 0 packages from /home/pdancak/.cache/vcpkg/archives in 726 ns. Use --debug to see more details.
+
+Total elapsed time: 394.2 ms
+
+The package glad provides CMake targets:
+
+    find_package(glad CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glad::glad)
+
+The package glfw3 provides CMake targets:
+
+    find_package(glfw3 CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glfw)
+
+The package glm provides CMake targets:
+
+    find_package(glm CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glm::glm)
+
+The package gtest provides CMake targets:
+
+    find_package(GTest CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE GTest::gmock GTest::gtest GTest::gmock_main GTest::gtest_main)
+
+The package imgui provides CMake targets:
+
+    find_package(imgui CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE imgui::imgui)
+
+The package lodepng provides CMake targets:
+
+    # C API
+    find_package(lodepng-c CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE lodepng-c)
+
+    # C++ API
+    find_package(lodepng CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE lodepng)
+
+The package stb is header only and can be used from CMake via:
+
+    find_path(STB_INCLUDE_DIRS "stb.h")
+    target_include_directories(main PRIVATE ${STB_INCLUDE_DIRS})
+
+The package tinyobjloader provides CMake targets:
+
+    find_package(tinyobjloader CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE tinyobjloader::tinyobjloader)
+
+The package toml11 provides CMake targets:
+
+    find_package(toml11 CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE toml11::toml11)
+

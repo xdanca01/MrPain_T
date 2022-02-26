@@ -1,0 +1,19 @@
+DEFINE go_and_place
+    TAKE
+    IFMARK go_and_place SKIP
+    put_r
+END
+
+
+DEFINE put_r
+    PUT
+    STEP
+    PUT
+    LEFT
+    LEFT
+    STEP
+    LEFT
+    LEFT
+END
+
+RUN go_and_place

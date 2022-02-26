@@ -1,0 +1,30 @@
+# Review
+
+Since this is a review chapter with no new material in it, there are
+no demonstrations. You can refer to previous chapters and lectures
+if you encounter concepts that you do not know, or which you need to
+refresh.
+
+Elementary exercises:
+
+ 1. ‹digraph›  – count digraph frequency
+ 2. ‹spelling› – a very simple spell checker
+ 3. ‹ternary›  – ternary logic
+
+Preparatory exercises:
+
+ 1. ‹chords›   – naming minor and major 5 & dominant 7 chords
+ 2. ‹grammar›  – generate words from regular grammars
+ 3. ‹linear›   – simple linear equations with a parser
+ 4. ‹poly›     – searching for roots of polynomials
+ 5. ‹queens›   – checking a solution of the 8 queens puzzle
+ 6. ‹map›      – more mapping of sequences
+
+Regular exercises:
+
+ 1. ‹trie›     – binary tries with wildcards
+ 2. ‹cooking›  – storing recipes
+ 3. ‹cards›    – parsing and comparing playing cards
+ 4. ‹minilisp› – a small LISP-like language parser
+ 5. ‹language› – detect language of a text fragment
+ 6. ‹union›    – the union-set data structure

@@ -1,0 +1,115 @@
+## Grading
+
+To pass the subject, you need to meet the following criteria:
+
+ • complete 8 out of the 12 seminars, that is:
+   ◦ submit at least 3 preparatory exercises
+   ◦ attend the corresponding seminar
+ • complete 4 tasks selected from 3 or 4 sets
+   ◦ the tasks must come from at least 3 different sets
+   ◦ which tasks you pick is entirely up to you
+ • write 6 peer reviews for tasks:
+   ◦ you can only review what you passed yourself
+   ◦ you must cover 2 different tasks (with at least 2 reviews each)
+
+The deadline for peer reviews is 13.2.2022 (the Sunday after the end
+of the exam period, or a week and a half after the last deadline for
+the last task set). Doing more work than required is always OK.
+
+### Seminars
+
+Each chapter in this exercise collection has 2 types of exercises:
+‘preparatory’ and ‘regular’.  Completing a seminar, then, has 2
+parts: working out 3 of the preparatory exercises and attending the
+seminar, which will include the following (group) activities:
+
+ • analysis of some of the submitted solutions,
+ • making improvements to the same,
+ • solving some of the ‘regular’ exercises live.
+
+In addition to the group activities, the teacher will live-solve one
+of the regular exercises with comments, input and questions from you
+as a group.
+
+All weekly exercises have test cases enclosed: it is sufficient to
+pass those test cases. Any bugs that slip by may be dissected in the
+following seminar. The submission deadlines for prep exercises are
+as follows:
+
+│ chapter │ lecture │   deadline   │    seminar    │
+├◅───────▻│◅───────▻│─────────────▻│◅─────────────▻┤
+│      01 │  13.9.  │ 18.9.  23:59 │ 20.9. –23.9.  │
+│      02 │  20.9.  │ 25.9.  23:59 │ 27.9. –30.9.  │
+│      03 │  27.9.  │  2.10. 23:59 │  4.10.– 7.10. │
+│      04 │   4.10. │  9.10. 23:59 │ 11.10.–14.10. │
+│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄│
+│      05 │  11.10. │ 16.10. 23:59 │ 18.10.–21.10. │
+│      06 │  18.10. │ 23.10. 23:59 │ 25.10.–28.10. │
+│      07 │  25.10. │ 30.10. 23:59 │  1.11.– 4.11. │
+│      08 │   1.11. │  6.11. 23:59 │  8.11.–11.11. │
+│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄│
+│      09 │   8.11. │ 13.11. 23:59 │ 15.11.–18.11. │
+│      10 │  15.11. │ 20.11. 23:59 │ 22.11.–25.11. │
+│      11 │  22.11. │ 27.11. 23:59 │ 29.11.– 2.12. │
+│      12 │  29.11. │  4.12. 23:59 │  6.12.– 9.12. │
+
+If your seminar falls on a holiday (this affects Tuesday 28.9.,
+Thursday 28.10. and Wednesday 17.11.), you can attend with a
+different group that week.
+
+### Tasks
+
+There will be 4 sets of 3 tasks each. As mentioned earlier, you are
+required to complete, at minimum, 4 tasks covering at least 3 of the
+sets. Submitting more is of course allowed and encouraged. There are
+8 deadlines for each set, summarised in the next section.
+
+Please remember that the test suite is strictly binary: you either
+pass or you fail, and that the deadlines are firm. More details and
+guidelines are in ‹3_tasks.txt›.
+
+### Peer Review
+
+Reading and understanding code is an important skill, and even
+though it's not easy to practice, we are going to at least try. You
+will be required to read, understand and provide feedback for 6 task
+solutions written by your classmates. The rules for peer review are
+as follows:
+
+ • «only tasks» are eligible for reviews (not the weekly exercises),
+ • you can submit any code (even completely broken) for peer review,
+ • to write a review for any given submission, you must have already
+   passed the respective task yourself,
+ • there are no interim deadlines for requesting or providing peer
+   reviews (only the deadline at the end of the exam period).
+
+It is okay to point out correctness problems during peer reviews,
+with the expectation that this might help the recipient complete the
+task. This is the «only» allowed form of cooperation (more on that
+below).
+
+### Plagiarism
+
+Copying someone else's work or letting someone else copy yours will
+cause that item to be crossed off your achievements, along with one
+more of the same kind. That is, if you ‘borrow’ a solution to a
+preparatory exercise, that week won't count toward the 8 seminars
+that you need to complete, and you will be required to complete «9»
+other seminars, instead of 8. Likewise, if you borrow a solution to
+a task, that task will be crossed off. You will then have to solve 4
+tasks in 3 different sets to pass the subject.
+
+You are also responsible for keeping your solutions private. If you
+only use the ‹pv248› command on ‹aisa›, it will make your ‹~/pv248›
+directory inaccessible to anyone else (this also applies to
+school-provided UNIX workstations). Keep it that way. If you work on
+your solution using other computers, make sure they are secure. Do
+not publish your solutions anywhere (on the internet or otherwise).
+All parties in a copying incident will be treated equally.
+
+No cooperation is allowed (not even design-level discussion about
+how to solve the exercise) on tasks and on weekly exercises «which
+you submit». If you want to study with your classmates, that is okay
+– but only cooperate on code which is not going to be submitted by
+either party. If you want to be sure of this, limit teamwork to the
+‘regular’ exercises (in files called ‹rN_*.py›).

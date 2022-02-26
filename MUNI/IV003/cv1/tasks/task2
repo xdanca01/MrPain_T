@@ -1,0 +1,21 @@
+DEFINE go_to_wall
+    IFWALL PUT next
+END
+
+DEFINE rotate_180
+    RIGHT
+    RIGHT
+END
+
+DEFINE go_back
+    IFMARK rotate_180 SKIP
+    STEP
+END
+
+DEFINE next
+    STEP
+    go_to_wall
+    go_back
+END
+
+RUN go_to_wall

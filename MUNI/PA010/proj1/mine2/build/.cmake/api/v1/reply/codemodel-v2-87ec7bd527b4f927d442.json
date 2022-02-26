@@ -1,0 +1,203 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-Release-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "pa010_projects",
+					"childIndexes" : 
+					[
+						2,
+						3,
+						4
+					],
+					"jsonFile" : "directory-pa010_projects-Release-a82c15a4a16fc1b8f36a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "pa010_projects"
+				},
+				{
+					"build" : "pa010_projects/framework/core",
+					"jsonFile" : "directory-pa010_projects.framework.core-Release-b6777ec6e3aa79e26542.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "framework/core",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "pa010_projects/framework/opengl_3_3",
+					"jsonFile" : "directory-pa010_projects.framework.opengl_3_3-Release-63a79b1b8f6bd970a8ae.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 2,
+					"source" : "framework/opengl_3_3",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "pa010_projects/subdivision",
+					"childIndexes" : 
+					[
+						5
+					],
+					"jsonFile" : "directory-pa010_projects.subdivision-Release-f68a1efae191d9619da8.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 3,
+					"source" : "pa010_projects/subdivision",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "pa010_projects/subdivision/tests",
+					"jsonFile" : "directory-pa010_projects.subdivision.tests-Release-4fc691e86c899f9eb0b8.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 3,
+					"source" : "pa010_projects/subdivision/tests",
+					"targetIndexes" : 
+					[
+						3
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "main"
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "FRAMEWORK_CORE",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "FRAMEWORK_OPENGL_3_3",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4,
+						5
+					],
+					"name" : "pa010_subdivision",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 2,
+					"id" : "FRAMEWORK_CORE::@c2ed88f7a7e4092cbe88",
+					"jsonFile" : "target-FRAMEWORK_CORE-Release-72a496c72600d4bc8473.json",
+					"name" : "FRAMEWORK_CORE",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "FRAMEWORK_OPENGL_3_3::@be316be0d218a3c9542d",
+					"jsonFile" : "target-FRAMEWORK_OPENGL_3_3-Release-da6d3e203e3416913442.json",
+					"name" : "FRAMEWORK_OPENGL_3_3",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "pa010_subdivision::@da98d33adba95d6d46d7",
+					"jsonFile" : "target-pa010_subdivision-Release-c6a99eb78e5df5626a10.json",
+					"name" : "pa010_subdivision",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "pa010_subdivision_tests::@ede80f1a2a6ca8e3d097",
+					"jsonFile" : "target-pa010_subdivision_tests-Release-5bd221298978d453d4ee.json",
+					"name" : "pa010_subdivision_tests",
+					"projectIndex" : 3
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build",
+		"source" : "/home/pdancak/school/MrPain_T/PA010/proj1/mine2"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

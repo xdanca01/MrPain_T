@@ -1,0 +1,23 @@
+# A. Preliminaries
+
+This document is a collection of exercises and commented source code
+examples. All the sources are also available as separate files that
+you can edit and compile (we will refer to these files as the
+«source bundle»). Additionally, this section contains the rules and
+general guidelines that apply to the course as a whole.
+
+The latest version of this document along with the source bundle is
+available both in the study materials in IS and on the student
+server ‹aisa›:
+
+ • ‹https://is.muni.cz/auth/el/fi/jaro2022/PB161/um/› – a PDF in
+   ‹pb161.seminar.pdf› and the source bundle in directories ‹01›
+   through ‹12›, ‹t1› through ‹t3› and ‹sol› – use the ‘download as
+   ZIP’ option in the sidebar to get entire directories in one go,
+ • log into ‹aisa› using ‹ssh› or ‹putty›, run ‹pb161 update›, then
+   look under ‹~/pb161› (this chapter is in subdirectory ‹00›).
+
+We will update the files as needed, to correct mistakes or include
+additional material. On ‹aisa›, running ‹pb161 update› at any time
+will update your working copies, taking care not to overwrite your
+changes. It will also tell you which files have been updated.

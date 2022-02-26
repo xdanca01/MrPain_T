@@ -1,0 +1,34 @@
+# Containers
+
+This week will be about containers (collections).
+
+Demonstrations:
+
+ 1. ‹freq›      – a word frequency histogram
+ 2. ‹dfs›       – reachability using recursive depth-first search
+ 3. ‹closure›   – closure properties of relations
+ 4. ‹bfs›       – find the nearest matching node
+
+Elementary exercises:
+
+ 1. ‹unique›    – remove duplicated entries from a vector
+ 2. ‹reflexive› – compute a reflexive closure of a relation
+ 3. ‹normalize› – scale an input vector into a 0-1 range
+
+Preparatory exercises:
+
+ 1. ‹brackets›  – check that brackets in a string balance out
+ 2. ‹connected› – decompose a graph into connected components
+ 3. ‹dag›       – check whether a graph is acyclic (dfs again)
+ 4. ‹rel›       – a tiny bit of relational algebra
+ 5. ‹numbers›   – a slightly enriched set of numbers
+ 6. ‹bipartite› – bipartiteness checking using BFS
+
+Regular exercises:
+
+ 1. ‹mode›      – find the mode (most common value) in a vector
+ 2. ‹buckets›   – sort items into buckets based on an attribute
+ 3. ‹shortest›  – shortest distances in an unweighted graph
+ 4. ‹flood›     – flood fill in a grid
+ 5. ‹colour›    – brute-force a 3-colouring of a graph
+ 6. ‹life›      – the game of life

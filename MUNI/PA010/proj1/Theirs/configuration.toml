@@ -1,0 +1,2 @@
+framework_shaders = "framework/core/shaders"
+shaders = "shaders"

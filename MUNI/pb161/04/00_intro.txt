@@ -1,0 +1,39 @@
+# Overloading, Constructors and Lifetime
+
+First, we will look at function and method overloading, including
+overloading of constructors and overloading on reference kinds. We
+will also touch the topic of object lifetime (which considers the
+question of when exactly is an object valid and can be used) and
+ownership (controlling the lifetime of ‘subordinate’ objects, e.g.
+elements in a container).
+
+Demonstrations:
+
+ 1. ‹art›      – overloading basics, with books and paintings
+ 2. ‹numbers›  – a list of numbers which remember their type
+ 3. ‹refs›     – overloading with references
+ 4. ‹pool›     – ownership and indirect references
+
+Elementary exercises:
+
+ 1. ‹diameter› – basic function overloading (circle diameter)
+ 2. ‹circle›   – same story, but with constructors
+ 3. ‹index›    – access elements of different types using indices
+
+Preparatory exercises:
+
+ 1. ‹format›   – method overloading 101
+ 2. ‹least›    – return a least element without making copies
+ 3. ‹area›     – geometry with function and ctor overloads
+ 4. ‹zipper›   – ‹const› method overloading on a zipper
+ 5. ‹rpn›      – postfix arithmetic with more overloading
+ 6. ‹eval›     – infix evaluation with a node pool
+
+Regular exercises:
+
+ 1. ‹complex›  – complex numbers and function overloading
+ 2. ‹XXX›      – … references again?
+ 3. ‹search›   – binary search tree with a pool of nodes
+ 4. ‹bitptr›   – pointer to a single bit
+ 5. ‹readint›  – read integers from various string types
+ 6. ‹XXX›

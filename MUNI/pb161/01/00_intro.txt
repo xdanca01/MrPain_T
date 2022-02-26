@@ -1,0 +1,81 @@
+# Strings and Classes
+
+Welcome to PB161. If you haven't read the rules and guidelines in
+Part A (directory ‹00› in the source bundle), please do so now,
+before going on.
+
+The exercises this week will look at some of the basics that you
+have seen in the lecture: strings, dynamic arrays – ‹std::vector›,
+classes with methods, and ‹const› references. These concepts are
+further explored in the ‘demonstrations’ (commented examples; please
+note that these do not replace the lectures – they are meant to be
+complementary). The corresponding files in the source bundle are
+named ‹d?_*.cpp›, i.e. ‹d1_fibonacci.cpp› through ‹d4_lemmings.cpp›.
+
+ 1. ‹fibonacci› – using ‹std::vector› (dynamic array)
+ 2. ‹hamming›   – introduction to ‹std::string›
+ 3. ‹hero›      – introduction to object composition
+ 4. ‹lemmings›  – collections of custom objects
+
+The second part of the study materials for each week gives you a
+couple of ‘elementary’ exercises, which you should be able to
+quickly solve to make sure you understand the concepts from the
+lecture and from the commented examples above. Sample solutions are
+in Part S at the end of the PDF, or in the directory ‹sol› in the
+source code bundle. Please note that the sample solution is not
+always the simplest possible – it's fine to take a more roundabout
+approach. The source files for this section are named ‹e?_*.cpp›.
+
+This week, the elementary exercises are:
+
+ 1. ‹predicates› – properties of lists of numbers
+ 2. ‹palindrome› – checking that an ‹std::string› is a palindrome
+ 3. ‹pascal›     – fill in an ‹std::vector›
+
+The next section has slightly more difficult exercises. These are
+labelled «preparatory», since they exist to let you prepare for the
+corresponding seminar. You are strongly encouraged to solve at least
+3 of them every week (if you submit them by Saturday, you can then
+gain a point for attending the seminar). The respective source files
+in the bundle are called ‹p?_*.cpp›. «Note:» Discussing and sharing
+solutions is strictly forbidden – you must solve the exercises on
+your own. For details, see Part A (directory ‹00› in the source
+bundle).
+
+ 1. ‹counting› – count words and lines in a string
+ 2. ‹fraction› – evaluate a continued fraction
+ 3. ‹words›    – break a string into a vector of one-word strings
+ 4. ‹account›  – encapsulation of state, ‹const› methods
+ 5. ‹shapes›   – object composition
+ 6. ‹contacts› – collections of your own objects
+
+The last section has «regular» exercises – those will be (on
+average) yet more difficult and let you further practice programming
+with the concepts that you have learned this week. Like with
+elementary exercises earlier, solutions to these can be freely
+discussed and shared, you can work on the exercises with your
+friends, and you can compare your solution to those included in
+Part S. Some of these exercises will be solved interactively in the
+seminar. The files are named ‹r?_*.cpp›.
+
+ 1. ‹wrap›    – wrap long lines into paragraphs of a given width
+ 2. ‹digits›  – representing numbers in a positional system
+ 3. ‹sieve›   – find prime numbers
+ 4. ‹bsearch› – binary search in a sorted ‹std::vector›
+ 5. ‹qsort›   – the staple of in-place sorting algorithms
+ 6. ‹radix›   – a fast comparison-free sorting algorithm
+
+## a. Using the source bundle
+
+We recommend that you work on ‹aisa›, which has all the required
+tools installed and set up correctly. You can use ‹micro› as your
+editor if you are not familiar with ‹vim›, or you can use a remote
+editing feature in your code editor of choice. If you prefer to set
+up your own, local, environment, you are of course free to do that,
+but please keep in mind that your tools are your responsibility.
+
+If you work on ‹aisa›, you can check your solutions against the test
+cases provided with the exercises by running ‹make› (this tries to
+compile all of them in order) or ‹make p1_counting› to compile and
+test only one of them. Additionally, ‹make› will run your code
+through ‹clang-tidy› and ‹valgrind›.

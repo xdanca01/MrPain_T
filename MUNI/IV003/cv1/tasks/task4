@@ -1,0 +1,12 @@
+DEFINE go_and_place
+    IFMARK take_rec SKIP
+END
+
+DEFINE take_rec
+    TAKE
+    go_and_place
+    IFMARK SKIP STEP
+    PUT
+END
+
+RUN go_and_place

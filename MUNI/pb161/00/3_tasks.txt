@@ -1,0 +1,102 @@
+## Task Sets
+
+The general principles outlined here apply to all tasks. The first
+and most important rule is, use common sense – the specifications
+are not exhaustive and sometimes leave room for different
+interpretations. Do your best to apply the most sensible one. Do not
+try to find loopholes (all you are likely to get is failed tests).
+Technically correct is «not» the best kind of correct.
+
+Think about pre- and postconditions. Aim for weakest preconditions
+that still allow you to guarantee the postconditions required by the
+assignment. If your preconditions are too strong (i.e. you disallow
+inputs that are not ruled out by the spec) you will likely fail the
+tests.
+
+Do not print anything that you are not specifically directed to.
+Programs which print garbage (i.e. anything that wasn't specified)
+will fail tests.
+
+You can use the standard C++ library. External libraries or header
+files are not allowed, unless specified as part of the assignment.
+Make sure that your classes and methods use the correct spelling,
+and that you accept and/or return the correct types. In most cases,
+either the ‘syntax’ or the ‘sanity’ test suite will catch problems
+of this kind, but we cannot guarantee that it always will – do not
+rely on it.
+
+If you don't get everything right the first time around, do not
+despair. The expectation is that most of the time, you will pass in
+the second or third verity run (especially if you test your program
+carefully). If you strongly disagree with a test outcome and you
+believe you adhered to the specification and resolved any
+ambiguities in a sensible fashion, please raise the issue in the
+discussion forum.
+
+### Submitting Solutions
+
+The easiest way to submit, for instance, a solution to the task
+‹t1_cellular› is this:
+
+    $ ssh aisa.fi.muni.cz
+    $ cd ~/pb161/t1
+    … edit files until satisfied …
+    $ pb161 submit t1_cellular
+
+NB. Only the files listed in the assignment will be submitted and
+evaluated. Please put your entire solution into existing files (or
+into files you are instructed to create).
+
+You can check the status of your submissions by issuing the
+following command:
+
+    $ pb161 status
+
+In case you already submitted a solution, but later changed it, you
+can see the differences between your most recent submitted version
+and your current version by issuing:
+
+    $ pb161 diff t1_cellular
+
+The lines starting with ‹-› have been removed since the submission,
+those with ‹+› have been added and those with neither are common to
+both versions.
+
+### Compilation
+
+To compile and test your solution, use the ‹make› command: each ‹tX›
+directory has a ‹makefile› in it. Typing ‹make cellular› in this
+directory will first compile your solution into an executable binary
+and then run ‹clang-tidy›, any tests you may have written, and
+‹valgrind›. If you want to work on your own computer instead of
+‹aisa›, you need to figure out the settings yourself. The ‹makefile›
+will tell you which compiler we use and how we invoke it.
+
+### Evaluation
+
+There are three sets of automated tests which are executed on the
+solutions you submit. The first set is called ‘syntax’ and runs
+immediately after you submit. Only 2 checks are performed: the code
+compiles and it passes ‹clang-tidy›.
+
+The next step is ‘sanity’ and runs every midnight and noon. Its main
+role is to check that your program meets basic semantic
+requirements, e.g. that it recognizes correct inputs and produces
+correctly formatted outputs. The ‘sanity’ test suite is for your
+information only and does not guarantee that your solution will be
+accepted. The ‘sanity’ test suite is only executed if you passed
+‘syntax’.
+
+The ‘verity’ test suite covers most of the specified functionality
+and runs once or twice a week (the exact schedule is in the previous
+section). If you pass the verity suite, the assignment is considered
+complete and you are awarded the points. The verity suite will «not»
+run unless the code passes ‘sanity’ (with the exceptions specified
+in the task descriptions). Please note that any memory errors
+(including memory leaks, as reported by ‹valgrind›) will cause
+‘verity’ to fail.
+
+Only the most recent submission is evaluated, and each submission is
+evaluated at most once in the ‘sanity‘ and once in the ‘verity’
+mode. You will find your latest evaluation results in the IS in
+notepads (one notepad per task).

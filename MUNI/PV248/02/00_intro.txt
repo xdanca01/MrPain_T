@@ -1,0 +1,32 @@
+# Objects, Classes and Types
+
+This week, the exercises require static type annotations that can be
+checked with ‹mypy --strict›. In most weeks from now on, prep
+exercises will require ‹mypy› annotations, though they will be
+optional in most tasks (but you may find them helpful). Please do
+not use ‹Any› in the annotations, or the ‹type: ignore› pragma.
+While not enforced by the submission evaluator (sometimes those are
+hard to avoid, like the cases already present in the skeletons),
+over-use will be frowned upon.
+
+Elementary exercises:
+
+ 1. ‹geometry› – define basic types for planar geometry
+
+Prep exercises:
+
+ 1. ‹dsw›       – Day, Stout & Warren balance binary trees
+ 2. ‹ts3norm›   – template system 3, normalization
+ 3. ‹ts3render› – template system 3, rendering into strings
+ 4. ‹bool›      – boolean expression trees
+ 5. ‹intersect› – computing intersections in a plane
+ 6. ‹list›      – linked list with generic type annotations
+
+Regular exercises:
+
+ 1. ‹json›      – recursive data types without gross hacks
+ 2. ‹treezip›   – a zipper on binary trees
+ 3. ‹ts3bugs›   – more fun with template system 3
+ 4. ‹treap›     – randomized search trees
+ 5. ‹distance›  – shortest distance between two 2D objects
+ 6. ‹cycle›     – finding cycles in object graphs

@@ -1,0 +1,153 @@
+Package: egl-registry
+Version: 2021-11-23
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 996200fa99b446334a06c4180ad862c451faac18b1362f2716129cb2cf46aa56
+Description: the EGL API and Extension Registry
+Type: Port
+Status: install ok installed
+
+Package: opengl-registry
+Version: 2021-11-17
+Depends: egl-registry
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 23ce1150c9258897dc28c66f65295b3a9baf934af57d52dc10ec412be2f14498
+Description: the API and Extension registries for the OpenGL family APIs
+Type: Port
+Status: install ok installed
+
+Package: glad
+Version: 0.1.34
+Port-Version: 3
+Depends: egl-registry, opengl-registry, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 80905dbb20e5a35c0c0efc89bb6effd5d7eaebe3394537364487d93002b07ede
+Description: Multi-Language Vulkan/GL/GLES/EGL/GLX/WGL Loader-Generator based on the official specs.
+Type: Port
+Default-Features: loader
+Status: install ok installed
+
+Package: glfw3
+Version: 3.3.6
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 7bb6a51ab05a507d51ab65b564c5890e96c8f101ff79fd02c4775c71ca264ffa
+Description: GLFW is a free, Open Source, multi-platform library for OpenGL, OpenGL ES and Vulkan application development. It provides a simple, platform-independent API for creating windows, contexts and surfaces, reading input, handling events, etc.
+Type: Port
+Status: install ok installed
+
+Package: glm
+Version: 0.9.9.8
+Port-Version: 1
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 8407f463f029eba074ec9349aa66a65e2eb72ffd47b1bce3272aae57209bdf13
+Description: OpenGL Mathematics (GLM)
+Type: Port
+Status: install ok installed
+
+Package: gtest
+Version: 1.11.0
+Port-Version: 3
+Architecture: x64-linux
+Multi-Arch: same
+Abi: a701979f277cac7b3240976b526cad0f2fd6389d4baf272fc6c1b602ced59213
+Description: GoogleTest and GoogleMock testing frameworks
+Type: Port
+Status: install ok installed
+
+Package: imgui
+Version: 1.86
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 84eda25a38bed01683bcbb287e71a9be3d2671e3320a60a443a7c8486d1cca88
+Description: Bloat-free Immediate Mode Graphical User interface for C++ with minimal dependencies.
+Type: Port
+Status: install ok installed
+
+Package: imgui
+Feature: glfw-binding
+Depends: glfw3
+Architecture: x64-linux
+Multi-Arch: same
+Description: Make available GLFW binding
+Type: Port
+Status: install ok installed
+
+Package: lodepng
+Version: 2021-12-04
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: da892328d585f492d71d16be610fa31f759b25b3e0db4675f4dec52dddc1a2db
+Description: PNG encoder and decoder in C++
+Type: Port
+Status: install ok installed
+
+Package: stb
+Version: 2020-09-14
+Port-Version: 1
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 38c041a78754fb0bd6a41324e483ba5bcfbd3311c8a7f4dcdcedeeb1d43fb212
+Description: public domain header-only libraries
+Type: Port
+Status: install ok installed
+
+Package: tinyobjloader
+Version: 2.0.0-rc2
+Port-Version: 2
+Architecture: x64-linux
+Multi-Arch: same
+Abi: b52e871da73447c2b9a3a89862b37917cd9149e17b47b16ff28e4f0dcab2bd0e
+Description: Tiny but powerful single file wavefront obj loader
+Type: Port
+Status: install ok installed
+
+Package: toml11
+Version: 3.7.0
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: e786d2b1a3409f845ca99df1997b5c7f922ff80ea56ca2d8ed9cb095f4c54cca
+Description: A C++11 header-only toml parser/encoder depending only on C++ standard library.
+Type: Port
+Status: install ok installed
+
+Package: vcpkg-cmake-config
+Version: 2022-01-30
+Architecture: x64-linux
+Multi-Arch: same
+Abi: e2fcf516c92ffcb013d6c719909cf8399d547ee236de18c9bb6e34914df10991
+Type: Port
+Status: install ok installed
+
+Package: vcpkg-cmake
+Version: 2022-01-19
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 6b9f611d331fb55817ef19729895ca0a72bc293920db2870e5175cfd35f6b4a4
+Type: Port
+Status: install ok installed
+
+Package: glad
+Feature: loader
+Architecture: x64-linux
+Multi-Arch: same
+Description: Generate loader logic.
+Type: Port
+Status: install ok installed
+
+Package: imgui
+Feature: opengl3-binding
+Architecture: x64-linux
+Multi-Arch: same
+Description: Make available OpenGL3/ES/ES2 (modern) binding
+Type: Port
+Status: install ok installed
+

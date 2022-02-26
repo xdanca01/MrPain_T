@@ -1,0 +1,255 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "pa010_projects/subdivision/pa010_subdivision"
+		}
+	],
+	"backtrace" : 2,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"_add_executable",
+			"add_executable",
+			"target_link_libraries",
+			"set_target_properties"
+		],
+		"files" : 
+		[
+			"/home/pdancak/school/vcpkg/scripts/buildsystems/vcpkg.cmake",
+			"pa010_projects/subdivision/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 9,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 660,
+				"parent" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 23,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 14,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-O3 -DNDEBUG"
+				},
+				{
+					"fragment" : "-std=c++20"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 3,
+					"path" : "/home/pdancak/school/MrPain_T/PA010/proj1/mine2/framework/core/include"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/pdancak/school/MrPain_T/PA010/proj1/mine2/framework/core/include/opengl"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/pdancak/school/MrPain_T/PA010/proj1/mine2/framework/core/include/scene"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/pdancak/school/MrPain_T/PA010/proj1/mine2/framework/core/include/geometry"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/pdancak/school/MrPain_T/PA010/proj1/mine2/framework/core/geometries"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/pdancak/school/MrPain_T/PA010/proj1/mine2/framework/opengl_3_3/include"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/vcpkg_installed/x64-linux/include"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/vcpkg_installed/x64-linux/include/glad"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					4
+				],
+				"standard" : "20"
+			},
+			"sourceIndexes" : 
+			[
+				1,
+				2,
+				3
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 3,
+			"id" : "FRAMEWORK_CORE::@c2ed88f7a7e4092cbe88"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "FRAMEWORK_OPENGL_3_3::@be316be0d218a3c9542d"
+		}
+	],
+	"id" : "pa010_subdivision::@da98d33adba95d6d46d7",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-O3 -DNDEBUG",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "../framework/core/libFRAMEWORK_CORE.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "../framework/opengl_3_3/libFRAMEWORK_OPENGL_3_3.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "../framework/core/libFRAMEWORK_CORE.a",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "../../vcpkg_installed/x64-linux/lib/libimgui.a",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "../../vcpkg_installed/x64-linux/lib/libglad.a",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "../../vcpkg_installed/x64-linux/lib/libglfw3.a",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/usr/lib64/librt.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lm",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-ldl",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/usr/lib64/libX11.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "../../vcpkg_installed/x64-linux/lib/libtinyobjloader.a",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "../../vcpkg_installed/x64-linux/lib/libgtest.a",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lpthread",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "pa010_subdivision",
+	"nameOnDisk" : "pa010_subdivision",
+	"paths" : 
+	{
+		"build" : "pa010_projects/subdivision",
+		"source" : "pa010_projects/subdivision"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				1,
+				2,
+				3
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 2,
+			"path" : "pa010_projects/subdivision/application.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "pa010_projects/subdivision/application.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "pa010_projects/subdivision/application_details.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "pa010_projects/subdivision/main.cpp",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "EXECUTABLE"
+}

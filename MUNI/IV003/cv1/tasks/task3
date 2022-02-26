@@ -1,0 +1,17 @@
+DEFINE go_and_place
+    IFMARK rec SKIP
+END
+
+DEFINE rec
+    TAKE
+    STEP
+    PUT
+    RIGHT
+    RIGHT
+    STEP
+    RIGHT
+    RIGHT
+    go_and_place
+END
+
+RUN go_and_place

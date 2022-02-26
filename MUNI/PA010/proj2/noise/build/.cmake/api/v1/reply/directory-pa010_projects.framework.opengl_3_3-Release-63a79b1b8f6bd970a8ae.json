@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "pa010_projects/framework/opengl_3_3",
+		"source" : "framework/opengl_3_3"
+	}
+}

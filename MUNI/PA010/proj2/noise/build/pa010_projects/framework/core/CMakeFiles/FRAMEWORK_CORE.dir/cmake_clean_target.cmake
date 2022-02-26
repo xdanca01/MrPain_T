@@ -1,0 +1,3 @@
+file(REMOVE_RECURSE
+  "libFRAMEWORK_CORE.a"
+)

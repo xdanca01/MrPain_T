@@ -1,0 +1,211 @@
+## Grading Overview
+
+There is a number of ways to obtain points:
+
+ │  max │ what        │ notes                                    │
+ ├─────▻│◅────────────│◅─────────────────────────────────────────│
+ │ 36pt │ tasks       │ 3pt each, max 12                         │
+ │ 12pt │ code review │ 2pt each, max 6                          │
+ │ 12pt │ seminars    │ 1pt/week: prep exercises + attendance    │
+ │  6pt │ sets        │ 2pt extra for each set with 4+ points    │
+ │  3pt │ peer review │ 0.3pt per review, 10 reviews max         │
+ │  3pt │ activity    │ 2pt + 1pt                                │
+ │ 18pt │ exam        │ 3pt + 4pt + 5pt + 6pt                    │
+ │┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄│
+ │ 90pt │ total       │ 72pt semester + 18pt exam                │
+
+The semester maximum is «72 point». You need «40 points» to pass the
+semester (failing to do this means grade X). To pass the exam, you
+need «8 points» on the exam. The final grade is then awarded as
+follows:
+
+ • [68, 90] points → A
+ • [63, 68) points → B
+ • [58, 63) points → C
+ • [53, 58) points → D
+ • [48, 53) points → E
+ • [40, 72] points → Z (if your ending type is ‘z’).
+
+### Seminars
+
+The preparatory exercises are to be worked out in the corresponding
+week of the semester, with a deadline every Saturday at midnight
+(see the semester overview in the previous section, column ‘prep’
+for exact dates). Only the enclosed tests are executed upon
+submission, and the result should appear in the corresponding
+notepad within 5-10 minutes.
+
+Together with seminar attendance, these exercises are worth a
+significant fraction of what you need to pass the semester. You are
+awarded a point for each unit (week) in which you submit at least 3
+preparatory exercises and attend¹ the corresponding seminar in the
+following week. In addition to gaining points, you may also get
+feedback and a chance to discuss the submitted solutions in the
+seminar.
+
+The activity points are likewise awarded in the seminar, in this
+case for demonstrating the solution of one of the r-type exercises
+for the week. These will be ‘live’ demos: you should solve the
+exercise on the spot, without looking at a prepared solution
+(whether your own or the reference one). You can do them from your
+own computer (using ‹pb161 beamer› on ‹aisa›) or you can go to the
+front and use the teacher's computer. In any case, in addition to
+writing down a solution, you will be expected to comment what and
+why you are doing. On the other hand, the teacher will help you out
+if you get stuck in a blind alley.
+
+You can do this twice during the semester: the first instance counts
+as 2 points, the second as 1. If nobody else is interested, you can
+also volunteer to do an exercise ‘for free’ (that is, if you already
+have your 3 activity points).
+
+¹ If you cannot attend the seminar and file the requisite paperwork
+  excusing you from attendance, you can instead show «original»
+  solutions for 3 of the r-type exercises from the affected unit to
+  your seminar tutor. If they are satisfactory, you will get a
+  point as if you have attended the seminar. Especially in case of
+  an extended illness, you can also ask for an extension of affected
+  prep exercise submission deadlines. Be sure to do this as soon as
+  you reasonably can.
+
+### Programming Tasks
+
+In each block, there are 4 tasks of increasing difficulty (both
+within and between blocks). There will be 8 deadlines for each
+«block», spread out over 6 weeks (there's a deadline once a week for
+the first month, then twice a week for another 2 weeks). Most
+deadlines are on Saturday (same as weekly exercises), the 2 extras
+are on Wednesdays. Submissions open 7 days before the first verity
+deadline (that is 19.2., 26.3. and 23.4. – submissions done before
+these dates will not be evaluated).
+
+Each deadline gives you one chance to pass the automated test suite.
+It does not matter when you pass any given task, but the test suite
+is strictly binary: you either pass or you fail. More details and
+guidelines are in ‹3_tasks.txt›.
+
+Verity tests continue to run after the last deadline: you can finish
+tasks and still get results after they expire, but you will not get
+any points for doing so. However, it does unlock peer reviews for
+the given task.
+
+The deadline schedule is as follows:
+
+│ week │     set 1     │     set 2     │     set 3     │
+├┄┄┄┄┄┄│┄┄┄┄┄┄▻┼┄┄┄┄┄┄▻│┄┄┄┄┄┄▻┼┄┄┄┄┄┄▻│┄┄┄┄┄┄▻┼┄┄┄┄┄┄▻│
+│      │  Wed  │  Sat  │  Wed  │  Sat  │  Wed  │  Sat  │
+│    1 │       │ 26.2. │       │       │       │       │
+│    2 │       │  5.3. │       │       │       │       │
+│    3 │       │ 12.3. │       │       │       │       │
+│    4 │       │ 19.3. │       │       │       │       │
+│    5 │ 23.3. │ 26.3. │       │ 26.3. │       │       │
+│    6 │ 30.3. │  2.4. │       │  2.4. │       │       │
+│    7 │       │       │       │  9.4. │       │       │
+│    8 │       │       │       │ 16.4. │       │       │
+│    9 │       │       │ 20.4. │ 23.4. │       │ 23.4. │
+│   10 │       │       │ 27.4. │ 30.4. │       │ 30.4. │
+│   11 │       │       │       │       │       │  7.5. │
+│   12 │       │       │       │       │       │ 14.5. │
+│   13 │       │       │       │       │ 18.5. │ 21.5. │
+│   14 │       │       │       │       │ 25.5. │ 28.5. │
+
+### Code Quality
+
+We should all strive to always write clean, readable and
+well-designed code. Of course, this takes more time (often a lot
+more time) than just going with the first thing that sort of works.
+
+You will be able to submit «six» of your task solutions for teacher
+review. Which assignments you choose to submit is up to you. Make
+sure that you put in adequate effort to make the code as clean and
+nice as you possibly can. The code must pass verity tests (within
+the designated deadlines).
+
+The last day on which you can file a request for (teacher) review is
+«3.4.» for T.1, «1.5.» for T.2 and «29.5.» for T.3 (i.e. the day
+after the last test deadline). Your teacher will have 10 days to
+complete the review.
+
+ • reviewer deadline: request + 10 days (i.e. 13.4., 25.5. and 8.6.)
+ • resubmit until 17.4., 15.5. and 12.6.
+ • earlier request → more time to fix stuff
+
+With each review, you get a grade which corresponds to the following
+point value:
+
+ • A = 2 points,
+ • B = 1 point,
+ • C = no points.
+
+The detailed criteria for individual grades (and for code quality in
+general) are provided in ‹5_quality.txt›. If your grade is not A,
+your tutor will point out what you need to improve.
+
+You then get a chance (once) to improve your code and submit the
+task for a second round of review. If your code has sufficiently
+improved, you can get the next better grade (i.e. B if your first
+grade was C and A if your first grade was B).
+
+### Peer Review
+
+Reading code is an important skill – sometimes more so than writing
+it. While the space to practice reading code in this subject is
+limited, you will be able to earn a few points doing just that. The
+rules for peer review are quite different from those for teacher
+reviews above:
+
+ • you can submit any code (even completely broken) for peer review,
+ • to write a review for any given submission, you must have already
+   passed the respective assignment yourself,
+ • there are no specific deadlines for requesting or providing peer
+   reviews.
+
+It is okay to point out correctness problems during peer reviews,
+with the expectation that this might help the recipient pass the
+assignment. This is the «only» allowed form of cooperation (more on
+that below).
+
+### Examples
+
+A lot more work is available that what you need to do, even for
+an A. We do not expect you to solve all the exercises nor tasks –
+pick a subset you like, but be sure to spread the work through the
+entire semester (there are very significant bonuses for doing it
+this way). To give you an idea, there are some point calculations:
+
+ • below tables give achievable grades by passed task count,
+ • the specific grade in the range depends on the outcome of your
+   exam (8pt – 18pt),
+ • 4 tasks are the minimum to pass,
+   ◦ all 3 sets must be covered,
+   ◦ the 2 that are alone in their set must get 1pt or better
+     review,
+ • 5 tasks are more or less the expected count,
+ • solving 6 tasks (i.e. half of them) allows considerable leeway in
+   other semester work,
+ • 6 tasks is also the minimum to get an A.
+
+Maxing out all the optional work gives you this:
+
+│ tasks │ pts │ rev │ other │ total │ grade │
+├┄┄┄┄┄┄┄│┄┄┄┄┄│┄┄┄┄┄│┄┄┄┄┄┄┄│┄┄┄┄┄┄┄│┄┄┄┄┄┄┄│
+│     3 │   9 │   6 │    24 │    39 │   X   │
+│     4 │  12 │   8 │    24 │    44 │  E-C  │
+│     5 │  15 │  10 │    24 │    49 │  D-B  │
+│     6 │  18 │  12 │    24 │    54 │  C-A  │
+│     7 │  21 │  12 │    24 │    57 │  B-A  │
+│     8 │  24 │  12 │    24 │    60 │   A   │
+
+If you forfeit 2 weeks of seminars and the second ‘activity’ point
+and get, on average, a B on teacher reviews, these are your
+prospects (you do need to distribute work across task sets, to get
+the 2 point bonus on all of them):
+
+│ tasks │ pts │ rev │ other │ total │ grade │
+├┄┄┄┄┄┄┄│┄┄┄┄┄│┄┄┄┄┄│┄┄┄┄┄┄┄│┄┄┄┄┄┄┄│┄┄┄┄┄┄┄│
+│     4 │  12 │   4 │    21 │    37 │ X     │
+│     5 │  15 │   5 │    21 │    41 │ E-C   │
+│     6 │  18 │   6 │    21 │    45 │ D-B   │
+│     7 │  21 │   6 │    21 │    48 │ D-B   │
+│     8 │  24 │   6 │    21 │    51 │ C-A   │
+│     9 │  27 │   6 │    21 │    54 │ C-A   │

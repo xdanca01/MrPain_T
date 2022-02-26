@@ -1,0 +1,47 @@
+DEFINE main
+    STEP
+    first_recursion
+    turn
+    STEP
+    STEP
+    second_recursion
+    turn
+END
+
+DEFINE second_recursion
+    IFMARK take_two SKIP
+END
+
+DEFINE take_two
+    TAKE
+    IFMARK second_recursion turn_two_steps
+    PUT
+END
+
+DEFINE turn_two_steps
+    turn
+    STEP
+    STEP
+END
+
+DEFINE first_recursion
+    IFMARK take_one SKIP
+END
+
+DEFINE take_one
+    TAKE
+    IFMARK first_recursion turn_step
+    PUT
+END
+
+DEFINE turn
+    RIGHT
+    RIGHT
+END
+
+DEFINE turn_step
+    turn
+    STEP
+END
+
+RUN main

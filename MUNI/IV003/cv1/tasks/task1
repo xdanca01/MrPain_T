@@ -1,0 +1,10 @@
+DEFINE go_to_wall
+    IFWALL put next
+END
+
+DEFINE next
+    STEP
+    go_to_wall
+END
+
+RUN go_to_wall

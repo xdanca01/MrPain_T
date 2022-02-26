@@ -1,0 +1,36 @@
+# References and Lambdas
+
+In this chapter, we will work with references (both constant and
+mutable) and also look at the basics of higher-order functions in
+C++.
+
+Demonstrations:
+
+ 1. ‹stats›      – input and output parameters
+ 2. ‹primes›     – fill in a vector with prime numbers
+ 3. ‹iterate›    – building sequences by iterating a function
+ 4. ‹newton›     – a general routine for numeric approximation
+
+Elementary exercises:
+
+ 1. ‹fibonacci›  – old sequence, new function signature
+ 2. ‹normalize›  – divide out the gcd from a fraction
+ 3. ‹accumulate› – sum up ⟦f(x)⟧ for all ⟦x⟧ in an ‹std::vector›
+
+Preparatory exercises:
+
+ 1. ‹rewrap›     – word wrapping redux, this time in-place
+ 2. ‹golden›     – basic uses of output parameters
+ 3. ‹divisors›   – collections as in/out parameters
+ 4. ‹midpoints›  – in/out parameters of custom types
+ 5. ‹higher›     – higher-order function primer: ‹map› and ‹zip›
+ 6. ‹fixpoint›   – find a fixed point of a monotonic function
+
+Regular exercises:
+
+ 1. ‹euler›      – implement Euler's totient function ⟦φ⟧
+ 2. ‹approx›     – somewhat easier approximation
+ 3. ‹solve›      – a very simple game solver
+ 4. ‹sort›       – selection sort with a comparator
+ 5. ‹permute›    – compute a vector of digit permutations
+ 6. ‹bsearch›    – binary search with a comparator

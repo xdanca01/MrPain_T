@@ -1,0 +1,59 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "FRAMEWORK_PA213",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "FRAMEWORK_PA213::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-FRAMEWORK_PA213-Debug-90a15de77ec6608e9b96.json",
+					"name" : "FRAMEWORK_PA213",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "G:/University/Teaching/ComputerGraphics/CommonFramework/framework/pa213/out/build/x64-Debug",
+		"source" : "G:/University/Teaching/ComputerGraphics/CommonFramework/framework/pa213"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 2
+	}
+}

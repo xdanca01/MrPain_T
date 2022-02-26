@@ -1,0 +1,15 @@
+# T.3. Tasks with Templates and Iterators
+
+The programming tasks for this block are as follows:
+
+ 1. ‹tree.*› – iterating trees in post-order,
+ 2. ‹bplus.*› – a class template implementing B+ trees,
+ 3. ‹linalg.*› – complex and real linear algebra,
+ 4. ‹lisp.*› – a simple interpreter for a LISP-like language.
+
+All tasks in this block make some use of templates, which are
+covered in chapters 9 and 10, and of course they also rely on
+knowledge from previous blocks. Since the first task is about
+writing iterators, you will also need to understand the material
+from chapter 11 to complete it (though you should be able to make
+considerable progress with what you know from chapter 5).

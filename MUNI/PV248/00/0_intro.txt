@@ -1,0 +1,45 @@
+# A. Introduction
+
+This document is a collection of exercises and commented examples of
+source code (in Python). All of the source code included here is
+also available as source files which you can edit and directly
+execute (we will refer to these files as the «source bundle»).
+Additionally, this section contains the rules and general guidelines
+that apply to the course as a whole.
+
+The latest version of this document along with the source bundle is
+available both in the study materials in IS and on the student
+server ‹aisa›:
+
+ • ‹https://is.muni.cz/auth/el/fi/podzim2021/PV248/um/› – a PDF in
+   ‹pv248.seminar.pdf› and the source bundle in directories ‹01›
+   through ‹12›, ‹t1› through ‹t4› and ‹sol› – use the ‘download as
+   ZIP’ option in the sidebar to get entire directories in one go,
+ • log into ‹aisa› using ‹ssh› or ‹putty›, run ‹pv248 update›, then
+   look under ‹~/pv248› (this chapter is in subdirectory ‹00›).
+
+We will update the files as needed, to correct mistakes and to
+include additional material.¹ On ‹aisa›, running ‹pv248 update› at
+any time will update your working copies, taking care not to
+overwrite your changes. It will also tell you which files have been
+updated.
+
+Each of the following chapters corresponds to a single week of the
+semester. The correspondence between exercises and the content of
+the lectures is, however, somewhat loose, especially at the start of
+the semester.
+
+«NB.» If you are going to attend the lectures (you need to enroll
+separately, subject code is PV288), all you need at the start is
+intuitive familiarity with common programming concepts like classes,
+objects, higher-order functions and function closures (which can be
+stored in variables), as covered in e.g. PB006.  You will get all
+the details that you may need in the lectures. On the other hand, if
+you are not going to attend lectures, you either need to already
+know all the theory, or you need to study it in your free time (this
+subject is purely practical).
+
+¹ The exercises and tasks will be made available, at the latest, on
+  the day before their ‘start date’ (see tables in the following
+  sections). Of course, we will try to fill everything in sooner than
+  that.

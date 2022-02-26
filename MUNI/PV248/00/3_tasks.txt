@@ -1,0 +1,129 @@
+## Tasks
+
+### Schedule
+
+There are 4 sets of tasks and each has a 4-week window when it can
+be handed in. The dates are as follows (both start and end are at
+the midnight which ends the given day):
+
+│ set │ start       │ end          │
+├─────│────────────▻│─────────────▻┤
+│ T.1 │ 24.9.  0:00 │ 21.10. 23:59 │
+│ T.2 │ 22.10. 0:00 │ 18.11. 23:59 │
+│ T.3 │ 19.11. 0:00 │ 16.12. 23:59 │
+│ T.4 │  7.1.  0:00 │  3.2.  23:59 │
+
+### Evaluation
+
+There are three sets of automated tests which are executed on the
+solutions you submit:
+
+ • The first set is called «syntax» and runs immediately after you
+   submit. Only 2 checks are performed: the code can be loaded (no
+   syntax errors) and it passes mypy.
+   
+ • The next step is «sanity» and runs every noon and midnight. Its
+   main role is to check that your program meets basic semantic
+   requirements, e.g. that it recognizes correct inputs and
+   produces correctly formatted outputs. The ‘sanity’ test suite is
+   for your information only and does not guarantee that your
+   solution will be accepted.  The ‘sanity’ test suite is only
+   executed if you passed ‘syntax’.
+   
+ • Finally the «verity» test suite covers most of the specified
+   functionality and runs twice a week – every Thursday and Monday
+   at midnight, right after the deadline. If you pass the verity
+   suite, the task is considered complete. The verity suite will
+   «not» run unless the code passes ‘sanity’.
+
+Only the most recent submission is evaluated, and each submission is
+evaluated at most once in the ‘sanity’ and once in the ‘verity’
+mode. You will find your latest evaluation results in the IS in
+notepads (one per assignment). You can still submit new versions
+after you pass ‘verity’ on a given task (e.g. because you want to
+improve the code for review). If your later submission happens to
+fail tests, this is of no consequence (the task is still considered
+complete).
+
+The deadlines for verity tests are as follows:
+
+│  try  │ day │   T.1   │   T.2   │   T.3   │   T.4   │
+├──────▻│─────│─────────┼─────────┼─────────┼─────────┤
+│ start │ Fri │  24.9.  │  22.10. │  19.11. │   7.1.  │
+│┄┄┄┄┄┄┄│┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│
+│     1 │ Mon │  27.9.  │  25.10. │  22.11. │  10.1.  │
+│     2 │ Thu │  30.9.  │  28.10. │  25.11. │  13.1.  │
+│┄┄┄┄┄┄┄│┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│
+│     3 │ Mon │   4.10. │   1.11. │  29.11. │  17.1.  │
+│     4 │ Thu │   7.10. │   4.11. │   2.12. │  20.1.  │
+│┄┄┄┄┄┄┄│┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│
+│     5 │ Mon │  11.10. │   8.11. │   6.12. │  24.1.  │
+│     6 │ Thu │  14.10. │  11.11. │   9.12. │  27.1.  │
+│┄┄┄┄┄┄┄│┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄│
+│     7 │ Mon │  18.10. │  15.11. │  13.12. │  31.1.  │
+│     8 │ Thu │  21.10. │  18.11. │  16.12. │   3.2.  │
+
+
+### Submitting Solutions
+
+The easiest way to submit a solution is this:
+
+    $ ssh aisa.fi.muni.cz
+    $ cd ~/pv248/t1
+    <edit files until satisfied>
+    $ pv248 submit t1_splay
+
+The number of times you submit is not limited (but not every
+submission will be necessarily evaluated, as explained above).
+
+NB. «Only» the files listed in the assignment will be submitted and
+evaluated. Please put your «entire» solution into «existing files».
+
+You can check the status of your submissions by issuing the
+following command:
+
+    $ pv248 status
+
+In case you already submitted a solution, but later changed it, you
+can see the differences between your most recent submitted version
+and your current version by issuing:
+
+    $ pv248 diff
+
+The lines starting with ‹-› have been removed since the submission,
+those with ‹+› have been added and those with neither are common to
+both versions.
+
+### Guidelines
+
+The general principles outlined here apply to all assignments. The
+first and most important rule is, use your brain -- the
+specifications are not exhaustive and sometimes leave room for
+different interpretations. Do your best to apply the most sensible
+one. Do not try to find loopholes (all you are likely to get is
+failed tests). Technically correct is «not» the best kind of
+correct.
+
+Think about pre- and postconditions. Aim for weakest preconditions
+that still allow you to guarantee the postconditions required by the
+assignment. If your preconditions are too strong (i.e. you disallow
+inputs that are not ruled out by the spec) you may fail the tests.
+
+Do not print anything that you are not specifically directed to.
+Programs which print anything that wasn't specified will fail tests.
+
+You can use the «standard library». Third-party libraries are not
+allowed, unless specified as part of the assignment. Make sure that
+your classes and methods use the correct spelling, and that you
+accept and/or return the correct types. In most cases, either the
+‘syntax’ or the ‘sanity’ test suite will catch problems of this
+kind, but we cannot guarantee that it always will – do not rely on
+it.
+
+If you don't get everything right the first time around, do not
+despair. The «expectation» is that most of the time, you will pass
+on the «second or third attempt». In the real world, the first
+delivered version of your product will rarely be perfect, or even
+acceptable, despite your best effort to fulfill every customer
+requirement. Only very small programs can be realistically written
+completely correctly in one go.

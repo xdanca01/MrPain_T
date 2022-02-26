@@ -1,0 +1,13 @@
+# T.1. Introductory Tasks
+
+The programming tasks for this block are as follows:
+
+ 1. ‹cellular.*› – a simple cellular automaton simulator,
+ 2. ‹magic.*› – a backtracking magic square solver,
+ 3. ‹reversi.*› – a 3D version of the game reversi,
+ 4. ‹chess.*› – a simple simulator of standard chess.
+
+In this set, the tasks only require basic programming skills and C++
+constructs that you have encountered in the first two chapters. In
+other words, no advanced language constructs or library features
+are necessary.

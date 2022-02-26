@@ -1,0 +1,76 @@
+## Peer Reviews
+
+You can optionally participate in peer reviews, both as a reviewer
+and as a review recipient. While reviewers get points for their
+effort, the recipients do not – instead, they get (hopefully) useful
+information.
+
+### Requesting Reviews
+
+If you would like to have your code reviewed, you can issue the
+following command:
+
+    $ pb161 review --request t1_cellular
+
+Substitute other programming tasks for ‹t1_cellular› as appropriate.
+You can request a «peer» review on a task which you did not pass
+yet. You may get up to 3 reviews for any given request. The reviewer
+will work with the submission that was current at the time you have
+created the request. Make sure you submit the code you want reviewed
+before requesting the review.
+
+The ‹pb161 update› command will indicate whether someone reviewed
+your code, by printing a line of the form
+‹A reviews/t1_cellular.by.xlogin›.  To read the review, look at the
+files in ‹~/pb161/reviews/t1_cellular.by.xlogin› -- you will find a
+copy of your submitted sources along with comments provided by the
+reviewer. After you read your review, you should write a few
+sentences for the reviewer into ‹note.txt› in the review directory
+(please wrap lines to 80 columns) and then run:
+
+    $ pb161 review --accept 100
+
+Instead of 100, you can use a smaller number, indicating what
+percentage of the points the reviewer deserves for their job. Please
+make sure that you grade the review honestly -- the reviews will be
+screened for abuse and depending on the type of misconduct, one or
+both parties will be punished.
+
+To request a review from a «teacher» (as opposed to peer review),
+add ‹--teacher› to the command:
+
+    $ pb161 review --request t1_cellular --teacher
+
+The output from ‹pb161 status› will indicate the task submissions
+for which you have requested a teacher review.
+
+### Writing Reviews
+
+To participate as a reviewer, start with the following command:
+
+    $ pb161 review --list
+
+You will get a list of review requests for which you are an eligible
+reviewer. In particular, only tasks that you have already
+successfully solved will show up. If you like one of the entries,
+note its number (e.g. 7) and type:
+
+    $ pb161 review --checkout 7
+    $ cd ~/pb161/reviews/
+    $ ls
+
+There will be a directory for each of the reviews you agreed to
+write. Each directory contains the source code submitted for review,
+along with further instructions (the file ‹readme.txt›).
+
+When inserting your comments, please use double ‹**› to make the
+comment stand out, like this:
+
+    /** A short, one-line remark. **/
+
+or for longer comments:
+
+    /** A longer comment, which should be wrapped to 80 columns or
+     ** less, and where each line should start with the ** marker.
+     ** It is okay to end the comment on the last line of text like
+     ** this. **/

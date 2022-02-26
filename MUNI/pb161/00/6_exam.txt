@@ -1,0 +1,55 @@
+## Exam
+
+The raison d'être of this course is to teach you to write correct
+C++ programs on your own – and the programming test is designed to
+ensure that this was indeed the outcome for you personally. Of
+course, we recognize that there is additional pressure when you are
+programming for an exam. You will get plenty of time to solve the
+exercises (in relation to their difficulty).
+
+During the exam, it'll be possible to submit the solutions and get
+back results of a ‘sanity’ test. The ‘sanity’ assertions will also
+be included with the exam source files, for your convenience. There
+is no requirement to pass ‹clang-tidy›.
+
+The exam will take place on 31st of May and 2nd of June (Tuesday and
+Thursday, respectively) starting at 12:30 and will extend until
+17:00. Additional attempts will be possible on 14th and 28th of
+June. You will get a ‘yes/no’ verity result (without any indication
+of what went wrong) at 14:00 and 15:30, and full results at 17:00.
+
+You will also get a chance for a ‘rehearsal’: there are two practice
+exams in an appendix of this document (directory ‹pex›). You can
+work them out and submit them for evaluation, as if they were a real
+exam. This is strictly optional and will not be graded in any way.
+It is up to you to complete them within a reasonable time limit
+(e.g. 3 hours, 2/3 of the official time limit for the real exam) and
+on your own.
+
+You can submit multiple times for the practice tests and get
+‘verity’ test results immediately, but please keep in mind that this
+will «not» be possible at the actual exam.
+
+### Evaluation
+
+The programming test will be evaluated using automated tests, just
+like the 12 ‘major’ tasks. Each exercise is evaluated in a binary
+fashion: you «must» pass all tests in order to succeed on the given
+task, in which case you are awarded its points.
+
+If you fail to obtain 8 points (i.e. pass 2 out of the 4 exercises),
+you get an F and you can try again according to the standard rules
+for repeating exams.
+
+### Materials
+
+The exam will be offline. The exam computers will have a standard
+selection of text editors and development tools¹ installed, in their
+default configurations. This document (but without exercise
+solutions) and lecture slides (again without example source code)
+will be available for reference.
+
+¹ You can expect VS Code, Geany, ‹micro› and ‹vim› to be present. Qt
+  Creator might be available. CLion has been excluded due to stability
+  issues (we don't want to deal with any more crashes in the middle of
+  an exam than we absolutely have to).

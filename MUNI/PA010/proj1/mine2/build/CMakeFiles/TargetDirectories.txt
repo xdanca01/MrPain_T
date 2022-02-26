@@ -1,0 +1,16 @@
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/CMakeFiles/rebuild_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/CMakeFiles/edit_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/pa010_projects/CMakeFiles/rebuild_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/pa010_projects/CMakeFiles/edit_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/pa010_projects/framework/core/CMakeFiles/rebuild_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/pa010_projects/framework/core/CMakeFiles/edit_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/pa010_projects/framework/core/CMakeFiles/FRAMEWORK_CORE.dir
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/pa010_projects/framework/opengl_3_3/CMakeFiles/rebuild_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/pa010_projects/framework/opengl_3_3/CMakeFiles/edit_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/pa010_projects/framework/opengl_3_3/CMakeFiles/FRAMEWORK_OPENGL_3_3.dir
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/pa010_projects/subdivision/CMakeFiles/rebuild_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/pa010_projects/subdivision/CMakeFiles/edit_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/pa010_projects/subdivision/CMakeFiles/pa010_subdivision.dir
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/pa010_projects/subdivision/tests/CMakeFiles/rebuild_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/pa010_projects/subdivision/tests/CMakeFiles/edit_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj1/mine2/build/pa010_projects/subdivision/tests/CMakeFiles/pa010_subdivision_tests.dir

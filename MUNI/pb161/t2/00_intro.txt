@@ -1,0 +1,16 @@
+# T.2. Tasks with Operators, Exceptions and OOP
+
+The programming tasks for this block are as follows:
+
+ 1. ‹machine.*› – a simple register machine simulator,
+ 2. ‹natural.*› – arbitrary-size natural numbers,
+ 3. ‹parser.*› – parsing simplified JSON,
+ 4. ‹complex.*› – arbitrary-precision complex numbers.
+
+The first task only relies on knowledge from the first block and you
+should be able to start working on it immediately. Tasks 2 and 4
+additionally require operator overloading (chapter 5) and basic
+understanding of exceptions (chapter 6). Finally, task 3 needs
+‹unique_ptr› (chapter 7) and virtual dispatch (chapter 8), but the
+parser itself (and hence ‹xml_validate›) can be implemented with
+knowledge from block 1 alone, so you can still start early.

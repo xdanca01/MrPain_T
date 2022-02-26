@@ -1,0 +1,39 @@
+# Templates (cont'd)
+
+This week, we will practice templates some more, and introduce a few
+more useful template constructs. Among other things, we'll look at
+more complicated cases of template argument deduction and how
+function overloading interacts with function templates. We will
+also look at templated operator overloads.
+
+Demonstrations:
+
+ 1. ‹apply›   – call functions on scalars in composite data
+ 2. ‹method›  – method templates
+ 3. ‹expr›    – expressions, this time with operator overloading
+ 4. ‹set›     – operators on sets (with arbitrary element types)
+ 5. ‹call›    – overloading the call operator
+
+Elementary exercises:
+
+ 1. ‹format›  – format collections
+ 2. ‹concat›  – splice two sequences into one
+ 3. ‹icons›   – integer lists with compile-time recursion
+
+Preparatory exercises:
+
+ 1. ‹post›    – post-order on a generic graph
+ 2. ‹cons›    – heterogeneous lists
+ 3. ‹map›     – more template argument deduction
+ 4. ‹collect› – extract values from containers
+ 5. ‹list›    – linked lists with sub-list sharing
+ 6. ‹vecset›  – implement a set using a sorted vector
+
+Regular exercises:
+
+ 1. ‹select›  – create a vector of variants
+ 2. ‹sorted›  – a stateful sequence observer
+ 3. ‹fsm›     – generic finite state machines
+ 4. ‹tree›    – trees with sub-tree sharing
+ 5. ‹bimap›   – map 2 types of keys to each other
+ 6. ‹tinyvec› – a generic vector in fixed memory

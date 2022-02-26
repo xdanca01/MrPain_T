@@ -1,0 +1,54 @@
+## Course Overview
+
+Welcome to PB161 Programming in C++. The course consists of
+lectures, weekly seminars, programming tasks, and a programming test
+(exam) at the end. Since this is a programming subject, most of the
+coursework – and grading – will center around actual programming.
+You will write a few tiny programs (15-20 minutes each) every week,
+a few bigger programs (though still small, at a couple hundred lines
+each) during the semester and there will be a simple (but strict)
+programming test at the end (in the exam period) that you have to
+pass.
+
+Writing programs is «hard» and consequently, this course will also
+be hard – you absolutely need to put in effort to pass the subject.
+Hopefully, you will have learned something by the end of it.
+
+Further details on the organisation of this course are in this
+directory or, if you are reading the PDF, in the following sections:
+
+ • ‹2_grading.txt› – what is graded and how; what you need to pass,
+ • ‹3_tasks.txt› – general guidelines that govern assignments,
+ • ‹4_reviews.txt› – writing and receiving peer reviews,
+ • ‹5_quality.txt› – code quality guidelines,
+ • ‹6_exam.txt› – about the final programming exam,
+ • ‹7_plagiarism.txt› – about cheating.
+
+### Topics
+
+The semester is organized as three four-week blocks. Each week
+corresponds to a single chapter in this document, for a total of 12
+chapters. The study materials for each week are in directories ‹01›
+through ‹12› (one per week). Start by reading the introduction
+(‹00_intro.txt› in the ‘source’ version). Each block is followed by
+a set of bigger tasks, in directories ‹t1› through ‹t3›. Again,
+start by reading the introduction (‹00_intro.txt›) in there.
+
+│ block │      │ topic                     │ lect. │  prep │ end   │
+├───────│─────▻┼◅──────────────────────────│───────│───────│───────│
+│    1  │   1. │ semantics 1, classes, …   │ 15.2. │ 19.2. │       │
+│       │   2. │ semantics 2, lambdas, …   │ 22.2. │ 26.2. │       │
+│       │   3. │ containers, algorithms    │  1.3. │  5.3. │       │
+│       │   4. │ overloading, types, …     │  8.3. │ 12.3. │ 19.3. │
+│┄┄┄┄┄┄┄│┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄│┄┄┄┄┄┄┄│┄┄┄┄┄┄┄│
+│    2  │   5. │ operators, IO             │ 15.3. │ 19.3. │       │
+│       │   6. │ RAII & exceptions         │ 22.3. │ 26.3. │       │
+│       │   7. │ memory, ‹unique_ptr›      │ 29.3. │  2.4. │       │
+│       │   8. │ OOP                       │  5.4. │  9.4. │ 16.4. │
+│┄┄┄┄┄┄┄│┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄│┄┄┄┄┄┄┄│┄┄┄┄┄┄┄│
+│    3  │   9. │ templates 1               │ 12.4. │ 16.4. │       │
+│       │  10. │ templates 2               │ 19.4. │ 23.4. │       │
+│       │  11. │ iterators                 │ 26.4. │ 30.4. │       │
+│       │  12. │ review                    │  3.5. │  7.5. │ 14.5. │
+│┄┄┄┄┄┄┄│┄┄┄┄┄┄│┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄│┄┄┄┄┄┄┄│┄┄┄┄┄┄┄│┄┄┄┄┄┄┄│
+│    –  │  13. │ C++20                     │ 10.5. │     – │       │

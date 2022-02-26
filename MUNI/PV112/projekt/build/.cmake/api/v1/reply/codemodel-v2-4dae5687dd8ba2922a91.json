@@ -1,0 +1,333 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						4,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12
+					],
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "courses/PV112",
+					"childIndexes" : 
+					[
+						2,
+						3
+					],
+					"jsonFile" : "directory-courses.PV112-Debug-04ba1861afc9f5c2e23e.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "courses/PV112"
+				},
+				{
+					"build" : "courses/PV112/lecture_01",
+					"jsonFile" : "directory-courses.PV112.lecture_01-Debug-04b4944376545a90d485.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "courses/PV112/lecture_01",
+					"targetIndexes" : 
+					[
+						8
+					]
+				},
+				{
+					"build" : "courses/PV112/lecture_02",
+					"jsonFile" : "directory-courses.PV112.lecture_02-Debug-eb5e6d2964e50b9e17dd.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "courses/PV112/lecture_02",
+					"targetIndexes" : 
+					[
+						9
+					]
+				},
+				{
+					"build" : "courses/PA213",
+					"childIndexes" : 
+					[
+						5
+					],
+					"jsonFile" : "directory-courses.PA213-Debug-80aa22e41a9582c8b3b8.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "courses/PA213"
+				},
+				{
+					"build" : "courses/PA213/fluid",
+					"jsonFile" : "directory-courses.PA213.fluid-Debug-e437405454a290ff489a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 0,
+					"source" : "courses/PA213/fluid",
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"build" : "framework/pv112",
+					"jsonFile" : "directory-framework.pv112-Debug-9aef9a24c9efbdeaa924.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "framework/pv112",
+					"targetIndexes" : 
+					[
+						7
+					]
+				},
+				{
+					"build" : "framework/geometry",
+					"jsonFile" : "directory-framework.geometry-Debug-18d92da3c4329d85b12b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "framework/geometry",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "framework/gui",
+					"jsonFile" : "directory-framework.gui-Debug-fcda3a01b32f37076941.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "framework/gui",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "framework/core",
+					"jsonFile" : "directory-framework.core-Debug-ddfdd5fc5406e08c75c3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "framework/core",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "framework/glm",
+					"jsonFile" : "directory-framework.glm-Debug-dc0ba8e174c3facf2345.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "framework/glm",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "framework/pa213",
+					"jsonFile" : "directory-framework.pa213-Debug-5e1092d4a45a28400dca.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "framework/pa213",
+					"targetIndexes" : 
+					[
+						5
+					]
+				},
+				{
+					"build" : "framework/opengl",
+					"jsonFile" : "directory-framework.opengl-Debug-e174bd904b3aac91c363.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "framework/opengl",
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12
+					],
+					"name" : "ComputerGraphicsFramework",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 9,
+					"id" : "CORE_MODULE::@03a3214d4d97b2505c38",
+					"jsonFile" : "target-CORE_MODULE-Debug-6943c826507d9f8debda.json",
+					"name" : "CORE_MODULE",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "GEOMETRY_MODULE::@0427da057047a9e64904",
+					"jsonFile" : "target-GEOMETRY_MODULE-Debug-145f00ef7650939e9327.json",
+					"name" : "GEOMETRY_MODULE",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 10,
+					"id" : "GLM_MODULE::@6f3e9f5a1d77e24efa0b",
+					"jsonFile" : "target-GLM_MODULE-Debug-26234daa865c463ebd43.json",
+					"name" : "GLM_MODULE",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "GUI_MODULE::@0fbfe7d627f7bc62651e",
+					"jsonFile" : "target-GUI_MODULE-Debug-59f785b89744abff9568.json",
+					"name" : "GUI_MODULE",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 12,
+					"id" : "OPENGL_MODULE::@cb017ab25b0b1ffd049d",
+					"jsonFile" : "target-OPENGL_MODULE-Debug-f1c59a4e7f2a6a0d1dd0.json",
+					"name" : "OPENGL_MODULE",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 11,
+					"id" : "PA213_MODULE::@20a1b1bb5e667dada3ae",
+					"jsonFile" : "target-PA213_MODULE-Debug-84ab08ee2e0857bc154d.json",
+					"name" : "PA213_MODULE",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "PA213_fluid::@38a922c0693968df4351",
+					"jsonFile" : "target-PA213_fluid-Debug-064441201f432f9a0794.json",
+					"name" : "PA213_fluid",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "PV112_MODULE::@beace442085c91862981",
+					"jsonFile" : "target-PV112_MODULE-Debug-8093787f5c766d6c0cff.json",
+					"name" : "PV112_MODULE",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "PV112_lecture_01::@635d5eec76aca7277401",
+					"jsonFile" : "target-PV112_lecture_01-Debug-48d8353fed4986988b5a.json",
+					"name" : "PV112_lecture_01",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "PV112_lecture_02::@7c560d4fca013e8a944a",
+					"jsonFile" : "target-PV112_lecture_02-Debug-df0a76ca6ec41fc5a41a.json",
+					"name" : "PV112_lecture_02",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build",
+		"source" : "/home/pdancak/school/MrPain_T/MUNI/PV112/projekt"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

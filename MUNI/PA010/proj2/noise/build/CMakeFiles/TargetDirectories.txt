@@ -1,0 +1,16 @@
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/CMakeFiles/rebuild_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/CMakeFiles/edit_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/pa010_projects/CMakeFiles/rebuild_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/pa010_projects/CMakeFiles/edit_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/pa010_projects/framework/core/CMakeFiles/rebuild_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/pa010_projects/framework/core/CMakeFiles/edit_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/pa010_projects/framework/core/CMakeFiles/FRAMEWORK_CORE.dir
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/pa010_projects/framework/opengl_3_3/CMakeFiles/rebuild_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/pa010_projects/framework/opengl_3_3/CMakeFiles/edit_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/pa010_projects/framework/opengl_3_3/CMakeFiles/FRAMEWORK_OPENGL_3_3.dir
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/pa010_projects/noise/CMakeFiles/rebuild_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/pa010_projects/noise/CMakeFiles/edit_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/pa010_projects/noise/CMakeFiles/pa010_noise.dir
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/pa010_projects/noise/tests/CMakeFiles/rebuild_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/pa010_projects/noise/tests/CMakeFiles/edit_cache.dir
+/home/pdancak/school/MrPain_T/PA010/proj2/noise/build/pa010_projects/noise/tests/CMakeFiles/pa010_noise_tests.dir

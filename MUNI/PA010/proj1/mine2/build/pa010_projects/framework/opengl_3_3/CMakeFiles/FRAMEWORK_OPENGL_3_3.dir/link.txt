@@ -1,0 +1,2 @@
+/usr/bin/ar qc libFRAMEWORK_OPENGL_3_3.a CMakeFiles/FRAMEWORK_OPENGL_3_3.dir/src/geometry_3_3.cpp.o CMakeFiles/FRAMEWORK_OPENGL_3_3.dir/src/texture_3_3.cpp.o
+/usr/bin/ranlib libFRAMEWORK_OPENGL_3_3.a

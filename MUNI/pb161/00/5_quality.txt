@@ -1,0 +1,75 @@
+## Code Quality
+
+As mentioned earlier, when you submit your code for teacher review,
+it will be graded A–C. The following criteria apply.
+
+### Vices
+
+This is a list of things your code should not do, and the best grade
+that is possible if they make an appearance. In all cases, only
+‘nontrivial’ instances matter, but unfortunately, there is no
+obvious line between trivial and nontrivial. Your reviewer's
+judgment will apply.
+
+ • Code duplication: this is a very serious problem, both when the
+   code is literal copy&paste and when there are minor modifications
+   between the copies. Any significant duplication is an automatic
+   «C».
+   
+   Code which is highly redundant (multiple implementations of the
+   same concept or pattern, even if not literally copied) is still a
+   problem, including duplication of the standard library. All but
+   trivial cases warrant a «C».
+   
+ • Spaghetti: another common and very serious problem, often paired
+   with the previous. Long functions, an excessive number of local
+   variables, non-obvious side effects which affect control flow
+   down the line, functions which do too many things at once. A
+   minor instance caps your grade at «B», anything more than that
+   means a «C».
+   
+ • Bad naming caps your grade at «B» (if the problem is pervasive, a
+   «C» is very likely). This includes:
+   ◦ meaningless names – single-letter global variables, names which
+     say nothing about the purpose of the thing (‹tmp1› through
+     ‹tmp7›, ‹tmp›, ‹tmptmp›, ‹pom›, ‹pomoc›, …),
+   ◦ names which are not English nor established placeholders or
+     abbreviations (these are fine: ‹a›, ‹b› for arguments of binary
+     operators, ‹i›, ‹j› for loop variables, etc.),
+   ◦ overlong, completely redundant names for local objects
+     (‹first_plus_operand›, ‹loop_index_variable_1›).
+   
+ • Inappropriate data types, data structures or algorithms: using
+   building blocks which do not fit the intended purpose makes
+   programs hard to follow and reason about, and often also leads to
+   poor performance. Abuse of strings is especially common. Caps the
+   grade at «B» (but may contribute strongly to a «C»).
+
+If your code is free of the above vices, it will get a «B» or an
+«A», depending on the virtues described below.
+
+### Virtues
+
+To earn a grade better than «C», your code should be free from vices
+and also demonstrate some of the following virtues.
+
+ • Cohesion and orthogonality: each code unit (class, function, …)
+   does one well-defined thing and has a clear and fitting name.
+   Required for «A».
+   
+ • Good naming: names should be clear, descriptive, respect word
+   categories (based around verbs for functions and nouns for types
+   and variables), be free from spelling or grammatical errors.
+   Names should not be redundant – context matters. The verbosity of
+   a name should be inversely proportional to its scope. Do not
+   repeat established context (no ‹list::list_length›). Required for
+   «A».
+   
+ • Comments: each non-obvious code unit should have a comment
+   concisely describing what it does and why. Contributes towards an
+   «A», but is not required. Comments which establish correctness of
+   the code are especially valued.
+   
+ • Preconditions: each function should clearly state its
+   preconditions, preferably in executable form (‹assert›).
+   Contributes significantly toward an «A».

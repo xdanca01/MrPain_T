@@ -1,0 +1,77 @@
+## Peer Reviews
+
+You must participate in the peer review system, both as a reviewer
+(see earlier section on grading) and as a review recipient. In
+addition to fulfilling the requirements of the course, we hope that
+the reviews you get will help you better understand how other people
+see your code, and perhaps also learn something new about writing
+code.
+
+### Requesting Reviews
+
+Not all submissions are worth reviewing, and only you can decide
+which are. Therefore, when you would like to have your code
+reviewed, use the following command:
+
+    $ pv248 review --request t1_splay
+
+Substitute other tasks for ‹t1_splay› as appropriate. You «can»
+request a review on a task which you did not pass yet.  You may get
+up to 3 reviews for any given request. The request you create is for
+your latest submission at the time (so make sure you submit first,
+ask for reviews later).
+
+The ‹pv248 update› command will indicate whether someone reviewed
+your code, by printing a line of the form:
+
+    A reviews/hw1.from.xlogin
+
+To read the review, look at the files in
+‹~/pv248/reviews/hw1.from.xlogin› -- you will find a copy of your
+submitted sources along with comments provided by the reviewer.¹
+After you read your review, you should write a few sentences for the
+reviewer into ‹note.txt› in the review directory (please wrap lines
+to 80 columns) and then run:
+
+    $ pv248 review --accept 100
+
+Instead of 100, you can use a smaller number, indicating a 0–100
+rating of the review you received. This does not serve any other
+purpose except give an idea to the recipient how satisfied you were,
+except if you indicate 0 (in which case, we will investigate what
+went wrong). Please rate the reviews honestly!
+
+¹ There is also a copy in the study materials in IS, in the
+  directory named ‹reviews›. Only you can see the reviews
+  intended for you.
+
+### Writing Reviews
+
+To write a review, start with the following command:
+
+    $ pv248 review --list
+
+You will get a list of review requests for which you are an eligible
+reviewer.  In particular, only tasks that you have already
+successfully solved will show up. If you like one of the entries,
+note its number (e.g. 7) and type:
+
+    $ pv248 review --checkout 7
+    $ cd ~/pv248/reviews/
+    $ ls
+
+There will be a directory for each of the reviews you agreed to
+write. Each directory contains the source code submitted for review,
+along with further instructions (the file ‹readme.txt›).
+
+When inserting your comments, please use double ‹##› to make the
+comment stand out, like this:
+
+    ## A longer comment should be wrapped to 80 columns or less,
+    ## and each line should start with the ## marker.
+
+You can write up to 9 reviews (though you only need to do 6, but you
+can help out more people if you write more reviews, and get more
+practice while doing it). The limit of 9 is applied at checkout
+time: once you agree to do a particular review, you cannot change
+your mind and ‘uncheckout’ it to reclaim one of the 9 slots.
