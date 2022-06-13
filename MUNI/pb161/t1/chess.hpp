@@ -10,7 +10,7 @@ struct position
 {
     int file; /* column 'letter', a = 1, b = 2, ... */
     int rank; /* row number, starting at 1 */
-    position(){};
+    position() = default;
     position(int col, int row) : file(col), rank(row) {};
 };
 
@@ -59,7 +59,7 @@ struct occupant
     bool moved = false;
     player owner;
     piece_type piece;
-    occupant(){};
+    occupant() = default;
     occupant(bool state, player own, piece_type p) : is_empty(state), owner(own), piece(p){} 
 };
 
@@ -106,7 +106,7 @@ public:
      *    ‹play› again will attempt another move by the same player. */
 
     result play( position from, position to,
-                 piece_type promote);
+                 piece_type promote = piece_type::rook);
 
     result check_bounds(position from, position to);
 

@@ -33,7 +33,17 @@ vec3 position_delta(vec3 origin, vec2 delta)
     // Implement the functionality described in the comment above the function.
     // HINT: Look at slides #29-#30 of the "Fluids" lecture for more info.
 
-    return vec3(0,0,0); // This is not the right solution.
+    vec3 P, P_minus, P_plus, du_plus, du_minus;
+    P = origin;
+    P_plus = to_eye_space(in_data.tex_coord+delta);
+    P_minus = to_eye_space(in_data.tex_coord-delta);
+    du_plus = P_plus - P;
+    du_minus = P - P_minus;
+    // d_plus if d_plus <= d_minus
+    if(abs(du_plus.z) <= abs(du_minus.z))
+        return du_plus;
+    // else d_minus
+    return du_minus;
 
     // --- TASK END ------------------------------------------------------
 }
@@ -55,8 +65,17 @@ void main()
     // and write the result into the variable 'normal_rgb'. Do not forget
     // to convert the coordinates into <0,1> range.
     // HINT: Look at slides #28-#30 of the "Fluids" lecture for more info.
-
-    normal_rgb = texture(depth_texture, in_data.tex_coord).r < 1.0f ? vec3(0,1,0) : vec3(0.5f,0.5f,1.0f); // This is not right solution.
+    vec3 pos_delta_u, pos_delta_v, P1, P2;
+    P1 = to_eye_space(in_data.tex_coord);
+    P2 = to_eye_space(in_data.tex_coord);
+    //U
+    pos_delta_u = position_delta(P1, vec2(pixel_delta.x, 0));
+    //V
+    pos_delta_v = position_delta(P2, vec2(0, pixel_delta.y));
+    vec3 n = cross(pos_delta_u, pos_delta_v);
+    n = normalize(n);
+    n = (n+1)/2;
+    normal_rgb = n;
 
     // --- TASK END ------------------------------------------------------
 

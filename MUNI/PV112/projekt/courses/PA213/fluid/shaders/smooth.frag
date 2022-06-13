@@ -41,6 +41,12 @@ vec4 to_tex_space(vec3 eye_space_pos)
     return tex_pos;
 }
 
+float gauss_kernel(float x)
+{
+    //     e^ (-x^2        /2*sigma^2)                 /  2*pi*sigma^2
+    return exp(-(pow(x, 2) / (2*pow(smooting_gauss_sigma, 2)))) / (2*3.14*pow(smooting_gauss_sigma, 2));
+}
+
 void main()
 {
     // We discard texels which do not correspond to any particle.
@@ -70,8 +76,31 @@ void main()
     // 
     // (Optional) Some of the points in the rectangle should be excluded
     // when soothing - see bottom of slide #27.
-    for(int u = -pixel_delta.u; u <= pixel_delta)
-    gl_FragDepth = self_orig_z; // This is not the right solution.
+    float W = 0.0f, z_smooth = 0.0f, z1, z2, length_pq, delta_u, delta_v;
+    z2 = texture(depth_texture, vec2(in_data.tex_coord.x, in_data.tex_coord.y)).r;
+    vec3 P = to_eye_space(in_data.tex_coord), r = vec3(particle_radius, particle_radius, 0), U, L;
+    vec4 U_l, L_l;
+    U = P + r;
+    L = P - r;
+    U_l = to_tex_space(U);
+    L_l = to_tex_space(L);
+    delta_u = int(min((U_l.x - L_l.x)/(2*pixel_delta.x), smoothing_radius));
+    delta_v = int(min((U_l.y - L_l.y)/(2*pixel_delta.y), smoothing_radius));
+    for(float p = -delta_u; p <= delta_u;++p)
+    {
+        for(float q = -delta_v; q <= delta_v;++q)
+        {
+            z1 = texture(depth_texture, in_data.tex_coord+vec2(p*pixel_delta.x, q*pixel_delta.y)).r; 
+            if(z1 == 1) continue;
+            length_pq = length(vec2(p, q));
+            W += gauss_kernel(abs(z1-z2)*smooting_depth_falloff) * gauss_kernel(length_pq/smoothing_radius);
+            z_smooth += z1 * gauss_kernel(abs(z2 - z1)*smooting_depth_falloff) * gauss_kernel(length_pq/smoothing_radius);
+        }
+    }
+    if(W != 0.0f)
+    {
+        gl_FragDepth = 1/W * z_smooth;
+    }
 
     // --- TASK END ------------------------------------------------------
 

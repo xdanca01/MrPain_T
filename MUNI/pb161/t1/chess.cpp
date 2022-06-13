@@ -17,7 +17,6 @@ void tc1(){
 
 void tc2(){
     chess game;
-    position from = position(1, 2), to = position(1, 3);
     piece_type p = piece_type::rook;
     assert(game.play(position(5, 2), position(5, 4), p) == result::ok);
     assert(game.play(position(4, 7), position(4, 5), p) == result::ok);
@@ -47,10 +46,10 @@ chess::chess(){
 
 result chess::find_check(position from, position to){
     result res = result::bad_move;
-    int row_diff = std::abs(from.rank - to.rank), col_diff = std::abs(from.file - to.file);
+    int col_diff = std::abs(from.file - to.file);
     std::vector<position> positions = {from, to};
     //add position between
-    if(col_diff == 2) positions.push_back(position((from.file+to.file)/2,from.rank));
+    if(col_diff == 2) positions.emplace_back(position((from.file+to.file)/2,from.rank));
     //check for each position check
     position comp = position(1, 1);
     for(auto p : positions){
@@ -61,7 +60,7 @@ result chess::find_check(position from, position to){
             for(int j = 1;j < 9;++j){
                 comp.rank = j;
                 //check only opposite owner fields
-                if(at(comp).is_empty == false && at(from).owner != at(comp).owner)
+                if(!at(comp).is_empty && at(from).owner != at(comp).owner){
                     //king would make recursion so exclude it
                     if(at(comp).piece != piece_type::king){
                         //if move can be done, then king can be captured
@@ -74,9 +73,10 @@ result chess::find_check(position from, position to){
                             return result::would_check;
                     }
                     //check king (cant be close less than 1)
-                    else if(abs(to.file-comp.file) < 1 | abs(to.rank-comp.rank) < 1){
+                    else if(abs(to.file-comp.file) < 1 || abs(to.rank-comp.rank) < 1){
                         return result::would_check;
                     }
+                }
             }
         }
     }
@@ -99,10 +99,10 @@ void chess::create_pawns(){
     occupant pawn = occupant(false, player::white, piece_type::pawn);
     //white down
     pawn.owner = player::white;
-    for(int i = 0; i < 8;++i) board[i][1] = pawn;
+    for(auto & i : board) i[1] = pawn;
     //black top
     pawn.owner = player::black;
-    for(int i = 0; i < 8;++i) board[i][6] = pawn;
+    for(auto & i : board) i[6] = pawn;
 }
 
 void chess::create_rooks(){
@@ -170,19 +170,18 @@ result chess::check_move_rook(position from, position to){
     //no piece should be in way (not checking end)
     for(int i = my_min + 1; i < my_max; ++i){
         if(row_diff){
-            if(at(position(from.file, i)).is_empty != true) return result::blocked;
+            if(!at(position(from.file, i)).is_empty) return result::blocked;
         }
         else
-            if(at(position(i, from.rank)).is_empty != true) return result::blocked;
+            if(!at(position(i, from.rank)).is_empty) return result::blocked;
     }
-    if(fig2.is_empty == false) set_result(res, result::capture);
+    if(!fig2.is_empty) set_result(res, result::capture);
     if(fig2.owner == fig1.owner) return result::blocked;
     return res;
 }
 
 result chess::check_move_queen(position from, position to){
     result res = result::ok;
-    occupant fig1 = at(from);
     int row_diff = std::abs(from.rank - to.rank), col_diff = std::abs(from.file - to.file);
     //No move or wrong move
     if( (row_diff == 0 && col_diff == 0) || 
@@ -213,13 +212,13 @@ result chess::check_move_pawn(position from, position to, piece_type promotion){
             if(fig1.owner == player::white && from.rank != 2) return result::bad_move;
             else if (fig1.owner == player::black && from.rank != 7) return result::bad_move;
             //blocked between 2 fields
-            if(at(position(from.file, (from.rank+to.rank)/2)).is_empty == false) set_result(res, result::blocked);
+            if(!at(position(from.file, (from.rank+to.rank)/2)).is_empty) set_result(res, result::blocked);
         }
         //check direction(cant go back)
         if(fig1.owner == player::white && from.rank > to.rank) return result::bad_move;
         else if(fig1.owner == player::black && from.rank < to.rank) return result::bad_move;
         //blocked, same color
-        if(fig2.is_empty == false && fig1.owner == fig2.owner) set_result(res, result::blocked);
+        if(!fig2.is_empty && fig1.owner == fig2.owner) set_result(res, result::blocked);
     }
     //pawn to any piece --- check promotion
     if( (fig1.owner == player::white && to.rank == 8) || 
@@ -233,7 +232,7 @@ result chess::check_move_pawn(position from, position to, piece_type promotion){
             abs(to.rank-last_valid_move[0].rank) == 1 &&
             abs(to.rank-last_valid_move[1].rank) == 1 &&
             at(last_valid_move[1]).piece == piece_type::pawn) set_result(res, result::capture);
-        else if(fig2.is_empty == true) return result::bad_move;
+        else if(fig2.is_empty) return result::bad_move;
         else res = result::capture;
     }
     return res;
@@ -244,8 +243,8 @@ result chess::check_move_knight(position from, position to){
     int row_diff = std::abs(from.rank - to.rank), col_diff = std::abs(from.file - to.file);
     if ( !(row_diff == 2 && col_diff == 1) && !(col_diff == 2 && row_diff == 1))
         return result::bad_move;
-    else if(fig2.is_empty == false && fig2.owner == fig1.owner) set_result(res, result::blocked);
-    if(fig2.is_empty == false && fig2.owner != fig1.owner) set_result(res, result::capture);
+    else if(!fig2.is_empty && fig2.owner == fig1.owner) set_result(res, result::blocked);
+    if(!fig2.is_empty && fig2.owner != fig1.owner) set_result(res, result::capture);
     return res;
 }
 
@@ -261,25 +260,25 @@ result chess::check_move_king(position from, position to){
         //rook and king are 1 field between each other
         bool right = (8-to.file) == 1;
         //cant do castling (king moved || right rook moved || left rook moved)
-        if  (fig1.moved == true || 
-            (right == true  && at(position(8, to.rank)).moved == true) ||
-            (right == false && at(position(1, to.rank)).moved == true))
+        if  (fig1.moved || 
+            (right  && at(position(8, to.rank)).moved) ||
+            (!right && at(position(1, to.rank)).moved))
                 set_result(res, result::has_moved);
         //check blocks between castling
         //from king to right rook
-        if(right == true){
+        if(right){
             for(int i = from.file + 1; i < 8; ++i)
                 //piece between right rook and king
-                if(at(position(i, to.rank)).is_empty == false){
+                if(!at(position(i, to.rank)).is_empty){
                     set_result(res, result::blocked);
                     break;
                 }
         }
         //from left rook to king
-        else if(right == false){
+        else if(!right){
             for(int i = 2; i < from.file; ++i)
                 //piece between left rook and king
-                if(at(position(i, to.rank)).is_empty == false){
+                if(!at(position(i, to.rank)).is_empty){
                     set_result(res, result::blocked);
                     break;
                 }
@@ -288,7 +287,7 @@ result chess::check_move_king(position from, position to){
     //check at to
     result comp = find_check(from, to);
     if(comp == result::would_check || comp == result::in_check) set_result(res, comp);
-    if(fig2.is_empty == false && fig2.owner != fig1.owner) set_result(res, result::capture);
+    if(!fig2.is_empty && fig2.owner != fig1.owner) set_result(res, result::capture);
     return res;
 }
 
@@ -317,7 +316,7 @@ result chess::check_move_bishop(position from, position to){
         }
     }
     //Some piece at TO
-    if(fig2.is_empty == false){
+    if(!fig2.is_empty){
         //Blocked at TO by own piece
         if(fig2.owner == fig1.owner) set_result(res, result::blocked);
         //check capture
@@ -339,8 +338,9 @@ result chess::check_move(position from, position to, piece_type promotion){
 }
 
 result chess::check_bounds(position from, position to){
-    if(from.file > 8 || from.file < 1 || from.rank > 8 || from.rank < 1
-    || to.file > 8   || from.file < 1 || to.rank   > 8 || to.rank  < 1)
+    if(from.file > 8 || from.file < 1 || from.rank > 8 || from.rank < 1)
+        return result::bad_move;
+    else if(to.file > 8   || from.file < 1 || to.rank   > 8 || to.rank  < 1)
         return result::bad_move;
     return result::ok;
 }
@@ -351,7 +351,7 @@ result chess::play( position from, position to, piece_type promote ){
     if(res != result::ok) return res;
     occupant fig1 = at(from), fig2 = at(to);
     //Check that field is not empty
-    if(fig1.is_empty == true) return result::no_piece;
+    if(fig1.is_empty) return result::no_piece;
     //Check, that player is owner
     else if(fig1.owner != actual_player) return result::bad_piece;
     //check move validity
@@ -359,7 +359,7 @@ result chess::play( position from, position to, piece_type promote ){
     //if ok set next round (player, save previous play, move fig)
     if(res == result::ok || res == result::capture){
         //en passan
-        if(res == result::capture && fig1.piece == piece_type::pawn && fig2.is_empty == true)
+        if(res == result::capture && fig1.piece == piece_type::pawn && fig2.is_empty)
             board[last_valid_move[1].file-1][last_valid_move[1].rank-1].is_empty = true;
         //castling
         else if(fig1.piece == piece_type::king && abs(from.file-to.file) == 2){

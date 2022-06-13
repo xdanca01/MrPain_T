@@ -39,7 +39,7 @@ void main()
         discard;
         return;
     }
-
+    final_color = vec4(0,0.75f,0,1);
     // --- TASK BEGIN ------------------------------------------------------
     // Read the unit normal vector from the 'normals_texture' texture (do not
     // forget to transform the coordinates from <0,1>) and apply Blinn-Phong
@@ -47,9 +47,18 @@ void main()
     // in the camera space. The final colour should be written to 'final_color'
     // variable.
     // HINT: Look at the slide #31 of the "Fluids" lecture for more info.
+    vec3 P = to_eye_space(in_data.tex_coord);
+    vec4 n = texture(normals_texture, in_data.tex_coord), L, V, H, S, D;
+    // <-1,1>
+    n = n*2 - 1;
+    V = vec4(-P, 0);
+    L = vec4(light_direction, 0);
+    H = (L+V)/length(L+V);
+    S = (light_color * specular_coef)*pow(dot(n, H), specular_exponent);
+    D = (light_color*diffuse_coef)*max(0, (dot(n, L)));
+    final_color = ambient_color + D + S;
 
-    final_color = vec4(0,0.75f,0,1); // This is not the right solution.
-
+    
     // --- TASK END ------------------------------------------------------
 
     gl_FragDepth = self_orig_z;

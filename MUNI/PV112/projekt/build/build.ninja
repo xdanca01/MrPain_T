@@ -277,6 +277,566 @@ build courses/PV112/lecture_02/PV112_lecture_02: CXX_EXECUTABLE_LINKER__PV112_le
 
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
+# /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build courses/PV112/lecture_03/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_03 && /usr/local/bin/cmake --regenerate-during-build -S/home/pdancak/school/MrPain_T/MUNI/PV112/projekt -B/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build courses/PV112/lecture_03/rebuild_cache: phony courses/PV112/lecture_03/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build courses/PV112/lecture_03/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_03 && /usr/local/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build courses/PV112/lecture_03/edit_cache: phony courses/PV112/lecture_03/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for test
+
+build courses/PV112/lecture_03/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_03 && /usr/local/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build courses/PV112/lecture_03/test: phony courses/PV112/lecture_03/CMakeFiles/test.util
+
+# =============================================================================
+# Object build statements for EXECUTABLE target PV112_lecture_03
+
+
+#############################################
+# Order-only phony target for PV112_lecture_03
+
+build cmake_object_order_depends_target_PV112_lecture_03: phony || cmake_object_order_depends_target_CORE_MODULE cmake_object_order_depends_target_GEOMETRY_MODULE cmake_object_order_depends_target_GLM_MODULE cmake_object_order_depends_target_GUI_MODULE cmake_object_order_depends_target_PV112_MODULE
+
+build courses/PV112/lecture_03/CMakeFiles/PV112_lecture_03.dir/application.cpp.o: CXX_COMPILER__PV112_lecture_03_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/lecture_03/application.cpp || cmake_object_order_depends_target_PV112_lecture_03
+  DEP_FILE = courses/PV112/lecture_03/CMakeFiles/PV112_lecture_03.dir/application.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pv112/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PV112/lecture_03/CMakeFiles/PV112_lecture_03.dir
+  OBJECT_FILE_DIR = courses/PV112/lecture_03/CMakeFiles/PV112_lecture_03.dir
+
+build courses/PV112/lecture_03/CMakeFiles/PV112_lecture_03.dir/main.cpp.o: CXX_COMPILER__PV112_lecture_03_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/lecture_03/main.cpp || cmake_object_order_depends_target_PV112_lecture_03
+  DEP_FILE = courses/PV112/lecture_03/CMakeFiles/PV112_lecture_03.dir/main.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pv112/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PV112/lecture_03/CMakeFiles/PV112_lecture_03.dir
+  OBJECT_FILE_DIR = courses/PV112/lecture_03/CMakeFiles/PV112_lecture_03.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target PV112_lecture_03
+
+
+#############################################
+# Link the executable courses/PV112/lecture_03/PV112_lecture_03
+
+build courses/PV112/lecture_03/PV112_lecture_03: CXX_EXECUTABLE_LINKER__PV112_lecture_03_Debug courses/PV112/lecture_03/CMakeFiles/PV112_lecture_03.dir/application.cpp.o courses/PV112/lecture_03/CMakeFiles/PV112_lecture_03.dir/main.cpp.o | framework/pv112/libPV112_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/gui/libGUI_MODULE.a framework/core/libCORE_MODULE.a framework/glm/libGLM_MODULE.a vcpkg_installed/x64-linux/debug/lib/libimguid.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a vcpkg_installed/x64-linux/debug/lib/libglad.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a /usr/lib64/librt.a /usr/lib64/libm.so /usr/lib64/libX11.so vcpkg_installed/x64-linux/debug/lib/libgtestd.a vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a || framework/core/libCORE_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/glm/libGLM_MODULE.a framework/gui/libGUI_MODULE.a framework/pv112/libPV112_MODULE.a
+  FLAGS = -g
+  LINK_LIBRARIES = framework/pv112/libPV112_MODULE.a  framework/geometry/libGEOMETRY_MODULE.a  framework/gui/libGUI_MODULE.a  framework/core/libCORE_MODULE.a  framework/glm/libGLM_MODULE.a  vcpkg_installed/x64-linux/debug/lib/libimguid.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  vcpkg_installed/x64-linux/debug/lib/libglad.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  /usr/lib64/librt.a  -lm  -ldl  /usr/lib64/libX11.so  vcpkg_installed/x64-linux/debug/lib/libgtestd.a  vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a
+  OBJECT_DIR = courses/PV112/lecture_03/CMakeFiles/PV112_lecture_03.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = courses/PV112/lecture_03/PV112_lecture_03
+  TARGET_PDB = PV112_lecture_03.dbg
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build courses/PV112/lecture_04/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_04 && /usr/local/bin/cmake --regenerate-during-build -S/home/pdancak/school/MrPain_T/MUNI/PV112/projekt -B/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build courses/PV112/lecture_04/rebuild_cache: phony courses/PV112/lecture_04/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build courses/PV112/lecture_04/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_04 && /usr/local/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build courses/PV112/lecture_04/edit_cache: phony courses/PV112/lecture_04/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for test
+
+build courses/PV112/lecture_04/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_04 && /usr/local/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build courses/PV112/lecture_04/test: phony courses/PV112/lecture_04/CMakeFiles/test.util
+
+# =============================================================================
+# Object build statements for EXECUTABLE target PV112_lecture_04
+
+
+#############################################
+# Order-only phony target for PV112_lecture_04
+
+build cmake_object_order_depends_target_PV112_lecture_04: phony || cmake_object_order_depends_target_CORE_MODULE cmake_object_order_depends_target_GEOMETRY_MODULE cmake_object_order_depends_target_GLM_MODULE cmake_object_order_depends_target_GUI_MODULE cmake_object_order_depends_target_PV112_MODULE
+
+build courses/PV112/lecture_04/CMakeFiles/PV112_lecture_04.dir/application.cpp.o: CXX_COMPILER__PV112_lecture_04_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/lecture_04/application.cpp || cmake_object_order_depends_target_PV112_lecture_04
+  DEP_FILE = courses/PV112/lecture_04/CMakeFiles/PV112_lecture_04.dir/application.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pv112/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PV112/lecture_04/CMakeFiles/PV112_lecture_04.dir
+  OBJECT_FILE_DIR = courses/PV112/lecture_04/CMakeFiles/PV112_lecture_04.dir
+
+build courses/PV112/lecture_04/CMakeFiles/PV112_lecture_04.dir/main.cpp.o: CXX_COMPILER__PV112_lecture_04_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/lecture_04/main.cpp || cmake_object_order_depends_target_PV112_lecture_04
+  DEP_FILE = courses/PV112/lecture_04/CMakeFiles/PV112_lecture_04.dir/main.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pv112/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PV112/lecture_04/CMakeFiles/PV112_lecture_04.dir
+  OBJECT_FILE_DIR = courses/PV112/lecture_04/CMakeFiles/PV112_lecture_04.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target PV112_lecture_04
+
+
+#############################################
+# Link the executable courses/PV112/lecture_04/PV112_lecture_04
+
+build courses/PV112/lecture_04/PV112_lecture_04: CXX_EXECUTABLE_LINKER__PV112_lecture_04_Debug courses/PV112/lecture_04/CMakeFiles/PV112_lecture_04.dir/application.cpp.o courses/PV112/lecture_04/CMakeFiles/PV112_lecture_04.dir/main.cpp.o | framework/pv112/libPV112_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/gui/libGUI_MODULE.a framework/core/libCORE_MODULE.a framework/glm/libGLM_MODULE.a vcpkg_installed/x64-linux/debug/lib/libimguid.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a vcpkg_installed/x64-linux/debug/lib/libglad.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a /usr/lib64/librt.a /usr/lib64/libm.so /usr/lib64/libX11.so vcpkg_installed/x64-linux/debug/lib/libgtestd.a vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a || framework/core/libCORE_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/glm/libGLM_MODULE.a framework/gui/libGUI_MODULE.a framework/pv112/libPV112_MODULE.a
+  FLAGS = -g
+  LINK_LIBRARIES = framework/pv112/libPV112_MODULE.a  framework/geometry/libGEOMETRY_MODULE.a  framework/gui/libGUI_MODULE.a  framework/core/libCORE_MODULE.a  framework/glm/libGLM_MODULE.a  vcpkg_installed/x64-linux/debug/lib/libimguid.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  vcpkg_installed/x64-linux/debug/lib/libglad.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  /usr/lib64/librt.a  -lm  -ldl  /usr/lib64/libX11.so  vcpkg_installed/x64-linux/debug/lib/libgtestd.a  vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a
+  OBJECT_DIR = courses/PV112/lecture_04/CMakeFiles/PV112_lecture_04.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = courses/PV112/lecture_04/PV112_lecture_04
+  TARGET_PDB = PV112_lecture_04.dbg
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build courses/PV112/lecture_05/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_05 && /usr/local/bin/cmake --regenerate-during-build -S/home/pdancak/school/MrPain_T/MUNI/PV112/projekt -B/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build courses/PV112/lecture_05/rebuild_cache: phony courses/PV112/lecture_05/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build courses/PV112/lecture_05/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_05 && /usr/local/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build courses/PV112/lecture_05/edit_cache: phony courses/PV112/lecture_05/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for test
+
+build courses/PV112/lecture_05/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_05 && /usr/local/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build courses/PV112/lecture_05/test: phony courses/PV112/lecture_05/CMakeFiles/test.util
+
+# =============================================================================
+# Object build statements for EXECUTABLE target PV112_lecture_05
+
+
+#############################################
+# Order-only phony target for PV112_lecture_05
+
+build cmake_object_order_depends_target_PV112_lecture_05: phony || cmake_object_order_depends_target_CORE_MODULE cmake_object_order_depends_target_GEOMETRY_MODULE cmake_object_order_depends_target_GLM_MODULE cmake_object_order_depends_target_GUI_MODULE cmake_object_order_depends_target_PV112_MODULE
+
+build courses/PV112/lecture_05/CMakeFiles/PV112_lecture_05.dir/application.cpp.o: CXX_COMPILER__PV112_lecture_05_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/lecture_05/application.cpp || cmake_object_order_depends_target_PV112_lecture_05
+  DEP_FILE = courses/PV112/lecture_05/CMakeFiles/PV112_lecture_05.dir/application.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pv112/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PV112/lecture_05/CMakeFiles/PV112_lecture_05.dir
+  OBJECT_FILE_DIR = courses/PV112/lecture_05/CMakeFiles/PV112_lecture_05.dir
+
+build courses/PV112/lecture_05/CMakeFiles/PV112_lecture_05.dir/main.cpp.o: CXX_COMPILER__PV112_lecture_05_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/lecture_05/main.cpp || cmake_object_order_depends_target_PV112_lecture_05
+  DEP_FILE = courses/PV112/lecture_05/CMakeFiles/PV112_lecture_05.dir/main.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pv112/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PV112/lecture_05/CMakeFiles/PV112_lecture_05.dir
+  OBJECT_FILE_DIR = courses/PV112/lecture_05/CMakeFiles/PV112_lecture_05.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target PV112_lecture_05
+
+
+#############################################
+# Link the executable courses/PV112/lecture_05/PV112_lecture_05
+
+build courses/PV112/lecture_05/PV112_lecture_05: CXX_EXECUTABLE_LINKER__PV112_lecture_05_Debug courses/PV112/lecture_05/CMakeFiles/PV112_lecture_05.dir/application.cpp.o courses/PV112/lecture_05/CMakeFiles/PV112_lecture_05.dir/main.cpp.o | framework/pv112/libPV112_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/gui/libGUI_MODULE.a framework/core/libCORE_MODULE.a framework/glm/libGLM_MODULE.a vcpkg_installed/x64-linux/debug/lib/libimguid.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a vcpkg_installed/x64-linux/debug/lib/libglad.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a /usr/lib64/librt.a /usr/lib64/libm.so /usr/lib64/libX11.so vcpkg_installed/x64-linux/debug/lib/libgtestd.a vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a || framework/core/libCORE_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/glm/libGLM_MODULE.a framework/gui/libGUI_MODULE.a framework/pv112/libPV112_MODULE.a
+  FLAGS = -g
+  LINK_LIBRARIES = framework/pv112/libPV112_MODULE.a  framework/geometry/libGEOMETRY_MODULE.a  framework/gui/libGUI_MODULE.a  framework/core/libCORE_MODULE.a  framework/glm/libGLM_MODULE.a  vcpkg_installed/x64-linux/debug/lib/libimguid.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  vcpkg_installed/x64-linux/debug/lib/libglad.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  /usr/lib64/librt.a  -lm  -ldl  /usr/lib64/libX11.so  vcpkg_installed/x64-linux/debug/lib/libgtestd.a  vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a
+  OBJECT_DIR = courses/PV112/lecture_05/CMakeFiles/PV112_lecture_05.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = courses/PV112/lecture_05/PV112_lecture_05
+  TARGET_PDB = PV112_lecture_05.dbg
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build courses/PV112/lecture_06/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_06 && /usr/local/bin/cmake --regenerate-during-build -S/home/pdancak/school/MrPain_T/MUNI/PV112/projekt -B/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build courses/PV112/lecture_06/rebuild_cache: phony courses/PV112/lecture_06/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build courses/PV112/lecture_06/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_06 && /usr/local/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build courses/PV112/lecture_06/edit_cache: phony courses/PV112/lecture_06/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for test
+
+build courses/PV112/lecture_06/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_06 && /usr/local/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build courses/PV112/lecture_06/test: phony courses/PV112/lecture_06/CMakeFiles/test.util
+
+# =============================================================================
+# Object build statements for EXECUTABLE target PV112_lecture_06
+
+
+#############################################
+# Order-only phony target for PV112_lecture_06
+
+build cmake_object_order_depends_target_PV112_lecture_06: phony || cmake_object_order_depends_target_CORE_MODULE cmake_object_order_depends_target_GEOMETRY_MODULE cmake_object_order_depends_target_GLM_MODULE cmake_object_order_depends_target_GUI_MODULE cmake_object_order_depends_target_PV112_MODULE
+
+build courses/PV112/lecture_06/CMakeFiles/PV112_lecture_06.dir/application.cpp.o: CXX_COMPILER__PV112_lecture_06_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/lecture_06/application.cpp || cmake_object_order_depends_target_PV112_lecture_06
+  DEP_FILE = courses/PV112/lecture_06/CMakeFiles/PV112_lecture_06.dir/application.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pv112/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PV112/lecture_06/CMakeFiles/PV112_lecture_06.dir
+  OBJECT_FILE_DIR = courses/PV112/lecture_06/CMakeFiles/PV112_lecture_06.dir
+
+build courses/PV112/lecture_06/CMakeFiles/PV112_lecture_06.dir/main.cpp.o: CXX_COMPILER__PV112_lecture_06_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/lecture_06/main.cpp || cmake_object_order_depends_target_PV112_lecture_06
+  DEP_FILE = courses/PV112/lecture_06/CMakeFiles/PV112_lecture_06.dir/main.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pv112/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PV112/lecture_06/CMakeFiles/PV112_lecture_06.dir
+  OBJECT_FILE_DIR = courses/PV112/lecture_06/CMakeFiles/PV112_lecture_06.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target PV112_lecture_06
+
+
+#############################################
+# Link the executable courses/PV112/lecture_06/PV112_lecture_06
+
+build courses/PV112/lecture_06/PV112_lecture_06: CXX_EXECUTABLE_LINKER__PV112_lecture_06_Debug courses/PV112/lecture_06/CMakeFiles/PV112_lecture_06.dir/application.cpp.o courses/PV112/lecture_06/CMakeFiles/PV112_lecture_06.dir/main.cpp.o | framework/pv112/libPV112_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/gui/libGUI_MODULE.a framework/core/libCORE_MODULE.a framework/glm/libGLM_MODULE.a vcpkg_installed/x64-linux/debug/lib/libimguid.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a vcpkg_installed/x64-linux/debug/lib/libglad.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a /usr/lib64/librt.a /usr/lib64/libm.so /usr/lib64/libX11.so vcpkg_installed/x64-linux/debug/lib/libgtestd.a vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a || framework/core/libCORE_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/glm/libGLM_MODULE.a framework/gui/libGUI_MODULE.a framework/pv112/libPV112_MODULE.a
+  FLAGS = -g
+  LINK_LIBRARIES = framework/pv112/libPV112_MODULE.a  framework/geometry/libGEOMETRY_MODULE.a  framework/gui/libGUI_MODULE.a  framework/core/libCORE_MODULE.a  framework/glm/libGLM_MODULE.a  vcpkg_installed/x64-linux/debug/lib/libimguid.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  vcpkg_installed/x64-linux/debug/lib/libglad.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  /usr/lib64/librt.a  -lm  -ldl  /usr/lib64/libX11.so  vcpkg_installed/x64-linux/debug/lib/libgtestd.a  vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a
+  OBJECT_DIR = courses/PV112/lecture_06/CMakeFiles/PV112_lecture_06.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = courses/PV112/lecture_06/PV112_lecture_06
+  TARGET_PDB = PV112_lecture_06.dbg
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for edit_cache
+
+build courses/PV112/lecture_07/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_07 && /usr/local/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build courses/PV112/lecture_07/edit_cache: phony courses/PV112/lecture_07/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for test
+
+build courses/PV112/lecture_07/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_07 && /usr/local/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build courses/PV112/lecture_07/test: phony courses/PV112/lecture_07/CMakeFiles/test.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build courses/PV112/lecture_07/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_07 && /usr/local/bin/cmake --regenerate-during-build -S/home/pdancak/school/MrPain_T/MUNI/PV112/projekt -B/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build courses/PV112/lecture_07/rebuild_cache: phony courses/PV112/lecture_07/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
+# Object build statements for EXECUTABLE target PV112_lecture_07
+
+
+#############################################
+# Order-only phony target for PV112_lecture_07
+
+build cmake_object_order_depends_target_PV112_lecture_07: phony || cmake_object_order_depends_target_CORE_MODULE cmake_object_order_depends_target_GEOMETRY_MODULE cmake_object_order_depends_target_GLM_MODULE cmake_object_order_depends_target_GUI_MODULE cmake_object_order_depends_target_PV112_MODULE
+
+build courses/PV112/lecture_07/CMakeFiles/PV112_lecture_07.dir/application.cpp.o: CXX_COMPILER__PV112_lecture_07_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/lecture_07/application.cpp || cmake_object_order_depends_target_PV112_lecture_07
+  DEP_FILE = courses/PV112/lecture_07/CMakeFiles/PV112_lecture_07.dir/application.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pv112/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PV112/lecture_07/CMakeFiles/PV112_lecture_07.dir
+  OBJECT_FILE_DIR = courses/PV112/lecture_07/CMakeFiles/PV112_lecture_07.dir
+
+build courses/PV112/lecture_07/CMakeFiles/PV112_lecture_07.dir/main.cpp.o: CXX_COMPILER__PV112_lecture_07_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/lecture_07/main.cpp || cmake_object_order_depends_target_PV112_lecture_07
+  DEP_FILE = courses/PV112/lecture_07/CMakeFiles/PV112_lecture_07.dir/main.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pv112/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PV112/lecture_07/CMakeFiles/PV112_lecture_07.dir
+  OBJECT_FILE_DIR = courses/PV112/lecture_07/CMakeFiles/PV112_lecture_07.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target PV112_lecture_07
+
+
+#############################################
+# Link the executable courses/PV112/lecture_07/PV112_lecture_07
+
+build courses/PV112/lecture_07/PV112_lecture_07: CXX_EXECUTABLE_LINKER__PV112_lecture_07_Debug courses/PV112/lecture_07/CMakeFiles/PV112_lecture_07.dir/application.cpp.o courses/PV112/lecture_07/CMakeFiles/PV112_lecture_07.dir/main.cpp.o | framework/pv112/libPV112_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/gui/libGUI_MODULE.a framework/core/libCORE_MODULE.a framework/glm/libGLM_MODULE.a vcpkg_installed/x64-linux/debug/lib/libimguid.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a vcpkg_installed/x64-linux/debug/lib/libglad.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a /usr/lib64/librt.a /usr/lib64/libm.so /usr/lib64/libX11.so vcpkg_installed/x64-linux/debug/lib/libgtestd.a vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a || framework/core/libCORE_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/glm/libGLM_MODULE.a framework/gui/libGUI_MODULE.a framework/pv112/libPV112_MODULE.a
+  FLAGS = -g
+  LINK_LIBRARIES = framework/pv112/libPV112_MODULE.a  framework/geometry/libGEOMETRY_MODULE.a  framework/gui/libGUI_MODULE.a  framework/core/libCORE_MODULE.a  framework/glm/libGLM_MODULE.a  vcpkg_installed/x64-linux/debug/lib/libimguid.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  vcpkg_installed/x64-linux/debug/lib/libglad.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  /usr/lib64/librt.a  -lm  -ldl  /usr/lib64/libX11.so  vcpkg_installed/x64-linux/debug/lib/libgtestd.a  vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a
+  OBJECT_DIR = courses/PV112/lecture_07/CMakeFiles/PV112_lecture_07.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = courses/PV112/lecture_07/PV112_lecture_07
+  TARGET_PDB = PV112_lecture_07.dbg
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build courses/PV112/lecture_08/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_08 && /usr/local/bin/cmake --regenerate-during-build -S/home/pdancak/school/MrPain_T/MUNI/PV112/projekt -B/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build courses/PV112/lecture_08/rebuild_cache: phony courses/PV112/lecture_08/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build courses/PV112/lecture_08/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_08 && /usr/local/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build courses/PV112/lecture_08/edit_cache: phony courses/PV112/lecture_08/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for test
+
+build courses/PV112/lecture_08/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_08 && /usr/local/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build courses/PV112/lecture_08/test: phony courses/PV112/lecture_08/CMakeFiles/test.util
+
+# =============================================================================
+# Object build statements for EXECUTABLE target PV112_lecture_08
+
+
+#############################################
+# Order-only phony target for PV112_lecture_08
+
+build cmake_object_order_depends_target_PV112_lecture_08: phony || cmake_object_order_depends_target_CORE_MODULE cmake_object_order_depends_target_GEOMETRY_MODULE cmake_object_order_depends_target_GLM_MODULE cmake_object_order_depends_target_GUI_MODULE cmake_object_order_depends_target_PV112_MODULE
+
+build courses/PV112/lecture_08/CMakeFiles/PV112_lecture_08.dir/application.cpp.o: CXX_COMPILER__PV112_lecture_08_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/lecture_08/application.cpp || cmake_object_order_depends_target_PV112_lecture_08
+  DEP_FILE = courses/PV112/lecture_08/CMakeFiles/PV112_lecture_08.dir/application.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pv112/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PV112/lecture_08/CMakeFiles/PV112_lecture_08.dir
+  OBJECT_FILE_DIR = courses/PV112/lecture_08/CMakeFiles/PV112_lecture_08.dir
+
+build courses/PV112/lecture_08/CMakeFiles/PV112_lecture_08.dir/main.cpp.o: CXX_COMPILER__PV112_lecture_08_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/lecture_08/main.cpp || cmake_object_order_depends_target_PV112_lecture_08
+  DEP_FILE = courses/PV112/lecture_08/CMakeFiles/PV112_lecture_08.dir/main.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pv112/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PV112/lecture_08/CMakeFiles/PV112_lecture_08.dir
+  OBJECT_FILE_DIR = courses/PV112/lecture_08/CMakeFiles/PV112_lecture_08.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target PV112_lecture_08
+
+
+#############################################
+# Link the executable courses/PV112/lecture_08/PV112_lecture_08
+
+build courses/PV112/lecture_08/PV112_lecture_08: CXX_EXECUTABLE_LINKER__PV112_lecture_08_Debug courses/PV112/lecture_08/CMakeFiles/PV112_lecture_08.dir/application.cpp.o courses/PV112/lecture_08/CMakeFiles/PV112_lecture_08.dir/main.cpp.o | framework/pv112/libPV112_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/gui/libGUI_MODULE.a framework/core/libCORE_MODULE.a framework/glm/libGLM_MODULE.a vcpkg_installed/x64-linux/debug/lib/libimguid.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a vcpkg_installed/x64-linux/debug/lib/libglad.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a /usr/lib64/librt.a /usr/lib64/libm.so /usr/lib64/libX11.so vcpkg_installed/x64-linux/debug/lib/libgtestd.a vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a || framework/core/libCORE_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/glm/libGLM_MODULE.a framework/gui/libGUI_MODULE.a framework/pv112/libPV112_MODULE.a
+  FLAGS = -g
+  LINK_LIBRARIES = framework/pv112/libPV112_MODULE.a  framework/geometry/libGEOMETRY_MODULE.a  framework/gui/libGUI_MODULE.a  framework/core/libCORE_MODULE.a  framework/glm/libGLM_MODULE.a  vcpkg_installed/x64-linux/debug/lib/libimguid.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  vcpkg_installed/x64-linux/debug/lib/libglad.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  /usr/lib64/librt.a  -lm  -ldl  /usr/lib64/libX11.so  vcpkg_installed/x64-linux/debug/lib/libgtestd.a  vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a
+  OBJECT_DIR = courses/PV112/lecture_08/CMakeFiles/PV112_lecture_08.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = courses/PV112/lecture_08/PV112_lecture_08
+  TARGET_PDB = PV112_lecture_08.dbg
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build courses/PV112/template/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/template && /usr/local/bin/cmake --regenerate-during-build -S/home/pdancak/school/MrPain_T/MUNI/PV112/projekt -B/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build courses/PV112/template/rebuild_cache: phony courses/PV112/template/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build courses/PV112/template/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/template && /usr/local/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build courses/PV112/template/edit_cache: phony courses/PV112/template/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for test
+
+build courses/PV112/template/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/template && /usr/local/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build courses/PV112/template/test: phony courses/PV112/template/CMakeFiles/test.util
+
+# =============================================================================
+# Object build statements for EXECUTABLE target PV112_project_template
+
+
+#############################################
+# Order-only phony target for PV112_project_template
+
+build cmake_object_order_depends_target_PV112_project_template: phony || cmake_object_order_depends_target_CORE_MODULE cmake_object_order_depends_target_GEOMETRY_MODULE cmake_object_order_depends_target_GLM_MODULE cmake_object_order_depends_target_GUI_MODULE cmake_object_order_depends_target_PV112_MODULE
+
+build courses/PV112/template/CMakeFiles/PV112_project_template.dir/application.cpp.o: CXX_COMPILER__PV112_project_template_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/template/application.cpp || cmake_object_order_depends_target_PV112_project_template
+  DEP_FILE = courses/PV112/template/CMakeFiles/PV112_project_template.dir/application.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pv112/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PV112/template/CMakeFiles/PV112_project_template.dir
+  OBJECT_FILE_DIR = courses/PV112/template/CMakeFiles/PV112_project_template.dir
+
+build courses/PV112/template/CMakeFiles/PV112_project_template.dir/main.cpp.o: CXX_COMPILER__PV112_project_template_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PV112/template/main.cpp || cmake_object_order_depends_target_PV112_project_template
+  DEP_FILE = courses/PV112/template/CMakeFiles/PV112_project_template.dir/main.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pv112/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PV112/template/CMakeFiles/PV112_project_template.dir
+  OBJECT_FILE_DIR = courses/PV112/template/CMakeFiles/PV112_project_template.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target PV112_project_template
+
+
+#############################################
+# Link the executable courses/PV112/template/PV112_project_template
+
+build courses/PV112/template/PV112_project_template: CXX_EXECUTABLE_LINKER__PV112_project_template_Debug courses/PV112/template/CMakeFiles/PV112_project_template.dir/application.cpp.o courses/PV112/template/CMakeFiles/PV112_project_template.dir/main.cpp.o | framework/pv112/libPV112_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/gui/libGUI_MODULE.a framework/core/libCORE_MODULE.a framework/glm/libGLM_MODULE.a vcpkg_installed/x64-linux/debug/lib/libimguid.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a vcpkg_installed/x64-linux/debug/lib/libglad.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a /usr/lib64/librt.a /usr/lib64/libm.so /usr/lib64/libX11.so vcpkg_installed/x64-linux/debug/lib/libgtestd.a vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a || framework/core/libCORE_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/glm/libGLM_MODULE.a framework/gui/libGUI_MODULE.a framework/pv112/libPV112_MODULE.a
+  FLAGS = -g
+  LINK_LIBRARIES = framework/pv112/libPV112_MODULE.a  framework/geometry/libGEOMETRY_MODULE.a  framework/gui/libGUI_MODULE.a  framework/core/libCORE_MODULE.a  framework/glm/libGLM_MODULE.a  vcpkg_installed/x64-linux/debug/lib/libimguid.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  vcpkg_installed/x64-linux/debug/lib/libglad.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  /usr/lib64/librt.a  -lm  -ldl  /usr/lib64/libX11.so  vcpkg_installed/x64-linux/debug/lib/libgtestd.a  vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a
+  OBJECT_DIR = courses/PV112/template/CMakeFiles/PV112_project_template.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = courses/PV112/template/PV112_project_template
+  TARGET_PDB = PV112_project_template.dbg
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
 # /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/CMakeLists.txt
 # =============================================================================
 
@@ -394,6 +954,86 @@ build courses/PA213/fluid/PA213_fluid: CXX_EXECUTABLE_LINKER__PA213_fluid_Debug 
   PRE_LINK = :
   TARGET_FILE = courses/PA213/fluid/PA213_fluid
   TARGET_PDB = PA213_fluid.dbg
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PA213/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build courses/PA213/lsystem/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PA213/lsystem && /usr/local/bin/cmake --regenerate-during-build -S/home/pdancak/school/MrPain_T/MUNI/PV112/projekt -B/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build courses/PA213/lsystem/rebuild_cache: phony courses/PA213/lsystem/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build courses/PA213/lsystem/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PA213/lsystem && /usr/local/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build courses/PA213/lsystem/edit_cache: phony courses/PA213/lsystem/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for test
+
+build courses/PA213/lsystem/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PA213/lsystem && /usr/local/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build courses/PA213/lsystem/test: phony courses/PA213/lsystem/CMakeFiles/test.util
+
+# =============================================================================
+# Object build statements for EXECUTABLE target PA213_lsystem
+
+
+#############################################
+# Order-only phony target for PA213_lsystem
+
+build cmake_object_order_depends_target_PA213_lsystem: phony || cmake_object_order_depends_target_CORE_MODULE cmake_object_order_depends_target_GEOMETRY_MODULE cmake_object_order_depends_target_GLM_MODULE cmake_object_order_depends_target_GUI_MODULE cmake_object_order_depends_target_OPENGL_MODULE cmake_object_order_depends_target_PA213_MODULE
+
+build courses/PA213/lsystem/CMakeFiles/PA213_lsystem.dir/application.cpp.o: CXX_COMPILER__PA213_lsystem_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PA213/lsystem/application.cpp || cmake_object_order_depends_target_PA213_lsystem
+  DEP_FILE = courses/PA213/lsystem/CMakeFiles/PA213_lsystem.dir/application.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pa213/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/opengl/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/opengl/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/opengl/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PA213/lsystem/CMakeFiles/PA213_lsystem.dir
+  OBJECT_FILE_DIR = courses/PA213/lsystem/CMakeFiles/PA213_lsystem.dir
+
+build courses/PA213/lsystem/CMakeFiles/PA213_lsystem.dir/main.cpp.o: CXX_COMPILER__PA213_lsystem_Debug /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/courses/PA213/lsystem/main.cpp || cmake_object_order_depends_target_PA213_lsystem
+  DEP_FILE = courses/PA213/lsystem/CMakeFiles/PA213_lsystem.dir/main.cpp.o.d
+  FLAGS = -g -std=c++20
+  INCLUDES = -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/pa213/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/include/geometry -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/core/geometries -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/opengl/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/opengl/include/opengl -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/opengl/include/scene -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/gui/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/glm/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/include -I/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/framework/geometry/geometries -isystem /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
+  OBJECT_DIR = courses/PA213/lsystem/CMakeFiles/PA213_lsystem.dir
+  OBJECT_FILE_DIR = courses/PA213/lsystem/CMakeFiles/PA213_lsystem.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target PA213_lsystem
+
+
+#############################################
+# Link the executable courses/PA213/lsystem/PA213_lsystem
+
+build courses/PA213/lsystem/PA213_lsystem: CXX_EXECUTABLE_LINKER__PA213_lsystem_Debug courses/PA213/lsystem/CMakeFiles/PA213_lsystem.dir/application.cpp.o courses/PA213/lsystem/CMakeFiles/PA213_lsystem.dir/main.cpp.o | framework/pa213/libPA213_MODULE.a framework/core/libCORE_MODULE.a framework/opengl/libOPENGL_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/glm/libGLM_MODULE.a framework/gui/libGUI_MODULE.a vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a framework/core/libCORE_MODULE.a vcpkg_installed/x64-linux/debug/lib/libglad.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a vcpkg_installed/x64-linux/debug/lib/libgtestd.a framework/glm/libGLM_MODULE.a vcpkg_installed/x64-linux/debug/lib/libimguid.a vcpkg_installed/x64-linux/debug/lib/libglfw3.a /usr/lib64/librt.a /usr/lib64/libm.so /usr/lib64/libX11.so || framework/core/libCORE_MODULE.a framework/geometry/libGEOMETRY_MODULE.a framework/glm/libGLM_MODULE.a framework/gui/libGUI_MODULE.a framework/opengl/libOPENGL_MODULE.a framework/pa213/libPA213_MODULE.a
+  FLAGS = -g
+  LINK_LIBRARIES = framework/pa213/libPA213_MODULE.a  framework/core/libCORE_MODULE.a  framework/opengl/libOPENGL_MODULE.a  framework/geometry/libGEOMETRY_MODULE.a  framework/glm/libGLM_MODULE.a  framework/gui/libGUI_MODULE.a  vcpkg_installed/x64-linux/debug/lib/libtinyobjloader.a  framework/core/libCORE_MODULE.a  vcpkg_installed/x64-linux/debug/lib/libglad.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  vcpkg_installed/x64-linux/debug/lib/libgtestd.a  framework/glm/libGLM_MODULE.a  vcpkg_installed/x64-linux/debug/lib/libimguid.a  vcpkg_installed/x64-linux/debug/lib/libglfw3.a  /usr/lib64/librt.a  -lm  -ldl  /usr/lib64/libX11.so
+  OBJECT_DIR = courses/PA213/lsystem/CMakeFiles/PA213_lsystem.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = courses/PA213/lsystem/PA213_lsystem
+  TARGET_PDB = PA213_lsystem.dbg
 
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
@@ -1000,11 +1640,27 @@ build PA213_MODULE: phony framework/pa213/libPA213_MODULE.a
 
 build PA213_fluid: phony courses/PA213/fluid/PA213_fluid
 
+build PA213_lsystem: phony courses/PA213/lsystem/PA213_lsystem
+
 build PV112_MODULE: phony framework/pv112/libPV112_MODULE.a
 
 build PV112_lecture_01: phony courses/PV112/lecture_01/PV112_lecture_01
 
 build PV112_lecture_02: phony courses/PV112/lecture_02/PV112_lecture_02
+
+build PV112_lecture_03: phony courses/PV112/lecture_03/PV112_lecture_03
+
+build PV112_lecture_04: phony courses/PV112/lecture_04/PV112_lecture_04
+
+build PV112_lecture_05: phony courses/PV112/lecture_05/PV112_lecture_05
+
+build PV112_lecture_06: phony courses/PV112/lecture_06/PV112_lecture_06
+
+build PV112_lecture_07: phony courses/PV112/lecture_07/PV112_lecture_07
+
+build PV112_lecture_08: phony courses/PV112/lecture_08/PV112_lecture_08
+
+build PV112_project_template: phony courses/PV112/template/PV112_project_template
 
 build libCORE_MODULE.a: phony framework/core/libCORE_MODULE.a
 
@@ -1035,7 +1691,7 @@ build all: phony courses/PV112/all courses/PA213/all framework/pv112/all framewo
 #############################################
 # Folder: /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PA213
 
-build courses/PA213/all: phony courses/PA213/fluid/all
+build courses/PA213/all: phony courses/PA213/fluid/all courses/PA213/lsystem/all
 
 # =============================================================================
 
@@ -1047,9 +1703,16 @@ build courses/PA213/fluid/all: phony courses/PA213/fluid/PA213_fluid
 # =============================================================================
 
 #############################################
+# Folder: /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PA213/lsystem
+
+build courses/PA213/lsystem/all: phony courses/PA213/lsystem/PA213_lsystem
+
+# =============================================================================
+
+#############################################
 # Folder: /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112
 
-build courses/PV112/all: phony courses/PV112/lecture_01/all courses/PV112/lecture_02/all
+build courses/PV112/all: phony courses/PV112/lecture_01/all courses/PV112/lecture_02/all courses/PV112/lecture_03/all courses/PV112/lecture_04/all courses/PV112/lecture_05/all courses/PV112/lecture_06/all courses/PV112/lecture_07/all courses/PV112/lecture_08/all courses/PV112/template/all
 
 # =============================================================================
 
@@ -1064,6 +1727,55 @@ build courses/PV112/lecture_01/all: phony courses/PV112/lecture_01/PV112_lecture
 # Folder: /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_02
 
 build courses/PV112/lecture_02/all: phony courses/PV112/lecture_02/PV112_lecture_02
+
+# =============================================================================
+
+#############################################
+# Folder: /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_03
+
+build courses/PV112/lecture_03/all: phony courses/PV112/lecture_03/PV112_lecture_03
+
+# =============================================================================
+
+#############################################
+# Folder: /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_04
+
+build courses/PV112/lecture_04/all: phony courses/PV112/lecture_04/PV112_lecture_04
+
+# =============================================================================
+
+#############################################
+# Folder: /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_05
+
+build courses/PV112/lecture_05/all: phony courses/PV112/lecture_05/PV112_lecture_05
+
+# =============================================================================
+
+#############################################
+# Folder: /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_06
+
+build courses/PV112/lecture_06/all: phony courses/PV112/lecture_06/PV112_lecture_06
+
+# =============================================================================
+
+#############################################
+# Folder: /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_07
+
+build courses/PV112/lecture_07/all: phony courses/PV112/lecture_07/PV112_lecture_07
+
+# =============================================================================
+
+#############################################
+# Folder: /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/lecture_08
+
+build courses/PV112/lecture_08/all: phony courses/PV112/lecture_08/PV112_lecture_08
+
+# =============================================================================
+
+#############################################
+# Folder: /home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PV112/template
+
+build courses/PV112/template/all: phony courses/PV112/template/PV112_project_template
 
 # =============================================================================
 
@@ -1121,14 +1833,14 @@ build framework/pv112/all: phony framework/pv112/libPV112_MODULE.a
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | ../CMakeLists.txt ../cmake/courses.cmake ../cmake/modules.cmake ../cmake/utils.cmake ../courses/PA213/CMakeLists.txt ../courses/PA213/depends.cmake ../courses/PA213/fluid/CMakeLists.txt ../courses/PV112/CMakeLists.txt ../courses/PV112/depends.cmake ../courses/PV112/lecture_01/CMakeLists.txt ../courses/PV112/lecture_02/CMakeLists.txt ../framework/core/CMakeLists.txt ../framework/core/depends.cmake ../framework/geometry/CMakeLists.txt ../framework/geometry/depends.cmake ../framework/glm/CMakeLists.txt ../framework/glm/depends.cmake ../framework/gui/CMakeLists.txt ../framework/gui/depends.cmake ../framework/opengl/CMakeLists.txt ../framework/opengl/depends.cmake ../framework/pa213/CMakeLists.txt ../framework/pa213/depends.cmake ../framework/pv112/CMakeLists.txt ../framework/pv112/depends.cmake ../vcpkg.json /home/pdancak/school/MrPain_T/MUNI/PV112/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake /usr/local/share/cmake-3.21/Modules/CMakeCXXInformation.cmake /usr/local/share/cmake-3.21/Modules/CMakeCommonLanguageInclude.cmake /usr/local/share/cmake-3.21/Modules/CMakeDependentOption.cmake /usr/local/share/cmake-3.21/Modules/CMakeFindDependencyMacro.cmake /usr/local/share/cmake-3.21/Modules/CMakeGenericSystem.cmake /usr/local/share/cmake-3.21/Modules/CMakeInitializeConfigs.cmake /usr/local/share/cmake-3.21/Modules/CMakeLanguageInformation.cmake /usr/local/share/cmake-3.21/Modules/CMakeSystemSpecificInformation.cmake /usr/local/share/cmake-3.21/Modules/CMakeSystemSpecificInitialize.cmake /usr/local/share/cmake-3.21/Modules/CheckCXXSourceCompiles.cmake /usr/local/share/cmake-3.21/Modules/CheckIncludeFileCXX.cmake /usr/local/share/cmake-3.21/Modules/CheckLibraryExists.cmake /usr/local/share/cmake-3.21/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/local/share/cmake-3.21/Modules/Compiler/GNU-CXX.cmake /usr/local/share/cmake-3.21/Modules/Compiler/GNU.cmake /usr/local/share/cmake-3.21/Modules/FindPackageHandleStandardArgs.cmake /usr/local/share/cmake-3.21/Modules/FindPackageMessage.cmake /usr/local/share/cmake-3.21/Modules/FindThreads.cmake /usr/local/share/cmake-3.21/Modules/Internal/CheckSourceCompiles.cmake /usr/local/share/cmake-3.21/Modules/Platform/Linux-GNU-CXX.cmake /usr/local/share/cmake-3.21/Modules/Platform/Linux-GNU.cmake /usr/local/share/cmake-3.21/Modules/Platform/Linux.cmake /usr/local/share/cmake-3.21/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.21.3/CMakeCXXCompiler.cmake CMakeFiles/3.21.3/CMakeSystem.cmake vcpkg_installed/.cmakestamp vcpkg_installed/x64-linux/share/GTest/GTestConfig.cmake vcpkg_installed/x64-linux/share/GTest/GTestConfigVersion.cmake vcpkg_installed/x64-linux/share/GTest/GTestTargets-debug.cmake vcpkg_installed/x64-linux/share/GTest/GTestTargets-release.cmake vcpkg_installed/x64-linux/share/GTest/GTestTargets.cmake vcpkg_installed/x64-linux/share/glad/gladConfig.cmake vcpkg_installed/x64-linux/share/glad/gladConfigVersion.cmake vcpkg_installed/x64-linux/share/glad/gladTargets-debug.cmake vcpkg_installed/x64-linux/share/glad/gladTargets-release.cmake vcpkg_installed/x64-linux/share/glad/gladTargets.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Config.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3ConfigVersion.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Targets-debug.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Targets-release.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Targets.cmake vcpkg_installed/x64-linux/share/glm/glm-config.cmake vcpkg_installed/x64-linux/share/imgui/imgui-config.cmake vcpkg_installed/x64-linux/share/imgui/imgui-targets-debug.cmake vcpkg_installed/x64-linux/share/imgui/imgui-targets-release.cmake vcpkg_installed/x64-linux/share/imgui/imgui-targets.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-config-version.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-config.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-targets-debug.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-targets-release.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-targets.cmake vcpkg_installed/x64-linux/share/toml11/toml11Config.cmake vcpkg_installed/x64-linux/share/toml11/toml11ConfigVersion.cmake vcpkg_installed/x64-linux/share/toml11/toml11Targets.cmake
+build build.ninja: RERUN_CMAKE | ../CMakeLists.txt ../cmake/courses.cmake ../cmake/modules.cmake ../cmake/utils.cmake ../courses/PA213/CMakeLists.txt ../courses/PA213/depends.cmake ../courses/PA213/fluid/CMakeLists.txt ../courses/PA213/lsystem/CMakeLists.txt ../courses/PV112/CMakeLists.txt ../courses/PV112/depends.cmake ../courses/PV112/lecture_01/CMakeLists.txt ../courses/PV112/lecture_02/CMakeLists.txt ../courses/PV112/lecture_03/CMakeLists.txt ../courses/PV112/lecture_04/CMakeLists.txt ../courses/PV112/lecture_05/CMakeLists.txt ../courses/PV112/lecture_06/CMakeLists.txt ../courses/PV112/lecture_07/CMakeLists.txt ../courses/PV112/lecture_08/CMakeLists.txt ../courses/PV112/template/CMakeLists.txt ../framework/core/CMakeLists.txt ../framework/core/depends.cmake ../framework/geometry/CMakeLists.txt ../framework/geometry/depends.cmake ../framework/glm/CMakeLists.txt ../framework/glm/depends.cmake ../framework/gui/CMakeLists.txt ../framework/gui/depends.cmake ../framework/opengl/CMakeLists.txt ../framework/opengl/depends.cmake ../framework/pa213/CMakeLists.txt ../framework/pa213/depends.cmake ../framework/pv112/CMakeLists.txt ../framework/pv112/depends.cmake ../vcpkg.json /home/pdancak/school/MrPain_T/MUNI/PV112/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake /usr/local/share/cmake-3.21/Modules/CMakeCXXInformation.cmake /usr/local/share/cmake-3.21/Modules/CMakeCommonLanguageInclude.cmake /usr/local/share/cmake-3.21/Modules/CMakeDependentOption.cmake /usr/local/share/cmake-3.21/Modules/CMakeFindDependencyMacro.cmake /usr/local/share/cmake-3.21/Modules/CMakeGenericSystem.cmake /usr/local/share/cmake-3.21/Modules/CMakeInitializeConfigs.cmake /usr/local/share/cmake-3.21/Modules/CMakeLanguageInformation.cmake /usr/local/share/cmake-3.21/Modules/CMakeSystemSpecificInformation.cmake /usr/local/share/cmake-3.21/Modules/CMakeSystemSpecificInitialize.cmake /usr/local/share/cmake-3.21/Modules/CheckCXXSourceCompiles.cmake /usr/local/share/cmake-3.21/Modules/CheckIncludeFileCXX.cmake /usr/local/share/cmake-3.21/Modules/CheckLibraryExists.cmake /usr/local/share/cmake-3.21/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/local/share/cmake-3.21/Modules/Compiler/GNU-CXX.cmake /usr/local/share/cmake-3.21/Modules/Compiler/GNU.cmake /usr/local/share/cmake-3.21/Modules/FindPackageHandleStandardArgs.cmake /usr/local/share/cmake-3.21/Modules/FindPackageMessage.cmake /usr/local/share/cmake-3.21/Modules/FindThreads.cmake /usr/local/share/cmake-3.21/Modules/Internal/CheckSourceCompiles.cmake /usr/local/share/cmake-3.21/Modules/Platform/Linux-GNU-CXX.cmake /usr/local/share/cmake-3.21/Modules/Platform/Linux-GNU.cmake /usr/local/share/cmake-3.21/Modules/Platform/Linux.cmake /usr/local/share/cmake-3.21/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.21.3/CMakeCXXCompiler.cmake CMakeFiles/3.21.3/CMakeSystem.cmake vcpkg_installed/.cmakestamp vcpkg_installed/x64-linux/share/GTest/GTestConfig.cmake vcpkg_installed/x64-linux/share/GTest/GTestConfigVersion.cmake vcpkg_installed/x64-linux/share/GTest/GTestTargets-debug.cmake vcpkg_installed/x64-linux/share/GTest/GTestTargets-release.cmake vcpkg_installed/x64-linux/share/GTest/GTestTargets.cmake vcpkg_installed/x64-linux/share/glad/gladConfig.cmake vcpkg_installed/x64-linux/share/glad/gladConfigVersion.cmake vcpkg_installed/x64-linux/share/glad/gladTargets-debug.cmake vcpkg_installed/x64-linux/share/glad/gladTargets-release.cmake vcpkg_installed/x64-linux/share/glad/gladTargets.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Config.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3ConfigVersion.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Targets-debug.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Targets-release.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Targets.cmake vcpkg_installed/x64-linux/share/glm/glm-config.cmake vcpkg_installed/x64-linux/share/imgui/imgui-config.cmake vcpkg_installed/x64-linux/share/imgui/imgui-targets-debug.cmake vcpkg_installed/x64-linux/share/imgui/imgui-targets-release.cmake vcpkg_installed/x64-linux/share/imgui/imgui-targets.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-config-version.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-config.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-targets-debug.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-targets-release.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-targets.cmake vcpkg_installed/x64-linux/share/toml11/toml11Config.cmake vcpkg_installed/x64-linux/share/toml11/toml11ConfigVersion.cmake vcpkg_installed/x64-linux/share/toml11/toml11Targets.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build ../CMakeLists.txt ../cmake/courses.cmake ../cmake/modules.cmake ../cmake/utils.cmake ../courses/PA213/CMakeLists.txt ../courses/PA213/depends.cmake ../courses/PA213/fluid/CMakeLists.txt ../courses/PV112/CMakeLists.txt ../courses/PV112/depends.cmake ../courses/PV112/lecture_01/CMakeLists.txt ../courses/PV112/lecture_02/CMakeLists.txt ../framework/core/CMakeLists.txt ../framework/core/depends.cmake ../framework/geometry/CMakeLists.txt ../framework/geometry/depends.cmake ../framework/glm/CMakeLists.txt ../framework/glm/depends.cmake ../framework/gui/CMakeLists.txt ../framework/gui/depends.cmake ../framework/opengl/CMakeLists.txt ../framework/opengl/depends.cmake ../framework/pa213/CMakeLists.txt ../framework/pa213/depends.cmake ../framework/pv112/CMakeLists.txt ../framework/pv112/depends.cmake ../vcpkg.json /home/pdancak/school/MrPain_T/MUNI/PV112/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake /usr/local/share/cmake-3.21/Modules/CMakeCXXInformation.cmake /usr/local/share/cmake-3.21/Modules/CMakeCommonLanguageInclude.cmake /usr/local/share/cmake-3.21/Modules/CMakeDependentOption.cmake /usr/local/share/cmake-3.21/Modules/CMakeFindDependencyMacro.cmake /usr/local/share/cmake-3.21/Modules/CMakeGenericSystem.cmake /usr/local/share/cmake-3.21/Modules/CMakeInitializeConfigs.cmake /usr/local/share/cmake-3.21/Modules/CMakeLanguageInformation.cmake /usr/local/share/cmake-3.21/Modules/CMakeSystemSpecificInformation.cmake /usr/local/share/cmake-3.21/Modules/CMakeSystemSpecificInitialize.cmake /usr/local/share/cmake-3.21/Modules/CheckCXXSourceCompiles.cmake /usr/local/share/cmake-3.21/Modules/CheckIncludeFileCXX.cmake /usr/local/share/cmake-3.21/Modules/CheckLibraryExists.cmake /usr/local/share/cmake-3.21/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/local/share/cmake-3.21/Modules/Compiler/GNU-CXX.cmake /usr/local/share/cmake-3.21/Modules/Compiler/GNU.cmake /usr/local/share/cmake-3.21/Modules/FindPackageHandleStandardArgs.cmake /usr/local/share/cmake-3.21/Modules/FindPackageMessage.cmake /usr/local/share/cmake-3.21/Modules/FindThreads.cmake /usr/local/share/cmake-3.21/Modules/Internal/CheckSourceCompiles.cmake /usr/local/share/cmake-3.21/Modules/Platform/Linux-GNU-CXX.cmake /usr/local/share/cmake-3.21/Modules/Platform/Linux-GNU.cmake /usr/local/share/cmake-3.21/Modules/Platform/Linux.cmake /usr/local/share/cmake-3.21/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.21.3/CMakeCXXCompiler.cmake CMakeFiles/3.21.3/CMakeSystem.cmake vcpkg_installed/.cmakestamp vcpkg_installed/x64-linux/share/GTest/GTestConfig.cmake vcpkg_installed/x64-linux/share/GTest/GTestConfigVersion.cmake vcpkg_installed/x64-linux/share/GTest/GTestTargets-debug.cmake vcpkg_installed/x64-linux/share/GTest/GTestTargets-release.cmake vcpkg_installed/x64-linux/share/GTest/GTestTargets.cmake vcpkg_installed/x64-linux/share/glad/gladConfig.cmake vcpkg_installed/x64-linux/share/glad/gladConfigVersion.cmake vcpkg_installed/x64-linux/share/glad/gladTargets-debug.cmake vcpkg_installed/x64-linux/share/glad/gladTargets-release.cmake vcpkg_installed/x64-linux/share/glad/gladTargets.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Config.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3ConfigVersion.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Targets-debug.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Targets-release.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Targets.cmake vcpkg_installed/x64-linux/share/glm/glm-config.cmake vcpkg_installed/x64-linux/share/imgui/imgui-config.cmake vcpkg_installed/x64-linux/share/imgui/imgui-targets-debug.cmake vcpkg_installed/x64-linux/share/imgui/imgui-targets-release.cmake vcpkg_installed/x64-linux/share/imgui/imgui-targets.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-config-version.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-config.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-targets-debug.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-targets-release.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-targets.cmake vcpkg_installed/x64-linux/share/toml11/toml11Config.cmake vcpkg_installed/x64-linux/share/toml11/toml11ConfigVersion.cmake vcpkg_installed/x64-linux/share/toml11/toml11Targets.cmake: phony
+build ../CMakeLists.txt ../cmake/courses.cmake ../cmake/modules.cmake ../cmake/utils.cmake ../courses/PA213/CMakeLists.txt ../courses/PA213/depends.cmake ../courses/PA213/fluid/CMakeLists.txt ../courses/PA213/lsystem/CMakeLists.txt ../courses/PV112/CMakeLists.txt ../courses/PV112/depends.cmake ../courses/PV112/lecture_01/CMakeLists.txt ../courses/PV112/lecture_02/CMakeLists.txt ../courses/PV112/lecture_03/CMakeLists.txt ../courses/PV112/lecture_04/CMakeLists.txt ../courses/PV112/lecture_05/CMakeLists.txt ../courses/PV112/lecture_06/CMakeLists.txt ../courses/PV112/lecture_07/CMakeLists.txt ../courses/PV112/lecture_08/CMakeLists.txt ../courses/PV112/template/CMakeLists.txt ../framework/core/CMakeLists.txt ../framework/core/depends.cmake ../framework/geometry/CMakeLists.txt ../framework/geometry/depends.cmake ../framework/glm/CMakeLists.txt ../framework/glm/depends.cmake ../framework/gui/CMakeLists.txt ../framework/gui/depends.cmake ../framework/opengl/CMakeLists.txt ../framework/opengl/depends.cmake ../framework/pa213/CMakeLists.txt ../framework/pa213/depends.cmake ../framework/pv112/CMakeLists.txt ../framework/pv112/depends.cmake ../vcpkg.json /home/pdancak/school/MrPain_T/MUNI/PV112/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake /usr/local/share/cmake-3.21/Modules/CMakeCXXInformation.cmake /usr/local/share/cmake-3.21/Modules/CMakeCommonLanguageInclude.cmake /usr/local/share/cmake-3.21/Modules/CMakeDependentOption.cmake /usr/local/share/cmake-3.21/Modules/CMakeFindDependencyMacro.cmake /usr/local/share/cmake-3.21/Modules/CMakeGenericSystem.cmake /usr/local/share/cmake-3.21/Modules/CMakeInitializeConfigs.cmake /usr/local/share/cmake-3.21/Modules/CMakeLanguageInformation.cmake /usr/local/share/cmake-3.21/Modules/CMakeSystemSpecificInformation.cmake /usr/local/share/cmake-3.21/Modules/CMakeSystemSpecificInitialize.cmake /usr/local/share/cmake-3.21/Modules/CheckCXXSourceCompiles.cmake /usr/local/share/cmake-3.21/Modules/CheckIncludeFileCXX.cmake /usr/local/share/cmake-3.21/Modules/CheckLibraryExists.cmake /usr/local/share/cmake-3.21/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/local/share/cmake-3.21/Modules/Compiler/GNU-CXX.cmake /usr/local/share/cmake-3.21/Modules/Compiler/GNU.cmake /usr/local/share/cmake-3.21/Modules/FindPackageHandleStandardArgs.cmake /usr/local/share/cmake-3.21/Modules/FindPackageMessage.cmake /usr/local/share/cmake-3.21/Modules/FindThreads.cmake /usr/local/share/cmake-3.21/Modules/Internal/CheckSourceCompiles.cmake /usr/local/share/cmake-3.21/Modules/Platform/Linux-GNU-CXX.cmake /usr/local/share/cmake-3.21/Modules/Platform/Linux-GNU.cmake /usr/local/share/cmake-3.21/Modules/Platform/Linux.cmake /usr/local/share/cmake-3.21/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.21.3/CMakeCXXCompiler.cmake CMakeFiles/3.21.3/CMakeSystem.cmake vcpkg_installed/.cmakestamp vcpkg_installed/x64-linux/share/GTest/GTestConfig.cmake vcpkg_installed/x64-linux/share/GTest/GTestConfigVersion.cmake vcpkg_installed/x64-linux/share/GTest/GTestTargets-debug.cmake vcpkg_installed/x64-linux/share/GTest/GTestTargets-release.cmake vcpkg_installed/x64-linux/share/GTest/GTestTargets.cmake vcpkg_installed/x64-linux/share/glad/gladConfig.cmake vcpkg_installed/x64-linux/share/glad/gladConfigVersion.cmake vcpkg_installed/x64-linux/share/glad/gladTargets-debug.cmake vcpkg_installed/x64-linux/share/glad/gladTargets-release.cmake vcpkg_installed/x64-linux/share/glad/gladTargets.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Config.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3ConfigVersion.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Targets-debug.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Targets-release.cmake vcpkg_installed/x64-linux/share/glfw3/glfw3Targets.cmake vcpkg_installed/x64-linux/share/glm/glm-config.cmake vcpkg_installed/x64-linux/share/imgui/imgui-config.cmake vcpkg_installed/x64-linux/share/imgui/imgui-targets-debug.cmake vcpkg_installed/x64-linux/share/imgui/imgui-targets-release.cmake vcpkg_installed/x64-linux/share/imgui/imgui-targets.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-config-version.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-config.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-targets-debug.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-targets-release.cmake vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-targets.cmake vcpkg_installed/x64-linux/share/toml11/toml11Config.cmake vcpkg_installed/x64-linux/share/toml11/toml11ConfigVersion.cmake vcpkg_installed/x64-linux/share/toml11/toml11Targets.cmake: phony
 
 
 #############################################

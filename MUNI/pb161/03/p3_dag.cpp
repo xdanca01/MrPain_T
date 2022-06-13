@@ -1,5 +1,6 @@
 #include <map>
 #include <cassert>
+#include <unordered_set>
 
 /* Another exercise for graph exploration, this time we will look
  * for cycles. There are a few algorithms to choose from, those
@@ -13,7 +14,16 @@
  * The graph does not need to be connected. */
 
 using graph = std::multimap< int, int >;
-bool is_dag( const graph &g );
+bool is_dag( const graph &g ){
+    std::unordered_set<int> zas;
+    for(auto edge : g){
+        zas.insert(edge.first);
+        for(auto z : zas){
+            if(z == edge.second) return false;
+        }
+    }
+    return true;
+}
 
 int main()
 {

@@ -1,0 +1,116 @@
+#version 450
+
+layout(binding = 0, std140) uniform Camera {
+    mat4 projection;
+    mat4 view;
+    vec3 position;
+}
+camera;
+
+struct Light {
+	vec4 position;
+	vec4 ambient_color;
+	vec4 diffuse_color;
+	vec4 specular_color;
+};
+
+layout(binding = 1, std430) buffer Lights{
+	Light lights[];
+};
+
+layout(binding = 2, std140) uniform Object {
+    mat4 model_matrix;
+    vec4 ambient_color;
+    vec4 diffuse_color;
+    vec4 specular_color;
+}
+object;
+
+struct Fog{
+    vec4 color;
+    vec2 position;
+};
+
+layout(binding = 3) uniform sampler2D albedo_texture;
+
+layout(location = 0) in vec3 fs_position;
+layout(location = 1) in vec3 fs_normal;
+layout(location = 2) in vec2 fs_texture_coordinate;
+layout(location = 3) uniform bool has_texture = false;
+layout(location = 4) uniform bool bright_textures = false;
+layout(location = 5) uniform bool fog_enable = false;
+layout(location = 6) uniform Fog F;
+layout(location = 8) uniform bool phong_enable = true;
+layout(location = 9) uniform bool toon_enable = false;
+
+layout(location = 0) out vec4 final_color;
+
+/*vec3 procedural_texture(vec2 uv){
+    float r = sin(uv.x*2000.73 + uv.y*1000.4);
+    if(r < 0.1) r = 0.13 + uv.x - uv.y;
+    return vec3(r, r, r);
+}*/
+
+float fogCalc(float z){
+    float LOG2 = 1.442695;
+    float density_square = F.color.w * F.color.w;
+    float distance_square = z * z;
+    float fogFact = exp2(-density_square * distance_square * LOG2);
+    return clamp(fogFact, 0.0, 1.0);
+}
+
+void main() {
+    vec3 color_sum = vec3(0.0);
+    if(phong_enable){
+        for(int i = 0; i < lights.length(); ++i)
+        {
+            Light light = lights[i];
+            vec3 light_vector = lights[i].position.xyz - fs_position * lights[i].position.w;
+            vec3 L = normalize(light_vector);
+            vec3 N = normalize(fs_normal);
+            vec3 E = normalize(camera.position - fs_position);
+            vec3 H = normalize(L + E);
+
+            float NdotL = max(dot(N, L), 0.0);
+            float NdotH = max(dot(N, H), 0.0001);
+
+            vec3 ambient = object.ambient_color.rgb * lights[i].ambient_color.rgb;
+            vec3 diffuse = object.diffuse_color.rgb * lights[i].diffuse_color.rgb * (has_texture && !bright_textures? texture(albedo_texture, fs_texture_coordinate).rgb : vec3(1.0));;
+            vec3 specular = object.specular_color.rgb * lights[i].specular_color.rgb;
+
+            vec3 color = ambient.rgb + NdotL * diffuse.rgb + pow(NdotH, object.specular_color.w) * specular;
+            color /= (length(light_vector * light_vector));
+
+            color_sum += color;
+        }
+    }
+    color_sum = color_sum + (has_texture && bright_textures? texture(albedo_texture, fs_texture_coordinate).rgb : vec3(0.0));
+    if(toon_enable){
+        vec3 lightDir = normalize(vec3(-1.0, 1.0, -1.0));
+        float intesity = dot(lightDir, fs_normal);
+        if(intesity < 0.2){
+            color_sum = color_sum * 0.1;
+        }
+        else if(intesity < 0.4){
+            color_sum = color_sum * 0.3;
+        }
+        else if(intesity < 0.6){
+            color_sum = color_sum * 0.5;
+        }
+        else if(intesity < 0.8){
+            color_sum = color_sum * 0.7;
+        }
+        else{
+            color_sum = color_sum * 0.9;
+        }
+    }
+    if(fog_enable){
+        float Z = length(fs_position - camera.position);
+        float fogFact = fogCalc(Z);
+        color_sum = mix(F.color.rgb, color_sum, fogFact);
+    }
+    color_sum = color_sum / (color_sum + 1.0);       // tone mapping
+    color_sum = pow(color_sum, vec3(1.0 / 2.2)); // gamma correction
+    
+    final_color = vec4(color_sum, 1.0);
+}

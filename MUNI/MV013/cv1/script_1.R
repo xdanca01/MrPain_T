@@ -58,7 +58,7 @@ table(comp$premium, comp$ram)
 #6.
 comp$price_range[comp$price < 3000] <-"normal"
 comp$price_range[comp$price >= 3000] <-"expensive"
-table(comp$price_range)
+table(comp$price_range)x\
 table(comp$price_range, comp$premium)
 
 str(comp)

@@ -47,3 +47,8 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PA213/fluid/cmake_install.cmake")
 endif()
 
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/courses/PA213/lsystem/cmake_install.cmake")
+endif()
+
