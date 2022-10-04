@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body><w:p><w:pPr><w:pStyle w:val="heading"/><w:jc w:val="left"/></w:pPr><w:r><w:t>Projectile trajectory</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="code"/></w:pPr><w:r><w:t><![CDATA[format short
+g = 10;
+h = @(x,theta0,v0) tan(theta0).* x - g.*x.^2/(2.*(v0.*cos(theta0)).^2);]]></w:t></w:r></w:p><w:p><w:pPr><w:sectPr/></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val="code"/></w:pPr><w:r><w:t><![CDATA[v0 = 100;
+x = 50;
+y = 80;
+f = @(theta0) h(x,theta0,v0) - y;]]></w:t></w:r></w:p><w:p><w:pPr><w:sectPr/></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val="code"/></w:pPr><w:r><w:t><![CDATA[theta = pi/2-0.01;
+error=0.0001;
+
+[theta,num] = newton_method(f,theta,error);
+num
+round(theta*360/(2*pi),2)
+plot(0:x,h(0:x,theta,v0))]]></w:t></w:r></w:p><w:p><w:pPr><w:sectPr/></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val="code"/></w:pPr><w:r><w:t><![CDATA[theta = pi/6;
+error=0.0001;
+
+[theta,num] = newton_method(f,theta,error);
+num
+round(theta*360/(2*pi),2)
+plot(0:x,h(0:x,theta,v0))]]></w:t></w:r></w:p><w:p><w:pPr><w:sectPr/></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val="code"/></w:pPr><w:r><w:t><![CDATA[function [x,num] = newton_method(f,x,error)
+%Newton method
+x_prev=Inf;
+df=derivative(f);
+num=0;
+while abs(x-x_prev)>error
+    x_prev=x;
+    x=x-f(x)/df(x);
+    num=num+1;
+end
+end]]></w:t></w:r></w:p></w:body></w:document>

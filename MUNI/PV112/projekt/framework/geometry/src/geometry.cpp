@@ -12,6 +12,36 @@
 #include <tiny_obj_loader.h>
 #include <glm/gtx/component_wise.hpp>
 
+std::vector<float> compute_TB(std::vector<float> positions, std::vector<float> normals, std::vector<float> tex_coords){
+    std::vector<glm::vec3> p, n, uv;
+    std::vector<float> TB;
+    //create vertices
+    for(int i = 0; i < positions.size(); i+= 3){
+        p.push_back(glm::vec3(positions[i], positions[i+1], positions[i+2]));
+        n.push_back(glm::vec3(normals[i], normals[i+1], normals[i+2]));
+    }
+    for(int i = 0; i < tex_coords.size(); i += 2){
+        uv.push_back(glm::vec3(tex_coords[i], tex_coords[i+1], 0.0));
+    }
+    for(int i = 0; i < p.size(); i+= 3){
+        glm::vec3 edge1 = p[i+1] - p[i];
+        glm::vec3 edge2 = p[i+2] - p[i];
+        glm::vec3 deltaUV1 = uv[i+1] - uv[i];
+        glm::vec3 deltaUV2 = uv[i+2] - uv[i];
+        
+        float f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+
+        TB.push_back(f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x));
+        TB.push_back(f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y));
+        TB.push_back(f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z));
+
+        TB.push_back(f * (-deltaUV2.x * edge1.x + deltaUV1.x * edge2.x));
+        TB.push_back(f * (-deltaUV2.x * edge1.y + deltaUV1.x * edge2.y));
+        TB.push_back(f * (-deltaUV2.x * edge1.z + deltaUV1.x * edge2.z));
+    }
+    return TB;
+}
+
 // ----------------------------------------------------------------------------
 // Constructors
 // ----------------------------------------------------------------------------
@@ -101,6 +131,7 @@ Geometry::~Geometry() {
 // ----------------------------------------------------------------------------
 // Methods
 // ----------------------------------------------------------------------------
+
 void Geometry::init_vao() {
     // Creates a new VAO.
     glCreateVertexArrays(1, &vao);
@@ -149,9 +180,8 @@ void Geometry::init_vao() {
     }
 }
 
-Geometry Geometry::from_file(std::filesystem::path path) {
+Geometry Geometry::from_file(std::filesystem::path path, bool TB) {
     const std::string extension = path.extension().generic_string();
-
     if (extension == ".obj") {
         tinyobj::ObjReader reader;
 
@@ -175,6 +205,8 @@ Geometry Geometry::from_file(std::filesystem::path path) {
         std::vector<float> positions;
         std::vector<float> normals;
         std::vector<float> tex_coords;
+        std::vector<float> tangents;
+        std::vector<float> bitangents;
 
         glm::vec3 min{std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max()};
         glm::vec3 max{std::numeric_limits<float>::min(), std::numeric_limits<float>::min(), std::numeric_limits<float>::min()};
@@ -242,8 +274,23 @@ Geometry Geometry::from_file(std::filesystem::path path) {
             positions[i + 2] /= std::max(std::max(diff.x, diff.y), diff.z);
         }
 
-        const int elements_per_vertex = 3 + (!normals.empty() ? 3 : 0) + (!tex_coords.empty() ? 2 : 0);
+        if(TB){
+            std::vector<float> tb_float = (positions, normals, tex_coords);
+            for(int i = 0; i < tb_float.size(); i+=6){
+                tangents.push_back(tb_float[i]);
+                tangents.push_back(tb_float[i+1]);
+                tangents.push_back(tb_float[i+2]);
+                bitangents.push_back(tb_float[i+3]);
+                bitangents.push_back(tb_float[i+4]);
+                bitangents.push_back(tb_float[i+5]);
+            }
+        }
 
+        const int elements_per_vertex = 3 + (!normals.empty() ? 3 : 0) + (!tex_coords.empty() ? 2 : 0) + (!tangents.empty() ? 3 : 0) + (!bitangents.empty() ? 3 : 0);
+
+        if(TB){
+            return Geometry{GL_TRIANGLES, positions, {/*indices*/}, normals, {/*colors*/}, tex_coords, tangents, bitangents};
+        }
         return Geometry{GL_TRIANGLES, positions, {/*indices*/}, normals, {/*colors*/}, tex_coords};
     }
     std::cerr << "Extension " << extension << " not supported" << std::endl;

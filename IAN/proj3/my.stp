@@ -1,0 +1,141 @@
+global CPU_USAGE
+# array of cpu idle times in us
+global CPU_IDLE
+# array of cpu hr_timer_interrup times in us
+global CPU_HR
+# time, when program was started
+global start
+# array of start times for each wait function
+global start_wait
+# array of start times for each hr_timer_interrupt
+global timer_i
+# time, when program ended
+global end
+
+function print_output()
+{
+	end = gettimeofday_us()
+        time = end - start
+	printf("CPU   |  IDLE  |INTERRUPT|  OTHER  |\n")
+	# not ended idle need to count
+	foreach(cpu+ in start_wait)
+	{
+		wait = end - start_wait[cpu]
+		CPU_IDLE[cpu] += wait
+		CPU_USAGE[cpu] += wait
+	}
+	# not ended hrtimer
+	foreach(cpu+ in timer_i)
+	{
+		wait = end - timer_i[cpu]
+		CPU_HR[cpu] += wait
+	}
+	foreach(cpu+ in CPU_USAGE)
+	{
+		other = time - CPU_USAGE[cpu]
+		if(other < 0)
+		{
+			other = 0
+		}
+#		printf("other: %d, usage: %d, time: %d, idle: %d\n",other, CPU_USAGE[cpu], time, CPU_IDLE[cpu])
+		prcnt_other = (other) * 100 / time
+		if (cpu in CPU_IDLE)
+		{
+			prcnt_idle = CPU_IDLE[cpu] * 100 / time
+		}
+		else
+		{
+			prcnt_idle = 0
+			CPU_IDLE[cpu] = 0
+		}
+		if (cpu in CPU_HR)
+		{
+			prcnt_hr = CPU_HR[cpu] * 100 / time
+		}
+		else
+		{
+			prcnt_hr = 0
+			CPU_HR[cpu] = 0
+		}
+		if (prcnt_idle >= 1)
+			printf("CPU %d |  %3d%%  ", cpu, prcnt_idle)
+		else
+			printf("CPU %d |%4d us ", cpu, CPU_IDLE[cpu])
+		if (prcnt_hr >= 1)
+			printf("|  %3d%%   ", prcnt_hr)
+		else
+			printf("|%5d us ", CPU_HR[cpu])
+		if (prcnt_other >= 1)
+			printf("|  %3d%%   |\n", prcnt_other)
+		else
+			printf("|%5d us |\n", other)
+	}
+	printf("----------------------------------\n")
+        delete CPU_IDLE
+        delete CPU_HR
+	delete CPU_USAGE
+	delete start_wait
+	delete timer_i
+}
+
+probe begin
+{
+	start = gettimeofday_us()
+}
+
+probe kernel.function("do_idle")
+{
+	actual_cpu = cpu()
+	start_wait[actual_cpu] = gettimeofday_us()
+}
+
+probe kernel.function("do_idle").return
+{
+	now = gettimeofday_us()
+    actual_cpu = cpu()
+    if(!(actual_cpu in start_wait))
+    {
+	    start_wait[actual_cpu] = start
+    }
+    # Count time from start to now
+    CPU_IDLE[actual_cpu] += (now - start_wait[actual_cpu])
+    CPU_USAGE[actual_cpu] += (now - start_wait[actual_cpu])
+#printf("idle:%d usage:%d\n", CPU_IDLE[actual_cpu], CPU_USAGE[actual_cpu])
+    delete start_wait[actual_cpu]
+}
+
+probe kernel.function("hrtimer_interrupt")
+{
+	timer_i[cpu()] = gettimeofday_us()
+}
+
+probe kernel.function("hrtimer_interrupt").return
+{
+	now = gettimeofday_us()
+	if(!(cpu() in timer_i))
+	{
+		timer_i[cpu()] = start
+	}
+	CPU_HR[cpu()] += (now - timer_i[cpu()])
+	CPU_USAGE[cpu()] += (now - timer_i[cpu()])
+	delete timer_i[cpu()]
+}
+
+probe timer.s(5)
+{
+	print_output()
+	start = gettimeofday_us()
+}
+
+probe signal.send
+{
+        if (sig == 11 || sig == 19){
+                printf("SIGNAL %d - process PID: %d NAME: %s HANDLE: %p\n", sig, sig_pid, pid_name, task)
+        }
+}
+
+probe end
+{
+	print_output()
+}
+

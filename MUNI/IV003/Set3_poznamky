@@ -1,0 +1,37 @@
+Funkce E, která ohodnotí řešení S - goodness/badness of solution
+	- na základě toho se snažíme najít optimální řešení s maximální/minimální hodnotou.
+	- funkce nemusí dávat optimální řešení, protože sama nemusí být vhodná
+	- Většinou tato technika selhává z důvodu špatné funkce.
+	*str. 2
+	
+optimalizace pro detekci a rozpoznávání objektů nám dává možnost kombinovat různé zdroje informací, dle kterých vyhodnotíme řešení v jediné objektivní funkci. - str. 3
+
+Výhodou diskrétních optimalizačních metod je to, že nám dají nějakou záruku kvality nalezeného řešení, případně je možné u nich dokázat, že nám ideálně vrátí globální minimum/maximum E. U většiny metod se ale setkáme především s lokálním minimem/maximem. - str. 3
+
+Funkce N - Dává nám okolí nějakého řešení.
+	 - Pomáhá nám při hledání lokálního minima/maxima. Kdy hledání probíhá iterativně prohledáváním sousedních řešení.
+
+Lokální řešení se používá například se segmentací objektu, kdy objekt rozdělíme na podproblémy jako v dynamickém programování a pro každý podproblém zjistíme lokální minimum/maximum. Pořád ale musíme mít na vědomí, že lokální minimum/maximum nemusí být ani trochu podobné optimálnímu řešení. str. 3
+
+Spojité metody jsou oproti diskrétním silnější s tím, že nám nedávají jistotu kvality nalezeného řešení, ale namísto toho rychleji konvergují k lokálnímu minimu/maximu. - str. 3
+
+Pokud nepotřebujeme mít zaručeně optimální řešení, tak spojité metody jsou lepší volbou z důvodu rychlosti konvergence. - str. 4
+
+
+Náročnost řešení problému může být neintuitivní. Například minimalizace E s diskrétní množinou S může trvat déle než minimalizace E se spojitou množinou S', který zahrnuje S. - str. 4
+Proto existuje něco jako relaxation originálního problému, což je minimalizace S'(spojité množiny) namísto S(diskrétní). Pokud nalezené řešení existuje i v množině S, pak se jedná o globální řešení, kterým vyřešíme originální problém. - str. 4
+Pokud nalezené řešení relaxation se v množině S nevyskytuje, pak nevíme o řešení problému nic. - str. 4
+Pro relaxation se používají spektrální grafy nebo lineární programování. - str. 4
+Problém je vytvořit relaxation. - str. 4
+
+
+Max flow algoritmy se hodí na řešení vizuálních problémů, protože grafy, které při řešení vizuálních problémů vzniknou jsou gridy. Tyto gridy mají hodně krátkých cest, což vede právě na max-flow. - str. 6
+
+V interaktivní segmentaci mají diskrétní optimizační techniky velký dopad. Kdy cílem je odlišit nějakou část obrázku od ostatních částí. K tomu dopomáhají lidé, kteří při procesu upravují výběr algoritmu. - str. 10
+3 interaktivní metody: Chytré nůžky,  aktivní kontury, GrabCut. - str. 10
+Chytré nůžky využívají algoritmy pro řešení shortest path. - str. 10
+Namísto interaktivních nůžek se používala interaktivní oddělování(segmentation), které provádí se na začátku pomocí uživatele, kde uživatel určí body na hraně požadovaného objektu a následně algoritmus body spojí. - str. 10
+U chytrých nůžek je to tak, že uživatel kopíruje myší oddělující hranici objektu s okolím. Při tomto procesu se vykresluje křivka, která snad kopíruje hranici objektu. Pro toto řešení byl zvolen problém shortest path, protože vrcholy musí být nutně uloženy v pixelech a hrany mohou být reprezentovány jako přechody mezi okolím pixelu. - str. 11
+Celý point chytrých nůžek je pak v tom najít co nejlépe vystihující hodnoty hran spojující vrcholy(pixely) tím, že určíme váhu na hranách na základě podobnosti hrany s pravou hranou objektu. Pokud bude pravé hraně objektu odpovídat bude co nejmenší. Poté můžeme vytvořený graf vyřešit pomocí algoritmů řešící shortest path problém. - str. 11
+Active contour models pracují s dynamickým programováním a energetickou funkcí E. ... U objektu zafixujeme některé body popisující hranici a pro zbylé optimalizujeme E. Tento proces opakujeme dokud nedojde ke konvergenci. - str. 11/12
+

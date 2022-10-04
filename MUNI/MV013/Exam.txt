@@ -1,0 +1,21 @@
+   1.
+	a)for example probability of hitting a target (0.1 possibility of succes, where we have only 2 probabilites. Succes or failure)
+	b)Normal distribution (if we have symetric distributon we have 0 skewness) (IQ of population)
+	c)(1,1+2,1+2+1,1+2+1+1)/n, distribuční funkce neklesající. V tomto případě je to diskrétní funkce. spojitá zleva
+	d)We can take average value or median.
+	e) x(u) from U(a,b); u from U(0,1) -> (b-a)*u from U(0,b-a) -> a+(b-a)*u from U(a, b)
+	     ############# if we want to take if from uniform distrib. Let x from F(x); u from U(0,1); F^-1(u) from F(x); x = F^-1(u) 
+	f) p = 0.53, n=5000, P(X > 2600); (Y_n - n*p)/sqrt(n*p(1-p)) follows N(0,1); 1-P(x <= 2600) = 1 - P(X - n*p <= 2600 - 5000*0.53) = 1 - P(x-n*p/sqrt(...) <= (2600-5000*0.53)/sqrt(5000*(1-0.53)*0.53)) = 
+	   1 - P(z <= -1.4167) = F(x) = P(X <= x) = F(-1.4163) = 1 - něco(-1, -1.4167) = 0.93 = 93%
+	g) Parametrix bootstrap method. We know F, we estimate parameter O and we follow provided slides. Estimation by optim(-;x=x;) -> rnorm(i,) generate 8 number from 
+	h)Not independent and not identically distributed, Because r = Y - Y_hat = Y - X*beta_hat; to compute every residual we will need whole dataset. B_hat = (X*X_hat)^-1*X*Y_hat
+	  By standardizing we ...IDK
+	  
+   2.
+   	a)X_1,...,X_n from P(lambda); P(x) = (lambda^x*e^lambda)/x!
+	L(t) = P(lambda_1 = x_1;...;lambda_n = X_n | O) = i from 1 to n identity(like sum, vypadá to jak pi) { f(xi)  } = i from 1 to 7 identity(like sum) { (lambda^x_i*e^lambda)/x_i! } = sum log((e^-			lambda*lambda^x_i)/x_i!) = sum log(e^-lambda) + log(lambda^x_i) - log(x_i!) = sum -lambda + x_i * log(lambda) - log(x_i!) ### nad timto provedu derivaci podle lambdy; -> -n + sum(x_i)/lambda = 0 -> sum(x_i)/lambda = n -> lambda = sum(x_i)/n -> lambda = 6+5+7+3+4+4+6/7
+	c) solution: lambda = (sum(x_i)/n)^2#########################
+   3. similar to HW3
+   4. eigen value/sum of eigen values; for explanation of variance defined by first and second cmp. (eigen_1 + eigen_2)/sum(eigen vlaues)
+      d)(x)#our data(asi SD)*P()#Matrix
+      e)X třeba PC1, Y PC2, tam kde je velké kladné číslo, tak je velké spojení s tímto jevem například PC2 fish in positive X.

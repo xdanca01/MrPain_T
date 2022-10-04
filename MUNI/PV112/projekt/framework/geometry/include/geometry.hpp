@@ -124,7 +124,7 @@ public:
      * @param 	file_path	The file name.
      * @return	A loaded geometry.
      */
-    static Geometry from_file(std::filesystem::path file_path);
+    static Geometry from_file(std::filesystem::path file_path, bool TB);
 
     // ----------------------------------------------------------------------------
     // Operators

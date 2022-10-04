@@ -1,0 +1,141 @@
+global start
+global CPUS
+global end
+global time, time2
+global start_interrupt
+global ends1, ends2
+global signals
+
+function print_output()
+{
+	end = gettimeofday_us()
+	foreach(cpu+ in ends2)
+	{
+		start_interrupt[cpu] = ends2[cpu]
+	}
+	foreach(cpu+ in start_interrupt)
+	{
+		time2[cpu] += end - start_interrupt[cpu]
+		ends2[cpu] = end
+	}
+	# Not ended process time
+	foreach(cpu+ in ends1)
+	{
+		CPUS[cpu] = ends1[cpu]
+	}
+	foreach(cpu+ in CPUS)
+	{
+		time[cpu] += end - CPUS[cpu]
+		ends1[cpu] = end
+	}
+	printf("----------------------START_OF_CYCLE------------------------\n")
+	printf("PID: %d was running on:\n", target())
+	foreach(cpu+ in time)
+	{
+		total = time[cpu]
+		prcnt =  (time[cpu] - time2[cpu]) * 100 /total
+		prcnt2 = time2[cpu] * 100 /total
+		printf("CPU%d: irq - ", cpu)
+        if(prcnt2 > 0)
+        {
+            printf("%d%% ", prcnt2)
+        }
+        else
+        {
+            printf("%d us ", time2[cpu])
+        }
+        if(prcnt > 0)
+        {
+            printf("- runtime - %d%%\n", prcnt)
+        }
+        else
+        {
+            printf("- runtime - %d us\n", (time[cpu] - time2[cpu]))
+        }
+	}
+	printf("----------------------END_OF_CYCLE--------------------------\n")
+	delete start_interrupt
+	delete CPUS
+	delete time2
+	delete time
+
+}
+
+probe process.syscall
+{
+	if (pid() == target())
+	{
+		CPUS[cpu()] = gettimeofday_us()
+	}
+}
+
+probe kernel.function("hrtimer_interrupt")
+{
+	if (pid() == target())
+	{
+		start_interrupt[cpu()] = gettimeofday_us()
+	}
+}
+
+probe kernel.function("hrtimer_interrupt").return
+{
+	if (pid() == target())
+	{
+		end_interrupt = gettimeofday_us()
+		if(cpu() in ends2)
+		{
+			start_interrupt[cpu()] = ends2[cpu()]
+			delete ends2[cpu()]
+		}
+		if(cpu() in start_interrupt && start_interrupt[cpu()] != 0)
+		{
+			time2[cpu()] += end_interrupt - start_interrupt[cpu()]
+			delete start_interrupt[cpu()]
+		}
+	}
+}
+
+probe process.syscall.return
+{
+	if (pid() == target())
+	{
+		end = gettimeofday_us()
+		if(cpu() in ends1)
+		{
+			CPUS[cpu()] = ends1[cpu()]
+			delete ends1[cpu()]
+		}
+		if(cpu() in CPUS && CPUS[cpu()] != 0)
+		{
+			my_time = end - CPUS[cpu()]
+			time[cpu()] += my_time
+			delete CPUS[cpu()]
+		}
+	}
+}
+
+probe signal.send
+{
+        if(sig_pid == target())
+        {
+                printf("SIGNAL: %d\n", sig)
+        }
+}
+
+#probe kernel.function("do_signal")
+#{
+#       if(pid() == target())
+#       {
+#printf("SIGNAL: %d\n", sig)
+#       }
+#}
+
+probe timer.s(5)
+{
+	print_output()
+}
+
+probe end
+{
+	print_output()
+}

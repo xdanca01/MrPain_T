@@ -1,0 +1,103 @@
+// Module included in the following assemblies:
+//
+// <List assemblies here, each on a new line>
+
+// This module can be included from assemblies using the following include statement:
+// include::<path>/proc_acquiring-administration-access-to-cups-web-ui.adoc[leveloffset=+1]
+
+// The file name and the ID are based on the module title. For example:
+// * file name: proc_doing-procedure-a.adoc
+// * ID: [id='proc_doing-procedure-a_{context}']
+// * Title: = Doing procedure A
+//
+// The ID is used as an anchor for linking to the module. Avoid changing
+// it after the module has been published to ensure existing links are not
+// broken.
+//
+// The `context` attribute enables module reuse. Every module's ID includes
+// {context}, which ensures that the module has a unique ID even if it is
+// reused multiple times in a guide.
+//
+// Start the title with a verb, such as Creating or Create. See also
+// _Wording of headings_ in _The IBM Style Guide_.
+
+[id="acquiring-administration-access-to-cups-web-ui_{context}"]
+= Acquiring administration access to the CUPS web UI
+
+This section describes how to acquire administration access to the [application]*CUPS web UI*. 
+
+.Procedure
+
+. To be able to access the `Administation` menu in the [application]*CUPS web UI*, include the following in the [filename]`/etc/cups/cupsd.conf` file:
++
+[literal,subs="+quotes,verbatim,normal,normal"]
+....
+<Location /admin>
+Allow from <your_ip_address>
+Order allow,deny
+</Location>
+....
++
+[NOTE]
+====
+Replace `<your_ip_address>` with the real IP  address of your system.
+====
+
+. To be able to access configuration files in the [application]*CUPS web UI*, include the following in the [filename]`/etc/cups/cupsd.conf` file:
++
+[#replace=<your_ip_address>=host-ip,literal,subs="+quotes,verbatim,normal,normal"]
+----
+<Location /admin/conf>
+AuthType Default
+Require user @SYSTEM
+Allow from <your_ip_address>
+Order allow,deny
+</Location>
+----
++
+[NOTE]
+====
+Replace `<your_ip_address>` with the real IP  address of your system.
+====
+
+. To be able to access log files in the [application]*CUPS web UI*, include the following in the [filename]`/etc/cups/cupsd.conf` file:
++
+[literal,subs="+quotes,verbatim,normal,normal"]
+....
+<Location /admin/log>
+AuthType Default
+Require user @SYSTEM
+Allow from <your_ip_address>
+Order allow,deny
+</Location>
+....
++
+[NOTE]
+====
+Replace `<your_ip_address>` with the real IP  address of your system.
+====
+
+. To specify the use of encryption for authenticated requests in the [application]*CUPS web UI*, include `DefaultEncryption` in the [filename]`/etc/cups/cupsd.conf` file:
++
+[literal,subs="+quotes,verbatim,normal,normal"]
+....
+DefaultEncryption IfRequested
+....
++
+With this setting, you will receive an authentication window to enter the username of a user allowed to add printers when you attempt to access the `Administration` menu. However, there are also other options how to set `DefaultEncryption`. For more details, see the `cupsd.conf` man page.
+
+. Restart the `cups` service:
++
+[literal,subs="+quotes,verbatim,normal,normal"]
+....
+#{nbsp}systemctl restart cups
+....
++
+WARNING: If you do not restart the `cups` service, the changes in [filename]`/etc/cups/cupsd.conf` will not be applied. Consequently, you will not be able to obtain administration access to the [application]*CUPS web UI*.
+
+// These settings enable you to access the `Administration` menu. However, you will not be able to access configuration files or log files, unless you follow instructions in xref:access-config-files[Acquiring access to configuration files] and xref:access-log-files[Acquiring access to log files].
+
+.Additional resources
+
+* For more information on how to configure a CUPS server using the [filename]`/etc/cups/cupsd.conf` file, see the `cupsd.conf` man page.
+

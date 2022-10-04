@@ -55,19 +55,23 @@ layout(location = 6) uniform Fog F;
 layout(location = 0) out vec3 fs_position;
 layout(location = 1) out vec3 fs_normal;
 layout(location = 2) out vec2 fs_texture_coordinate;
+//layout(location = 3) out mat3 TBN;
 
 void main()
 {
+	//bottom square
 	if( gl_VertexID < 6){
 		fs_position = vec3(square[gl_VertexID].x, -1.37f, square[gl_VertexID].y);
 		fs_texture_coordinate = texCoord[gl_VertexID] * 50;
 	}
+	//background square
 	else{
 		fs_position = vec3(square[gl_VertexID-6].y, square[gl_VertexID-6].x, -100.0);
 		fs_texture_coordinate = texCoord[gl_VertexID-6] * 50;
 	}
 	fs_normal = vec3(1,0,0);
-	fs_texture_coordinate = texCoord[gl_VertexID] * 50;
     vec4 MVposition = camera.view * object.model_matrix * vec4(fs_position, 1.0);
     gl_Position = camera.projection * MVposition;
+
+
 }

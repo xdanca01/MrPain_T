@@ -7,8 +7,62 @@
 
 using std::make_shared;
 
+glm::vec3 cameraPos   = glm::vec3(0.0f, 1.0f,  0.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+const float cameraSpeed = 0.05f;
+bool firstMouse = true, is_rotating = false;
+float lastX, lastY, yaw = -90.0f, pitch = 0.0f;
+bool keys[6] = {false, false, false, false, false, false};
 
 
+void mouse_callback(double xpos, double ypos)
+{
+    if (firstMouse)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+  
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos; 
+    lastX = xpos;
+    lastY = ypos;
+
+    float sensitivity = 0.2f;
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+
+    yaw   += xoffset;
+    pitch += yoffset;
+
+    /*if(pitch > 89.0f)
+        pitch = 89.0f;
+    if(pitch < -89.0f)
+        pitch = -89.0f;*/
+
+    glm::vec3 direction;
+    direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    direction.y = sin(glm::radians(pitch));
+    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    cameraFront = glm::normalize(direction);
+} 
+
+void compute_camera(){
+    //W
+    if(keys[0]) cameraPos += cameraSpeed * cameraFront;
+    //S
+    if(keys[1]) cameraPos -= cameraSpeed * cameraFront;
+    //A
+    if(keys[2]) cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    //D
+    if(keys[3]) cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    //SHIFT
+    if(keys[4]) cameraPos += glm::normalize(cameraUp) * cameraSpeed;
+    //CONTROL
+    if(keys[5]) cameraPos -= glm::normalize(cameraUp) * cameraSpeed;
+}
 
 GLuint load_texture_2d(const std::filesystem::path filename) {
     int width, height, channels;
@@ -31,6 +85,7 @@ GLuint load_texture_2d(const std::filesystem::path filename) {
 
     glGenerateTextureMipmap(texture);
 
+    //glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY, 16.0f);
     glTextureParameteri(texture, GL_TEXTURE_WRAP_R, GL_MIRRORED_REPEAT);
     glTextureParameteri(texture, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
     glTextureParameteri(texture, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
@@ -45,7 +100,6 @@ Application::Application(int initial_width, int initial_height, std::vector<std:
     : PV112Application(initial_width, initial_height, arguments) {
     this->width = initial_width;
     this->height = initial_height;
-
     images_path = lecture_folder_path / "images";
     objects_path = lecture_folder_path / "objects";
 
@@ -53,10 +107,10 @@ Application::Application(int initial_width, int initial_height, std::vector<std:
     //  Load/Create Objects
     // --------------------------------------------------------------------------
     // You can use from_file function to load a Geometry from .obj file
-    geometries.push_back(make_shared<Geometry>(Geometry::from_file(objects_path / "mustang.obj")));
-    geometries.push_back(make_shared<Geometry>(Geometry::from_file(objects_path / "parking lot.obj")));
-    geometries.push_back(make_shared<Geometry>(Geometry::from_file(objects_path / "Barrier.obj")));
-    geometries.push_back(make_shared<Geometry>(Geometry::from_file(objects_path / "cone.obj")));
+    geometries.push_back(make_shared<Geometry>(Geometry::from_file(objects_path / "mustang.obj", false)));
+    geometries.push_back(make_shared<Geometry>(Geometry::from_file(objects_path / "parking lot.obj", true)));
+    geometries.push_back(make_shared<Geometry>(Geometry::from_file(objects_path / "Barrier.obj", false)));
+    geometries.push_back(make_shared<Geometry>(Geometry::from_file(objects_path / "cone.obj", false)));
 
     car = geometries[0];
     parking = geometries[1];
@@ -70,7 +124,7 @@ Application::Application(int initial_width, int initial_height, std::vector<std:
     textures.push_back(load_texture_2d(images_path / "barricade.jpg"));
     textures.push_back(load_texture_2d(images_path / "mustang.png"));
     textures.push_back(load_texture_2d(images_path / "cone.jpg"));
-    normals.push_back(load_texture_2d(images_path / "concrete_wall_normals.jpg"));
+    normals.push_back(load_texture_2d(images_path / "concrete_wall_normals_fixed.jpg"));
     normals.push_back(load_texture_2d(images_path / "asphalt_normals.jpg"));
 
     // --------------------------------------------------------------------------
@@ -160,6 +214,17 @@ Application::Application(int initial_width, int initial_height, std::vector<std:
     light.specular_color = glm::vec4(0.98f, 0.79f, 0.03f, 1.0f);
     lights.push_back(light);
 
+    light.position = glm::vec4(-0.14f, 0.61f, 3.43f, 1.0f);
+    light.ambient_color = glm::vec4(0.0f);
+    light.diffuse_color = glm::vec4(0.2f, 0.3f, 0.8f, 1.0f);
+    light.specular_color = glm::vec4(0.0f);
+    lights.push_back(light);
+
+    light.position = glm::vec4(0.14f, 0.61f, 3.43f, 1.0f);
+    light.ambient_color = glm::vec4(0.0f);
+    light.diffuse_color = glm::vec4(0.2f, 0.3f, 0.8f, 1.0f);
+    light.specular_color = glm::vec4(0.0f);
+    lights.push_back(light);
 
     auto T = glm::radians(-90.0f);
     //car
@@ -279,31 +344,46 @@ Application::~Application() {
 double timeOfNextAnimationStep = 2;
 double animationDelayTime = 0.05; //in seconds
 double step = 0;
-unsigned steps = 200;
+unsigned steps = 250;
+glm::vec4 position {1.0f};
 
 void Application::animate() {
     double currentTime = glfwGetTime();
     if(currentTime < timeOfNextAnimationStep) return;
     timeOfNextAnimationStep = currentTime + animationDelayTime;
+    LightUBO L1 = lights.at(lights.size()-1);
+    LightUBO L2 = lights.at(lights.size()-2);
+    L1.diffuse_color = glm::vec4(0.2f, 0.3f, 0.8f, 1.0f);
+    L2.diffuse_color = glm::vec4(0.2f, 0.3f, 0.8f, 1.0f);
+    lights.pop_back();
+    lights.pop_back();    
 
     float car_angle = glm::radians(1.0f);
     glm::vec3 car_rotate {0.0f, 1.0f, 0.0f};
     glm::vec3 car_trans {0.015f,0,0};
     unsigned modulo_step = step % steps;
-    if(modulo_step < 100){
+    if(modulo_step < 125){
         car_trans = {-0.015f,0,0,};
-        if(modulo_step >= 50){
-            car_angle = glm::radians(-1.0f);
+        if(modulo_step >= 75){
+            car_angle = -car_angle;
         }
     }
     auto model_matrix = objects_ubos.at(0).model_matrix;
     model_matrix = glm::translate(model_matrix, car_trans);
     //rotate only between steps 50 and 150
-    if(modulo_step >= 50 && modulo_step < 150){
+    if(modulo_step >= 75 && modulo_step < 175){
         model_matrix = glm::rotate(model_matrix, car_angle, car_rotate);
+        L1.diffuse_color = glm::vec4(0.0f);
+        L2.diffuse_color = glm::vec4(0.0f);
     }
     objects_ubos.at(0).model_matrix = model_matrix;
+    //std::cout << (model_matrix * position).z << "\n";
+    L1.position = L1.position + glm::vec4(0.0f, 0.0f, car_trans.x, 0.0f);
+    L2.position = L2.position + glm::vec4(0.0f, 0.0f, car_trans.x, 0.0f);
+    lights.push_back(L1);
+    lights.push_back(L2);
     glNamedBufferSubData(objects_buffer, 0, sizeof(ObjectUBO) * objects_ubos.size(), objects_ubos.data());
+    glNamedBufferSubData(lights_buffer,  0, sizeof(LightUBO) * lights.size(), lights.data());
     ++step;
 }
 
@@ -320,14 +400,22 @@ void Application::compile_shaders() {
 void Application::update(float delta) {}
 
 void Application::render() {
-    animate();
+    if(play){
+        animate();
+    }
+    compute_camera();
     // --------------------------------------------------------------------------
     // Update UBOs
     // --------------------------------------------------------------------------
     // Camera
     camera_ubo.position = glm::vec4(camera.get_eye_position(), 1.0f);
     camera_ubo.projection = glm::perspective(glm::radians(45.0f), static_cast<float>(width) / static_cast<float>(height), 0.01f, 1000.0f);
-    camera_ubo.view = glm::lookAt(camera.get_eye_position(), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    if(camera1){
+        camera_ubo.view = glm::lookAt(camera.get_eye_position(), glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    }
+    else{
+        camera_ubo.view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+    }
     glNamedBufferSubData(camera_buffer, 0, sizeof(CameraUBO), &camera_ubo);
 
     // --------------------------------------------------------------------------
@@ -344,10 +432,11 @@ void Application::render() {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
-    glDisable(GL_BLEND);
+    glEnable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
-    glDisable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
+    //glCullFace(GL_FRONT);
     glCullFace(GL_BACK);
 
     glUseProgram(parking_program);
@@ -360,6 +449,9 @@ void Application::render() {
     glUniform1i(glGetUniformLocation(parking_program, "fog_enable"), fog);
     glUniform4f(glGetUniformLocation(parking_program, "F.color"), 1.0f, 1.0f, 1.0f, 0.03f);
     glUniform2f(glGetUniformLocation(parking_program, "F.position"), camera.get_eye_position().z, camera.get_eye_position().z+15.0f);
+    glUniform1i(glGetUniformLocation(parking_program, "toon_enable"), this->toon);
+    glUniform1i(glGetUniformLocation(parking_program, "phong_enable"), this->phong_parking);
+    glUniform1i(glGetUniformLocation(parking_program, "has_cone"), this->has_cone);
     glBindTextureUnit(3, textures[0]);
     glBindTextureUnit(4, textures[0]);
     parking->draw();
@@ -378,6 +470,7 @@ void Application::render() {
     glUniform1i(glGetUniformLocation(main_program, "fog_enable"), fog);
     glUniform1i(glGetUniformLocation(main_program, "phong_enable"), this->phong);
     glUniform1i(glGetUniformLocation(main_program, "toon_enable"), this->toon);
+    glUniform1i(glGetUniformLocation(main_program, "has_cone"), this->has_cone);
     glBindTextureUnit(3, textures[2]);
     barrier->draw();
 
@@ -415,6 +508,8 @@ void Application::render() {
     glUniform1i(glGetUniformLocation(square_program, "fog_enable"), fog);
     glUniform4f(glGetUniformLocation(square_program, "F.color"), 1.0f, 1.0f, 1.0f, 0.03f);
     glUniform2f(glGetUniformLocation(square_program, "F.position"), camera.get_eye_position().z, camera.get_eye_position().z+15.0f);
+    glUniform1i(glGetUniformLocation(square_program, "toon_enable"), this->toon);
+    glUniform1i(glGetUniformLocation(square_program, "phong_enable"), this->phong_parking);
     glBindTextureUnit(3, textures[1]);
     glBindTextureUnit(4, normals[1]);
     
@@ -434,8 +529,32 @@ void Application::on_resize(int width, int height) {
     PV112Application::on_resize(width, height);
 }
 
-void Application::on_mouse_move(double x, double y) { camera.on_mouse_move(x, y); }
-void Application::on_mouse_button(int button, int action, int mods) { camera.on_mouse_button(button, action, mods); }
+void Application::on_mouse_move(double x, double y) { 
+    if(camera1){
+        camera.on_mouse_move(x, y); 
+    }
+    else{
+        if(is_rotating){
+            mouse_callback(x, y);
+        }
+    }
+}
+void Application::on_mouse_button(int button, int action, int mods) {
+    if(camera1){
+        camera.on_mouse_button(button, action, mods);
+    }
+    else{
+        if (button == GLFW_MOUSE_BUTTON_LEFT) {
+            if (action == GLFW_PRESS) {
+                is_rotating = true;
+                firstMouse = true;
+            }
+            else {
+                is_rotating = false;
+            }
+        } 
+    }
+}
 void Application::on_key_pressed(int key, int scancode, int action, int mods) {
     // Calls default implementation that invokes compile_shaders when 'R key is hit.
     PV112Application::on_key_pressed(key, scancode, action, mods);
@@ -450,8 +569,82 @@ void Application::on_key_pressed(int key, int scancode, int action, int mods) {
             case GLFW_KEY_P:
                 this->phong = !phong;
                 break;
+            case GLFW_KEY_O:
+                this->phong_parking = !phong_parking;
+                break;
             case GLFW_KEY_T:
                 this->toon = !toon;
+                break;
+            case GLFW_KEY_C:
+                this->has_cone = !has_cone;
+                break;
+            case GLFW_KEY_TAB:
+                this->camera1 = !camera1;
+                break;
+            case GLFW_KEY_SPACE:
+                this->play = !play;
+                break;
+            case GLFW_KEY_W:
+                keys[0] = true;
+                break;
+            case GLFW_KEY_S:
+                keys[1] = true;
+                break;
+            case GLFW_KEY_A:
+                keys[2] = true;
+                break;
+            case GLFW_KEY_D:
+                keys[3] = true;
+                break;
+            case GLFW_KEY_LEFT_SHIFT:
+                keys[4] = true;
+                break;
+            case GLFW_KEY_LEFT_CONTROL:
+                keys[5] = true;
+                break;
+        }
+    }
+    else if(action == GLFW_REPEAT){
+        switch (key) {
+            case GLFW_KEY_W:
+                keys[0] = true;
+                break;
+            case GLFW_KEY_S:
+                keys[1] = true;
+                break;
+            case GLFW_KEY_A:
+                keys[2] = true;
+                break;
+            case GLFW_KEY_D:
+                keys[3] = true;
+                break;
+            case GLFW_KEY_LEFT_SHIFT:
+                keys[4] = true;
+                break;
+            case GLFW_KEY_LEFT_CONTROL:
+                keys[5] = true;
+                break;
+        }
+    }
+    else if(action == GLFW_RELEASE){
+        switch (key) {
+            case GLFW_KEY_W:
+                keys[0] = false;
+                break;
+            case GLFW_KEY_S:
+                keys[1] = false;
+                break;
+            case GLFW_KEY_A:
+                keys[2] = false;
+                break;
+            case GLFW_KEY_D:
+                keys[3] = false;
+                break;
+            case GLFW_KEY_LEFT_SHIFT:
+                keys[4] = false;
+                break;
+            case GLFW_KEY_LEFT_CONTROL:
+                keys[5] = false;
                 break;
         }
     }

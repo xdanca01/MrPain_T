@@ -35,6 +35,9 @@ layout(location = 6) uniform Fog F;
 
 layout(location = 3) uniform bool has_texture = false;
 layout(location = 5) uniform bool fog_enable = false;
+layout(location = 9) uniform bool toon_enable = false;
+layout(location = 8) uniform bool phong_enable = true;
+
 
 layout(binding = 3) uniform sampler2D albedo_texture;
 layout(binding = 4) uniform sampler2D normal_texture;
@@ -57,27 +60,51 @@ float fogCalc(float z){
 void main() {
     vec3 color_sum = vec3(0.0);
     //vec3 normal = fs_normal;
-    vec3 normal = normalize(texture(normal_texture, fs_texture_coordinate).rgb * 2.0 - 1.0);
-    for(int i = 0; i < lights.length(); ++i)
-    {
-        Light light = lights[i];
-        vec3 light_vector = lights[i].position.xyz - fs_position * lights[i].position.w;
-        vec3 L = normalize(light_vector);
-        vec3 N = normalize(normal);
-        vec3 E = normalize(camera.position - fs_position);
-        vec3 H = normalize(L + E);
+    vec3 normal = normalize(texture(normal_texture, fs_texture_coordinate).xzy * 2.0 - 1.0);
+    if(phong_enable){
+        for(int i = 0; i < lights.length() - 2; ++i)
+        {
+            Light light = lights[i];
+            vec3 light_vector = lights[i].position.xyz - fs_position * lights[i].position.w;
+            vec3 L = normalize(light_vector);
+            vec3 N = normalize(normal);
+            vec3 E = normalize(camera.position - fs_position);
+            vec3 H = normalize(L + E);
 
-        float NdotL = max(dot(N, L), 0.0);
-        float NdotH = max(dot(N, H), 0.0001);
+            float NdotL = max(dot(N, L), 0.0);
+            float NdotH = max(dot(N, H), 0.0001);
 
-        vec3 ambient = object.ambient_color.rgb * lights[i].ambient_color.rgb;
-        vec3 diffuse = object.diffuse_color.rgb * lights[i].diffuse_color.rgb * texture(albedo_texture, fs_texture_coordinate).rgb;
-        vec3 specular = object.specular_color.rgb * lights[i].specular_color.rgb;
+            vec3 ambient = object.ambient_color.rgb * lights[i].ambient_color.rgb;
+            vec3 diffuse = object.diffuse_color.rgb * lights[i].diffuse_color.rgb * texture(albedo_texture, fs_texture_coordinate).rgb;
+            vec3 specular = object.specular_color.rgb * lights[i].specular_color.rgb;
 
-        vec3 color = ambient.rgb + NdotL * diffuse.rgb + pow(NdotH, object.specular_color.w) * specular;
-        color /= (length(light_vector * light_vector));
+            vec3 color = ambient.rgb + NdotL * diffuse.rgb + pow(NdotH, object.specular_color.w) * specular;
+            color /= (length(light_vector * light_vector));
 
-        color_sum += color;
+            color_sum += color;
+        }
+    }
+    if(toon_enable){
+        if(!phong_enable){
+            color_sum = color_sum = vec3(1.0);
+        }
+        vec3 lightDir = normalize(vec3(-1.5, 1.0, -1.0));
+        float intesity = dot(lightDir, normal);
+        if(intesity < 0.2){
+            color_sum = color_sum * 0.1;
+        }
+        else if(intesity < 0.4){
+            color_sum = color_sum * 0.3;
+        }
+        else if(intesity < 0.6){
+            color_sum = color_sum * 0.5;
+        }
+        else if(intesity < 0.8){
+            color_sum = color_sum * 0.7;
+        }
+        else{
+            color_sum = color_sum * 0.9;
+        }
     }
     if(fog_enable){
         float Z = length(fs_position - camera.position);

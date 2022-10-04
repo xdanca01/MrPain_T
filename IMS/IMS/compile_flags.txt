@@ -1,0 +1,7 @@
+-I/usr/include/c++/9
+-I/usr/include/c++/9/x86_64-redhat-linux
+-I/usr/include/c++/9/backward
+-I/usr/lib/gcc/x86_64-redhat-linux/9/include
+-I/usr/local/include
+-I/usr/include
+-I/home/pdancak/school/MrPain_T/IMS/IMS

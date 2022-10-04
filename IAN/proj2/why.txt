@@ -1,0 +1,26 @@
+log | less --> watchdog: BUG: soft lockup - CPU#1 stuck for 22s! [kworker/1:1:61] --> Watchdog odhalil loop CPU po dobu 22s
+
+je zaseklé CPU 1 a cpu visí na soft lockup procesu s PID 61 (kworker/1:1)
+----------------------------------------------------------------------------------------
+bt --> [exception RIP: smp_call_function_many+0x227]
+----------------------------------------------------------------------------------------
+dis -l smp_call_function_many+0x227 -> /usr/src/debug/kernel-4.15.fc27/linux-4.15.3-300.fc27.x86_64/kernel/smp.c: 108
+----------------------------------------------------------------------------------------
+vim smp.c -> na řádku 108 je funkce smp_cond_load_acquire(), která je v těle csd_lock_wait(), sloužící pro lock CSD. Z toho plyne, že je problém s CSD. Tato funkce porovnává hodnotu csd->flags s 0x1, kde musí dojít k tomu, že v csd->flags bude 0x0, aby se splnila podmínka zámku. Protože 0x0 & 0x1 => 0x0 a podmínka je !(flag & 0x1) => aby byla podmínka splněna výsledek == 0
+
+CPU čeká na unlock CS
+----------------------------------------------------------------------------------------
+Z dis -r smp_call_function_many+0x227 zjistím, že v předchozí instrukci je "je     0xffffffff8c13405c <smp_call_function_many+0x22c>" --> dis -l smp_call_function_many+0x22c --> "jmp    0xffffffff8c134025 <smp_call_function_many+0x1f5>"
+
+dis -l smp_call_function_many+0x1f5 --> /usr/src/debug/kernel-4.15.fc27/linux-4.15.3-300.fc27.x86_64/kernel/smp.c: 464--> na tomto řádku je funkce, ve které je funkce z řádku 108 použitá. Jedná se o for_each_cpu, takže je možné, že CSD má jiné CPU. Když se podívám zpět do kódu smp.c na řádek 451, tak zjistím, že se uzamyká CPU, takže se v csd->flags nastaví 0x1. Jelikož jsem se do funkce na řádku 464 musel dostat přes wait, tak je možné že v csd flags nebude 0x1, ale 0x3, protože jde o OR 0x2 a 0x1 = 0x3.
+----
+Zámek je v CSD->flags, takže musím najít CSD. CSD se předává funkci csd_lock_wait, takže bude na stacku v argumentech.
+Jelikož se mi nechce hledat na stacku, tak si najdu adresu v programu, jelikož se musí získat flags pro porovnání. Porovnává se na adrese smp_call_function_many+0x227, kde hodnota flags je uložená v ECX. Takže musím najít jak se zámek dostal do ECX. --> <smp_call_function_many+0x224>:      mov    0x18(%rdx),%ecx 
+Podívám se co je v RDX -> ffff8f6f7b2e69c0 pokud chci celé csd, tak musím použít strukturu call_single_data_t. --> call_single_data_t ffff8f6f7b2e69c0 --> vypíše se struktura a v ní je možné vidět hodnotu flag, která je 0x3, takže je stejná jako odhadovaná.
+----
+jestliže je možné, že některý z CPU má zámek na CSD, tak je vhodné vědět co se s ostatními CPU děje --> dis -a --> 
+CPU: 0 swapper - [exception RIP: native_safe_halt+0x2]
+CPU: 2 python - [exception RIP: queued_spin_lock_slowpath+0x21]
+CPU: 3 yum - [exception RIP: queued_spin_lock_slowpath+0x21]
+
+CPU mají spinlock, takže je možné, že drží CSD příliš dlouho

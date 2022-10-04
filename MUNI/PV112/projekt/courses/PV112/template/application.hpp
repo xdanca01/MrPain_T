@@ -113,7 +113,13 @@ class Application : public PV112Application {
     bool bright = false;
     bool fog = false;
     bool phong = true;
+    bool phong_parking = true;
     bool toon = false;
+    bool has_cone = true;
+    bool play = true;
+    bool camera1 = true;
+    glm::vec3 camera_target = glm::vec3(0.0f);
+    float cameraStep = 0.05f;
 
     // ----------------------------------------------------------------------------
     // Constructors & Destructors

@@ -1,0 +1,1 @@
+https://gitlab.cee.redhat.com/red-hat-enterprise-linux-documentation/rhel-8-docs/-/blob/master/enterprise/modules/core-services/proc_acquiring-administration-access-to-cups-web-ui.adoc

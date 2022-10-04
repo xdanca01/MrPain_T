@@ -1,0 +1,64 @@
+[id="installing-postgresql_{context}"]
+= Installing PostgreSQL
+
+In RHEL 8, the *PostgreSQL* server is available in several versions, each provided by a separate stream:
+
+* *PostgreSQL 10* - the default stream
+* *PostgreSQL 9.6*
+* *PostgreSQL 12* - available since RHEL 8.1.1
+
+
+[NOTE]
+====
+By design, it is impossible to install more than one version (stream) of the same module in parallel. Thus you need to choose only one of the available streams from the `postgresql` module. Parallel installation of components is possible in {RH} Software Collections for RHEL 7 and RHEL 6. In RHEL 8, different versions of database servers can be used in containers.
+====
+
+To install *PostgreSQL*:
+
+. Enable the stream (version) you wish to install:
++
+[literal,subs="+quotes,verbatim,normal,normal",#enable_spec_postgre_stream_{context},#replace=stream=stream,]
+....
+#{nbsp}yum module enable postgresql:_stream_
+....
++
+Replace _stream_ with the selected version of the *PostgreSQL* server. 
++
+You can omit this step if you want to use the default stream, which provides *PostgreSQL 10*.
+
+. Ensure that the [package]`postgresql-server` package, available in the AppStream repository, is installed on the required server:
++
+[literal,subs="+quotes,verbatim,normal,normal",#install_postgre_{context}]
+....
+#{nbsp}yum install postgresql-server
+....
+
+. Initialize the data directory
++
+[literal,subs="+quotes,verbatim,normal,normal",#init_postgre_datadir_{context}]
+....
+postgresql-setup --initdb
+....
+
+. Start the `postgresql` service:
++
+[literal,subs="+quotes,verbatim,normal,normal",#start_postgre_{context}]
+....
+#{nbsp}systemctl start postgresql.service
+....
+
+. Enable the `postgresql` service to start at boot:
++
+[literal,subs="+quotes,verbatim,normal,normal",#enable_postgre_{context}]
+....
+#{nbsp}systemctl enable postgresql.service
+....
+
+
+For information about using module streams, see link:https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/installing_managing_and_removing_user-space_components/[Installing, managing, and removing user-space components]. 
+
+
+[IMPORTANT]
+====
+If you want to upgrade from an earlier `postgresql` stream within RHEL 8, follow both procedures described in link:https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html-single/installing_managing_and_removing_user-space_components/index#switching-to-a-later-stream_managing-versions-of-appstream-content[Switching to a later stream] and in xref:migrating-to-a-rhel-8-version-of-postgresql_{context}[].
+====

@@ -30,18 +30,20 @@ struct Fog{
     vec4 color;
     vec2 position;
 };
-
-layout(binding = 3) uniform sampler2D albedo_texture;
-
-layout(location = 0) in vec3 fs_position;
-layout(location = 1) in vec3 fs_normal;
-layout(location = 2) in vec2 fs_texture_coordinate;
 layout(location = 3) uniform bool has_texture = false;
 layout(location = 4) uniform bool bright_textures = false;
 layout(location = 5) uniform bool fog_enable = false;
 layout(location = 6) uniform Fog F;
 layout(location = 8) uniform bool phong_enable = true;
 layout(location = 9) uniform bool toon_enable = false;
+layout(location = 10) uniform bool has_cone = false;
+
+layout(binding = 3) uniform sampler2D albedo_texture;
+
+layout(location = 0) in vec3 fs_position;
+layout(location = 1) in vec3 fs_normal;
+layout(location = 2) in vec2 fs_texture_coordinate;
+
 
 layout(location = 0) out vec4 final_color;
 
@@ -61,8 +63,9 @@ float fogCalc(float z){
 
 void main() {
     vec3 color_sum = vec3(0.0);
+    vec3 normal = fs_normal;
     if(phong_enable){
-        for(int i = 0; i < lights.length(); ++i)
+        for(int i = 0; i < lights.length() - 2; ++i)
         {
             Light light = lights[i];
             vec3 light_vector = lights[i].position.xyz - fs_position * lights[i].position.w;
@@ -86,8 +89,11 @@ void main() {
     }
     color_sum = color_sum + (has_texture && bright_textures? texture(albedo_texture, fs_texture_coordinate).rgb : vec3(0.0));
     if(toon_enable){
-        vec3 lightDir = normalize(vec3(-1.0, 1.0, -1.0));
-        float intesity = dot(lightDir, fs_normal);
+        if(!phong_enable && !bright_textures){
+            color_sum = vec3(1.0);
+        }
+        vec3 lightDir = normalize(vec3(-1.5, 1.0, -1.0));
+        float intesity = dot(lightDir, normal);
         if(intesity < 0.2){
             color_sum = color_sum * 0.1;
         }
@@ -104,6 +110,25 @@ void main() {
             color_sum = color_sum * 0.9;
         }
     }
+    //Cone lightning
+    if(has_cone && fs_position.y > 0.0){
+        float spotExp = 0.5;
+        vec3 spotDirection = vec3(0.0, 0.0, 1.0);
+        Light L1 = lights[lights.length()-2];
+        Light L2 = lights[lights.length()-1];
+        vec3 lightDir1 = normalize(fs_position - L1.position.xyz);
+        vec3 lightDir2 = normalize(fs_position - L2.position.xyz);
+        float theta1 = max(dot(spotDirection, lightDir1), 0.0);
+        float theta2 = max(dot(spotDirection, lightDir2), 0.0);
+        float checkSpot1 = dot(-normalize(normal), lightDir1);
+        float checkSpot2 = dot(-normalize(normal), lightDir2);
+        if(theta1 > spotExp && L1.diffuse_color.b > 0.0 && checkSpot1 > 0.1){
+            color_sum = mix(color_sum, L1.diffuse_color.rgb, 0.2);
+        }
+        if(theta2 > spotExp && L2.diffuse_color.b > 0.0 && checkSpot2 > 0.1){
+            color_sum = mix(color_sum, L2.diffuse_color.rgb, 0.2);
+        }
+    }
     if(fog_enable){
         float Z = length(fs_position - camera.position);
         float fogFact = fogCalc(Z);
@@ -111,6 +136,5 @@ void main() {
     }
     color_sum = color_sum / (color_sum + 1.0);       // tone mapping
     color_sum = pow(color_sum, vec3(1.0 / 2.2)); // gamma correction
-    
     final_color = vec4(color_sum, 1.0);
 }

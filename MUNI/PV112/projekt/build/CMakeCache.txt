@@ -194,12 +194,6 @@ ComputerGraphicsFramework_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 ComputerGraphicsFramework_SOURCE_DIR:STATIC=/home/pdancak/school/MrPain_T/MUNI/PV112/projekt
 
-//The directory containing a CMake configuration file for GTest.
-GTest_DIR:PATH=/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/share/GTest
-
-//Path to a file.
-STB_INCLUDE_DIRS:PATH=/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/include
-
 //Automatically copy dependencies into the output directory for
 // executables.
 VCPKG_APPLOCAL_DEPS:BOOL=ON
@@ -258,24 +252,6 @@ Z_VCPKG_CL:FILEPATH=Z_VCPKG_CL-NOTFOUND
 //The directory which contains the installed libraries for each
 // triplet
 _VCPKG_INSTALLED_DIR:PATH=/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed
-
-//The directory containing a CMake configuration file for glad.
-glad_DIR:PATH=/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/share/glad
-
-//The directory containing a CMake configuration file for glfw3.
-glfw3_DIR:PATH=/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/share/glfw3
-
-//The directory containing a CMake configuration file for glm.
-glm_DIR:PATH=/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/share/glm
-
-//The directory containing a CMake configuration file for imgui.
-imgui_DIR:PATH=/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/share/imgui
-
-//The directory containing a CMake configuration file for tinyobjloader.
-tinyobjloader_DIR:PATH=/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/share/tinyobjloader
-
-//The directory containing a CMake configuration file for toml11.
-toml11_DIR:PATH=/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build/vcpkg_installed/x64-linux/share/toml11
 
 
 ########################
@@ -340,10 +316,6 @@ CMAKE_GENERATOR_INSTANCE:INTERNAL=
 CMAKE_GENERATOR_PLATFORM:INTERNAL=
 //Name of generator toolset.
 CMAKE_GENERATOR_TOOLSET:INTERNAL=
-//Test CMAKE_HAVE_LIBC_PTHREAD
-CMAKE_HAVE_LIBC_PTHREAD:INTERNAL=1
-//Have include pthread.h
-CMAKE_HAVE_PTHREAD_H:INTERNAL=1
 //Source directory with the top level CMakeLists.txt file for this
 // project
 CMAKE_HOME_DIRECTORY:INTERNAL=/home/pdancak/school/MrPain_T/MUNI/PV112/projekt
@@ -366,7 +338,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=21
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=16
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -411,8 +383,6 @@ CMAKE_TOOLCHAIN_FILE-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
-//Details about finding Threads
-FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //ADVANCED property for variable: VCPKG_VERBOSE
 VCPKG_VERBOSE-ADVANCED:INTERNAL=1
 //Making sure VCPKG_MANIFEST_MODE doesn't change
@@ -426,5 +396,5 @@ visitlab_current_target:INTERNAL=
 //Required Modules
 visitlab_required_modules:INTERNAL=PV112_MODULE;GEOMETRY_MODULE;GUI_MODULE;CORE_MODULE;GLM_MODULE;PA213_MODULE;OPENGL_MODULE
 //Solved Module Dependencies
-visitlab_solved_mod_deps:INTERNAL=OPENGL_MODULE;CORE_MODULE;GUI_MODULE;GLM_MODULE;GEOMETRY_MODULE
+visitlab_solved_mod_deps:INTERNAL=PV227_MODULE
 

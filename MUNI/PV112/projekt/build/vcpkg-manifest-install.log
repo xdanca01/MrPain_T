@@ -1,8 +1,8 @@
 Detecting compiler hash for triplet x64-linux...
 All requested packages are currently installed.
-Restored 0 packages from /home/pdancak/.cache/vcpkg/archives in 699 ns. Use --debug to see more details.
+Restored 0 packages from /home/pdancak/.cache/vcpkg/archives in 700 ns. Use --debug to see more details.
 
-Total elapsed time: 385.2 ms
+Total elapsed time: 421 ms
 
 The package glad provides CMake targets:
 
