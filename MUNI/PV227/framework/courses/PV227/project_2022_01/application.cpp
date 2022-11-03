@@ -165,6 +165,8 @@ void Application::update_particles_gpu(float delta) {
      // Bind all buffers to OpenGL.
     glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, particle_positions_bo);
     glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, particle_velocities_bo);
+    phong_lights_bo.bind_buffer_base(2);
+    //glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, phong_lights_bo);
 
     // Memory barrier, we need the data in the buffers to be ready
     glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
@@ -181,7 +183,7 @@ void Application::update_particles_gpu(float delta) {
     //particle_size = 1.0;
     //choose color
     if(time < init_delay && time <= time_between_frames_in_seconds && time != elapsed_time_in_seconds){
-        
+
         particle_color = glm::vec4(glm::rgbColor(glm::vec3(static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * 360.0f, 1.0f, 1.0f)), particle_size);
     }
     //change particle_size
@@ -211,6 +213,7 @@ void Application::update_particles_gpu(float delta) {
     update_particles_program.uniform("blink_delay", blink_delay);
     update_particles_program.uniform("blink_frequency", blink_frequency);
     update_particles_program.uniform("blink_ratio", blink_ratio);
+    update_particles_program.uniform("particle_color", particle_color);
     particle_textured_program.uniform("particle_color", particle_color);
 
     // Dispatches the compute shader

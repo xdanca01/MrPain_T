@@ -17,6 +17,30 @@ layout (std430, binding = 1) buffer VelocitiesBuffer
 	vec4 particle_velocities[];
 };
 
+// The structure holding the information about a single Phong light.
+struct PhongLight
+{
+	vec4 position;                   // The position of the light. Note that position.w should be one for point lights and spot lights, and zero for directional lights.
+	vec3 ambient;                    // The ambient part of the color of the light.
+	vec3 diffuse;                    // The diffuse part of the color of the light.
+	vec3 specular;                   // The specular part of the color of the light. 
+	vec3 spot_direction;             // The direction of the spot light, irrelevant for point lights and directional lights.
+	float spot_exponent;             // The spot exponent of the spot light, irrelevant for point lights and directional lights.
+	float spot_cos_cutoff;           // The cosine of the spot light's cutoff angle, -1 point lights, irrelevant for directional lights.
+	float atten_constant;            // The constant attenuation of spot lights and point lights, irrelevant for directional lights. For no attenuation, set this to 1.
+	float atten_linear;              // The linear attenuation of spot lights and point lights, irrelevant for directional lights.  For no attenuation, set this to 0.
+	float atten_quadratic;           // The quadratic attenuation of spot lights and point lights, irrelevant for directional lights. For no attenuation, set this to 0.
+};
+
+// The UBO with light data. Note that we use SSBO.
+layout (std430, binding = 2) buffer PhongLightsBuffer
+{
+	vec3 global_ambient_color;		 // The global ambient color.
+	int lights_count;				 // The number of lights in the buffer.
+	PhongLight lights[100];			 // The array with actual lights.
+};
+
+
 // The particle count.
 uniform int current_particle_count;
 
@@ -39,7 +63,7 @@ uniform float fade_time;
 uniform float blink_delay;
 uniform float blink_frequency;
 uniform float blink_ratio;
-
+uniform vec4 particle_color;
 // ----------------------------------------------------------------------------
 // Local Functions
 // ----------------------------------------------------------------------------
@@ -88,6 +112,26 @@ void main()
     //compute average light position
     barrier();
     if(gl_GlobalInvocationID.x == 0){
-        
+        if(time >= init_delay && time <= fade_end_time){
+            lights_count = fireworks_count;
+            vec3 average_position = vec3(0.0);
+            for(int i = 0; i < current_particle_count; ++i){
+                average_position += particle_positions[gl_GlobalInvocationID.x].xyz;
+            }
+            average_position = average_position / current_particle_count;
+            lights[0].position = vec4(average_position, 1.0);
+            float particle_size = particle_color.w;
+            //if(particle_size <= 0.2){
+            //    particle_size = 0.0;
+            //}
+            lights[0].diffuse = particle_color.xyz * particle_size;
+            //lights[0].ambient = particle_color.xyz;
+            lights[0].specular = particle_color.xyz * particle_size;
+        }
+        else{
+            lights[0].diffuse = vec3(0.0);
+            //lights[0].ambient = particle_color.xyz;
+            lights[0].specular = vec3(0.0);
+        }
     }
 }
