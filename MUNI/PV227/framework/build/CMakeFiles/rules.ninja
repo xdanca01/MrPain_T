@@ -79,6 +79,101 @@ rule CXX_EXECUTABLE_LINKER__PV227_lecture_03_Debug
 #############################################
 # Rule for compiling CXX files.
 
+rule CXX_COMPILER__PV227_lecture_04_Debug
+  depfile = $DEP_FILE
+  deps = gcc
+  command = /usr/bin/c++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building CXX object $out
+
+
+#############################################
+# Rule for linking CXX executable.
+
+rule CXX_EXECUTABLE_LINKER__PV227_lecture_04_Debug
+  command = $PRE_LINK && /usr/bin/c++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
+  description = Linking CXX executable $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling CXX files.
+
+rule CXX_COMPILER__PV227_lecture_05_Debug
+  depfile = $DEP_FILE
+  deps = gcc
+  command = /usr/bin/c++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building CXX object $out
+
+
+#############################################
+# Rule for linking CXX executable.
+
+rule CXX_EXECUTABLE_LINKER__PV227_lecture_05_Debug
+  command = $PRE_LINK && /usr/bin/c++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
+  description = Linking CXX executable $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling CXX files.
+
+rule CXX_COMPILER__PV227_lecture_06_wihout_gs_Debug
+  depfile = $DEP_FILE
+  deps = gcc
+  command = /usr/bin/c++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building CXX object $out
+
+
+#############################################
+# Rule for linking CXX executable.
+
+rule CXX_EXECUTABLE_LINKER__PV227_lecture_06_wihout_gs_Debug
+  command = $PRE_LINK && /usr/bin/c++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
+  description = Linking CXX executable $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling CXX files.
+
+rule CXX_COMPILER__PV227_lecture_07_Debug
+  depfile = $DEP_FILE
+  deps = gcc
+  command = /usr/bin/c++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building CXX object $out
+
+
+#############################################
+# Rule for linking CXX executable.
+
+rule CXX_EXECUTABLE_LINKER__PV227_lecture_07_Debug
+  command = $PRE_LINK && /usr/bin/c++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
+  description = Linking CXX executable $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling CXX files.
+
+rule CXX_COMPILER__PV227_project_2022_01_Debug
+  depfile = $DEP_FILE
+  deps = gcc
+  command = /usr/bin/c++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building CXX object $out
+
+
+#############################################
+# Rule for linking CXX executable.
+
+rule CXX_EXECUTABLE_LINKER__PV227_project_2022_01_Debug
+  command = $PRE_LINK && /usr/bin/c++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
+  description = Linking CXX executable $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling CXX files.
+
 rule CXX_COMPILER__PV227_MODULE_Debug
   depfile = $DEP_FILE
   deps = gcc

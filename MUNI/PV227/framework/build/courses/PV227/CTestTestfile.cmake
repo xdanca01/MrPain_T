@@ -7,3 +7,8 @@
 subdirs("lecture_01")
 subdirs("lecture_02")
 subdirs("lecture_03")
+subdirs("lecture_04")
+subdirs("lecture_05")
+subdirs("lecture_06")
+subdirs("lecture_07")
+subdirs("project_2022_01")

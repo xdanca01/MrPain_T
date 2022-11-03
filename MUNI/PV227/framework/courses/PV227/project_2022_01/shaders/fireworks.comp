@@ -1,0 +1,93 @@
+#version 450 core
+
+// The size of work group - 256 threads.
+layout (local_size_x = 256) in;
+//shared vec3 velocity;
+// ----------------------------------------------------------------------------
+// Input Variables
+// ----------------------------------------------------------------------------
+// The shader storage buffer with input positions.
+layout (std430, binding = 0) buffer PositionsInBuffer
+{
+	vec4 particle_positions[];
+};
+// The shader storage buffer with velocities.
+layout (std430, binding = 1) buffer VelocitiesBuffer
+{
+	vec4 particle_velocities[];
+};
+
+// The particle count.
+uniform int current_particle_count;
+
+// The input parameters of the simulation.
+uniform float time_delta;
+uniform float gravity;
+uniform float elapsed_time;
+uniform int fireworks_count;
+uniform float rocket_spread;
+uniform float lifespan;
+uniform float min_initial_velocity;
+uniform float max_initial_velocity;
+uniform float init_delay;
+uniform float explosion_delay;
+uniform float explosion_thrust_time;
+uniform float explosion_force;
+uniform float explosion_light_delay;
+uniform float fade_delay;
+uniform float fade_time;
+uniform float blink_delay;
+uniform float blink_frequency;
+uniform float blink_ratio;
+
+// ----------------------------------------------------------------------------
+// Local Functions
+// ----------------------------------------------------------------------------
+
+// Noise function by Dave Hoskins.
+vec3 hash31(float p) {
+    vec3 p3 = fract(vec3(p) * vec3(.1031, .11369, .13787));
+    p3 += dot(p3, vec3(p3.y + 19.19, p3.z + 19.19, p3.x + 19.19));
+    return fract(vec3((p3.x + p3.y) * p3.z, (p3.x + p3.z) * p3.y, (p3.y + p3.z) * p3.x));
+}
+
+// ----------------------------------------------------------------------------
+// Main Method
+// ----------------------------------------------------------------------------
+void main()
+{
+    //set same time for each thread
+    float time = mod(elapsed_time, lifespan);
+    float explosion_start_time = init_delay + explosion_delay;
+    float explosion_end_time = explosion_start_time + explosion_thrust_time;
+    float fade_start_time = explosion_start_time + fade_delay;
+    float fade_end_time = fade_start_time + fade_time;
+    float blink_start_time = fade_start_time + blink_delay;
+    vec3 dir;
+    vec3 acceleration = vec3(0, gravity, 0);
+    //initialize values before shooting
+    if(time <= init_delay){
+        particle_positions[gl_GlobalInvocationID.x] = vec4(vec3(0.0), 1.0);
+        vec3 velocity = hash31(elapsed_time);
+        velocity.xz = (velocity.xz * rocket_spread) - rocket_spread;
+        velocity.y = min(max(velocity.y, min_initial_velocity), max_initial_velocity);
+        particle_velocities[gl_GlobalInvocationID.x] = vec4(velocity, 0.0);
+    }
+    //explosion count
+    else{
+        if(time >= explosion_start_time){
+            vec3 random_position = hash31(gl_GlobalInvocationID.x);
+            dir = random_position*2 - 1;
+            vec3 expand = normalize(dir) * explosion_force;
+            acceleration += expand;
+        }
+        particle_positions[gl_GlobalInvocationID.x].xyz = particle_positions[gl_GlobalInvocationID.x].xyz + particle_velocities[gl_GlobalInvocationID.x].xyz * time_delta + 0.5 * acceleration * time_delta;
+        particle_velocities[gl_GlobalInvocationID.x].xyz = particle_velocities[gl_GlobalInvocationID.x].xyz + acceleration * time_delta;
+    }
+
+    //compute average light position
+    barrier();
+    if(gl_GlobalInvocationID.x == 0){
+        
+    }
+}
