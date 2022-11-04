@@ -33,7 +33,8 @@ out VertexData
 // ----------------------------------------------------------------------------
 void main()
 {
-	out_data.position_vs = view * position;
+	vec4 pos = view * position;
+	out_data.position_vs = pos;
 	out_data.color = color;
 	out_data.id = gl_VertexID;
 }

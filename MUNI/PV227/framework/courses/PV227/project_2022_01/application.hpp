@@ -44,6 +44,8 @@ class Application : public PV227Application {
     /** The particle texture. */
     GLuint particle_tex;
 
+    GLuint mask_tex;
+
     // ----------------------------------------------------------------------------
     // Variables (Camera)
     // ----------------------------------------------------------------------------
@@ -63,6 +65,11 @@ class Application : public PV227Application {
     // ----------------------------------------------------------------------------
     // Variables (Frame Buffers)
     // ----------------------------------------------------------------------------
+     GLuint gbuffer_fbo;
+    /** The texture used in @link gbuffer_fbo to store mask. */
+    GLuint gbuffer_mask = 0;
+    /** The texture used in @link gbuffer_fbo to store albedo. */
+    GLuint gbuffer_albedo_texture = 0;
   protected:
 
     // ----------------------------------------------------------------------------
@@ -172,6 +179,9 @@ class Application : public PV227Application {
     // Render
     // ----------------------------------------------------------------------------
   public:
+    /** Sets up the G-buffer and renders all objects into it using deferred shading. */
+    void render_into_g_buffer();
+
     /** @copydoc PV227Application::render */
     void render() override;
 

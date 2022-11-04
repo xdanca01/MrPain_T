@@ -68,6 +68,10 @@ void Application::prepare_textures() {
 
 void Application::prepare_framebuffers() {
     // Here you can create your framebuffers.
+    // Creates the framebuffer for rendering into the G-buffer.
+    glCreateFramebuffers(1, &gbuffer_fbo);
+    // Specifies a list of color buffers to be drawn into.
+    glNamedFramebufferDrawBuffers(gbuffer_fbo, 2, FBOUtils::draw_buffers_constants);
 
     // We call separate resize method where we create and attache the textures.
     resize_fullscreen_textures();
@@ -75,6 +79,23 @@ void Application::prepare_framebuffers() {
 
 void Application::resize_fullscreen_textures() {
     // Here you can (re)create you textures as this method is called whenever the window is resized.
+    // Removes the previously allocated textures (if any).
+    glDeleteTextures(1, &gbuffer_albedo_texture);
+
+    // Creates new textures for G-buffer and set their basic parameters.
+    glCreateTextures(GL_TEXTURE_2D, 1, &gbuffer_albedo_texture);
+
+    // Initializes the immutable storage.
+    glTextureStorage2D(gbuffer_albedo_texture, 1, GL_RGBA32F, width, height);
+
+    // Sets the texture parameters.
+    TextureUtils::set_texture_2d_parameters(gbuffer_albedo_texture, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE, GL_NEAREST, GL_NEAREST);
+
+    // Binds the texture to the G-buffer.
+
+    glNamedFramebufferTexture(gbuffer_fbo, GL_COLOR_ATTACHMENT0, gbuffer_albedo_texture, 0);
+    FBOUtils::check_framebuffer_status(gbuffer_fbo, "G-buffer");
+
 }
 
 void Application::prepare_scene() {
@@ -124,6 +145,7 @@ void Application::prepare_scene() {
 // ----------------------------------------------------------------------------
 // Update
 // ----------------------------------------------------------------------------
+
 void Application::update(float delta) {
     PV227Application::update(delta);
 
@@ -227,6 +249,19 @@ void Application::update_particles_gpu(float delta) {
 // ----------------------------------------------------------------------------
 // Render
 // ----------------------------------------------------------------------------
+void Application::render_into_g_buffer() {
+    // Binds G-Buffer.
+    glBindFramebuffer(GL_FRAMEBUFFER, gbuffer_fbo);
+    glViewport(0, 0, width, height);
+
+    // Clears the G-buffer, clear all textures to (0,0,0,0) and depth to 1.0.
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // Renders all objects in the scene, use deferred shading program
+    render_scene(default_lit_program);
+}
+
 void Application::render() {
     // Begins measuring the GPU time.
     glBeginQuery(GL_TIME_ELAPSED, render_time_query);
