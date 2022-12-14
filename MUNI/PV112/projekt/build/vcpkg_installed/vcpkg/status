@@ -2,7 +2,7 @@ Package: egl-registry
 Version: 2021-11-23
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 0cd9fc625e307dcdde8cc15cde0dd28e20217899ed082a4b2524d817733e3760
+Abi: 6f8665e887081bb570b1f9f1c7465604aa53c89d60bdd42890a26f7c712d38a4
 Description: the EGL API and Extension Registry
 Type: Port
 Status: install ok installed
@@ -12,7 +12,7 @@ Version: 2021-11-17
 Depends: egl-registry
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 26e7e7a1083c4416e94e4715e97209899bce3b1308762abd3ef063a66d52941c
+Abi: dccfcf85b31f0f74cec09b1bb17a4c057186868269e7134826a4a862241252a5
 Description: the API and Extension registries for the OpenGL family APIs
 Type: Port
 Status: install ok installed
@@ -23,7 +23,7 @@ Port-Version: 3
 Depends: egl-registry, opengl-registry, vcpkg-cmake, vcpkg-cmake-config
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 5b3bf7509a666de1e78051f20a7d1aee608cf79fd7afc1b54d778a95fbab1a33
+Abi: b30390a5e02ce78a5c8d073aa998c75fd7ccca5ba27e466505fe50adb35e5bd4
 Description: Multi-Language Vulkan/GL/GLES/EGL/GLX/WGL Loader-Generator based on the official specs.
 Type: Port
 Default-Features: loader
@@ -34,7 +34,7 @@ Version: 3.3.6
 Depends: vcpkg-cmake, vcpkg-cmake-config
 Architecture: x64-linux
 Multi-Arch: same
-Abi: fb63d9a3e982bff0bd42bbd97e6967edcf302f1782630528eeb6e1f9080af581
+Abi: 0f2598caf4297002df8262eae9e2d9b725d6dc66eedab9a5f3b7caf752ab3607
 Description: GLFW is a free, Open Source, multi-platform library for OpenGL, OpenGL ES and Vulkan application development. It provides a simple, platform-independent API for creating windows, contexts and surfaces, reading input, handling events, etc.
 Type: Port
 Status: install ok installed
@@ -44,7 +44,7 @@ Version: 0.9.9.8
 Port-Version: 1
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 40346aaca74d77ece6241f50e96762078786216e045d172aaf354273d61d4785
+Abi: bca95726ed58bf35fdbf1ee5a9c694fc6ac6691c8e0904613bf2bcff830574ce
 Description: OpenGL Mathematics (GLM)
 Type: Port
 Status: install ok installed
@@ -54,7 +54,7 @@ Version: 1.11.0
 Port-Version: 3
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 88c9cc26eb86e235ca65f689949ceb9c1a3d523df8fdc00e384b8efde06808b5
+Abi: bd13f2d60377cefcf5a5943c8c6f5f86d38fd4d7f4dcf877316f0be8dc557e9d
 Description: GoogleTest and GoogleMock testing frameworks
 Type: Port
 Status: install ok installed
@@ -64,7 +64,7 @@ Version: 1.86
 Depends: vcpkg-cmake, vcpkg-cmake-config
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 5ca251a2fe08f6b74828278b2285a788b7f27d2f83ccd4cabc5046953a91b7f8
+Abi: d22c4f6fac7f20e145e57d275a7b93b13e70dc09383885d817ba116cb9751a33
 Description: Bloat-free Immediate Mode Graphical User interface for C++ with minimal dependencies.
 Type: Port
 Status: install ok installed
@@ -84,7 +84,7 @@ Port-Version: 1
 Depends: vcpkg-cmake, vcpkg-cmake-config
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 420e0c5c098a3608a3b3a89c2e8df396f7e1d8818c208305caee2af00aaa956b
+Abi: d34d7be5bb2ca5b699a278161054c18b60e80f6159e5dbbd05fe6047b51cf530
 Description: PNG encoder and decoder in C++
 Type: Port
 Status: install ok installed
@@ -94,7 +94,7 @@ Version: 2020-09-14
 Port-Version: 1
 Architecture: x64-linux
 Multi-Arch: same
-Abi: cc4ca8f432522d0ae9068887b7e72012d589ec4685be816a1771a2a8f26bc3b2
+Abi: 45ad93e6588527fdbb06b12d9efced99dce2c8f4774c43b5dfc2d1e9799e792d
 Description: public domain header-only libraries
 Type: Port
 Status: install ok installed
@@ -104,7 +104,7 @@ Version: 2.0.0-rc2
 Port-Version: 2
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 306227f99a2ea00c63e59d157a0165d6ec981836f7bff2da1a2de3b0c7db6e9a
+Abi: e3877bf1a4450a0e91225c07c9cf65457f2a8245484b1a5766fe3d624280aabe
 Description: Tiny but powerful single file wavefront obj loader
 Type: Port
 Status: install ok installed
@@ -114,7 +114,7 @@ Version: 3.7.0
 Depends: vcpkg-cmake, vcpkg-cmake-config
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 0fc9ef1133ba96425c6366999c54ca91be80a10c210954f39b2d494a7e3df8f6
+Abi: 9cd128b7d6cc1e1058e13f99cd1cc241f924a778b6f5fe41b5c2147dc12f0ca9
 Description: A C++11 header-only toml parser/encoder depending only on C++ standard library.
 Type: Port
 Status: install ok installed
@@ -123,7 +123,7 @@ Package: vcpkg-cmake-config
 Version: 2022-01-30
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 0fa376fff07f439e95fa9e395d6dac620c02437423a2c0807fd7e3fe8cbb3fb0
+Abi: a300be1f2374aa0184e45b38a9fb74d467c009c63f9c44cd05936efffa871d96
 Type: Port
 Status: install ok installed
 
@@ -131,7 +131,7 @@ Package: vcpkg-cmake
 Version: 2022-01-19
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 4aa0f6464647ff0c5a8d4d6d3983761d9225d7555ba1c4285409b9584f9cd8bb
+Abi: e14e877dc82549855e44017f54476f63d9aae1c85bb47576600c892cf0c7df46
 Type: Port
 Status: install ok installed
 

@@ -22,4 +22,5 @@ x64-linux/share/imgui/imgui-config.cmake
 x64-linux/share/imgui/imgui-targets-debug.cmake
 x64-linux/share/imgui/imgui-targets-release.cmake
 x64-linux/share/imgui/imgui-targets.cmake
+x64-linux/share/imgui/vcpkg.spdx.json
 x64-linux/share/imgui/vcpkg_abi_info.txt

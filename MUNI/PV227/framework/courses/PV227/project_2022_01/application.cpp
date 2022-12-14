@@ -25,6 +25,8 @@ Application::~Application() {}
 void Application::compile_shaders() {
     default_unlit_program = ShaderProgram(lecture_shaders_path / "object.vert", lecture_shaders_path / "unlit.frag");
     default_lit_program = ShaderProgram(lecture_shaders_path / "object.vert", lecture_shaders_path / "lit.frag");
+    display_texture_program = ShaderProgram(lecture_shaders_path / "full_screen_quad.vert", lecture_shaders_path / "display_texture.frag");
+
 
     particle_textured_program = ShaderProgram();
     particle_textured_program.add_vertex_shader(lecture_shaders_path / "particle_textured.vert");
@@ -70,8 +72,10 @@ void Application::prepare_framebuffers() {
     // Here you can create your framebuffers.
     // Creates the framebuffer for rendering into the G-buffer.
     glCreateFramebuffers(1, &gbuffer_fbo);
+    glCreateFramebuffers(1, &gbuffer_fbo_mirror);
     // Specifies a list of color buffers to be drawn into.
     glNamedFramebufferDrawBuffers(gbuffer_fbo, 2, FBOUtils::draw_buffers_constants);
+    glNamedFramebufferDrawBuffers(gbuffer_fbo_mirror, 1, FBOUtils::draw_buffers_constants);
 
     // We call separate resize method where we create and attache the textures.
     resize_fullscreen_textures();
@@ -81,20 +85,41 @@ void Application::resize_fullscreen_textures() {
     // Here you can (re)create you textures as this method is called whenever the window is resized.
     // Removes the previously allocated textures (if any).
     glDeleteTextures(1, &gbuffer_albedo_texture);
+    glDeleteTextures(1, &gbuffer_mask_texture);
+    glDeleteTextures(1, &gbuffer_albedo_texture_mirror);
+    glDeleteTextures(1, &gbuffer_depth_texture);
+    glDeleteTextures(1, &gbuffer_depth_texture_mirror);
 
     // Creates new textures for G-buffer and set their basic parameters.
     glCreateTextures(GL_TEXTURE_2D, 1, &gbuffer_albedo_texture);
+    glCreateTextures(GL_TEXTURE_2D, 1, &gbuffer_mask_texture);
+    glCreateTextures(GL_TEXTURE_2D, 1, &gbuffer_albedo_texture_mirror);
+    glCreateTextures(GL_TEXTURE_2D, 1, &gbuffer_depth_texture);
+    glCreateTextures(GL_TEXTURE_2D, 1, &gbuffer_depth_texture_mirror);
 
     // Initializes the immutable storage.
     glTextureStorage2D(gbuffer_albedo_texture, 1, GL_RGBA32F, width, height);
+    glTextureStorage2D(gbuffer_mask_texture, 1, GL_RGBA32F, width, height);
+    glTextureStorage2D(gbuffer_albedo_texture_mirror, 1, GL_RGBA32F, width, height);
+    glTextureStorage2D(gbuffer_depth_texture, 1, GL_DEPTH_COMPONENT24, width, height);
+    glTextureStorage2D(gbuffer_depth_texture_mirror, 1, GL_DEPTH_COMPONENT24, width, height);
 
     // Sets the texture parameters.
     TextureUtils::set_texture_2d_parameters(gbuffer_albedo_texture, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE, GL_NEAREST, GL_NEAREST);
+    TextureUtils::set_texture_2d_parameters(gbuffer_mask_texture, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE, GL_NEAREST, GL_NEAREST);
+    TextureUtils::set_texture_2d_parameters(gbuffer_albedo_texture_mirror, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE, GL_NEAREST, GL_NEAREST);
+    TextureUtils::set_texture_2d_parameters(gbuffer_depth_texture, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE, GL_NEAREST, GL_NEAREST);
+    TextureUtils::set_texture_2d_parameters(gbuffer_depth_texture_mirror, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE, GL_NEAREST, GL_NEAREST);
 
     // Binds the texture to the G-buffer.
-
     glNamedFramebufferTexture(gbuffer_fbo, GL_COLOR_ATTACHMENT0, gbuffer_albedo_texture, 0);
+    glNamedFramebufferTexture(gbuffer_fbo, GL_COLOR_ATTACHMENT1, gbuffer_mask_texture, 0);
+    glNamedFramebufferTexture(gbuffer_fbo, GL_DEPTH_ATTACHMENT, gbuffer_depth_texture, 0);
     FBOUtils::check_framebuffer_status(gbuffer_fbo, "G-buffer");
+
+    glNamedFramebufferTexture(gbuffer_fbo_mirror, GL_COLOR_ATTACHMENT0, gbuffer_albedo_texture_mirror, 0);
+    glNamedFramebufferTexture(gbuffer_fbo_mirror, GL_DEPTH_ATTACHMENT, gbuffer_depth_texture_mirror, 0);
+    FBOUtils::check_framebuffer_status(gbuffer_fbo_mirror, "G-buffer");
 
 }
 
@@ -249,17 +274,58 @@ void Application::update_particles_gpu(float delta) {
 // ----------------------------------------------------------------------------
 // Render
 // ----------------------------------------------------------------------------
+void Application::show_g_buffer_textures() {
+    // Binds the main window framebuffer.
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport(0, 0, width, height);
+
+    // Clears the framebuffer color.
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    // We do not need depth and depth test.
+    glDisable(GL_DEPTH_TEST);
+
+    glBindTextureUnit(0, gbuffer_albedo_texture);
+    glBindTextureUnit(1, gbuffer_mask_texture);
+    glBindTextureUnit(2, gbuffer_albedo_texture_mirror);
+    glBindTextureUnit(3, gbuffer_depth_texture);
+    //glTextureParameteri(gbuffer_depth_texture, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+    //glTextureParameteri(gbuffer_depth_texture, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+
+    display_texture_program.uniform("mirror_factor", mirror_factor);
+    display_texture_program.use();
+
+    // Renders the full screen quad to evaluate every pixel.
+    // Calls a draw command with 3 vertices that are generated in vertex shader.
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+}
+
 void Application::render_into_g_buffer() {
-    // Binds G-Buffer.
+    
     glBindFramebuffer(GL_FRAMEBUFFER, gbuffer_fbo);
+    glViewport(0, 0, width, height);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glEnable(GL_DEPTH_TEST);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    phong_lights_bo.bind_buffer_base(PhongLightsUBO::DEFAULT_LIGHTS_BINDING);
+
+    // Renders all objects in the scene, use deferred shading program
+    render_scene(default_lit_program);
+
+    // Binds G-Buffer.
+    glBindFramebuffer(GL_FRAMEBUFFER, gbuffer_fbo_mirror);
     glViewport(0, 0, width, height);
 
     // Clears the G-buffer, clear all textures to (0,0,0,0) and depth to 1.0.
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // Renders all objects in the scene, use deferred shading program
-    render_scene(default_lit_program);
+    phong_lights_bo.bind_buffer_base(PhongLightsUBO::DEFAULT_LIGHTS_BINDING);
+    
+    render_scene_mirrored(default_lit_program);
+
 }
 
 void Application::render() {
@@ -267,8 +333,11 @@ void Application::render() {
     glBeginQuery(GL_TIME_ELAPSED, render_time_query);
 
     normal_camera_ubo.bind_buffer_base(CameraUBO::DEFAULT_CAMERA_BINDING);
-    evaluate_lighting_forward();
-    render_particles();
+    //evaluate_lighting_forward();
+    render_into_g_buffer();
+    render_particles(gbuffer_fbo_mirror, true);
+    render_particles(gbuffer_fbo, false);
+    show_g_buffer_textures();
 
     // Resets the VAO and the program.
     glBindVertexArray(0);
@@ -296,16 +365,23 @@ void Application::evaluate_lighting_forward() {
     render_scene(default_lit_program);
 }
 
-void Application::render_scene(const ShaderProgram& program) {
-    render_object(castle_object, program);
-    render_object(castel_base, program);
-    render_object(outer_terrain_object, program);
-    render_object(lake_object, program);
+void Application::render_scene_mirrored(const ShaderProgram& program){
+    program.uniform("is_mirrored", true);
+    render_object(castle_object, program, false);
+    render_object(castel_base, program, false);
+    program.uniform("is_mirrored", false);
 }
 
-void Application::render_object(const SceneObject& object, const ShaderProgram& program) {
-    program.use();
+void Application::render_scene(const ShaderProgram& program) {
+    render_object(castel_base, program, false);
+    render_object(castle_object, program, false);
+    render_object(outer_terrain_object, program, false);
+    render_object(lake_object, program, true);
+}
 
+void Application::render_object(const SceneObject& object, const ShaderProgram& program, bool is_lake) {
+    program.use();
+    program.uniform("is_lake", is_lake);
     // Calls the standard rendering functions.
     object.get_model_ubo().bind_buffer_base(ModelUBO::DEFAULT_MODEL_BINDING);
     object.get_material().bind_buffer_base(PhongMaterialUBO::DEFAULT_MATERIAL_BINDING);
@@ -313,16 +389,25 @@ void Application::render_object(const SceneObject& object, const ShaderProgram& 
     object.get_geometry().draw();
 }
 
-void Application::render_particles() {
+void Application::render_particles(GLuint buffer, bool is_mirrored) {
+    glBindFramebuffer(GL_FRAMEBUFFER, buffer);
     // Sets up very simple blending.
+    glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
+    glDepthMask(GL_FALSE);
     glBlendFunc(GL_ONE, GL_ONE);
-    glDisable(GL_DEPTH_TEST);
 
     // Sets the necessary values
     particle_textured_program.use();
     particle_textured_program.uniform("particle_size_vs", particle_size);
+    particle_textured_program.uniform("is_mirrored", is_mirrored);
     glBindTextureUnit(0, particle_tex);
+    if(is_mirrored == false){
+        glBindTextureUnit(1, gbuffer_depth_texture);
+    }
+    else{
+        glBindTextureUnit(1, gbuffer_depth_texture_mirror);
+    }
 
     // Binds the proper VAO (we use the VAO with the data we just wrote).
     glBindVertexArray(particle_vao);
@@ -333,7 +418,8 @@ void Application::render_particles() {
 
     // Disables blending.
     glDisable(GL_BLEND);
-    glEnable(GL_DEPTH_TEST); 
+    glDepthMask(GL_TRUE);
+    glEnable(GL_DEPTH_TEST);
 }
 
 // ----------------------------------------------------------------------------

@@ -7,6 +7,8 @@ layout (location = 0) in vec4 position;  // The vertex position.
 layout (location = 1) in vec3 normal;	 // The vertex normal.
 layout (location = 2) in vec2 tex_coord; // The vertex texture coordinates.
 
+uniform bool is_mirrored;
+
 // The UBO with camera data.	
 layout (std140, binding = 0) uniform CameraBuffer
 {
@@ -45,5 +47,9 @@ void main()
 	out_data.position_ws = vec3(model * position);
 	out_data.normal_ws = normalize(model_it * normal);
 
-	gl_Position = projection * view * model * position;
+	mat4 new_view = view;
+	if(is_mirrored == true){
+		new_view = view * mat4(1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+	}
+	gl_Position = projection * new_view * model * position;
 }

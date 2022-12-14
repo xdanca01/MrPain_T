@@ -77,6 +77,7 @@ x64-linux/share/gtest/GTestTargets-debug.cmake
 x64-linux/share/gtest/GTestTargets-release.cmake
 x64-linux/share/gtest/GTestTargets.cmake
 x64-linux/share/gtest/copyright
+x64-linux/share/gtest/vcpkg.spdx.json
 x64-linux/share/gtest/vcpkg_abi_info.txt
 x64-linux/src/
 x64-linux/src/gtest-all.cc

@@ -1,31 +1,35 @@
 Detecting compiler hash for triplet x64-linux...
 All requested packages are currently installed.
-Restored 0 packages from /home/pdancak/.cache/vcpkg/archives in 700 ns. Use --debug to see more details.
+Restored 0 package(s) from /home/pdancak/.cache/vcpkg/archives in 1.266 us. Use --debug to see more details.
 
-Total elapsed time: 421 ms
+Total elapsed time: 294.1 ms
+glad provides CMake targets:
 
-The package glad provides CMake targets:
-
+    # this is heuristically generated, and may not be correct
     find_package(glad CONFIG REQUIRED)
     target_link_libraries(main PRIVATE glad::glad)
 
-The package glfw3 provides CMake targets:
+glfw3 provides CMake targets:
 
+    # this is heuristically generated, and may not be correct
     find_package(glfw3 CONFIG REQUIRED)
     target_link_libraries(main PRIVATE glfw)
 
-The package glm provides CMake targets:
+glm provides CMake targets:
 
+    # this is heuristically generated, and may not be correct
     find_package(glm CONFIG REQUIRED)
     target_link_libraries(main PRIVATE glm::glm)
 
-The package gtest provides CMake targets:
+gtest provides CMake targets:
 
+    # this is heuristically generated, and may not be correct
     find_package(GTest CONFIG REQUIRED)
     target_link_libraries(main PRIVATE GTest::gmock GTest::gtest GTest::gmock_main GTest::gtest_main)
 
-The package imgui provides CMake targets:
+imgui provides CMake targets:
 
+    # this is heuristically generated, and may not be correct
     find_package(imgui CONFIG REQUIRED)
     target_link_libraries(main PRIVATE imgui::imgui)
 
@@ -39,18 +43,20 @@ The package lodepng provides CMake targets:
     find_package(lodepng CONFIG REQUIRED)
     target_link_libraries(main PRIVATE lodepng)
 
-The package stb is header only and can be used from CMake via:
+stb is header-only and can be used from CMake via:
 
     find_path(STB_INCLUDE_DIRS "stb.h")
     target_include_directories(main PRIVATE ${STB_INCLUDE_DIRS})
 
-The package tinyobjloader provides CMake targets:
+tinyobjloader provides CMake targets:
 
+    # this is heuristically generated, and may not be correct
     find_package(tinyobjloader CONFIG REQUIRED)
     target_link_libraries(main PRIVATE tinyobjloader::tinyobjloader)
 
-The package toml11 provides CMake targets:
+toml11 provides CMake targets:
 
+    # this is heuristically generated, and may not be correct
     find_package(toml11 CONFIG REQUIRED)
     target_link_libraries(main PRIVATE toml11::toml11)
 

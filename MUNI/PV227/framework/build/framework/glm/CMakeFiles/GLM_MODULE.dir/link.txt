@@ -1,0 +1,2 @@
+/usr/bin/ar qc libGLM_MODULE.a CMakeFiles/GLM_MODULE.dir/src/empty.cpp.o
+/usr/bin/ranlib libGLM_MODULE.a

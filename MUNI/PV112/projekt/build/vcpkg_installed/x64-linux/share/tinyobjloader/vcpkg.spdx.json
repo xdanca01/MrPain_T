@@ -1,0 +1,114 @@
+{
+  "$schema": "https://raw.githubusercontent.com/spdx/spdx-spec/v2.2.1/schemas/spdx-schema.json",
+  "spdxVersion": "SPDX-2.2",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "documentNamespace": "https://spdx.org/spdxdocs/tinyobjloader-x64-linux-2.0.0-rc2#2-cfaffd5b-f86e-4e78-9a8a-8f9da75a9532",
+  "name": "tinyobjloader:x64-linux@2.0.0-rc2#2 e3877bf1a4450a0e91225c07c9cf65457f2a8245484b1a5766fe3d624280aabe",
+  "creationInfo": {
+    "creators": [
+      "Tool: vcpkg-3247920fbdd47d08f36cbd480addd9890d3c2435"
+    ],
+    "created": "2022-12-13T21:08:03Z"
+  },
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "GENERATES",
+      "relatedSpdxElement": "SPDXRef-binary"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-0"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-1"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "GENERATED_FROM",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-0",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-1",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-1",
+      "relationshipType": "DEPENDENCY_MANIFEST_OF",
+      "relatedSpdxElement": "SPDXRef-port"
+    }
+  ],
+  "packages": [
+    {
+      "name": "tinyobjloader",
+      "SPDXID": "SPDXRef-port",
+      "versionInfo": "2.0.0-rc2#2",
+      "downloadLocation": "git+https://github.com/Microsoft/vcpkg@1e64b6f58d80d1ff9b43cd9700c8996d0b5b764d",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "description": "Tiny but powerful single file wavefront obj loader",
+      "comment": "This is the port (recipe) consumed by vcpkg."
+    },
+    {
+      "name": "tinyobjloader:x64-linux",
+      "SPDXID": "SPDXRef-binary",
+      "versionInfo": "e3877bf1a4450a0e91225c07c9cf65457f2a8245484b1a5766fe3d624280aabe",
+      "downloadLocation": "NONE",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "comment": "This is a binary package built by vcpkg."
+    },
+    {
+      "SPDXID": "SPDXRef-resource-1",
+      "name": "syoyo/tinyobjloader",
+      "downloadLocation": "git+https://github.com/syoyo/tinyobjloader@v2.0.0-rc2",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "936f7897a87fe00d474231ad5f69816da127f14296c3591144c26c6058bd11ea1490c2db6b8c4a8adf629ae148423705d0c4020f4ed034921f0f2f711498f3bb"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "fileName": "./portfile.cmake",
+      "SPDXID": "SPDXRef-file-0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "fc011c8d8273c064c156b69e4aaa54309e6c52e4323dfd949db321c4a15e5739"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./vcpkg.json",
+      "SPDXID": "SPDXRef-file-1",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "832f724ecd3fcfdb5fdfd36db6e0d1eb00de4a53a7b652275933d04107a701b8"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    }
+  ]
+}

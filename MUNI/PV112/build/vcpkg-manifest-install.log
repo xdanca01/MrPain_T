@@ -1,0 +1,306 @@
+Detecting compiler hash for triplet x64-linux...
+The following packages will be built and installed:
+  * egl-registry[core]:x64-linux -> 2021-11-23 -- /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/egl-registry/ec272777ea9d0ceccf5cc8b0336f038853e5c911
+    glad[core,loader]:x64-linux -> 0.1.34#3 -- /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/glad/2ebf6ed85a860c74f8649571e168900426cbb944
+    glfw3[core]:x64-linux -> 3.3.6 -- /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/glfw3/8a41aae4fb04023a3a94bf3aa66196b0aee2cc8e
+    glm[core]:x64-linux -> 0.9.9.8#1 -- /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/glm/4aafac80f39a72fadaf6a31afb961790678062de
+    gtest[core]:x64-linux -> 1.11.0#3 -- /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/gtest/bc195b45d4d766498fb51de96427835c7c4d5748
+    imgui[core,glfw-binding,opengl3-binding]:x64-linux -> 1.86 -- /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/imgui/afdf40a53f1f7d77248d9cdeb3f629698d0a72c5
+    lodepng[core]:x64-linux -> 2021-12-04#1 -- /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/lodepng/744376b1eace2fdab47d24858d7d1e79f32eefa3
+  * opengl-registry[core]:x64-linux -> 2021-11-17 -- /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/opengl-registry/7f4a1e05a6cfbd923a2eaf9d32da22bde0742a15
+    stb[core]:x64-linux -> 2020-09-14#1 -- /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/stb/fa6d7e998f98f122efa37f456ffa498d546185b9
+    tinyobjloader[core]:x64-linux -> 2.0.0-rc2#2 -- /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/tinyobjloader/1e64b6f58d80d1ff9b43cd9700c8996d0b5b764d
+    toml11[core]:x64-linux -> 3.7.0 -- /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/toml11/ab8e69aef0551e2e862e74ec70b5c2dd58aac36b
+  * vcpkg-cmake[core]:x64-linux -> 2022-01-19 -- /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/vcpkg-cmake/b7c050fe60f91dcedef6d87a3f87584151bf8aee
+  * vcpkg-cmake-config[core]:x64-linux -> 2022-01-30 -- /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/vcpkg-cmake-config/fea8f92ffa5e14c7111fe526f8cc93ecd8f9dbf0
+Additional packages (*) will be modified to complete this operation.
+Restored 1 package(s) from /home/pdancak/.cache/vcpkg/archives in 32.29 ms. Use --debug to see more details.
+Installing 1/13 vcpkg-cmake-config:x64-linux...
+Building vcpkg-cmake-config[core]:x64-linux...
+-- Installing port from location: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/vcpkg-cmake-config/fea8f92ffa5e14c7111fe526f8cc93ecd8f9dbf0
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/vcpkg-cmake-config_x64-linux/share/vcpkg-cmake-config/vcpkg_cmake_config_fixup.cmake
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/vcpkg-cmake-config_x64-linux/share/vcpkg-cmake-config/vcpkg-port-config.cmake
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/vcpkg-cmake-config_x64-linux/share/vcpkg-cmake-config/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: "/home/pdancak/.cache/vcpkg/archives/a3/a300be1f2374aa0184e45b38a9fb74d467c009c63f9c44cd05936efffa871d96.zip"
+Elapsed time to handle vcpkg-cmake-config:x64-linux: 15.38 ms
+Installing 2/13 vcpkg-cmake:x64-linux...
+Building vcpkg-cmake[core]:x64-linux...
+-- Installing port from location: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/vcpkg-cmake/b7c050fe60f91dcedef6d87a3f87584151bf8aee
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/vcpkg_cmake_configure.cmake
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/vcpkg_cmake_build.cmake
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/vcpkg_cmake_install.cmake
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/vcpkg_cmake_get_vars.cmake
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/cmake_get_vars
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/cmake_get_vars/CMakeLists.txt
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/vcpkg-port-config.cmake
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/vcpkg-cmake_x64-linux/share/vcpkg-cmake/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: "/home/pdancak/.cache/vcpkg/archives/e1/e14e877dc82549855e44017f54476f63d9aae1c85bb47576600c892cf0c7df46.zip"
+Elapsed time to handle vcpkg-cmake:x64-linux: 16.66 ms
+Installing 3/13 egl-registry:x64-linux...
+Building egl-registry[core]:x64-linux...
+-- Installing port from location: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/egl-registry/ec272777ea9d0ceccf5cc8b0336f038853e5c911
+-- Downloading https://github.com/KhronosGroup/EGL-Registry/archive/992aa3914f8fea801b1034c992db389911d9f3c3.tar.gz -> KhronosGroup-EGL-Registry-992aa3914f8fea801b1034c992db389911d9f3c3.tar.gz...
+-- Extracting source /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/downloads/KhronosGroup-EGL-Registry-992aa3914f8fea801b1034c992db389911d9f3c3.tar.gz
+-- Using source at /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/egl-registry/src/9911d9f3c3-247a0cf5c1.clean
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/egl-registry_x64-linux/share/egl-registry/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: "/home/pdancak/.cache/vcpkg/archives/6f/6f8665e887081bb570b1f9f1c7465604aa53c89d60bdd42890a26f7c712d38a4.zip"
+Elapsed time to handle egl-registry:x64-linux: 1.395 s
+Installing 4/13 opengl-registry:x64-linux...
+Building opengl-registry[core]:x64-linux...
+-- Installing port from location: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/opengl-registry/7f4a1e05a6cfbd923a2eaf9d32da22bde0742a15
+-- Downloading https://github.com/KhronosGroup/OpenGL-Registry/archive/a48c224a2db6edc4f4c610025b529d1c31ee9445.tar.gz -> KhronosGroup-OpenGL-Registry-a48c224a2db6edc4f4c610025b529d1c31ee9445.tar.gz...
+-- Extracting source /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/downloads/KhronosGroup-OpenGL-Registry-a48c224a2db6edc4f4c610025b529d1c31ee9445.tar.gz
+-- Using source at /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/opengl-registry/src/1c31ee9445-26fd4dce99.clean
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/opengl-registry_x64-linux/share/opengl-registry/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: "/home/pdancak/.cache/vcpkg/archives/dc/dccfcf85b31f0f74cec09b1bb17a4c057186868269e7134826a4a862241252a5.zip"
+Elapsed time to handle opengl-registry:x64-linux: 17.01 s
+Installing 5/13 glad:x64-linux...
+Building glad[core,loader]:x64-linux...
+-- Installing port from location: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/glad/2ebf6ed85a860c74f8649571e168900426cbb944
+-- Downloading https://github.com/Dav1dde/glad/archive/7ece538856bf124d798ab323c8e1e64ebb83cb50.tar.gz -> Dav1dde-glad-7ece538856bf124d798ab323c8e1e64ebb83cb50.tar.gz...
+-- Extracting source /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/downloads/Dav1dde-glad-7ece538856bf124d798ab323c8e1e64ebb83cb50.tar.gz
+-- Applying patch encoding.patch
+-- Applying patch find_python.patch
+-- Using source at /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/glad/src/4ebb83cb50-009ec283eb.clean
+-- This version of glad uses the compatibility profile. To use the core profile instead, create an overlay port of this with GLAD_PROFILE set to 'core' or set GLAD_PROFILE to 'core' in a custom triplet.
+-- This recipe is at /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/glad/2ebf6ed85a860c74f8649571e168900426cbb944
+-- See the overlay ports documentation at https://github.com/microsoft/vcpkg/blob/master/docs/specifications/ports-overlay.md
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/glad_x64-linux/share/glad/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: "/home/pdancak/.cache/vcpkg/archives/b3/b30390a5e02ce78a5c8d073aa998c75fd7ccca5ba27e466505fe50adb35e5bd4.zip"
+Elapsed time to handle glad:x64-linux: 2.806 s
+Installing 6/13 glfw3:x64-linux...
+Building glfw3[core]:x64-linux...
+-- Installing port from location: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/glfw3/8a41aae4fb04023a3a94bf3aa66196b0aee2cc8e
+-- Downloading https://github.com/glfw/glfw/archive/7d5a16ce714f0b5f4efa3262de22e4d948851525.tar.gz -> glfw-glfw-7d5a16ce714f0b5f4efa3262de22e4d948851525.tar.gz...
+-- Extracting source /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/downloads/glfw-glfw-7d5a16ce714f0b5f4efa3262de22e4d948851525.tar.gz
+-- Using source at /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/glfw3/src/d948851525-553a09536e.clean
+GLFW3 currently requires the following libraries from the system package manager:
+    xinerama
+    xcursor
+    xorg
+    libglu1-mesa
+
+These can be installed on Ubuntu systems via sudo apt install libxinerama-dev libxcursor-dev xorg-dev libglu1-mesa-dev
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Fixing pkgconfig file: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/glfw3_x64-linux/lib/pkgconfig/glfw3.pc
+-- Fixing pkgconfig file: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/glfw3_x64-linux/debug/lib/pkgconfig/glfw3.pc
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/glfw3_x64-linux/share/glfw3/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: "/home/pdancak/.cache/vcpkg/archives/0f/0f2598caf4297002df8262eae9e2d9b725d6dc66eedab9a5f3b7caf752ab3607.zip"
+Elapsed time to handle glfw3:x64-linux: 2.93 s
+Installing 7/13 glm:x64-linux...
+Elapsed time to handle glm:x64-linux: 25.66 ms
+Installing 8/13 gtest:x64-linux...
+Building gtest[core]:x64-linux...
+-- Installing port from location: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/gtest/bc195b45d4d766498fb51de96427835c7c4d5748
+-- Downloading https://github.com/google/googletest/archive/release-1.11.0.tar.gz -> google-googletest-release-1.11.0.tar.gz...
+-- Extracting source /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/downloads/google-googletest-release-1.11.0.tar.gz
+-- Applying patch fix-main-lib-path.patch
+-- Using source at /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/gtest/src/ase-1.11.0-7d339f16d4.clean
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+CMake Warning at scripts/cmake/vcpkg_configure_cmake.cmake:379 (message):
+  The following variables are not used in CMakeLists.txt:
+
+      BUILD_GTEST
+      CMAKE_DEBUG_POSTFIX
+
+  Please recheck them and remove the unnecessary options from the
+  `vcpkg_configure_cmake` call.
+
+  If these options should still be passed for whatever reason, please use the
+  `MAYBE_UNUSED_VARIABLES` argument.
+Call Stack (most recent call first):
+  buildtrees/versioning_/versions/gtest/bc195b45d4d766498fb51de96427835c7c4d5748/portfile.cmake:17 (vcpkg_configure_cmake)
+  scripts/ports.cmake:147 (include)
+
+
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/src/gtest.cc
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/src/gtest_main.cc
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/src/gtest-all.cc
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/src/gtest-death-test.cc
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/src/gtest-filepath.cc
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/src/gtest-internal-inl.h
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/src/gtest-matchers.cc
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/src/gtest-port.cc
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/src/gtest-printers.cc
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/src/gtest-test-part.cc
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/src/gtest-typed-test.cc
+-- Fixing pkgconfig file: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/lib/pkgconfig/gmock.pc
+-- Fixing pkgconfig file: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/lib/pkgconfig/gmock_main.pc
+-- Fixing pkgconfig file: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/lib/pkgconfig/gtest.pc
+-- Fixing pkgconfig file: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/lib/pkgconfig/gtest_main.pc
+-- Fixing pkgconfig file: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/debug/lib/pkgconfig/gmock.pc
+-- Fixing pkgconfig file: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/debug/lib/pkgconfig/gmock_main.pc
+-- Fixing pkgconfig file: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/debug/lib/pkgconfig/gtest.pc
+-- Fixing pkgconfig file: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/debug/lib/pkgconfig/gtest_main.pc
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/gtest_x64-linux/share/gtest/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: "/home/pdancak/.cache/vcpkg/archives/bd/bd13f2d60377cefcf5a5943c8c6f5f86d38fd4d7f4dcf877316f0be8dc557e9d.zip"
+Elapsed time to handle gtest:x64-linux: 15.06 s
+Installing 9/13 imgui:x64-linux...
+Building imgui[core,glfw-binding,opengl3-binding]:x64-linux...
+-- Installing port from location: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/imgui/afdf40a53f1f7d77248d9cdeb3f629698d0a72c5
+-- Downloading https://github.com/ocornut/imgui/archive/v1.86.tar.gz -> ocornut-imgui-v1.86.tar.gz...
+-- Extracting source /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/downloads/ocornut-imgui-v1.86.tar.gz
+-- Using source at /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/imgui/src/v1.86-7944920afc.clean
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/imgui_x64-linux/share/imgui/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: "/home/pdancak/.cache/vcpkg/archives/d2/d22c4f6fac7f20e145e57d275a7b93b13e70dc09383885d817ba116cb9751a33.zip"
+Elapsed time to handle imgui:x64-linux: 12.62 s
+Installing 10/13 lodepng:x64-linux...
+Building lodepng[core]:x64-linux...
+-- Installing port from location: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/lodepng/744376b1eace2fdab47d24858d7d1e79f32eefa3
+-- Using cached lvandeve-lodepng-8c6a9e30576f07bf470ad6f09458a2dcd7a6a84a.tar.gz.
+-- Cleaning sources at /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/lodepng/src/dcd7a6a84a-1b95b8ca64.clean. Use --editable to skip cleaning for the packages you specify.
+-- Extracting source /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/downloads/lvandeve-lodepng-8c6a9e30576f07bf470ad6f09458a2dcd7a6a84a.tar.gz
+-- Using source at /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/lodepng/src/dcd7a6a84a-1b95b8ca64.clean
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/lodepng_x64-linux/share/lodepng/usage
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/lodepng_x64-linux/share/lodepng/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: "/home/pdancak/.cache/vcpkg/archives/d3/d34d7be5bb2ca5b699a278161054c18b60e80f6159e5dbbd05fe6047b51cf530.zip"
+Elapsed time to handle lodepng:x64-linux: 5.791 s
+Installing 11/13 stb:x64-linux...
+Building stb[core]:x64-linux...
+-- Installing port from location: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/stb/fa6d7e998f98f122efa37f456ffa498d546185b9
+-- Downloading https://github.com/nothings/stb/archive/b42009b3b9d4ca35bc703f5310eedc74f584be58.tar.gz -> nothings-stb-b42009b3b9d4ca35bc703f5310eedc74f584be58.tar.gz...
+-- Extracting source /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/downloads/nothings-stb-b42009b3b9d4ca35bc703f5310eedc74f584be58.tar.gz
+-- Using source at /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/stb/src/74f584be58-c6ba25f408.clean
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/stb_x64-linux/share/stb/copyright
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/stb_x64-linux/share/stb/FindStb.cmake
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/stb_x64-linux/share/stb/vcpkg-cmake-wrapper.cmake
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: "/home/pdancak/.cache/vcpkg/archives/45/45ad93e6588527fdbb06b12d9efced99dce2c8f4774c43b5dfc2d1e9799e792d.zip"
+Elapsed time to handle stb:x64-linux: 1.066 s
+Installing 12/13 tinyobjloader:x64-linux...
+Building tinyobjloader[core]:x64-linux...
+-- Installing port from location: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/tinyobjloader/1e64b6f58d80d1ff9b43cd9700c8996d0b5b764d
+-- Downloading https://github.com/syoyo/tinyobjloader/archive/v2.0.0-rc2.tar.gz -> syoyo-tinyobjloader-v2.0.0-rc2.tar.gz...
+-- Extracting source /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/downloads/syoyo-tinyobjloader-v2.0.0-rc2.tar.gz
+-- Using source at /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/tinyobjloader/src/v2.0.0-rc2-b244f77d44.clean
+CMake Deprecation Warning at scripts/cmake/vcpkg_check_features.cmake:44 (message):
+  calling `vcpkg_check_features` without the `FEATURES` keyword has been
+  deprecated.
+
+      Please add the `FEATURES` keyword to the call.
+Call Stack (most recent call first):
+  buildtrees/versioning_/versions/tinyobjloader/1e64b6f58d80d1ff9b43cd9700c8996d0b5b764d/portfile.cmake:11 (vcpkg_check_features)
+  scripts/ports.cmake:147 (include)
+
+
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Fixing pkgconfig file: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/tinyobjloader_x64-linux/lib/pkgconfig/tinyobjloader.pc
+-- Fixing pkgconfig file: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/tinyobjloader_x64-linux/debug/lib/pkgconfig/tinyobjloader.pc
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: "/home/pdancak/.cache/vcpkg/archives/e3/e3877bf1a4450a0e91225c07c9cf65457f2a8245484b1a5766fe3d624280aabe.zip"
+Elapsed time to handle tinyobjloader:x64-linux: 7.365 s
+Installing 13/13 toml11:x64-linux...
+Building toml11[core]:x64-linux...
+-- Installing port from location: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/versioning_/versions/toml11/ab8e69aef0551e2e862e74ec70b5c2dd58aac36b
+-- Downloading https://github.com/ToruNiina/toml11/archive/v3.7.0.tar.gz -> ToruNiina-toml11-v3.7.0.tar.gz...
+-- Extracting source /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/downloads/ToruNiina-toml11-v3.7.0.tar.gz
+-- Using source at /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/buildtrees/toml11/src/v3.7.0-dfaa484352.clean
+-- Configuring x64-linux-dbg
+-- Configuring x64-linux-rel
+-- Building x64-linux-dbg
+-- Building x64-linux-rel
+-- Installing: /home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/packages/toml11_x64-linux/share/toml11/copyright
+-- Performing post-build validation
+-- Performing post-build validation done
+Stored binary cache: "/home/pdancak/.cache/vcpkg/archives/9c/9cd128b7d6cc1e1058e13f99cd1cc241f924a778b6f5fe41b5c2147dc12f0ca9.zip"
+Elapsed time to handle toml11:x64-linux: 1.601 s
+
+Total elapsed time: 1.136 min
+glad provides CMake targets:
+
+    # this is heuristically generated, and may not be correct
+    find_package(glad CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glad::glad)
+
+glfw3 provides CMake targets:
+
+    # this is heuristically generated, and may not be correct
+    find_package(glfw3 CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glfw)
+
+glm provides CMake targets:
+
+    # this is heuristically generated, and may not be correct
+    find_package(glm CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glm::glm)
+
+gtest provides CMake targets:
+
+    # this is heuristically generated, and may not be correct
+    find_package(GTest CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE GTest::gmock GTest::gtest GTest::gmock_main GTest::gtest_main)
+
+imgui provides CMake targets:
+
+    # this is heuristically generated, and may not be correct
+    find_package(imgui CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE imgui::imgui)
+
+The package lodepng provides CMake targets:
+
+    # C API
+    find_package(lodepng-c CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE lodepng-c)
+
+    # C++ API
+    find_package(lodepng CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE lodepng)
+
+stb is header-only and can be used from CMake via:
+
+    find_path(STB_INCLUDE_DIRS "stb.h")
+    target_include_directories(main PRIVATE ${STB_INCLUDE_DIRS})
+
+tinyobjloader provides CMake targets:
+
+    # this is heuristically generated, and may not be correct
+    find_package(tinyobjloader CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE tinyobjloader::tinyobjloader)
+
+toml11 provides CMake targets:
+
+    # this is heuristically generated, and may not be correct
+    find_package(toml11 CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE toml11::toml11)
+

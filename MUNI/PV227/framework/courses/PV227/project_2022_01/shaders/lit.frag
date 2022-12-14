@@ -56,6 +56,8 @@ layout (std140, binding = 3) uniform PhongMaterialBuffer
 
 // The flag determining whether a texture should be used.
 uniform bool has_texture;
+uniform bool is_lake;
+uniform bool is_mirrored;
 // The texture that will be used (if available).
 layout(binding = 0) uniform sampler2D material_diffuse_texture;
 
@@ -64,6 +66,8 @@ layout(binding = 0) uniform sampler2D material_diffuse_texture;
 // ----------------------------------------------------------------------------
 // The final output color.
 layout (location = 0) out vec4 final_color;
+// The computed mask.
+layout (location = 1) out vec4 mask;
 
 // ----------------------------------------------------------------------------
 // Main Method
@@ -138,4 +142,10 @@ void main()
 
 	// Outputs the final light color.
 	final_color = vec4(final_light, 1.0f);
-}	
+	if(is_lake){
+		mask = vec4(1.0, 0.0, 0.0, 1.0);
+	}
+	else{
+		mask = vec4(0.0);
+	}
+}

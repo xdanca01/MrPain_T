@@ -80,9 +80,11 @@ Geometry::Geometry(const Geometry& other)
     glCopyNamedBufferSubData(other.vertex_buffer, vertex_buffer, 0, 0, vertex_buffer_size);
 
     // Creates a buffer for indices.
-    glCreateBuffers(1, &index_buffer);
-    glNamedBufferStorage(index_buffer, draw_elements_count * sizeof(unsigned int), nullptr, GL_DYNAMIC_STORAGE_BIT);
-    glCopyNamedBufferSubData(other.index_buffer, index_buffer, 0, 0, draw_elements_count * sizeof(unsigned int));
+    if (draw_elements_count > 0) {
+        glCreateBuffers(1, &index_buffer);
+        glNamedBufferStorage(index_buffer, draw_elements_count * sizeof(unsigned int), nullptr, GL_DYNAMIC_STORAGE_BIT);
+        glCopyNamedBufferSubData(other.index_buffer, index_buffer, 0, 0, draw_elements_count * sizeof(unsigned int));
+    }
 
     init_vao();
 

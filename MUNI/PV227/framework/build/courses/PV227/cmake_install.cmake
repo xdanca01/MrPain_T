@@ -79,6 +79,26 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("/home/pdancak/school/MrPain_T/MUNI/PV227/framework/build/courses/PV227/lecture_08/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/pdancak/school/MrPain_T/MUNI/PV227/framework/build/courses/PV227/lecture_10/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/pdancak/school/MrPain_T/MUNI/PV227/framework/build/courses/PV227/lecture_02_final/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("/home/pdancak/school/MrPain_T/MUNI/PV227/framework/build/courses/PV227/project_2022_01/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/pdancak/school/MrPain_T/MUNI/PV227/framework/build/courses/PV227/project_2022_02/cmake_install.cmake")
 endif()
 

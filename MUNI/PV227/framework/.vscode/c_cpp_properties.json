@@ -3,12 +3,16 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/lib64/**",
+                "/lib/**",
+                "/home/pdancak/school/MrPain_T/MUNI/PV227/framework/framework/**",
+                "/home/pdancak/school/MrPain_T/MUNI/PV227/framework/build/vcpkg_installed/x64-linux/include/**"
             ],
             "defines": [],
             "cStandard": "c17",
             "cppStandard": "c++14",
-            "intelliSenseMode": "linux-clang-x64"
+            "intelliSenseMode": "linux-gcc-x64"
         }
     ],
     "version": 4

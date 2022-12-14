@@ -1,0 +1,2 @@
+/usr/bin/ar qc libOPENGL_MODULE.a CMakeFiles/OPENGL_MODULE.dir/src/color.cpp.o CMakeFiles/OPENGL_MODULE.dir/src/fbo_utils.cpp.o CMakeFiles/OPENGL_MODULE.dir/src/opengl_application.cpp.o CMakeFiles/OPENGL_MODULE.dir/src/program.cpp.o CMakeFiles/OPENGL_MODULE.dir/src/program_map.cpp.o CMakeFiles/OPENGL_MODULE.dir/src/shader.cpp.o CMakeFiles/OPENGL_MODULE.dir/src/texture.cpp.o CMakeFiles/OPENGL_MODULE.dir/src/texture_utils.cpp.o
+/usr/bin/ranlib libOPENGL_MODULE.a

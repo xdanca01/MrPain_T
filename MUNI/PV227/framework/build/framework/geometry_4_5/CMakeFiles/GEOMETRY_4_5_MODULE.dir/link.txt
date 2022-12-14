@@ -1,0 +1,2 @@
+/usr/bin/ar qc libGEOMETRY_4_5_MODULE.a CMakeFiles/GEOMETRY_4_5_MODULE.dir/src/geometry.cpp.o
+/usr/bin/ranlib libGEOMETRY_4_5_MODULE.a

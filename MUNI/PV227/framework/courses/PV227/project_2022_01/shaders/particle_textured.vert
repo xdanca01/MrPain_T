@@ -18,6 +18,8 @@ layout (std140, binding = 0) uniform CameraBuffer
 	vec3 eye_position;		// The position of the eye in world space.
 };
 
+uniform bool is_mirrored;
+
 // ----------------------------------------------------------------------------
 // Output Variables
 // ----------------------------------------------------------------------------
@@ -33,7 +35,14 @@ out VertexData
 // ----------------------------------------------------------------------------
 void main()
 {
-	vec4 pos = view * position;
+	mat4 new_view = view;
+	if(is_mirrored == true){
+		new_view = view * mat4(1.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+	}
+	vec4 pos = new_view * position;
+	if((is_mirrored == false && position.y < 0.0)){
+		pos.w = 0.0;
+	}	
 	out_data.position_vs = pos;
 	out_data.color = color;
 	out_data.id = gl_VertexID;

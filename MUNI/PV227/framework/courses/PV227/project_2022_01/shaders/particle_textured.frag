@@ -12,6 +12,7 @@ in VertexData
 
 // The particle texture.
 layout (binding = 0) uniform sampler2D particle_texture;
+layout (binding = 1) uniform sampler2D depth_texture;
 
 // ----------------------------------------------------------------------------
 // Output Variables
@@ -24,6 +25,7 @@ layout (location = 0) out vec4 final_color;
 // ----------------------------------------------------------------------------
 void main()
 {
-	float intensity = texture(particle_texture, in_data.tex_coord).r;
-	final_color = vec4(in_data.color.rgb * intensity, intensity);
+	float zDepth = texture(depth_texture, in_data.tex_coord).r;
+		float intensity = texture(particle_texture, in_data.tex_coord).r;
+		final_color = vec4(in_data.color.rgb * intensity, intensity);
 }

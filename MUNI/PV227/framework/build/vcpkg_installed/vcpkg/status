@@ -11,7 +11,7 @@ Package: vcpkg-cmake
 Version: 2022-07-18
 Architecture: x64-linux
 Multi-Arch: same
-Abi: fb81412dd5ee87bbf68749b8d930e40271ffed004960b1d92e3ce243d1de6a99
+Abi: 5e038e835ecde27b2fdd788a90be208d74c6efe261c913732688a4ad38c61858
 Type: Port
 Status: install ok installed
 
@@ -39,7 +39,7 @@ Version: 0.1.36
 Depends: egl-registry, opengl-registry, vcpkg-cmake, vcpkg-cmake-config
 Architecture: x64-linux
 Multi-Arch: same
-Abi: fe2c74ea7d9b5f2f5a9b472fa5fd36553969a503b5aa379392197ccc7a6744bc
+Abi: 3826582955ae519e21f85554a1dfcd24e9b640b79d9d4a461934ba185d3806d9
 Description: Multi-Language Vulkan/GL/GLES/EGL/GLX/WGL Loader-Generator based on the official specs.
 Type: Port
 Default-Features: loader
@@ -58,7 +58,7 @@ Version: 3.3.8
 Depends: vcpkg-cmake, vcpkg-cmake-config
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 36e9322199c7a5c6037273a40199d5fd4258922b17f81f4d2fcfaeb2336ba966
+Abi: 0ca59d771f0e8d300e3fa7e2413107a41bdede8106bc1248a3457c05770b6b23
 Description: GLFW is a free, Open Source, multi-platform library for OpenGL, OpenGL ES and Vulkan application development. It provides a simple, platform-independent API for creating windows, contexts and surfaces, reading input, handling events, etc.
 Type: Port
 Status: install ok installed
@@ -68,7 +68,7 @@ Version: 0.9.9.8
 Port-Version: 1
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 014012a0bb94db13a938111971a55e840452fc888e75b87d341aa0318774f75e
+Abi: bca95726ed58bf35fdbf1ee5a9c694fc6ac6691c8e0904613bf2bcff830574ce
 Description: OpenGL Mathematics (GLM)
 Type: Port
 Status: install ok installed
@@ -78,7 +78,7 @@ Version: 1.12.1
 Depends: vcpkg-cmake, vcpkg-cmake-config
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 4fd8716ed09244f75146614da53386aca182352271e12d81464bd8150ba81dad
+Abi: 33ad342d4969e0167e37cb0d3bb26619bdb44729160d1c3adf11edf1c3e1b05f
 Description: GoogleTest and GoogleMock testing frameworks
 Type: Port
 Status: install ok installed
@@ -89,7 +89,7 @@ Port-Version: 1
 Depends: vcpkg-cmake, vcpkg-cmake-config
 Architecture: x64-linux
 Multi-Arch: same
-Abi: a5dae02bf9daceaba9553b249c9c4c2beb0073ee8cdcf1359e5fb7735a2bf97c
+Abi: 1c618dffc00c7fbe05462510e7382fb32898648e1b6f7f141016568586162c29
 Description: Bloat-free Immediate Mode Graphical User interface for C++ with minimal dependencies.
 Type: Port
 Status: install ok installed
@@ -117,7 +117,7 @@ Port-Version: 1
 Depends: vcpkg-cmake, vcpkg-cmake-config
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 03d086d2278058e46e69ee9998e09f768f917118a5ce4cf2652fbdf19d111286
+Abi: cf0d650c443d27f2c278df69df45b3216892a83142b37a1a88abb4e0f33f2e71
 Description: PNG encoder and decoder in C++
 Type: Port
 Status: install ok installed
@@ -137,7 +137,7 @@ Version: 2.0.0-rc9
 Depends: vcpkg-cmake, vcpkg-cmake-config
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 85436ce651bb92de7c35c3cdbfe2f69136ef29fa95ca4bd367c0b5f8adac700b
+Abi: ad123ab538a88e7105537e3677602c3f94ce3ffb20adb28d7ac43d4a5dbdd8f4
 Description: Tiny but powerful single file wavefront obj loader
 Type: Port
 Status: install ok installed
@@ -147,7 +147,7 @@ Version: 3.7.1
 Depends: vcpkg-cmake, vcpkg-cmake-config
 Architecture: x64-linux
 Multi-Arch: same
-Abi: 3c24c11ce8d19b931cbd11655e7002358bccb9780bd3de8201b77291104e8678
+Abi: 1ea1cf971a171764344c392d5256f68de683bcfd70fd081151cd20078591244a
 Description: A C++11 header-only toml parser/encoder depending only on C++ standard library.
 Type: Port
 Status: install ok installed

@@ -37,6 +37,7 @@ class Application : public PV227Application {
     /** The UBO storing the data about lights - positions, colors, etc. */
     PhongLightsUBO phong_lights_bo;
 
+
     // ----------------------------------------------------------------------------
     // Variables (Textures)
     // ----------------------------------------------------------------------------
@@ -62,14 +63,23 @@ class Application : public PV227Application {
     /** The simple program for updating particles. */
     ShaderProgram update_particles_program;
 
+    ShaderProgram display_texture_program;
     // ----------------------------------------------------------------------------
     // Variables (Frame Buffers)
     // ----------------------------------------------------------------------------
-     GLuint gbuffer_fbo;
+    GLuint gbuffer_fbo = 0;
+    GLuint gbuffer_fbo_mirror = 0;
     /** The texture used in @link gbuffer_fbo to store mask. */
-    GLuint gbuffer_mask = 0;
     /** The texture used in @link gbuffer_fbo to store albedo. */
     GLuint gbuffer_albedo_texture = 0;
+
+    GLuint gbuffer_mask_texture = 0;
+
+    GLuint gbuffer_albedo_texture_mirror = 0;
+
+    GLuint gbuffer_depth_texture = 0;
+
+    GLuint gbuffer_depth_texture_mirror = 0;
   protected:
 
     // ----------------------------------------------------------------------------
@@ -179,23 +189,27 @@ class Application : public PV227Application {
     // Render
     // ----------------------------------------------------------------------------
   public:
+    void show_g_buffer_textures();
     /** Sets up the G-buffer and renders all objects into it using deferred shading. */
     void render_into_g_buffer();
 
     /** @copydoc PV227Application::render */
     void render() override;
 
+    /** Renders scene mirrored and without lake and without terrain. */
+    void render_scene_mirrored(const ShaderProgram& program);
+
     /** Renders the whole scene. */
     void render_scene(const ShaderProgram& program);
 
     /** Renders the specified object. */
-    void render_object(const SceneObject& object, const ShaderProgram& program);
+    void render_object(const SceneObject& object, const ShaderProgram& program, bool is_lake);
 
     /** Sets up the frame buffer and evaluates the lighting using forward shading. */
     void evaluate_lighting_forward();
 
     /** Renders the particles. */
-    void render_particles();
+    void render_particles(GLuint buffer, bool is_mirrored);
 
     // ----------------------------------------------------------------------------
     // GUI

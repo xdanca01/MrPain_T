@@ -64,6 +64,7 @@ uniform float blink_delay;
 uniform float blink_frequency;
 uniform float blink_ratio;
 uniform vec4 particle_color;
+
 // ----------------------------------------------------------------------------
 // Local Functions
 // ----------------------------------------------------------------------------
@@ -93,7 +94,7 @@ void main()
     if(time <= init_delay){
         particle_positions[gl_GlobalInvocationID.x] = vec4(vec3(0.0), 1.0);
         vec3 velocity = hash31(elapsed_time);
-        velocity.xz = (velocity.xz * rocket_spread) - rocket_spread;
+        velocity.xz = (velocity.xz * 2 * rocket_spread) - rocket_spread;
         velocity.y = min(max(velocity.y, min_initial_velocity), max_initial_velocity);
         particle_velocities[gl_GlobalInvocationID.x] = vec4(velocity, 0.0);
     }

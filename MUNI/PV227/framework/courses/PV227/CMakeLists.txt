@@ -41,6 +41,7 @@ visitlab_add_directory(lecture_12_final)
 # Adds projects.
 visitlab_add_directory(project_2021_01)
 visitlab_add_directory(project_2022_01)
+visitlab_add_directory(project_2022_02)
 visitlab_add_directory(project_2021_01_final)
 visitlab_add_directory(project_2021_02)
 visitlab_add_directory(project_2021_02_final)

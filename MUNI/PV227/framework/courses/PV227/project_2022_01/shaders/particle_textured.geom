@@ -69,6 +69,11 @@ void main()
 		out_data.tex_coord = quad_tex_coords[i];
 		out_data.color = vec4(particle_color.xyz, 1.0);
 		out_data.id = in_data[0].id;
+		float particleS = particle_color.w;
+		if(in_data[0].color == vec4(0.0)){
+			particleS = 0.0;
+			out_data.color = vec4(0.0);
+		}
 		gl_Position = projection * (in_data[0].position_vs + particle_size_vs * quad_offsets[i] * particle_color.w);
 		EmitVertex();
 	}

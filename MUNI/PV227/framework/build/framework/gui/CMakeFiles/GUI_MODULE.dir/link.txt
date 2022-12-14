@@ -1,0 +1,2 @@
+/usr/bin/ar qc libGUI_MODULE.a CMakeFiles/GUI_MODULE.dir/src/camera.cpp.o CMakeFiles/GUI_MODULE.dir/src/gui_application.cpp.o CMakeFiles/GUI_MODULE.dir/src/gui_manager.cpp.o
+/usr/bin/ranlib libGUI_MODULE.a

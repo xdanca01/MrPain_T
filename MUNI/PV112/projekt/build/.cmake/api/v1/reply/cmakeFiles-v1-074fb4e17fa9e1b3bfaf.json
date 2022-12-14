@@ -1,0 +1,630 @@
+{
+	"inputs" : 
+	[
+		{
+			"path" : "CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/CMakeFiles/3.22.2/CMakeSystem.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/home/pdancak/school/MrPain_T/MUNI/PV227/framework/ext/vcpkg/scripts/buildsystems/vcpkg.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeDependentOption.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/CMakeFiles/3.22.2/CMakeCXXCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeGenericSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeInitializeConfigs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Platform/Linux.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Platform/UnixPaths.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeCXXInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Compiler/GNU-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Compiler/GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Platform/Linux-GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"path" : "cmake/utils.cmake"
+		},
+		{
+			"path" : "cmake/courses.cmake"
+		},
+		{
+			"path" : "cmake/modules.cmake"
+		},
+		{
+			"path" : "vcpkg.json"
+		},
+		{
+			"path" : "courses/PV112/CMakeLists.txt"
+		},
+		{
+			"path" : "courses/PV112/lecture_01/CMakeLists.txt"
+		},
+		{
+			"path" : "courses/PV112/depends.cmake"
+		},
+		{
+			"path" : "framework/pv112/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"path" : "framework/gui/depends.cmake"
+		},
+		{
+			"path" : "framework/geometry/depends.cmake"
+		},
+		{
+			"path" : "courses/PV112/lecture_02/CMakeLists.txt"
+		},
+		{
+			"path" : "courses/PV112/depends.cmake"
+		},
+		{
+			"path" : "framework/pv112/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"path" : "framework/gui/depends.cmake"
+		},
+		{
+			"path" : "framework/geometry/depends.cmake"
+		},
+		{
+			"path" : "courses/PV112/lecture_03/CMakeLists.txt"
+		},
+		{
+			"path" : "courses/PV112/depends.cmake"
+		},
+		{
+			"path" : "framework/pv112/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"path" : "framework/gui/depends.cmake"
+		},
+		{
+			"path" : "framework/geometry/depends.cmake"
+		},
+		{
+			"path" : "courses/PV112/lecture_04/CMakeLists.txt"
+		},
+		{
+			"path" : "courses/PV112/depends.cmake"
+		},
+		{
+			"path" : "framework/pv112/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"path" : "framework/gui/depends.cmake"
+		},
+		{
+			"path" : "framework/geometry/depends.cmake"
+		},
+		{
+			"path" : "courses/PV112/lecture_05/CMakeLists.txt"
+		},
+		{
+			"path" : "courses/PV112/depends.cmake"
+		},
+		{
+			"path" : "framework/pv112/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"path" : "framework/gui/depends.cmake"
+		},
+		{
+			"path" : "framework/geometry/depends.cmake"
+		},
+		{
+			"path" : "courses/PV112/lecture_06/CMakeLists.txt"
+		},
+		{
+			"path" : "courses/PV112/depends.cmake"
+		},
+		{
+			"path" : "framework/pv112/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"path" : "framework/gui/depends.cmake"
+		},
+		{
+			"path" : "framework/geometry/depends.cmake"
+		},
+		{
+			"path" : "courses/PV112/lecture_07/CMakeLists.txt"
+		},
+		{
+			"path" : "courses/PV112/depends.cmake"
+		},
+		{
+			"path" : "framework/pv112/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"path" : "framework/gui/depends.cmake"
+		},
+		{
+			"path" : "framework/geometry/depends.cmake"
+		},
+		{
+			"path" : "courses/PV112/lecture_08/CMakeLists.txt"
+		},
+		{
+			"path" : "courses/PV112/depends.cmake"
+		},
+		{
+			"path" : "framework/pv112/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"path" : "framework/gui/depends.cmake"
+		},
+		{
+			"path" : "framework/geometry/depends.cmake"
+		},
+		{
+			"path" : "courses/PV112/template/CMakeLists.txt"
+		},
+		{
+			"path" : "courses/PV112/depends.cmake"
+		},
+		{
+			"path" : "framework/pv112/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"path" : "framework/gui/depends.cmake"
+		},
+		{
+			"path" : "framework/geometry/depends.cmake"
+		},
+		{
+			"path" : "courses/PA213/CMakeLists.txt"
+		},
+		{
+			"path" : "courses/PA213/fluid/CMakeLists.txt"
+		},
+		{
+			"path" : "courses/PA213/depends.cmake"
+		},
+		{
+			"path" : "framework/pa213/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"path" : "framework/opengl/depends.cmake"
+		},
+		{
+			"path" : "framework/gui/depends.cmake"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"path" : "framework/geometry/depends.cmake"
+		},
+		{
+			"path" : "courses/PA213/lsystem/CMakeLists.txt"
+		},
+		{
+			"path" : "courses/PA213/depends.cmake"
+		},
+		{
+			"path" : "framework/pa213/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"path" : "framework/opengl/depends.cmake"
+		},
+		{
+			"path" : "framework/gui/depends.cmake"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"path" : "framework/geometry/depends.cmake"
+		},
+		{
+			"path" : "framework/pv112/CMakeLists.txt"
+		},
+		{
+			"path" : "framework/pv112/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"path" : "framework/gui/depends.cmake"
+		},
+		{
+			"path" : "framework/geometry/CMakeLists.txt"
+		},
+		{
+			"path" : "framework/geometry/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-config-version.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-config.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-targets.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-targets-debug.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/tinyobjloader/tinyobjloader-targets-release.cmake"
+		},
+		{
+			"path" : "framework/gui/CMakeLists.txt"
+		},
+		{
+			"path" : "framework/gui/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/imgui/imgui-config.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glfw3/glfw3ConfigVersion.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glfw3/glfw3Config.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glfw3/glfw3Targets.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glfw3/glfw3Targets-debug.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glfw3/glfw3Targets-release.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/imgui/imgui-targets.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/imgui/imgui-targets-debug.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/imgui/imgui-targets-release.cmake"
+		},
+		{
+			"path" : "framework/core/CMakeLists.txt"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glfw3/glfw3ConfigVersion.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glfw3/glfw3Config.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glfw3/glfw3Targets.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glfw3/glfw3Targets-debug.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glfw3/glfw3Targets-release.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glad/gladConfigVersion.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glad/gladConfig.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glad/gladTargets.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glad/gladTargets-debug.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glad/gladTargets-release.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/toml11/toml11ConfigVersion.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/toml11/toml11Config.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/toml11/toml11Targets.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/GTest/GTestConfigVersion.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/GTest/GTestConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/FindThreads.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CheckIncludeFileCXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/CheckIncludeFile.cxx.in"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/usr/share/cmake/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/GTest/GTestTargets.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/GTest/GTestTargets-debug.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/GTest/GTestTargets-release.cmake"
+		},
+		{
+			"path" : "framework/glm/CMakeLists.txt"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/vcpkg_installed/x64-linux/share/glm/glm-config.cmake"
+		},
+		{
+			"path" : "framework/pa213/CMakeLists.txt"
+		},
+		{
+			"path" : "framework/pa213/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"path" : "framework/opengl/depends.cmake"
+		},
+		{
+			"path" : "framework/gui/depends.cmake"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"path" : "framework/geometry/depends.cmake"
+		},
+		{
+			"path" : "framework/opengl/CMakeLists.txt"
+		},
+		{
+			"path" : "framework/opengl/depends.cmake"
+		},
+		{
+			"path" : "framework/core/depends.cmake"
+		},
+		{
+			"path" : "framework/gui/depends.cmake"
+		},
+		{
+			"path" : "framework/glm/depends.cmake"
+		},
+		{
+			"path" : "framework/geometry/depends.cmake"
+		}
+	],
+	"kind" : "cmakeFiles",
+	"paths" : 
+	{
+		"build" : "/home/pdancak/school/MrPain_T/MUNI/PV112/projekt/build",
+		"source" : "/home/pdancak/school/MrPain_T/MUNI/PV112/projekt"
+	},
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}

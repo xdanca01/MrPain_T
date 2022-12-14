@@ -1,0 +1,3 @@
+file(REMOVE_RECURSE
+  "libOPENGL_MODULE.a"
+)

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libOPENGL_4_5_MODULE.a CMakeFiles/OPENGL_4_5_MODULE.dir/src/ubo/light_ubo.cpp.o CMakeFiles/OPENGL_4_5_MODULE.dir/src/ubo/ubo.cpp.o CMakeFiles/OPENGL_4_5_MODULE.dir/src/fbo_utils.cpp.o CMakeFiles/OPENGL_4_5_MODULE.dir/src/opengl_4_5_application.cpp.o CMakeFiles/OPENGL_4_5_MODULE.dir/src/program.cpp.o CMakeFiles/OPENGL_4_5_MODULE.dir/src/texture.cpp.o CMakeFiles/OPENGL_4_5_MODULE.dir/src/texture_utils.cpp.o
+/usr/bin/ranlib libOPENGL_4_5_MODULE.a

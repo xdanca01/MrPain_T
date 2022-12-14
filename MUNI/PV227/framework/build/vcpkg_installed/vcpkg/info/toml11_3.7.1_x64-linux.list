@@ -31,4 +31,5 @@ x64-linux/share/toml11/copyright
 x64-linux/share/toml11/toml11Config.cmake
 x64-linux/share/toml11/toml11ConfigVersion.cmake
 x64-linux/share/toml11/toml11Targets.cmake
+x64-linux/share/toml11/vcpkg.spdx.json
 x64-linux/share/toml11/vcpkg_abi_info.txt

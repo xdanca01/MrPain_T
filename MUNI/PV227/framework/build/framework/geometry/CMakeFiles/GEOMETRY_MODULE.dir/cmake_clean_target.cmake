@@ -1,0 +1,3 @@
+file(REMOVE_RECURSE
+  "libGEOMETRY_MODULE.a"
+)

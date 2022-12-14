@@ -77,6 +77,9 @@ class OpenGLApplication : public GUIApplication {
     ShaderProgram default_lit_program;
     /** The default unlit program. */
     ShaderProgram default_unlit_program;
+    ShaderProgram snow_tesselation_program;
+
+    ShaderProgram shadow_map_program;
     /** The absolute path to framework's shaders. Loaded from {@link configuration} if a configuration file is available. */
     std::filesystem::path framework_shaders_path;
     /** The absolute path to framework's textures. Loaded from {@link configuration} if a configuration file is available. */

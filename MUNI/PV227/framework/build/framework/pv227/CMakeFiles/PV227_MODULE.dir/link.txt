@@ -1,0 +1,2 @@
+/usr/bin/ar qc libPV227_MODULE.a CMakeFiles/PV227_MODULE.dir/src/pv227_application.cpp.o
+/usr/bin/ranlib libPV227_MODULE.a

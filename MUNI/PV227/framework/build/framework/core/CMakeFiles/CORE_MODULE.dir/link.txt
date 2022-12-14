@@ -1,0 +1,2 @@
+/usr/bin/ar qc libCORE_MODULE.a CMakeFiles/CORE_MODULE.dir/src/iapplication.cpp.o CMakeFiles/CORE_MODULE.dir/src/manager.cpp.o CMakeFiles/CORE_MODULE.dir/src/configuration.cpp.o
+/usr/bin/ranlib libCORE_MODULE.a
